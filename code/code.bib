@@ -1,0 +1,100 @@
+
+@inproceedings{andersen_local_2006,
+  title = {Local {{Graph Partitioning}} Using {{PageRank Vectors}}},
+  booktitle = {2006 47th {{Annual IEEE Symposium}} on {{Foundations}} of {{Computer Science}} ({{FOCS}}'06)},
+  author = {Andersen, Reid and Chung, Fan and Lang, Kevin},
+  year = {2006},
+  pages = {475--486},
+  publisher = {{IEEE}},
+  address = {{Berkeley, CA, USA}},
+  doi = {10.1109/FOCS.2006.44},
+  abstract = {A local graph partitioning algorithm finds a cut near a specified starting vertex, with a running time that depends largely on the size of the small side of the cut, rather than the size of the input graph. In this paper, we present an algorithm for local graph partitioning using personalized PageRank vectors. We develop an improved algorithm for computing approximate PageRank vectors, and derive a mixing result for PageRank vectors similar to that for random walks. Using this mixing result, we derive an analogue of the Cheeger inequality for PageRank, which shows that a sweep over a single PageRank vector can find a cut with conductance {$\varphi$}, provided there exists a cut with conductance at most f ({$\varphi$}), where f ({$\varphi$}) is {$\Omega$}({$\varphi$}2/ log m), and where m is the number of edges in the graph. By extending this result to approximate PageRank vectors, we develop an algorithm for local graph partitioning that can be used to a find a cut with conductance at most {$\varphi$}, whose small side has volume at least 2b, in time O(2b log3 m/{$\varphi$}2). Using this local graph partitioning algorithm as a subroutine, we obtain an algorithm that finds a cut with conductance {$\varphi$} and approximately optimal balance in time O(m log4 m/{$\varphi$}3).},
+  isbn = {978-0-7695-2720-8},
+  langid = {english},
+  keywords = {done},
+  file = {/home/alex/Zotero/storage/PRFTIXH9/Andersen et al. - 2006 - Local Graph Partitioning using PageRank Vectors.pdf}
+}
+
+@article{chen_targeted_2020,
+  title = {Targeted Sampling from Massive Block Model Graphs with Personalized {{PageRank}}},
+  author = {Chen, Fan and Zhang, Yini and Rohe, Karl},
+  year = {2020},
+  month = feb,
+  journal = {Journal of the Royal Statistical Society: Series B (Statistical Methodology)},
+  volume = {82},
+  number = {1},
+  pages = {99--126},
+  issn = {13697412},
+  doi = {10.1111/rssb.12349},
+  abstract = {The paper provides statistical theory and intuition for personalized PageRank (called `PPR'): a popular technique that samples a small community from a massive network.We study a setting where the entire network is expensive to obtain thoroughly or to maintain, but we can start from a seed node of interest and `crawl' the network to find other nodes through their connections. By crawling the graph in a designed way, the PPR vector can be approximated without querying the entire massive graph, making it an alternative to snowball sampling. Using the degreecorrected stochastic block model, we study whether the PPR vector can select nodes that belong to the same block as the seed node. We provide a simple and interpretable form for the PPR vector, highlighting its biases towards high degree nodes outside the target block. We examine a simple adjustment based on node degrees and establish consistency results for PPR clustering that allows for directed graphs. These results are enabled by recent technical advances showing the elementwise convergence of eigenvectors. We illustrate the method with the massive Twitter friendship graph, which we crawl by using the Twitter application programming interface. We find that the adjusted and unadjusted PPR techniques are complementary approaches, where the adjustment makes the results particularly localized around the seed node, and that the bias adjustment greatly benefits from degree regularization.},
+  langid = {english},
+  file = {/home/alex/Zotero/storage/64MT3UQ6/Chen et al. - 2020 - Targeted sampling from massive block model graphs .pdf}
+}
+
+@article{cho_asymptotic_2018,
+  title = {Asymptotic Theory for Estimating the Singular Vectors and Values of a Partially-Observed Low Rank Matrix with Noise},
+  author = {Cho, Juhee and Kim, Donggyu and Rohe, Karl},
+  year = {2018},
+  journal = {Statistica Sinica},
+  issn = {10170405},
+  doi = {10.5705/ss.202016.0205},
+  langid = {english},
+  file = {/home/alex/Zotero/storage/MLS47XWI/Cho et al. - 2018 - Asymptotic theory for estimating the singular vect.pdf}
+}
+
+@article{cho_intelligent_2019,
+  title = {Intelligent {{Initialization}} and {{Adaptive Thresholding}} for {{Iterative Matrix Completion}}: {{Some Statistical}} and {{Algorithmic Theory}} for {{{\emph{Adaptive-Impute}}}}},
+  shorttitle = {Intelligent {{Initialization}} and {{Adaptive Thresholding}} for {{Iterative Matrix Completion}}},
+  author = {Cho, Juhee and Kim, Donggyu and Rohe, Karl},
+  year = {2019},
+  month = apr,
+  journal = {Journal of Computational and Graphical Statistics},
+  volume = {28},
+  number = {2},
+  pages = {323--333},
+  issn = {1061-8600, 1537-2715},
+  doi = {10.1080/10618600.2018.1518238},
+  abstract = {Over the past decade, various matrix completion algorithms have been developed. Thresholded singular value decomposition (SVD) is a popular technique in implementing many of them. A sizable number of studies have shown its theoretical and empirical excellence, but choosing the right threshold level still remains as a key empirical difficulty. This article proposes a novel matrix completion algorithm which iterates thresholded SVD with theoretically justified and data-dependent values of thresholding parameters. The estimate of the proposed algorithm enjoys the minimax error rate and shows outstanding empirical performances. The thresholding scheme that we use can be viewed as a solution to a nonconvex optimization problem, understanding of whose theoretical convergence guarantee is known to be limited. We investigate this problem by introducing a simpler algorithm, generalized-softImpute, analyzing its convergence behavior, and connecting it to the proposed algorithm.},
+  langid = {english},
+  file = {/home/alex/Zotero/storage/P3CE3JSM/cho2018.pdf#view=FitH.pdf;/home/alex/Zotero/storage/Z58MWM8G/Cho et al. - 2019 - Intelligent Initialization and Adaptive Thresholdi.pdf}
+}
+
+@article{rohe_note_2018,
+  title = {A {{Note}} on {{Quickly Sampling}} a {{Sparse Matrix}} with {{Low Rank Expectation}}},
+  author = {Rohe, Karl and Tao, Jun and Han, Xintian and Binkiewicz, Norbert},
+  year = {2018},
+  journal = {Journal of Machine Learning Research},
+  volume = {19},
+  pages = {1--13},
+  abstract = {Given matrices X,Y {$\in$} Rn\texttimes K and S {$\in$} RK\texttimes K with positive elements, this paper proposes an algorithm fastRG to sample a sparse matrix A with low rank expectation E(A) = XSY T and independent Poisson elements. This allows for quickly sampling from a broad class of stochastic blockmodel graphs (degree-corrected, mixed membership, overlapping) all of which are specific parameterizations of the generalized random product graph model defined in Section 2.2. The basic idea of fastRG is to first sample the number of edges m and then sample each edge. The key insight is that because of the the low rank expectation, it is easy to sample individual edges. The naive ``element-wise'' algorithm requires O(n2) operations to generate the n \texttimes{} n adjacency matrix A. In sparse graphs, where m = O(n), ignoring log terms, fastRG runs in time O(n). An implementation in R is available on github. A computational experiment in Section 2.4 simulates graphs up to n = 10, 000, 000 nodes with m = 100, 000, 000 edges. For example, on a graph with n = 500, 000 and m = 5, 000, 000, fastRG runs in less than one second on a 3.5 GHz Intel i5.},
+  langid = {english},
+  file = {/home/alex/Zotero/storage/YVIWEQYK/Rohe et al. - A Note on Quickly Sampling a Sparse Matrix with Lo.pdf}
+}
+
+@article{rohe_vintage_2022,
+  title = {Vintage {{Factor Analysis}} with {{Varimax Performs Statistical Inference}}},
+  author = {Rohe, Karl and Zeng, Muzhe},
+  year = {2022+},
+  journal = {arXiv:2004.05387 [math, stat]},
+  eprint = {2004.05387},
+  eprinttype = {arxiv},
+  primaryclass = {math, stat},
+  abstract = {Psychologists developed Multiple Factor Analysis to decompose multivariate data into a small number of interpretable factors without any a priori knowledge about those factors [Thurstone, 1935]. In this form of factor analysis, the Varimax ``factor rotation'' is a key step to make the factors interpretable [Kaiser, 1958]. Charles Spearman and many others objected to factor rotations because the factors seem to be rotationally invariant [Thurstone, 1947, Anderson and Rubin, 1956]. These objections are still reported in all contemporary multivariate statistics textbooks. This is an engima because this vintage form of factor analysis has survived and is widely popular because, empirically, the factor rotation often makes the factors easier to interpret. We argue that the rotation makes the factors easier to interpret because, in fact, the Varimax factor rotation performs statistical inference. We show that Principal Components Analysis (PCA) with the Varimax rotation provides a unified spectral estimation strategy for a broad class of modern factor models, including the Stochastic Blockmodel and a natural variation of Latent Dirichlet Allocation (i.e., ``topic modeling''). In addition, we show that Thurstone's widely employed sparsity diagnostics implicitly assess a key ``leptokurtic'' condition that makes the rotation statistically identifiable in these models. Taken together, this shows that the know-how of Vintage Factor Analysis performs statistical inference, reversing nearly a century of statistical thinking on the topic. With a sparse eigensolver, PCA with Varimax is both fast and stable. Combined with Thurstone's straightforward diagnostics, this vintage approach is suitable for a wide array of modern applications.},
+  archiveprefix = {arXiv},
+  langid = {english},
+  file = {/home/alex/Zotero/storage/BZB352YZ/Rohe and Zeng - 2020 - Vintage Factor Analysis with Varimax Performs Stat.pdf}
+}
+
+@article{zhang_murmuration_2021,
+  ids = {zhang_murmuration_nodate-1},
+  title = {Murmuration: {{Contextualize Public Opinion Expression}}},
+  author = {Zhang, Yini and Chen, Fan and Rohe, Karl},
+  year = {2021+},
+  journal = {Journal of Computer-Mediated Communication},
+  abstract = {The prevalence of social media changes how public opinion can be understood and measured. Containing rich data on both opinion expression and social interaction, social media provide a unique opportunity to put public opinion in its natural social context, which contrasts with survey-based public opinion polls. We conceptualize opinion originating from social media as networked public opinion to emphasize the social and technological context of opinion expression. We develop a framework that identifies targeted nodes from large social graphs and tracks networked public opinion based on structures of social relations, i.e, flocks. We provide empirical evidence showing that opinion expression is endogenous with social relations. Specifically, we find that flocks yield an accurate and stable contextualization of opinion expression; flocks provide a clearer delineation of the social groupings than text; and networked public opinion displays strong temporal and content patterns as seen by flock. Our results demonstrate one way social media can be leveraged to enhance our understanding of the social and temporal dynamics of public opinion. Our results further suggest a new approach to understanding and mining social media opinion by incorporating social network information.},
+  langid = {english},
+  keywords = {research},
+  file = {/home/alex/Zotero/storage/SHVN4VJ8/Zhang et al. - Murmuration Contextualize Public Opinion Expressi.pdf;/home/alex/Zotero/storage/YRZB6ZRL/Zhang et al. - Murmuration Contextualize Public Opinion Expressi.pdf}
+}
+
+

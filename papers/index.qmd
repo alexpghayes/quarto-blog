@@ -1,0 +1,19 @@
+---
+title: "papers"
+---
+
+I primarily study networks using tools from multivariate analysis. 
+
+My work with [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/) has focused on fast approaches to spectral estimation via sparse linear algebra. Our primary project together has been developing a method for network co-factor analysis for settings with missing edge data, which we applied to a large network of citations between statistics papers. We have spent some time working to understand effective regularization strategies for spectral estimators, as well as developing diagnostic tools for PCA and varimax rotation. As part of an outgrowth of Karl's [murmuration project](https://murmuration.wisc.edu/) I developed extensive infrastructure to sample and analyze the Twitter following graph (see [code](../code)), and Twitter data remains near and dear to my heart.
+
+I am currently working with [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) on causal interpretations of network regression, and with [Jiwei Zhao](https://biostat.wiscweb.wisc.edu/staff/zhao-jiwei/) on semi-parametric inference for experimental guardrails in a data fusion setting.
+
+Previously at Facebook, I developed internal tooling to understand post content using neural hypergraph embeddings. At Facebook I also developed a diagnostic to assess the out-of-sample reliability of rolling classifiers based on differential calibration of the classifier over time.
+
+I keep [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIAAAAJ) up to date, and post any research related code to Github ([personal](https://github.com/alexpghayes), [lab](https://github.com/rohelab)).
+
+## publications
+
+1. *Welcome to the Tidyverse.* Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, **Alex Hayes**, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. [Journal of Open Source Software](https://joss.theoj.org/papers/10.21105/joss.01686), 2019. [pdf](welcome-to-the-tidyverse.pdf)
+
+Last updated on 2022-04-27.

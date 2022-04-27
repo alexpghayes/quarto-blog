@@ -12,11 +12,13 @@ website:
     card-style: summary_large_image
   navbar:
     right:
-      - index.qmd
+      - text: about
+        file: index.qmd
       - posts.qmd
-      - papers.qmd
-      - code.qmd
-      - talks.qmd
+      - papers/index.qmd
+      - code/index.qmd
+      - courses/index.qmd
+      - talks/index.qmd
       - icon: github
         href: https://github.com/alexpghayes
       - icon: twitter
