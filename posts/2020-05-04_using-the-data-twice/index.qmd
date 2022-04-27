@@ -1,0 +1,128 @@
+---
+title: "using the data twice"
+subtitle: |
+  ur gonna have to think a carefully about the sampling distribution
+date: "2020-05-04"
+bibliography: using-the-data-twice.bib
+---
+
+Berna Devezer, Danielle Navarro, Joachim Vandekerckhove, and Erkan Ozge Buzbas recently posted a [pre-print](http://biorxiv.org/lookup/doi/10.1101/2020.04.26.048306), [-@devezer_case_2020], responding to various claims within the open science community. In particular, they explore the following claims:
+
+1. reproducibility of an effect can be used to demarcate scientific claims and non-scientific claims,
+
+2. data should not be used twice in a data analysis, and
+
+3. exploratory data analysis is characterized by poor statistical practice.
+
+I find the arguments presented against these claims compelling, and anticipate directing many people to their paper in the future. This post is largely a re-expression of some ideas in their paper in language that feels slightly more natural to me.
+
+## The setting & the key idea
+
+In a data analysis, we observe a sample $X_1, ..., X_n$ and compute some estimate from the sample. The properties of the estimate depend on every step we take to report our final result; for example, if we fit a linear regression, look at residuals, add a spline term, and report predictions from the model with the spline term, these decisions influence the sampling distribution of the final predictions.
+
+The fact that our entire procedure matters leads to a lot of confusion.
+
+## What does "using the data twice" mean?
+
+While reading @devezer_case_2020 I found it useful to think about three interpretations of the phrase "using the data twice".
+
+1. **Sequential decision making**. A data analyst computes an estimate, and uses it to inform the next step of their data analysis. This is in my mind the most traditional meaning of "using the data twice" (although for bayesians "using the data twice" might more commonly mean using the data to [pick your priors]( https://statmodeling.stat.columbia.edu/2016/03/25/28321/)).
+
+1. **Deriving new estimators by conditioning an estimating estimator on another statistic**. There is a classic result in mathematical statistics that says if you calculate $\mathbb E(U|T)$ where $U$ is unbiased and $T$ is sufficient, good things happen. This can be thought of as using the data twice.
+
+1. **Reusing data during computations**. For example, as you might with in-sample risk estimation or empirical bayes. @devezer_case_2020 isn't about computational data reuse, but I kept reading "using the data twice" and thinking computationally (especially with the T-statistic example). I was better able to follow the paper after blocking out "computational data reuse" as a separate thing.
+
+I am going to focus on sequential decision making.
+
+## Sequential decision making
+
+Let's first consider an example that most people would consider an obvious and unacceptable "double use" of data. Suppose we do a one sample T-test, but we only report the test statistic (call it $T_1$) if the p-value is less than 0.05. If the p-value is greater than 0.05, we will instead report some other more significant test statistic $T_2$.
+
+Under a two-sided alternative, the p-value of $T_1$ is $p = 1 - \phi_{n-1}(|T_1|) + \phi_{n-1}(-|T_1|)$ where $\phi_n$ is cdf of a T-distribution with $n$ degrees of freedom. Now our overall, actual test statistic is
+
+$$
+   T = T_1 \, \mathbf 1(p < 0.05) + T_2 \, \mathbf 1(p \ge 0.05),
+$$
+
+where $\mathbf 1$ denotes an indicator function. If you decide between reporting $T_1$ or $T_2$ based on $p$ with a threshold of 0.05, you are using this test statistic. If you compute $T$ but report that you did $T_2$, not realizing that entire procedure to arrive at $T_2$ is important, someone else will go to calculate your p-value as 
+
+$$
+  P(|T_2(X_1, ..., X_n)| > T_2(x_1, ..., x_n))
+$$
+
+where $T_2(x_1, ..., x_n)$ describes the observed test statistic and $T_2(X_1, ..., X_n)$ is the random variable corresponding to $T_2$. But really, they need to calculate the p-value as 
+
+$$
+  P(|T(X_1, ..., X_n)| > T(x_1, ..., x_n))
+$$
+
+and so they will be *using the wrong p-value*, and they will think they are doing $T_2$, a test with some nice set of properties, when in fact they are doing the test $T$, which may not have any nice properties at all, and in fact is likely a very bad test from an inferential perspective, at least based on typical choices of $T_2$ amongst social scientists doing null hypothesis testing.
+
+## Slight generalization: a two-stage estimation problem
+
+Suppose we want to estimate some parameter $\theta$ from a sample $X_1, ..., X_n$. First we will compute some point estimate $T^{(1)}$. We will look at $T^{(1)}$ and make some decision based on $T^{(1)}$. In particular, we will choose one of $k$ estimators $T^{(2)}_1, ..., T^{(2)}_k$ and report the estimate from this estimator. We have some decision function, $f$, that, given $T^{(1)}$, we use to choose which of the second stage estimators we will report. In particular, if $T^{(1)} \in A_j$, where $A_1, ..., A_k$ partition the space of possible estimates from $T^{(1)}$, we will report results from the second stage estimator $T^{(2)}_j$. So our overall estimator is given by
+
+$$
+  T = T^{(2)}_{f(T^{(1)})} = T^{(2)}_1 \, \mathbf 1( T^{(1)} \in A_1) +  
+    ... + T^{(2)}_k \, \mathbf 1( T^{(1)} \in A_k).
+$$
+
+The common admonition against using the data twice is directed at researchers who use the *unconditional* sampling distribution of whichever $T^{(2)}_j$ they selected. Gelman made this mistake famous on his blog and in @gelman_statistical_2014, where he defined the "garden of forking paths" in data analysis. @mayo_statistical_2018 refers to this "biasing selection effects."
+
+So how do we do correct inference when our estimation procedure involves sequential decision making? There are two possibilities: (1) we can use sampling distribution of $T$ (i.e. the sampling distribution of the entire procedure), or (2) we can use the sampling distribution of $T | \{T^{(1)} = t_1\}$, which equals the sampling distribution of $T^{(2)}_j | \{T^{(1)} = t_1\}$ (i.e. the sampling distribution of the final estimator we selected, conditional on selecting that estimator).
+
+I had a major confusion on my first reading of the paper when I assumed that we would only ever want to do inference unconditionally on the whole procedure (i.e. using $T$). In particular, I misread @devezer_case_2020 as claiming that the unconditional distribution of $T$ has nice properties. This is neither true, nor the claim they make! @devezer_case_2020 instead makes the point that *if you condition $T$ on the decisions you made* (i.e. use $T^{(2)}_j | \{T^{(1)} = t_1\}$ for inference) you can still do inference, and if you made decisions based on nice statistics the conditioning might even improve the properties of your estimator^[Thanks to Dr. Buzbas for an edifying comment about this.].
+
+It'll probably help to be a bit more concrete about the difference between correct unconditional inference and correct conditional inference. Consider backwards stepwise regression. In backwards stepwise regression, we fit a linear model on the full original data with OLS, and then iteratively remove terms with the largest p-value until all the remaining p-values are less than $\alpha = 0.05$. Suppose our data has three predictors $X_1, X_2$ and $X_3$, and we run backwards stepwise regression. In the full model $X_3$ has the largest p-value, and we remove it. Then we refit on $X_1$ and $X_2$ and both terms have p-values less than 0.05, so we stop and report this final model.
+
+Correct conditional inference in this case will produce probabilities statements like:
+
+> Under a Gaussian linear model with three predictors $X_1, X_2$ and $X_3$, if we perform backwards stepwise regression and remove $X_3$ from the model, and then stop, the $\alpha$-level confidence set for the model coefficients returned from the final OLS model will have coverage level $\gamma_1$.
+
+Correct unconditional inference in this case will produce probabilities statements like:
+
+> Under a Gaussian linear model with three predictors $X_1, X_2$ and $X_3$, the $\alpha$-level confidence set for the model coefficients returned from the final OLS model will have coverage level $\gamma_2$.
+
+Personally I find the unconditional inference much more useful than the conditional inference. For this particular example, note that both $\gamma_1$ and $\gamma_2$ will be atrocious, but hopefully this illustrates the general point about interpretation^[Note that in the unconditional case the properties of your estimate from $T$ also depend on all the estimators $T^{(2)}_{i \neq j}$ that you didn't end up using!].
+
+As further examples, the Benjamini-Hochberg procedure results in *unconditional* false discovery control, whereas selective inference^[P-values for the LASSO basically.] can only be interpreted *conditional* on the selected penalty parameter $\lambda$.
+
+## Just use the sampling distribution of the procedure, they said. It will be easy, they said.
+
+The real problem is that data analysts might go through many, many decisions before arriving at some final estimate, but the mental process of selecting amongst several competing estimators is not well defined. If a data analyst looks at a residual plot and judges the residuals to be fine based on some gut intuition, this "decision" cannot be encoded formally. If you ask the analyst "what procedure did you follow to get this estimate?" so that you can evaluate the properties of that procedure, most analysts can't tell you. Humans behaviors do not follow well-specified algorithms, or at least not algorithms that we can elicit. This means that frequentist properties of most procedures carried out by humans aren't well-defined.
+
+Even though data analytic procedures may not be well-defined, they can definitely be good! For example, consider updating a model after investigating model diagnostics, a poorly defined procedure that most statisticians nonetheless find essential.
+
+Pre-registration essentially tries to fix ill-definedness of procedures. Pre-registration asks people to describe the procedure they use to arrive at an estimate so that other people can evaluate the properties of that procedure. This transparency is admirable, and in general, I am fully on board with pushing the scientific community to specify more explicitly the procedures they are using to analyze data. But pre-registration only applies to situations when scientists can follow fixed procedures to learn new things.
+
+Critiques of pre-registration often point out that if you require data analytic procedures to be strictly algorithmic, you give up on a large swathe of (heretofore productive!) science. There is also the fact that knowing the sampling distribution and properties of an estimator does not mean that those properties are good, or that inference based on that estimator is warranted.
+
+## Dealing with procedures in real life
+
+Statisticians have known that the sampling distribution of the entire procedure matters for a long time. Current practice is a mixture of recognizing this fact when there's some solution with provably nice properties, and ignoring it, appealing to intuition, or hoping it doesn't matter when working the sampling distribution of the entire procedure is intractable.
+
+Here are some ways statisticians handle the mismatch between sampling distributions of procedures and unconditional sampling distributions of individual estimators:
+
+1. Being aware of the (potentially large) discrepancy between the sampling distributions, or interpreting results as conditional on decisions made by the data analyst.
+
+1. Heuristically trying to limit the dependence between decisions during data analysis and the measures of interest.
+
+1. Assessing the stability of a inference by comparing results from a variety of procedures (i.e. multiverse analysis).
+
+1. Simulating or bootstrapping entire procedures if possible to assess unconditional properties of the properties.
+
+1. Transparently describing the entire data analytic procedure, as well as releasing code and data.
+
+Frank Harrell's *Regression Modeling Strategies* deserves special note for providing practical advice on performing inference using the sampling distribution of the entire estimation procedure, and I believe is famous for being one of the first textbooks to emphasize the importance of procedures (@harrell_regression_2015). Another great textbook that carefully considers  procedures is @shalizi_advanced_2018.
+
+## The End
+
+@devezer_case_2020 point out that to understand the properties of your estimator, you need to consider the sampling distribution of your estimation procedure, either conditionally or unconditionally. Understanding the form and properties of the sampling distribution is a key piece to much of the ongoing discussion about pre-registration.
+
+Personally, I am curious about justification for frequentist inference using iterative model development procedures. What kind of guarantees can we make when we formally consider, say, model selection. One interesting prospect seems to be decision-analytic inference that doesn't rely on the sampling distribution of the entire procedure. For example, @van_calster_calibration_2016 proves that any prognostic model that satisfies a criterion they call "moderate calibration" is not harmful, as measured by a clinical utility score called Net Benefit^[I would be very grateful to learn about other similar inferences that rely on narrow properties of the estimates]. Notably, calibration can be assessed for any predictive model, regardless of how analysts arrived at the model itself.
+
+If you enjoyed this post you may also enjoy @baumgaertner_model-centric_2018 and @navarro_between_2018.
+
+### Acknowledgements
+
+I would like to thank Dr. Devezer and Dr. Buzbas for an extensive discussion and feedback on this post!

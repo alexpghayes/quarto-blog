@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.257">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alex Hayes">
+<meta name="dcterms.date" content="2017-08-07">
+
+<title>aleatoric - gentle tidy eval with examples</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="aleatoric - gentle tidy eval with examples">
+<meta property="og:site-name" content="aleatoric">
+<meta name="twitter:title" content="aleatoric - gentle tidy eval with examples">
+<meta name="twitter:creator" content="@alexpghayes">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">aleatoric</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/alexpghayes"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/alexpghayes"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">gentle tidy eval with examples</h1>
+            <p class="subtitle lead"></p><p>Copy-pasteable example code for people who want to program around the tidyverse.</p><p></p>
+                </div>
+  </div>
+    
+  
+
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Alex Hayes <a href="https://orcid.org/0000-0002-4985-5160" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2017-08-07</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#using-strings-to-refer-to-column-names" id="toc-using-strings-to-refer-to-column-names" class="nav-link active" data-scroll-target="#using-strings-to-refer-to-column-names">Using strings to refer to column names</a></li>
+  <li><a href="#details-about-unquoting" id="toc-details-about-unquoting" class="nav-link" data-scroll-target="#details-about-unquoting">Details about unquoting</a></li>
+  <li><a href="#creating-non-standard-functions" id="toc-creating-non-standard-functions" class="nav-link" data-scroll-target="#creating-non-standard-functions">Creating non-standard functions</a></li>
+  </ul>
+</nav>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>I’ve been using the tidy eval framework introduced with <code>dplyr 0.7</code> for about two months now, and it’s time for an update to my original post on tidy eval. My goal is not to explain tidy eval to you, but rather to show you some simple examples that you can easily generalize from.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>starwars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 87 × 14
+   name  hei…¹  mass hai…² ski…³ eye…⁴ bir…⁵ sex   gen…⁶ hom…⁷ spe…⁸ films veh…⁹
+   &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;lis&gt; &lt;lis&gt;
+ 1 Luke…   172    77 blond fair  blue   19   male  masc… Tato… Human &lt;chr&gt; &lt;chr&gt;
+ 2 C-3PO   167    75 &lt;NA&gt;  gold  yell… 112   none  masc… Tato… Droid &lt;chr&gt; &lt;chr&gt;
+ 3 R2-D2    96    32 &lt;NA&gt;  whit… red    33   none  masc… Naboo Droid &lt;chr&gt; &lt;chr&gt;
+ 4 Dart…   202   136 none  white yell…  41.9 male  masc… Tato… Human &lt;chr&gt; &lt;chr&gt;
+ 5 Leia…   150    49 brown light brown  19   fema… femi… Alde… Human &lt;chr&gt; &lt;chr&gt;
+ 6 Owen…   178   120 brow… light blue   52   male  masc… Tato… Human &lt;chr&gt; &lt;chr&gt;
+ 7 Beru…   165    75 brown light blue   47   fema… femi… Tato… Human &lt;chr&gt; &lt;chr&gt;
+ 8 R5-D4    97    32 &lt;NA&gt;  whit… red    NA   none  masc… Tato… Droid &lt;chr&gt; &lt;chr&gt;
+ 9 Bigg…   183    84 black light brown  24   male  masc… Tato… Human &lt;chr&gt; &lt;chr&gt;
+10 Obi-…   182    77 aubu… fair  blue…  57   male  masc… Stew… Human &lt;chr&gt; &lt;chr&gt;
+# … with 77 more rows, abbreviated variable names ¹​height, ²​hair_color,
+#   ³​skin_color, ⁴​eye_color, ⁵​birth_year, ⁶​gender, ⁷​homeworld, ⁸​species,
+#   ⁹​vehicles, and 1 more variable: starships &lt;list&gt;</code></pre>
+</div>
+</div>
+<section id="using-strings-to-refer-to-column-names" class="level2">
+<h2 class="anchored" data-anchor-id="using-strings-to-refer-to-column-names">Using strings to refer to column names</h2>
+<p>To refer to columns in a data frame with strings, we need to convert those strings into symbol objects with <code>rlang::sym</code> and <code>rlang::syms</code>. We then use the created symbol objects in dplyr functions with the prefixes <code>!!</code> and <code>!!!</code>. This is because <code>dplyr</code> verbs expect input that looks like code. Using the <code>sym/syms</code> functions we can convert strings into objects that look like code.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mass <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">sym</span>(<span class="st">"mass"</span>)                        <span class="co"># create a single symbol</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">syms</span>(<span class="fu">c</span>(<span class="st">"homeworld"</span>, <span class="st">"species"</span>))  <span class="co"># create a list of symbols</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="sc">!!!</span>groups) <span class="sc">%&gt;%</span>               <span class="co"># use list of symbols with !!!</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_mass =</span> <span class="fu">mean</span>(<span class="sc">!!</span>mass))    <span class="co"># use single symbol with !!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 58 × 3
+# Groups:   homeworld [49]
+   homeworld      species   avg_mass
+   &lt;chr&gt;          &lt;chr&gt;        &lt;dbl&gt;
+ 1 Alderaan       Human         NA  
+ 2 Aleen Minor    Aleena        15  
+ 3 Bespin         Human         79  
+ 4 Bestine IV     Human        110  
+ 5 Cato Neimoidia Neimodian     90  
+ 6 Cerea          Cerean        82  
+ 7 Champala       Chagrian      NA  
+ 8 Chandrila      Human         NA  
+ 9 Concord Dawn   Human         79  
+10 Corellia       Human         78.5
+# … with 48 more rows</code></pre>
+</div>
+</div>
+<p>The usage <code>mass &lt;- rlang::sym("mass")</code> is Hadley approved:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p>{{% tweet "885993307968593920" %}}</p>
+</div>
+</div>
+<p>I believe it is also the current tidyverse code style standard. We use <code>rlang::sym</code> and <code>rlang::syms</code> identically inside functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>summarize_by <span class="ot">&lt;-</span> <span class="cf">function</span>(df, groups, to_summarize) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="sc">!!!</span>rlang<span class="sc">::</span><span class="fu">syms</span>(groups)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">summarized_mean =</span> <span class="fu">mean</span>(<span class="sc">!!</span>rlang<span class="sc">::</span><span class="fu">sym</span>(to_summarize)))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_by</span>(starwars, <span class="fu">c</span>(<span class="st">"homeworld"</span>, <span class="st">"species"</span>), <span class="st">"mass"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 58 × 3
+# Groups:   homeworld [49]
+   homeworld      species   summarized_mean
+   &lt;chr&gt;          &lt;chr&gt;               &lt;dbl&gt;
+ 1 Alderaan       Human                NA  
+ 2 Aleen Minor    Aleena               15  
+ 3 Bespin         Human                79  
+ 4 Bestine IV     Human               110  
+ 5 Cato Neimoidia Neimodian            90  
+ 6 Cerea          Cerean               82  
+ 7 Champala       Chagrian             NA  
+ 8 Chandrila      Human                NA  
+ 9 Concord Dawn   Human                79  
+10 Corellia       Human                78.5
+# … with 48 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="details-about-unquoting" class="level2">
+<h2 class="anchored" data-anchor-id="details-about-unquoting">Details about unquoting</h2>
+<p><code>!!</code> and <code>!!!</code> are syntactic sugar on top of the functions <code>UQ()</code> and <code>UQS()</code>, respectively. It used to be that <code>!!</code> and <code>!!!</code> had low operator precedence, meaning that in terms of PEMDAS they came pretty much last. But now we can use them more intuitively:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>homeworld <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">sym</span>(<span class="st">"homeworld"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(starwars, <span class="sc">!!</span>homeworld <span class="sc">==</span> <span class="st">"Alderaan"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 14
+  name   hei…¹  mass hai…² ski…³ eye…⁴ bir…⁵ sex   gen…⁶ hom…⁷ spe…⁸ films veh…⁹
+  &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;lis&gt; &lt;lis&gt;
+1 Leia …   150    49 brown light brown    19 fema… femi… Alde… Human &lt;chr&gt; &lt;chr&gt;
+2 Bail …   191    NA black tan   brown    67 male  masc… Alde… Human &lt;chr&gt; &lt;chr&gt;
+3 Raymu…   188    79 brown light brown    NA male  masc… Alde… Human &lt;chr&gt; &lt;chr&gt;
+# … with abbreviated variable names ¹​height, ²​hair_color, ³​skin_color,
+#   ⁴​eye_color, ⁵​birth_year, ⁶​gender, ⁷​homeworld, ⁸​species, ⁹​vehicles, and 1
+#   more variable: starships &lt;list&gt;</code></pre>
+</div>
+</div>
+<p>We can also use <code>UQ</code> and <code>UQS</code> directly to be explicit about what we’re unquoting.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(starwars, <span class="fu">UQ</span>(homeworld) <span class="sc">==</span> <span class="st">"Alderaan"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 14
+  name   hei…¹  mass hai…² ski…³ eye…⁴ bir…⁵ sex   gen…⁶ hom…⁷ spe…⁸ films veh…⁹
+  &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;lis&gt; &lt;lis&gt;
+1 Leia …   150    49 brown light brown    19 fema… femi… Alde… Human &lt;chr&gt; &lt;chr&gt;
+2 Bail …   191    NA black tan   brown    67 male  masc… Alde… Human &lt;chr&gt; &lt;chr&gt;
+3 Raymu…   188    79 brown light brown    NA male  masc… Alde… Human &lt;chr&gt; &lt;chr&gt;
+# … with abbreviated variable names ¹​height, ²​hair_color, ³​skin_color,
+#   ⁴​eye_color, ⁵​birth_year, ⁶​gender, ⁷​homeworld, ⁸​species, ⁹​vehicles, and 1
+#   more variable: starships &lt;list&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="creating-non-standard-functions" class="level2">
+<h2 class="anchored" data-anchor-id="creating-non-standard-functions">Creating non-standard functions</h2>
+<p>Sometimes it is nice to write functions that use accept non-standard inputs, like <code>dplyr</code> verbs. For example, we might want to write a function with the same effect as</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(homeworld, species) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_mass =</span> <span class="fu">mean</span>(mass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 58 × 3
+# Groups:   homeworld [49]
+   homeworld      species   avg_mass
+   &lt;chr&gt;          &lt;chr&gt;        &lt;dbl&gt;
+ 1 Alderaan       Human         NA  
+ 2 Aleen Minor    Aleena        15  
+ 3 Bespin         Human         79  
+ 4 Bestine IV     Human        110  
+ 5 Cato Neimoidia Neimodian     90  
+ 6 Cerea          Cerean        82  
+ 7 Champala       Chagrian      NA  
+ 8 Chandrila      Human         NA  
+ 9 Concord Dawn   Human         79  
+10 Corellia       Human         78.5
+# … with 48 more rows</code></pre>
+</div>
+</div>
+<p>To this we need to capture our input in <code>quosures</code> with <code>quo</code> and <code>quos</code> when programming interactively.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">quos</span>(homeworld, species)   <span class="co"># capture a list of variables as raw input</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mass <span class="ot">&lt;-</span> <span class="fu">quo</span>(mass)                    <span class="co"># capture a single variable as raw input</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="sc">!!!</span>groups) <span class="sc">%&gt;%</span>            <span class="co"># use !!! to access variables from `quos`</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_mass =</span> <span class="fu">sum</span>(<span class="sc">!!</span>mass))  <span class="co"># use !! to access the variable in `quo`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 58 × 3
+# Groups:   homeworld [49]
+   homeworld      species   avg_mass
+   &lt;chr&gt;          &lt;chr&gt;        &lt;dbl&gt;
+ 1 Alderaan       Human           NA
+ 2 Aleen Minor    Aleena          15
+ 3 Bespin         Human           79
+ 4 Bestine IV     Human          110
+ 5 Cato Neimoidia Neimodian       90
+ 6 Cerea          Cerean          82
+ 7 Champala       Chagrian        NA
+ 8 Chandrila      Human           NA
+ 9 Concord Dawn   Human           79
+10 Corellia       Human          157
+# … with 48 more rows</code></pre>
+</div>
+</div>
+<p>There’s some nice symmetry here in that we unwrap both <code>rlang::sym</code> and <code>quo</code> with <code>!!</code> and both <code>rlang::syms</code> and <code>quos</code> with <code>!!!</code>.</p>
+<p>We might be interested in using this behavior in a function. To do this we replace calls to <code>quo</code> with calls to <code>enquo</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>summarize_by <span class="ot">&lt;-</span> <span class="cf">function</span>(df, to_summarize, ...) {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  to_summarize <span class="ot">&lt;-</span> <span class="fu">enquo</span>(to_summarize)  <span class="co"># enquo captures a single argument</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  groups <span class="ot">&lt;-</span> <span class="fu">quos</span>(...)                  <span class="co"># quos captures multiple arguments</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="sc">!!!</span>groups) <span class="sc">%&gt;%</span>                 <span class="co"># unwrap quos with !!!</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">summ =</span> <span class="fu">sum</span>(<span class="sc">!!</span>to_summarize))   <span class="co"># unwrap enquo with !!</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now our function call is non-standardized. Note that <code>quos</code> can capture an arbitrary number of arguments, like we have here. So both of the following calls are valid</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_by</span>(starwars, mass, homeworld)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 49 × 2
+   homeworld       summ
+   &lt;chr&gt;          &lt;dbl&gt;
+ 1 Alderaan          NA
+ 2 Aleen Minor       15
+ 3 Bespin            79
+ 4 Bestine IV       110
+ 5 Cato Neimoidia    90
+ 6 Cerea             82
+ 7 Champala          NA
+ 8 Chandrila         NA
+ 9 Concord Dawn      79
+10 Corellia         157
+# … with 39 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_by</span>(starwars, mass, homeworld, species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 58 × 3
+# Groups:   homeworld [49]
+   homeworld      species    summ
+   &lt;chr&gt;          &lt;chr&gt;     &lt;dbl&gt;
+ 1 Alderaan       Human        NA
+ 2 Aleen Minor    Aleena       15
+ 3 Bespin         Human        79
+ 4 Bestine IV     Human       110
+ 5 Cato Neimoidia Neimodian    90
+ 6 Cerea          Cerean       82
+ 7 Champala       Chagrian     NA
+ 8 Chandrila      Human        NA
+ 9 Concord Dawn   Human        79
+10 Corellia       Human       157
+# … with 48 more rows</code></pre>
+</div>
+</div>
+<p>For more details, see the <a href="http://dplyr.tidyverse.org/articles/programming.html">programming with <code>dplyr</code> vignette</a>.</p>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{hayes2017,
+  author = {Alex Hayes},
+  title = {Gentle Tidy Eval with Examples},
+  date = {2017-08-07},
+  url = {https://www.alexpghayes.com/posts/2017-08-07_gentle-tidy-eval},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-hayes2017" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Alex Hayes. 2017. <span>“Gentle Tidy Eval with Examples.”</span> August
+7, 2017. <a href="https://www.alexpghayes.com/posts/2017-08-07_gentle-tidy-eval">https://www.alexpghayes.com/posts/2017-08-07_gentle-tidy-eval</a>.
+</div></div></section></div></main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.257">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alex Hayes">
+<meta name="dcterms.date" content="2018-05-03">
+
+<title>alex hayes - predictive performance via bootstrap variants</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="alex hayes - predictive performance via bootstrap variants">
+<meta property="og:site-name" content="alex hayes">
+<meta name="twitter:title" content="alex hayes - predictive performance via bootstrap variants">
+<meta name="twitter:creator" content="@alexpghayes">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">alex hayes</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">about</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html">posts</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../papers.html">papers</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../code.html">code</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talks.html">talks</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/alexpghayes"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/alexpghayes"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">predictive performance via bootstrap variants</h1>
+            <p class="subtitle lead"></p><p>i got curious so i coded these up</p><p></p>
+                </div>
+  </div>
+    
+  
+
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Alex Hayes <a href="https://orcid.org/0000-0002-4985-5160" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2018-05-03</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#a-brief-introduction-to-the-bootstrap" id="toc-a-brief-introduction-to-the-bootstrap" class="nav-link active" data-scroll-target="#a-brief-introduction-to-the-bootstrap">A brief introduction to the bootstrap</a></li>
+  <li><a href="#data-model" id="toc-data-model" class="nav-link" data-scroll-target="#data-model">Data &amp; Model</a>
+  <ul class="collapse">
+  <li><a href="#apparent-and-out-of-sample-bootstrap-error" id="toc-apparent-and-out-of-sample-bootstrap-error" class="nav-link" data-scroll-target="#apparent-and-out-of-sample-bootstrap-error">Apparent and out of sample bootstrap error</a></li>
+  <li><a href="#the-optimism-bootstrap" id="toc-the-optimism-bootstrap" class="nav-link" data-scroll-target="#the-optimism-bootstrap">The optimism bootstrap</a></li>
+  <li><a href="#the-0.632-and-0.632-bootstrap" id="toc-the-0.632-and-0.632-bootstrap" class="nav-link" data-scroll-target="#the-0.632-and-0.632-bootstrap">The 0.632 and 0.632+ bootstrap</a></li>
+  </ul></li>
+  <li><a href="#actually-calculating-these-things-in-r" id="toc-actually-calculating-these-things-in-r" class="nav-link" data-scroll-target="#actually-calculating-these-things-in-r">Actually calculating these things in R</a></li>
+  <li><a href="#using-the-bootstrap-in-practice" id="toc-using-the-bootstrap-in-practice" class="nav-link" data-scroll-target="#using-the-bootstrap-in-practice">Using the bootstrap in practice</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/posts/2018-05-03_performance-assessments-via-bootstrap-variants/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>When we build a predictive model, we are interested in how the model will perform on data it hasn’t seen before. If we have lots of data, we can split it into training and test sets to assess model performance. If we don’t have lots of data, it’s better to fit a model using all of the available data and to assess its predictive performance using resampling techniques. The bootstrap is one such resampling technique. This post discusses several variants of the bootstrap that are appropriate for estimating predictive performance.</p>
+<section id="a-brief-introduction-to-the-bootstrap" class="level2">
+<h2 class="anchored" data-anchor-id="a-brief-introduction-to-the-bootstrap">A brief introduction to the bootstrap</h2>
+<p>The bootstrap isn’t a particular procedure so much as a general strategy. We assume that our data comes from some underlying population <span class="math inline">\(F\)</span> that we care about. We’re interested in the sampling distribution of some statistic <span class="math inline">\(T\)</span> that we calculate from the data. In our case <span class="math inline">\(T\)</span> is predictive performance.</p>
+<p>We don’t know <span class="math inline">\(F\)</span>, but we can treat the data as an approximation <span class="math inline">\(\hat F\)</span> of <span class="math inline">\(F\)</span>. Here <span class="math inline">\(\hat F\)</span> is the empirical distribution of the data, which gives equal probablity to each observed data point. So we know how to sample from <span class="math inline">\(\hat F\)</span>. The bootstrap says to sample from <span class="math inline">\(\hat F\)</span> many times and calculate <span class="math inline">\(T\)</span> using these samples. The sampling distribution of <span class="math inline">\(T\)</span> under <span class="math inline">\(\hat F\)</span> then approximates the sampling distribution of <span class="math inline">\(T\)</span> under <span class="math inline">\(F\)</span>.</p>
+<p>The canonical diagram comes from <span class="citation" data-cites="efron1994">Efron and Tibshirani (<a href="#ref-efron1994" role="doc-biblioref">1994</a>)</span>. In the diagram the bootstrap world approximates the real world:</p>
+<p><img src="bootstrap_world.png" class="img-fluid" alt="TODO"></p>
+<p>In terms of assessing model performance, this means that we sample our original data <span class="math inline">\(X \in \mathbb{R}^{n, p}\)</span> with replacement to generate new datasets <span class="math inline">\(X^*_1, ..., X^*_B \in \mathbb{R}^{n, p}\)</span>, and then we estimate model performance on each of the bootstrap samples <span class="math inline">\(X^*_b\)</span>.</p>
+</section>
+<section id="data-model" class="level2">
+<h2 class="anchored" data-anchor-id="data-model">Data &amp; Model</h2>
+<p>In this post, we’ll fit a linear regression<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and compare:</p>
+<ul>
+<li>bootstrap in-sample error</li>
+<li>bootstrap out-of-sample error</li>
+<li>the optimism bootstrap</li>
+<li>the 0.632 bootstrap</li>
+<li>the 0.632+ bootstrap</li>
+</ul>
+<p>For data, we’ll use average college tuition costs in each state. The original data source is <a href="https://onlinembapage.com/average-tuition-and-educational-attainment-in-the-united-states/">here</a>, but I downloaded it from the <a href="https://github.com/rfordatascience/tidytuesday">Tidy Tuesday</a> repository.</p>
+<p>In particular, we’ll see how predictive tuition costs in 2014-15 are for 2015-16 using a simple linear regression of the form<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
+<p><span class="math display">\[y_i = f(x_i) = \beta_0 + \beta_1 x_i + \varepsilon_i, \qquad \varepsilon_i \sim \mathrm{N}(0, \sigma^2)\]</span></p>
+<p>Here <span class="math inline">\(y_i\)</span> is the average tuition in state <span class="math inline">\(i\)</span> for the 2015-16 academic year<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, and <span class="math inline">\(x_i\)</span> is the average tuition in state <span class="math inline">\(i\)</span> for the 2014-15 academic year. We have <span class="math inline">\(n = 50\)</span> data points. Once we fit a model, we’ll refer to the predicted tuition for state <span class="math inline">\(i\)</span> as <span class="math inline">\(f(x_i)\)</span>. The data looks like:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-1_d444255515751a87410cefb48693a8e5">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at /dabox/hayes/quarto-blog</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ────────────────────────────────── tidyverse 1.3.1.9000 ──</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ ggplot2 3.3.5.9000     ✔ purrr   0.3.4.9000
+✔ tibble  3.1.7.9000     ✔ dplyr   1.0.8.9000
+✔ tidyr   1.2.0.9000     ✔ stringr 1.4.0.9000
+✔ readr   2.1.2.9000     ✔ forcats 0.5.1.9000</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Metrics)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">27</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="fu">here</span>(<span class="st">"posts/2018-05-03_performance-assessments-via-bootstrap-variants/us_avg_tuition.xlsx"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">state =</span> State,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">avg_tuition_15_16 =</span> <span class="st">`</span><span class="at">2015-16</span><span class="st">`</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">avg_tuition_14_15 =</span> <span class="st">`</span><span class="at">2014-15</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.numeric, round)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 50 × 3
+   state       avg_tuition_15_16 avg_tuition_14_15
+   &lt;chr&gt;                   &lt;dbl&gt;             &lt;dbl&gt;
+ 1 Alabama                  9751              9496
+ 2 Alaska                   6571              6149
+ 3 Arizona                 10646             10414
+ 4 Arkansas                 7867              7606
+ 5 California               9270              9187
+ 6 Colorado                 9748              9299
+ 7 Connecticut             11397             10664
+ 8 Delaware                11676             11515
+ 9 Florida                  6360              6345
+10 Georgia                  8447              8063
+# … with 40 more rows</code></pre>
+</div>
+</div>
+<p>We quickly plot the data with a linear regression overlaid:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_5afa7196ed4a1dcb0f33ae4a1393fba7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(avg_tuition_14_15, avg_tuition_15_16)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average College Tuition"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Each point represents one state"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"2015-2016 Average Tuition (dollars)"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"2014-2015 Average Tuition (dollars)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>To assess model performance, we’ll use squared error, which we calculate as:</p>
+<p><span class="math display">\[\mathcal{L(y_i, f(x_i))} = (y_i - f(x_i))^2\]</span></p>
+<p>where we treat <span class="math inline">\(y\)</span> as a vector in <span class="math inline">\(\mathbb{R}^n\)</span>. Our first measure of model performance is the <em>in sample</em> performance, which is the mean squared error (MSE) on all the training data:</p>
+<p><span class="math display">\[\texttt{in sample error} = {1 \over n} \sum_{i = 1}^n \mathcal{L}(y_i, f(x_i))\]</span></p>
+<p>We can calculate this in R like so:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_dca335d41351bf5b8edd31ce083f34b5">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> avg_tuition_15_16 <span class="sc">~</span> avg_tuition_14_15</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(formula, data)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># utility to extract response vector from formula and dataframe</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, data) <span class="fu">model.response</span>(<span class="fu">model.frame</span>(formula, data))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, data)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>true <span class="ot">&lt;-</span> <span class="fu">response</span>(formula, data)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># in the code I use root mean squared error (RMSE) as a metric rather than </span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># MSE. this keeps the presentation of the math slightly nicer, since I can</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># omit square roots, but keeps the errors on a more interpretable scale.</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># I use `Metrics::rmse` for predictions that live in vectors</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># and `yardstick::rmse` for predictions that live in dataframes</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>in_sample <span class="ot">&lt;-</span> Metrics<span class="sc">::</span><span class="fu">rmse</span>(pred, true)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The in sample error on the original data is 186 dollars.</p>
+<section id="apparent-and-out-of-sample-bootstrap-error" class="level3">
+<h3 class="anchored" data-anchor-id="apparent-and-out-of-sample-bootstrap-error">Apparent and out of sample bootstrap error</h3>
+<p>There are several ways to calculate the error on our bootstrap samples. One first step is to calculate the <em>bootstrap in sample error</em> by estimating the performance of a model fit on each bootstrap sample on the each bootstrap sample <span class="math inline">\(X^*_b\)</span> itself.</p>
+<p>To write this out more formally, let <span class="math inline">\(f_b\)</span> be the model fit to the <span class="math inline">\(b^{th}\)</span> bootstrapped dataset, let <span class="math inline">\(I_b\)</span> be the data points that made it into the <span class="math inline">\(b^{th}\)</span> bootstrap sample and let <span class="math inline">\(n_b\)</span> be the total number of data points in the <span class="math inline">\(b^{th}\)</span> bootstrap sample</p>
+<p><span class="math display">\[\texttt{bootstrap in sample error} = \\ {1 \over B } \sum_{b = 1}^B {1 \over n_b} \sum_{i \in I_b} \mathcal{L}(y_i, f_b(x_i))\]</span></p>
+<p>However, we also know that for example bootstrap sample, some of the original data didn’t get used to fit <span class="math inline">\(f_b\)</span>. We can use that data to calculate <em>bootstrap out of sample error</em>:</p>
+<p><span class="math display">\[\texttt{bootstrap out of sample error} = \\ {1 \over B } \sum_{b = 1}^B {1 \over n - n_b} \sum_{i \notin I_b} \mathcal{L}(y_i, f_b(x_i))\]</span></p>
+<p>When someone tells me that they used the bootstrap to evaluate their model, I typically assume that they’re reporting the <em>bootstrap out of sample error</em>, especially if they’re from the machine learning community.</p>
+<p>The <em>bootstrap in sample error</em> typically underestimates prediction error, and the <em>bootstrap out of sample error</em> typically overestimates prediction error. There are several variants of the bootstrap that try to correct these biases.</p>
+</section>
+<section id="the-optimism-bootstrap" class="level3">
+<h3 class="anchored" data-anchor-id="the-optimism-bootstrap">The optimism bootstrap</h3>
+<p>The first of these is the optimism bootstrap. First we define the optimism of the <span class="math inline">\(b^{th}\)</span> bootstrap model.</p>
+<p><span class="math display">\[\mathcal{O}_b = {1 \over n} \sum_{i = 1}^n \mathcal{L}(y_i, f_b(x_i)) - {1 \over n_b} \sum_{i \in I_b} \mathcal{L}(y_i, f_b(x_i))\]</span></p>
+<p>This is the same as calculating the average error of <span class="math inline">\(f_b\)</span> on the entire original sample, and then subtracting the bootstrap in sample error. To get a better estimate of the overall error we take the average optimism and add it to the <em>in sample error</em> estimate:</p>
+<p><span class="math display">\[\texttt{optimism bootstrap error} = \\ \texttt{in sample error} + {1 \over B} \sum_{b=1}^B \mathcal{O}_b\]</span></p>
+</section>
+<section id="the-0.632-and-0.632-bootstrap" class="level3">
+<h3 class="anchored" data-anchor-id="the-0.632-and-0.632-bootstrap">The 0.632 and 0.632+ bootstrap</h3>
+<p>Interestingly, the <em>bootstrap out of sample error</em> is somewhat pessimistic (<span class="citation" data-cites="efron1994">Efron and Tibshirani (<a href="#ref-efron1994" role="doc-biblioref">1994</a>)</span>, <span class="citation" data-cites="efron1997">Efron and Tibshirani (<a href="#ref-efron1997" role="doc-biblioref">1997</a>)</span>). The <em>0.632 bootstrap</em> estimator tries to address this problem by combining the <code>in sample</code> performance estimate with the <em>bootstrap out of sample</em> performance estimate:</p>
+<p><span class="math display">\[\texttt{0.632 bootstrap error} = \\ \quad \\ 0.632 \cdot \texttt{bootstrap out of sample error} + \\ 0.368 \cdot \texttt{in sample error}\]</span></p>
+<p>Where does the 0.632 come from? On average a bootstrap sample contains 63.2% of the data points in the original dataset. <a href="https://stats.stackexchange.com/questions/96739/what-is-the-632-rule-in-bootstrapping">This Cross Validated answer</a> has some nice discussion.</p>
+<p>Similarly, the <em>0.632+ bootstrap estimator</em> tries to find a good balance between the in sample error and the bootstrap out of sample error. To do this, it considers the no information error rate:</p>
+<p><span class="math display">\[\texttt{no info error rate} = {1 \over n^2} \sum_{i=1}^n \sum_{j=1}^n \mathcal{L}(y_i, f(x_j))\]</span></p>
+<p>which is the expected error rate when data points and responses are randomly assigned. Averaging over all <span class="math inline">\(i, j\)</span> you get a measure of how well you can predict when you know pretty much nothing. Then you can estimate the relative overfitting of a model with:</p>
+<p><span class="math display">\[\texttt{overfit} = {\texttt{bootstrap out of sample error} - \texttt{in sample error} \over \texttt{no info error rate} - \texttt{in sample error}}\]</span></p>
+<p>The 0.632+ uses this to weight the bootstrap out of sample error and the in sample error according to</p>
+<p><span class="math display">\[\texttt{w} = \texttt{weight on out of sample bootstrap error} \\ = {0.632 \over 1 - 0.368 \cdot \texttt{overfit}}\]</span></p>
+<p>and the final 0.632+ estimator is</p>
+<p><span class="math display">\[\texttt{0.632+ bootstrap error} = \\ \quad \\ \texttt{w} \cdot \texttt{out of sample bootstrap error} + \\ (1 - \texttt{w}) \cdot \texttt{in sample error}\]</span></p>
+<p>The idea is that the 0.632 estimator can be optimistic, and to take overfitting into account to correct this. If the relative overfitting is zero, the 0.632+ estimator reduces to the 0.632 estimator.</p>
+</section>
+</section>
+<section id="actually-calculating-these-things-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="actually-calculating-these-things-in-r">Actually calculating these things in R</h2>
+<p>Before anything else, we need bootstrap samples. Luckily, the <code>rsample</code> package makes this super convenient.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_e726f638cbf015d16762618e3a94051c">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create an `rset` object: a data frame with a list-column full</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># of bootstrap resamples</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>boots <span class="ot">&lt;-</span> <span class="fu">bootstraps</span>(data, <span class="at">times =</span> <span class="dv">25</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>boots</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Bootstrap sampling 
+# A tibble: 25 × 2
+   splits          id         
+   &lt;list&gt;          &lt;chr&gt;      
+ 1 &lt;split [50/19]&gt; Bootstrap01
+ 2 &lt;split [50/20]&gt; Bootstrap02
+ 3 &lt;split [50/17]&gt; Bootstrap03
+ 4 &lt;split [50/18]&gt; Bootstrap04
+ 5 &lt;split [50/14]&gt; Bootstrap05
+ 6 &lt;split [50/13]&gt; Bootstrap06
+ 7 &lt;split [50/15]&gt; Bootstrap07
+ 8 &lt;split [50/20]&gt; Bootstrap08
+ 9 &lt;split [50/17]&gt; Bootstrap09
+10 &lt;split [50/13]&gt; Bootstrap10
+# … with 15 more rows</code></pre>
+</div>
+</div>
+<p>The individual bootstrap samples are contained in the <code>rsplit</code> objects:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_9c628707bcdd476e57c0509973b63e9a">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>one_boot <span class="ot">&lt;-</span> boots<span class="sc">$</span>splits[[<span class="dv">1</span>]]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>one_boot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;Analysis/Assess/Total&gt;
+&lt;50/19/50&gt;</code></pre>
+</div>
+</div>
+<p>This print method is to help track which data went into the bootstrap sample. The format here is <code>&lt;# data points in resampled data set / # original data points not in the resampled data set / # original data points&gt;</code>.</p>
+<p>If we want to see the bootstrap sample itself, we can:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_57551a0b91db622d25d6b66997bc194d">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">analysis</span>(one_boot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 50 × 3
+   state          avg_tuition_15_16 avg_tuition_14_15
+   &lt;chr&gt;                      &lt;dbl&gt;             &lt;dbl&gt;
+ 1 California                  9270              9187
+ 2 Wyoming                     4891              4654
+ 3 Florida                     6360              6345
+ 4 South Carolina             11816             11470
+ 5 Maine                       9573              9560
+ 6 Kansas                      8530              8270
+ 7 North Carolina              6973              6685
+ 8 Missouri                    8564              8409
+ 9 North Carolina              6973              6685
+10 Alabama                     9751              9496
+# … with 40 more rows</code></pre>
+</div>
+</div>
+<p>If we want to see all the data points that <em>didn’t</em> go into the bootstrap sample, we can use:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_3fd3be54774cd4c9b191fce67437a9c0">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assessment</span>(one_boot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19 × 3
+   state         avg_tuition_15_16 avg_tuition_14_15
+   &lt;chr&gt;                     &lt;dbl&gt;             &lt;dbl&gt;
+ 1 Alaska                     6571              6149
+ 2 Colorado                   9748              9299
+ 3 Connecticut               11397             10664
+ 4 Delaware                  11676             11515
+ 5 Georgia                    8447              8063
+ 6 Massachusetts             11588             10987
+ 7 Michigan                  11991             11618
+ 8 Nebraska                   7608              7348
+ 9 New Jersey                13303             13027
+10 New York                   7644              7306
+11 Ohio                      10196             10104
+12 Oregon                     9371              8949
+13 Pennsylvania              13395             13157
+14 Rhode Island              11390             10977
+15 Tennessee                  9263              8941
+16 Vermont                   14993             14501
+17 Virginia                  11819             11202
+18 Washington                10288             10703
+19 West Virginia              7171              6698</code></pre>
+</div>
+</div>
+<p>Now we want to fit models on each of the bootstrap samples and assess various performance metrics. We write some helper functions to smooth things along.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_132d01a8fd25441e7cb899f603ceee6e">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># evaluate model performance on a particular dataset</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>performance <span class="ot">&lt;-</span> <span class="cf">function</span>(model, data, <span class="at">metric =</span> Metrics<span class="sc">::</span>rmse) {</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># aside: it would be nice to be able to extract a data/design object from</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the model, and then extract the response from that. someday.</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  true <span class="ot">&lt;-</span> <span class="fu">response</span>(formula, data)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, data)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">metric</span>(true, pred)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># get the no info error rate. should be used on the model</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="co"># fit to full original data</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>no_info_error_rate <span class="ot">&lt;-</span> <span class="cf">function</span>(model, formula, data, <span class="at">metric =</span> Metrics<span class="sc">::</span>rmse) {</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  true <span class="ot">&lt;-</span> <span class="fu">response</span>(formula, data)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, data)</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  crossed <span class="ot">&lt;-</span> <span class="fu">crossing</span>(true, pred)</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(crossed, <span class="fu">metric</span>(true, pred))</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: `bs` in variable names is an abbreviation for `bootstrap`</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 0.632 bootstrap estimate of performance</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>bs_632 <span class="ot">&lt;-</span> <span class="cf">function</span>(in_sample, bs_out_of_sample) {</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.368</span> <span class="sc">*</span> in_sample <span class="sc">+</span> <span class="fl">0.632</span> <span class="sc">*</span> bs_out_of_sample</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 0.632+ bootstrap estimate of performance</span></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>bs_632p <span class="ot">&lt;-</span> <span class="cf">function</span>(in_sample, bs_out_of_sample, no_info_error_rate) {</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>  relative_overfit <span class="ot">&lt;-</span> (bs_out_of_sample <span class="sc">-</span> in_sample) <span class="sc">/</span></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>    (no_info_error_rate <span class="sc">-</span> in_sample)</span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>  w <span class="ot">&lt;-</span> <span class="fl">0.632</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.368</span> <span class="sc">*</span> relative_overfit)</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>  w <span class="sc">*</span> bs_out_of_sample <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> w) <span class="sc">*</span> in_sample</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can fit models on each bootstrapped dataset:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_2ca20a863ad561c3176c21628d939060">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>no_info_perf <span class="ot">&lt;-</span> <span class="fu">no_info_error_rate</span>(model, formula, data)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>boot_performance <span class="ot">&lt;-</span> boots <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fit a model on *bootstrap sample* of data</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="fu">map</span>(splits, <span class="sc">~</span><span class="fu">lm</span>(formula, <span class="fu">analysis</span>(.x))),</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># bootstrap in sample error</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">bs_is_perf =</span> <span class="fu">map2_dbl</span>(model, splits, <span class="sc">~</span><span class="fu">performance</span>(.x, <span class="fu">analysis</span>(.y))),</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># bootstrap out of sample error</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">bs_os_perf =</span> <span class="fu">map2_dbl</span>(model, splits, <span class="sc">~</span><span class="fu">performance</span>(.x, <span class="fu">assessment</span>(.y))),</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># bootstrap error on full data</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">data_perf =</span> <span class="fu">map_dbl</span>(model, <span class="sc">~</span><span class="fu">performance</span>(.x, data)),</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># optimism</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">optimism =</span> bs_is_perf <span class="sc">-</span> data_perf,</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># optimism corrected error estimate</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">bs_optimism =</span> in_sample <span class="sc">-</span> optimism,</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 0.632 bootstrap error estimate</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">bs_632_perf =</span> <span class="fu">bs_632</span>(bs_is_perf, bs_os_perf),</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 0.632+ bootstrap error estimate</span></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">bs_632p_perf =</span> <span class="fu">bs_632p</span>(bs_is_perf, bs_os_perf, no_info_perf))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can calculate the point estimates we discussed above:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_af72d71557d2407ef0765f5201858a67">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>clean_performance <span class="ot">&lt;-</span> boot_performance <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(is.numeric) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>optimism, <span class="sc">-</span>data_perf) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(model, statistic) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">measure =</span> <span class="fu">recode</span>(</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    model,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bs_is_perf"</span> <span class="ot">=</span> <span class="st">"bootstrap in sample"</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bs_os_perf"</span> <span class="ot">=</span> <span class="st">"bootstrap out of sample"</span> ,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bs_optimism"</span> <span class="ot">=</span> <span class="st">"optimism bootstrap"</span>,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bs_632_perf"</span> <span class="ot">=</span> <span class="st">"0.632 bootstrap"</span>,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bs_632p_perf"</span> <span class="ot">=</span> <span class="st">"0.632+ bootstrap"</span>),</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> statistic</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>clean_performance <span class="sc">%&gt;%</span> </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(measure) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_if</span>(is.numeric, mean) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.numeric, round) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">measure</th>
+<th style="text-align: right;">error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0.632 bootstrap</td>
+<td style="text-align: right;">188</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.632+ bootstrap</td>
+<td style="text-align: right;">188</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">bootstrap in sample</td>
+<td style="text-align: right;">180</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bootstrap out of sample</td>
+<td style="text-align: right;">192</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">optimism bootstrap</td>
+<td style="text-align: right;">195</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>However, point estimates aren’t good ways to compare the performance of two models because they don’t give us a sense of how much model performance might vary on different data sets. Visualizing the sampling distribution of each of the metrics gives us a more complete view of model performance:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_ad1b35e3f4fb5420578d23740e39f113">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>clean_performance <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(measure, error, <span class="at">color =</span> measure)) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">type =</span> <span class="st">"qual"</span>) <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sampling distributions of bootstrap performance metrics"</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"rmse error (dollars)"</span>) <span class="sc">+</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>For this particular model, we see that the 0.632 and 0.632+ estimators are pretty much the same. This makes sense because a linear model fits the data quick well and so there should be little overfitting. We can also see that the bootstrap in sample error rate has the lowest median.</p>
+<p>Given how it can be difficult to keep track of which metric should be calculated on which dataset, I should probably write some tests to confirm that my code does what I want it to. Since this is a blog post, I’m going to pass on that for the moment.</p>
+</section>
+<section id="using-the-bootstrap-in-practice" class="level2">
+<h2 class="anchored" data-anchor-id="using-the-bootstrap-in-practice">Using the bootstrap in practice</h2>
+<p>When you have fewer than 20,000 data points, it’s reasonable to use the optimism bootstrap with <span class="math inline">\(B = 200\)</span> to <span class="math inline">\(B = 400\)</span>. When you have more data, cross-validation<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> or simply splitting the data becomes more reliable. Any steps taken to develop a model should be performed on each bootstrap dataset. For example, if you use LASSO for feature selection and then fit a model, the feature selection step needs to be included in the bootstrap procedure.</p>
+<p>In some studies (<span class="citation" data-cites="steyerberg2001">Steyerberg et al. (<a href="#ref-steyerberg2001" role="doc-biblioref">2001</a>)</span>) the 0.632 and 0.632+ estimators have similar performance. Asymptotically, the 0.632 estimator is equivalent to the optimism bootstrap (<span class="citation" data-cites="efron1994">Efron and Tibshirani (<a href="#ref-efron1994" role="doc-biblioref">1994</a>)</span>)<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. It isn’t clear if one is preferrable over the other in finite samples, so I’d just stick with the estimator your audience is most likely to already be familiar with. You should be fine so long as you avoid using the <em>bootstrap in sample error</em> estimate.</p>
+<p>If you are interested in comparing several models, it probably isn’t sufficient to compare the sampling distributions of these error measures. If you fit multiple models on the same bootstrap datasets, the bootstrap samples will have an impact on model performance. Hierarchicals models are a good way to model this. Once you have your bootstrapped error estimates, Max Kuhn’s <a href="https://topepo.github.io/tidyposterior/articles/Getting_Started.html">tidyposterior</a> package can help you take the next step when comparing models.</p>
+<p>If you’re interested, stick around for future posts, where I’ll cover the process of building predictive models and how to select from several predictive models.</p>
+<p>Feedback is always welcome!</p>
+
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-efron1997" class="csl-entry" role="doc-biblioentry">
+Efron, Bradley, and Robert Tibshirani. 1997. <span>“Improvements on Cross-Validation: The .632+ Bootstrap Method.”</span> <em>Journal of the American Statistical Association</em> 92 (438). <a href="http://www.jstor.org/stable/2965703">http://www.jstor.org/stable/2965703</a>.
+</div>
+<div id="ref-efron1994" class="csl-entry" role="doc-biblioentry">
+Efron, Bradley, and Robert J Tibshirani. 1994. <em>An Introduction to the Bootstrap</em>. CRC press.
+</div>
+<div id="ref-harrell2015" class="csl-entry" role="doc-biblioentry">
+Harrell, Frank. 2015. <em>Regression Modeling Strategies: With Applications to Linear Models, Logistic and Ordinal Regression, and Survival Analysis</em>. Springer.
+</div>
+<div id="ref-steyerberg2001" class="csl-entry" role="doc-biblioentry">
+Steyerberg, Ewout W, Frank E Harrell, Gerard J. J. M Borsboom, M. J. C Eijkemans, Yvonne Vergouwe, and J.Dik F Habbema. 2001. <span>“Internal Validation of Predictive Models: Efficiency of Some Procedures for Logistic Regression Analysis.”</span> <em>Journal of Clinical Epidemiology</em> 54 (8). <a href="http://www.sciencedirect.com/science/article/pii/S0895435601003419">http://www.sciencedirect.com/science/article/pii/S0895435601003419</a>.
+</div>
+</div></section><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1" role="doc-endnote"><p>I feel guilty about using linear regression as an example. OLS on the original data is too simple. There’s no feature selection, no parameter tuning, etc. I’m on the lookout for a good canonical modelling example to use in posts like this. Hopefully the work on <code>recipes</code> and <code>parsnip</code> standardizes interfaces enough to make this reasonable sometime soon.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>I’m trying to get into the habit of always writing out the mathematical form of the model I’m fitting. Richard McElreath writes about <a href="http://elevanth.org/blog/2017/08/28/first-world-modeling-problems/">why this is important</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Typically, regressions using averaged data have inappropriately small confidence intervals. However, the goal here is to demonstrate various bootstrapping methods, rather than inference, so we’ll ignore this for now.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Cross validation is much less stable than the bootstrap on data sets with less than 20,000 data points (<span class="citation" data-cites="steyerberg2001">Steyerberg et al. (<a href="#ref-steyerberg2001" role="doc-biblioref">2001</a>)</span>). Frank Harrell has run a number of simulations showing that you need at least 100 repetitions of 10-fold cross-validation to get accurate error estimates at this data size (<span class="citation" data-cites="harrell2015">Harrell (<a href="#ref-harrell2015" role="doc-biblioref">2015</a>)</span>). Here’s <a href="http://biostat.mc.vanderbilt.edu/wiki/pub/Main/RmS/logistic.val.pdf">one such simulation</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>The relevant chapter can be <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.473.2742&amp;rep=rep1&amp;type=pdf">found online</a>. You may also enjoy the draft of Frank Harrell’s <a href="http://www.fharrell.com/doc/bbr.pdf">new book</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{hayes2018,
+  author = {Alex Hayes},
+  title = {Predictive Performance via Bootstrap Variants},
+  date = {2018-05-03},
+  url = {https://www.alexpghayes.com//posts/2018-05-03_performance-assessments-via-bootstrap-variants},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-hayes2018" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Alex Hayes. 2018. <span>“Predictive Performance via Bootstrap
+Variants.”</span> May 3, 2018. <a href="https://www.alexpghayes.com//posts/2018-05-03_performance-assessments-via-bootstrap-variants">https://www.alexpghayes.com//posts/2018-05-03_performance-assessments-via-bootstrap-variants</a>.
+</div></div></section></div></main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

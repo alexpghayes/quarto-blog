@@ -1,0 +1,44 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/2020-05-04_using-the-data-twice/index.html",
+      "/posts/2020-05-01_elon-musk-send-tweet/index.html",
+      "/posts/2020-03-22_to-transform-or-not-to-transform/index.html",
+      "/posts/2020-01-06_overfitting-a-guide-tour/index.html",
+      "/posts/2019-08-31_consistency-and-the-linear-probability-model/index.html",
+      "/posts/2019-07-26_an-annotated-bibliography-on-stochastic-blockmodels/index.html",
+      "/posts/2019-06-07_testing-statistical-software/index.html",
+      "/posts/2019-05-21_type-stable-estimation/index.html",
+      "/posts/2019-04-13_implementing-the-superlearner-with-tidymodels/index.html",
+      "/posts/2019-01-31_overlapping-confidence-intervals-correcting-bad-intuition/index.html",
+      "/posts/2018-10-23_understanding-multinomial-regression-with-partial-dependence-plots/index.html",
+      "/posts/2018-08-10_a-summer-with-rstudio/index.html",
+      "/posts/2018-05-16_comparing-runs-with-riegels-formula-and-gams/index.html",
+      "/posts/2018-05-03_performance-assessments-via-bootstrap-variants/index.html",
+      "/posts/2017-10-18_gradient-checks/index.html",
+      "/posts/2017-08-07_gentle-tidy-eval/index.html"
+    ]
+  },
+  {
+    "listing": "/posts.html",
+    "items": [
+      "/posts/2020-05-04_using-the-data-twice/index.html",
+      "/posts/2020-05-01_elon-musk-send-tweet/index.html",
+      "/posts/2020-03-22_to-transform-or-not-to-transform/index.html",
+      "/posts/2020-01-06_overfitting-a-guide-tour/index.html",
+      "/posts/2019-08-31_consistency-and-the-linear-probability-model/index.html",
+      "/posts/2019-07-26_an-annotated-bibliography-on-stochastic-blockmodels/index.html",
+      "/posts/2019-06-07_testing-statistical-software/index.html",
+      "/posts/2019-05-21_type-stable-estimation/index.html",
+      "/posts/2019-04-13_implementing-the-superlearner-with-tidymodels/index.html",
+      "/posts/2019-01-31_overlapping-confidence-intervals-correcting-bad-intuition/index.html",
+      "/posts/2018-10-23_understanding-multinomial-regression-with-partial-dependence-plots/index.html",
+      "/posts/2018-08-10_a-summer-with-rstudio/index.html",
+      "/posts/2018-05-16_comparing-runs-with-riegels-formula-and-gams/index.html",
+      "/posts/2018-05-03_performance-assessments-via-bootstrap-variants/index.html",
+      "/posts/2017-10-18_gradient-checks/index.html",
+      "/posts/2017-08-07_gentle-tidy-eval/index.html"
+    ]
+  }
+]

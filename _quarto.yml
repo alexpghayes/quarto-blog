@@ -1,0 +1,28 @@
+project:
+  type: website
+
+website:
+  title: "alex hayes"
+  site-url: https://www.alexpghayes.com/
+  repo-url: https://github.com/alexpghayes/quarto-blog
+  repo-actions: [edit, issue]
+  open-graph: true
+  twitter-card:
+    creator: "@alexpghayes"
+    card-style: summary_large_image
+  navbar:
+    right:
+      - index.qmd
+      - posts.qmd
+      - papers.qmd
+      - code.qmd
+      - talks.qmd
+      - icon: github
+        href: https://github.com/alexpghayes
+      - icon: twitter
+        href: https://twitter.com/alexpghayes
+
+format:
+  html:
+    theme: ember.scss
+    css: styles.css
