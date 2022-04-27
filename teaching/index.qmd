@@ -1,0 +1,42 @@
+---
+title: "teaching"
+---
+
+## current courses
+
+None.
+
+## past courses
+
+I enjoy teaching a fair amount but have not taught since my first year of graduate school due to funding that has allowed me to focus on research. Based on my teaching in the 2018-2019 academic year I received Statistics Department Outstanding TA award.
+
+**Graduate Teaching Assistant**  
+Spring 2019, STAT 324  Intro to Statistics for Engineers, UW-Madison  
+[student eval comments](evals/s19-stat324-comments.pdf), [student eval ratings](evals/s19-stat324-ratings.pdf)
+
+**Applied Machine Learning Workshop**  
+January 15-16, 2019, rstudio::conf(2019)  
+(co-taught with Max Kuhn and Davis Vaughn)  
+[materials](https://github.com/topepo/rstudio-conf-2019) (January 2019)
+
+**Graduate Teaching Assistant**  
+Fall 2018, STAT 324  Intro to Statistics for Engineers, UW-Madison  
+[student eval comments](evals/f18-stat324-comments.pdf), [student eval ratings](evals/f18-stat324-ratings.pdf)
+
+**Undergraduate Teaching Assistant**  
+Spring 2018, COMP 540 Statistical Machine Learning, Rice University
+
+**Undergraduate Teaching Assistant**  
+Fall 2017, COMP 330 Data Science: Tools & Models, Rice University
+
+Outside of academic settings, I used to devote a fair amount of time to teaching R workshops for the Rice DataSci club, and to helping people make their first open source contributions, primarily to the [`broom`](https://broom.tidymodels.org/) package.
+
+## teaching material
+
+If you are teaching an introductory statistics class in the classic "barrage of hypothesis tests" tradition, you may find my [cheatsheet on common hypothesis tests](https://github.com/alexpghayes/classic-stats-formulas) useful. I also wrote [`distributions3`](https://alexpghayes.github.io/distributions3/dev/) to be an approachable set of tools for manipulating probability distributions for intro stat students. The package [vignettes](https://alexpghayes.github.io/distributions3/dev/articles/) are designed to walk students intro stat courses though many classic hypothesis tests as well.
+
+## mentoring
+
+- [Nathan Kolbow](https://wid.wisc.edu/people/nathan-kolbow/) worked with me as a undergraduate RA to develop the [`neocache`](https://github.com/alexpghayes/neocache) data collection infrastructure. He is now a PhD student in Biostatistics at UW-Madison.
+
+Last updated 2022-04-27.

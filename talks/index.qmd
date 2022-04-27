@@ -2,45 +2,62 @@
 title: "talks"
 ---
 
-**The Low Hanging Fruit of the Twitter Following Graph**
+## upcoming talks
+
+Last updated on 2022-04-27.
+
+## past talks
+
+**The Low Hanging Fruit of the Twitter Following Graph**  
 2021-08-11 Joint Statistical Meetings
 
 In recent applied work on the Twitter media ecosystem, we have found that Twitter metadata (such as follows, likes, quotes, retweets, mentions, etc) is often more informative than the actual content of tweets themselves. The metadata, in some sense, is the right data to use for many inference tasks. In particular, we find that embedding the Twitter following graph is highly informative. However, collecting the following graph is rather challenging due to API rate limits, and storing graphs can also be challenging. We present some computational infrastructure to make access and storage of this high signal data more straightforward, and suggest that research progress would be well served by an increased focus on instrumentation. [slides](https://github.com/alexpghayes/JSM2021)
 
-**Triangles & networks**
-2021-02-17, STAT 992 Seminar Course presentation
-
-**A new way to think about citations**
-2020-11-17, Rohe Lab Group Meeting
-
-TODO: abstract, slides
-
-**The linear probability model**
-2019-11-19, STAT 992 Seminar Course presentation
-
-TODO:abstract [slides](https://github.com/alexpghayes/linear-probability-model)
-
-**Solving the model representation problem with broom** 
-2019-01-25, `rstudio::conf(2019)`
+**Solving the model representation problem with broom**  
+2019-01-25, `rstudio::conf(2019)`  
 
 The R objects used to represent model fits are notoriously inconsistent, making data analysis inconvenient and frustrating. The broom package resolves this issue by defining a consistent way to represent model fits. By summarizing essential information about fits in tidy tibbles, broom makes it easy to programmatically work with model objects. Combining broom with list-columns results in an especially powerful way to work with many model fits at once. This talk will feature several case studies demonstrating how broom resolves common problems in data analysis. [video](https://resources.rstudio.com/rstudio-conf-2019/solving-the-model-representation-problem-with-broom), [slides](https://github.com/alexpghayes/workshops_presentations/blob/master/2019-01-18-rstudioconf-broom-talk.pdf)
 
-**Solving the model representation problem with broom**
-2018-11-30
+**Solving the model representation problem with broom**  
+2018-09-19, Statistics Graduate Student Seminar  
+[slides](https://github.com/alexpghayes/workshops_presentations/blob/main/2018-09-19-solving-the-model-representation-problem-with-broom.pdf)
 
-TODO: abstract. [slides](https://github.com/alexpghayes/workshops_presentations/raw/master/2018-11-30-broom-sgsa-seminar.pdf), Graduate Student Seminar (November 2018)
+**Convenient data analysis with broom**  
+2018-11-30, RStudio Webinar Series  
 
-**Convenient data analysis with broom**
-RStudio Webinar Series (November 2018)
+Broom is a package that converts statistical objects into tibbles. This consistent structure makes it easier to accomplish many standard modelling tasks. In this webinar I'll demonstrate how to use to broom to work with many models at once. We'll see how broom makes it easier to visualize models, work with bootstrapped fits and assess model diagnostics. [video](https://resources.rstudio.com/webinars/convenient-analysis-with-broom-alex-hayes), [slides](https://github.com/alexpghayes/workshops_presentations/blob/main/2018-11-14-rstudio-broom-webinar.pdf)
 
-[video](https://resources.rstudio.com/webinars/convenient-analysis-with-broom-alex-hayes), 
+**Solving the model representation problem with broom**  
+2018-09-19, Madison R User Group  
+[slides](https://github.com/alexpghayes/workshops_presentations/blob/master/2018-09-19-solving-the-model-representation-problem-with-broom.pdf)
 
-**Solving the model representation problem with broom** 
-2018-09-19, Madison R User Group
+## slides from various informal presentations
 
-TODO: abstract. [slides](https://github.com/alexpghayes/workshops_presentations/blob/master/2018-09-19-solving-the-model-representation-problem-with-broom.pdf)
+**Identifiability of homophily and contagion in social networks**  
+2022-02-23, Madison Networks Reading Group  
+[slides](todo)
 
-- [misc presentations](https://github.com/alexpghayes/workshops_presentations)
+**Triangles & networks**  
+2021-02-17, STAT 992 Seminar on Tensors  
+[slides](todo)
 
+**A new way to think about citations**  
+2020-11-17, Rohe Lab Group Meeting  
+[slides](todo)
 
-Last updated on 2022-04-27.
+**The linear probability model**  
+2019-11-19, STAT 992 Seminar Course presentation  
+[slides](https://github.com/alexpghayes/linear-probability-model)
+
+**rstudio internship progress update**  
+2018-07-23, RStudio tidyverse team  
+[slides](todo)
+
+**Locally Interpretable Model-Agnostic Explanations**
+2018-03-29, Rice DataSci club  
+[slides](todo)
+
+**Your First R Package**  
+2018-02-22, Rice DataSci club  
+[slides](todo)
+

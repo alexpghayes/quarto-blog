@@ -3,7 +3,7 @@ project:
 
 website:
   title: "alex hayes"
-  site-url: https://www.alexpghayes.com/
+  site-url: https://www.alexpghayes.com
   repo-url: https://github.com/alexpghayes/quarto-blog
   repo-actions: [edit, issue]
   open-graph: true
@@ -17,7 +17,7 @@ website:
       - posts.qmd
       - papers/index.qmd
       - code/index.qmd
-      - courses/index.qmd
+      - teaching/index.qmd
       - talks/index.qmd
       - icon: github
         href: https://github.com/alexpghayes

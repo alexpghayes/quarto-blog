@@ -6,7 +6,7 @@ date: "2020-05-04"
 bibliography: using-the-data-twice.bib
 ---
 
-Berna Devezer, Danielle Navarro, Joachim Vandekerckhove, and Erkan Ozge Buzbas recently posted a [pre-print](http://biorxiv.org/lookup/doi/10.1101/2020.04.26.048306), [-@devezer_case_2020], responding to various claims within the open science community. In particular, they explore the following claims:
+Berna Devezer, Danielle Navarro, Joachim Vandekerckhove, and Erkan Ozge Buzbas recently posted a [pre-print](http://biorxiv.org/lookup/doi/10.1101/2020.04.26.048306), responding to various claims within the open science community. In particular, they explore the following claims:
 
 1. reproducibility of an effect can be used to demarcate scientific claims and non-scientific claims,
 
@@ -14,7 +14,7 @@ Berna Devezer, Danielle Navarro, Joachim Vandekerckhove, and Erkan Ozge Buzbas r
 
 3. exploratory data analysis is characterized by poor statistical practice.
 
-I find the arguments presented against these claims compelling, and anticipate directing many people to their paper in the future. This post is largely a re-expression of some ideas in their paper in language that feels slightly more natural to me.
+I find the arguments presented against these claims compelling, and anticipate directing many people to @devezer_case_2020 in the future. This post is largely a re-expression of some ideas in their paper in language that feels slightly more natural to me.
 
 ## The setting & the key idea
 
