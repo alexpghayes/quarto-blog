@@ -13,10 +13,12 @@ execute:
 ---
 
 ```{r}
+library(stringr)
+
 # set up some redirects following 
 # https://blog.djnavarro.net/posts/2022-04-20_porting-to-quarto/#netlify-redirects
 #
-# this relies of netlify deployment
+# this relies on netlify deployment
 
 # list names of post folders
 posts <- list.dirs(
@@ -29,9 +31,22 @@ posts <- list.dirs(
 slugs <- gsub("^.*_", "", posts)
 
 # lines to insert to a netlify _redirect file
-redirects <- paste0("/", slugs, " ", "/post/", posts)
+post_redirects <- glue::glue("/{slugs} /post/{slugs}")
+
+hugo_redirects <- readLines(here::here("post", "hugo_redirects"))
+
+hugo_redirected_to <- hugo_redirects |> 
+  str_extract("\\s(.*)") |> 
+  str_trim()
+
+# parsing or redirect file failure if there is an NA here
+stopifnot(all(!is.na(hugo_redirected_to)))
+
+prepended_posts <- glue::glue("/post/{posts}")
+stopifnot(all(hugo_redirected_to %in% prepended_posts))
+
+redirects <- c(post_redirects, hugo_redirects)
 
 # write the _redirect file
 writeLines(redirects, here::here("_site", "_redirects"))
 ```
-
