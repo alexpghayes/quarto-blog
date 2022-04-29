@@ -7,7 +7,7 @@ jupyter: sklearn0.24
 categories: [python, workflow, tidymodels]
 ---
 
-In this followup to [my earlier post](../many-models-workflows-in-python-part-i/) on modeling workflows in Python, I demonstrate how to integrate sample splitting, parallel processing, exception handling and caching into many-models workflows. I also discuss some differences between exploration/inference-centric workflows and tuning-centric workflows.
+In this followup to [my earlier post](../2020-08-25_many-models-workflows-in-python-part-i/) on modeling workflows in Python, I demonstrate how to integrate sample splitting, parallel processing, exception handling and caching into many-models workflows. I also discuss some differences between exploration/inference-centric workflows and tuning-centric workflows.
 
 ## Motivating example
 

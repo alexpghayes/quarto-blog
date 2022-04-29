@@ -775,7 +775,7 @@ In terms of more didactic material, Michael Clark's [Bayesian Basics][mclark] is
 [loo]: http://mc-stan.org/loo/
 [bayesplot]: http://mc-stan.org/bayesplot/
 
-[stan_manual]: https://mc-stan.org/docs/2_18/bayes-stats-stan/index.html
-[stan_example_models]: https://mc-stan.org/docs/2_18/bayes-stats-stan/example-models-part.html#example-models.part
+[stan_manual]: https://mc-stan.org/docs/2_29/stan-users-guide/
+[stan_example_models]: https://mc-stan.org/docs/2_29/stan-users-guide/example-models.html#example-models.part
 [func_ref]: https://mc-stan.org/docs/2_18/functions-reference/
 

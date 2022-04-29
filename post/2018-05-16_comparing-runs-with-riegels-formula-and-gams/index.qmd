@@ -109,7 +109,7 @@ I record my runs using [Strava](https://www.strava.com). Strava can analyze data
 
 In total I have recordings of 45 runs from November 2017 to April 2018[^3]. The trajectory of one of these runs is below:
 
-[^3]: I stopped running in April after being proscribed Cipro for an infection. Cipro and other fluoroquinolone's have the side effect of [*spontaneous tendon rupture*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4080593/) for up to 6 months after use, although most of the risk is in the first month after usage. Achilles tendons are at the highest risk. If you run, ask to be put on another medication!
+[^3]: I stopped running in April after being proscribed Cipro for an infection. Cipro and other fluoroquinolone's have the side effect of [*spontaneous tendon rupture*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4080593/pdf/i1062-6050-49-3-422.pdf) for up to 6 months after use, although most of the risk is in the first month after usage. Achilles tendons are at the highest risk. If you run, ask to be put on another medication!
 
 ```{r fig.cap = "Run in black."}
 runs <- read_rds(here::here("post", "2018-05-16_comparing-runs-with-riegels-formula-and-gams", "2018-04-17-runs-alex.rds"))

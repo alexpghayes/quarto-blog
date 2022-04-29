@@ -636,7 +636,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="using-the-bootstrap-in-practice">Using the bootstrap in practice</h2>
 <p>When you have fewer than 20,000 data points, it’s reasonable to use the optimism bootstrap with <span class="math inline">\(B = 200\)</span> to <span class="math inline">\(B = 400\)</span>. When you have more data, cross-validation<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> or simply splitting the data becomes more reliable. Any steps taken to develop a model should be performed on each bootstrap dataset. For example, if you use LASSO for feature selection and then fit a model, the feature selection step needs to be included in the bootstrap procedure.</p>
 <p>In some studies (<span class="citation" data-cites="steyerberg2001">Steyerberg et al. (<a href="#ref-steyerberg2001" role="doc-biblioref">2001</a>)</span>) the 0.632 and 0.632+ estimators have similar performance. Asymptotically, the 0.632 estimator is equivalent to the optimism bootstrap (<span class="citation" data-cites="efron1994">Efron and Tibshirani (<a href="#ref-efron1994" role="doc-biblioref">1994</a>)</span>)<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. It isn’t clear if one is preferrable over the other in finite samples, so I’d just stick with the estimator your audience is most likely to already be familiar with. You should be fine so long as you avoid using the <em>bootstrap in sample error</em> estimate.</p>
-<p>If you are interested in comparing several models, it probably isn’t sufficient to compare the sampling distributions of these error measures. If you fit multiple models on the same bootstrap datasets, the bootstrap samples will have an impact on model performance. Hierarchicals models are a good way to model this. Once you have your bootstrapped error estimates, Max Kuhn’s <a href="https://topepo.github.io/tidyposterior/articles/Getting_Started.html">tidyposterior</a> package can help you take the next step when comparing models.</p>
+<p>If you are interested in comparing several models, it probably isn’t sufficient to compare the sampling distributions of these error measures. If you fit multiple models on the same bootstrap datasets, the bootstrap samples will have an impact on model performance. Hierarchical models are a good way to model this. Once you have your bootstrapped error estimates, the <a href="https://tidyposterior.tidymodels.org/">tidyposterior</a> package can help you take the next step when comparing models.</p>
 <p>If you’re interested, stick around for future posts, where I’ll cover the process of building predictive models and how to select from several predictive models.</p>
 <p>Feedback is always welcome!</p>
 
@@ -664,7 +664,7 @@ Steyerberg, Ewout W, Frank E Harrell, Gerard J. J. M Borsboom, M. J. C Eijkemans
 <li id="fn1" role="doc-endnote"><p>I feel guilty about using linear regression as an example. OLS on the original data is too simple. There’s no feature selection, no parameter tuning, etc. I’m on the lookout for a good canonical modelling example to use in posts like this. Hopefully the work on <code>recipes</code> and <code>parsnip</code> standardizes interfaces enough to make this reasonable sometime soon.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p>I’m trying to get into the habit of always writing out the mathematical form of the model I’m fitting. Richard McElreath writes about <a href="http://elevanth.org/blog/2017/08/28/first-world-modeling-problems/">why this is important</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3" role="doc-endnote"><p>Typically, regressions using averaged data have inappropriately small confidence intervals. However, the goal here is to demonstrate various bootstrapping methods, rather than inference, so we’ll ignore this for now.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>Cross validation is much less stable than the bootstrap on data sets with less than 20,000 data points (<span class="citation" data-cites="steyerberg2001">Steyerberg et al. (<a href="#ref-steyerberg2001" role="doc-biblioref">2001</a>)</span>). Frank Harrell has run a number of simulations showing that you need at least 100 repetitions of 10-fold cross-validation to get accurate error estimates at this data size (<span class="citation" data-cites="harrell2015">Harrell (<a href="#ref-harrell2015" role="doc-biblioref">2015</a>)</span>). Here’s <a href="http://biostat.mc.vanderbilt.edu/wiki/pub/Main/RmS/logistic.val.pdf">one such simulation</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Cross validation is much less stable than the bootstrap on data sets with less than 20,000 data points (<span class="citation" data-cites="steyerberg2001">Steyerberg et al. (<a href="#ref-steyerberg2001" role="doc-biblioref">2001</a>)</span>). Frank Harrell has run a number of simulations showing that you need at least 100 repetitions of 10-fold cross-validation to get accurate error estimates at this data size (<span class="citation" data-cites="harrell2015">Harrell (<a href="#ref-harrell2015" role="doc-biblioref">2015</a>)</span>).<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5" role="doc-endnote"><p>The relevant chapter can be <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.473.2742&amp;rep=rep1&amp;type=pdf">found online</a>. You may also enjoy the draft of Frank Harrell’s <a href="http://www.fharrell.com/doc/bbr.pdf">new book</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
@@ -748,6 +748,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alexpghayes/quarto-blog">blog source</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
 
 
 

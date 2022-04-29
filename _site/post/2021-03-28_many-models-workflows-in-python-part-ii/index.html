@@ -245,7 +245,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 
-<p>In this followup to <a href="../many-models-workflows-in-python-part-i/">my earlier post</a> on modeling workflows in Python, I demonstrate how to integrate sample splitting, parallel processing, exception handling and caching into many-models workflows. I also discuss some differences between exploration/inference-centric workflows and tuning-centric workflows.</p>
+<p>In this followup to <a href="../2020-08-25_many-models-workflows-in-python-part-i/">my earlier post</a> on modeling workflows in Python, I demonstrate how to integrate sample splitting, parallel processing, exception handling and caching into many-models workflows. I also discuss some differences between exploration/inference-centric workflows and tuning-centric workflows.</p>
 <section id="motivating-example" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="motivating-example">Motivating example</h2>
 <p>We will work with the <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-07-28">Palmer Penguin</a> dataset, which contains various biological measures on three species of penguins. Our goal will be to cluster the penguins into groups that correspond to their species using their bill length, bill depth, flipper length and body mass. We’ll use a Gaussian Mixture Model for clustering. Caveat: my goal here is to demonstrate a workflow, not good science.</p>
@@ -493,23 +493,23 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="ss">    """</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-    In fold 0 there are 269
+    In fold 0 there are 267
     training observations and 67 test observations
     
 
-    In fold 1 there are 267
+    In fold 1 there are 269
     training observations and 67 test observations
     
 
-    In fold 2 there are 266
+    In fold 2 there are 267
     training observations and 67 test observations
     
 
-    In fold 3 there are 269
+    In fold 3 there are 271
     training observations and 66 test observations
     
 
-    In fold 4 there are 272
+    In fold 4 there are 269
     training observations and 66 test observations
     </code></pre>
 </div>
@@ -687,35 +687,35 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <td>full</td>
       <td>2</td>
       <td>[GaussianMixture(n_components=2, n_init=5, ran...</td>
-      <td>[0.6393736747675747, 0.6868372766779334, 0.582...</td>
+      <td>[0.7494757446724656, 0.6601979361110133, 0.629...</td>
     </tr>
     <tr>
       <th>1</th>
       <td>full</td>
       <td>3</td>
       <td>[GaussianMixture(n_components=3, n_init=5, ran...</td>
-      <td>[0.9203075242889042, 0.5284651662794326, 1.0, ...</td>
+      <td>[1.0, 0.9183802977833249, 0.9571986362701186, ...</td>
     </tr>
     <tr>
       <th>2</th>
       <td>full</td>
       <td>4</td>
       <td>[GaussianMixture(n_components=4, n_init=5, ran...</td>
-      <td>[0.6988842021671452, 0.7076009213237968, 0.803...</td>
+      <td>[0.835783421282886, 0.6891338866090895, 0.8788...</td>
     </tr>
     <tr>
       <th>3</th>
       <td>full</td>
       <td>5</td>
       <td>[GaussianMixture(n_components=5, n_init=5, ran...</td>
-      <td>[0.5688679676431607, 0.5818016435606298, 0.716...</td>
+      <td>[0.8662259741689476, 0.6533338920699733, 0.521...</td>
     </tr>
     <tr>
       <th>4</th>
       <td>full</td>
       <td>6</td>
       <td>[GaussianMixture(n_components=6, n_init=5, ran...</td>
-      <td>[0.5441775154582934, 0.6712697694245447, 0.667...</td>
+      <td>[0.5695333527048168, 0.8213228325631625, 0.549...</td>
     </tr>
   </tbody>
 </table>
@@ -762,7 +762,7 @@ dtype: object</code></pre>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-9-output-1.png" width="589" height="423"></p>
+<p><img src="index_files/figure-html/cell-9-output-1.png" width="589" height="422"></p>
 </div>
 </div>
 <p>Higher Adjusted Rand Scores are better, so this initial pass of modeling suggests that we should use three clusters. This is reassuring, since we know there are three species of penguin in the dataset!</p>
@@ -986,6 +986,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alexpghayes/quarto-blog">blog source</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
 
 
 

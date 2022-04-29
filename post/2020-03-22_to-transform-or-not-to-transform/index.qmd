@@ -426,7 +426,7 @@ profile %>%
 
 ## TL; DR
 
-1. Comparing models with transformed and non-transformed outcomes is hard. You should probably use held-out induced likelihoods for these comparisons, or maybe the [optimism bootstrap](https://www.alexpghayes.com/blog/predictive-performance-via-bootstrap-variants/).
+1. Comparing models with transformed and non-transformed outcomes is hard. You should probably use held-out induced likelihoods for these comparisons, or maybe the [optimism bootstrap](../2018-05-03_performance-assessments-via-bootstrap-variants/).
 
 1. Prediction is hard with transformations. Use Duan's Smearing estimator. Also, please, please, please report error on the original scale. Nobody knows how to interpret the root mean square error of log home price.
 

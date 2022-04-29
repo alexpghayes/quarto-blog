@@ -43,7 +43,7 @@ There are a lot of different ways you can test modeling code. Broadly, I think o
 
 Most research software tests for correctness, but on occasion I come across parameter recovery tests and convergence tests[^gam_crisis]. I rarely come across identification tests[^white_book].
 
-[^gam_crisis]: Here's a [fascinating read](https://simplystatistics.org/2018/05/24/context-compatibility-in-data-analysis/) that describes the "GAM crisis", a series of nonsense research results in the air pollution community that resulted from subtle convergence failures.
+[^gam_crisis]: Here's a [fascinating read](https://simplystatistics.org/posts/2018-05-24-context-compatibility-in-data-analysis/) that describes the "GAM crisis", a series of nonsense research results in the air pollution community that resulted from subtle convergence failures.
 
 [^white_book]: Interestingly enough, the foundational "White Book" [@chambers_statistical_1999] does spend some time discussing condition numbers for linear models, although this material rarely appears in regression courses.
 
@@ -69,7 +69,7 @@ Consider *Algorithm 1* of @allen_sparse_2013-1:
 
 ![](sfpca_algorithm_1.png){fig-alt="Psuedo-code for the SFPCA algorithm."}
 
-You can find a MATLAB reference implementation [here][sfpca_reference_implementation]. It looks like:
+There used a MATLAB reference implementation available online[^It has seen been replaced with a more full fledged R package [`MoMa`](https://github.com/DataSlingers/MoMA).], which looked like:
 
 [sfpca_reference_implementation]: http://www.stat.rice.edu/~gallen/software/sfpca/
 
@@ -282,7 +282,7 @@ Now that I've pontificated for a while, I recommend that you go out and assess s
 The R community already has shared some excellent thoughts on how to choose which packages we should trust. I especially like Thomas Lumley's [blog post][lumley_post], as well as Jeff Leek's [blog post][leek_post]. Hadley Wickham shares some thoughts in [this Twitter thread][engler_thread]. The common theme amongst all these takes is that you should trust people rather than packages, and trust heavily used software with crucial functionality.
 
 [lumley_post]: https://notstatschat.rbind.io/2019/02/04/how-do-you-tell-what-packages-to-trust/
-[leek_post]: https://simplystatistics.org/2015/11/06/how-i-decide-when-to-trust-an-r-package/
+[leek_post]: https://simplystatistics.org/posts/2015-11-06-how-i-decide-when-to-trust-an-r-package/
 [engler_thread]: https://twitter.com/AlexCEngler/status/1092123648834658305
 
 I agree with all of this. Additionally, I'd pretty strongly endorse packages that have reviewed by [ROpenSci](https://ropensci.org/). I'm less certain how I feel about packages published in the [Journal of Open Source Software](https://joss.theoj.org/) (JOSS) and the [Journal of Statistical Software](https://www.jstatsoft.org/index) (JSS). More peer review is always better than less, but my impression is that peer review is does a lot more to ensure that package authors follow good software engineering practices than it does to ensure actual correctness.
@@ -313,4 +313,4 @@ There are a lot of important correctness issues in data science beyond implement
 
 For thoughts on sanity checking the correctness of a data analysis, you may enjoy [Checking Driven Development][cdd] by Greg Wilson or @hicks_elements_2019. If you run machine learning in production, some good resources are @breck_ml_2017 and @kirk_thoughtful_2015. 
 
-[cdd]: http://third-bit.com/2019/05/28/checking-driven-development.html
+[cdd]: http://third-bit.com/2019/05/28/checking-driven-development/

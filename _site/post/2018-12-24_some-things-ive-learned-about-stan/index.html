@@ -275,14 +275,14 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 <p>My senior year I took <a href="http://www.danielrkowal.com/">Daniel Kowal’s</a> fantastic Bayes course. In that class we didn’t use Stan, but I got comfortable with Bayesian inference and MCMC and I started using <a href="https://github.com/paul-buerkner/brms"><code>brms</code></a>, <a href="http://mc-stan.org/loo/"><code>loo</code></a> and <a href="http://mc-stan.org/bayesplot/"><code>bayesplot</code></a> for personal projects.</p>
 <p>Intermittently I’ve tried to code up models in raw Stan. I’ve probably tried to code up a model in Stan ten or so times before this, always hitting some roadblock along the way.</p>
-<p>In retrospect, I should have just sat down and read the <a href="https://mc-stan.org/docs/2_18/bayes-stats-stan/index.html">manual</a> sooner, but I really dislike learning new languages by reading dense technical documentation<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>In retrospect, I should have just sat down and read the <a href="https://mc-stan.org/docs/2_29/stan-users-guide/">manual</a> sooner, but I really dislike learning new languages by reading dense technical documentation<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <p>I also think there’d be a lot of value in a publicly available set of Stan exercises, where you would practice translating models from math to Stan, and from Stan to math.</p>
 </section>
 <section id="the-bare-minimum-to-get-started-with-stan" class="level2">
 <h2 class="anchored" data-anchor-id="the-bare-minimum-to-get-started-with-stan">The bare minimum to get started with Stan</h2>
 <section id="what-programs-look-like" class="level3">
 <h3 class="anchored" data-anchor-id="what-programs-look-like">What programs look like</h3>
-<p>I’m not going to formally describe the structure of a Stan program. If you haven’t seen Stan code before, I think a much better approach is to go read a bunch of Stan, even if it doesn’t make sense. I’d start by taking a look through the <a href="https://mc-stan.org/docs/2_18/bayes-stats-stan/example-models-part.html#example-models.part">example models</a> in the Stan manual, then reading <a href="https://khakieconomics.github.io/">blog posts</a>. The first thing you want to pay attention to is the different “blocks,” and what goes in <code>data</code> versus <code>parameters</code> versus <code>model</code>.</p>
+<p>I’m not going to formally describe the structure of a Stan program. If you haven’t seen Stan code before, I think a much better approach is to go read a bunch of Stan, even if it doesn’t make sense. I’d start by taking a look through the <a href="https://mc-stan.org/docs/2_29/stan-users-guide/example-models.html#example-models.part">example models</a> in the Stan manual, then reading <a href="https://khakieconomics.github.io/">blog posts</a>. The first thing you want to pay attention to is the different “blocks,” and what goes in <code>data</code> versus <code>parameters</code> versus <code>model</code>.</p>
 <p>To get you started, here’s simple linear regression on a single predictor, taken from the Stan manual:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; N;</span>
@@ -558,7 +558,7 @@ alpha[3] 427145.8 173526.8 212211.0 144019.2 308301.4 804984.9     1 2.11
 alpha[4] 525718.6 192718.8 241149.8 187486.6 404614.1 951796.0     2 1.96
 alpha[5] 437993.4 210197.6 245454.9 128395.4 279577.4 860000.9     1 2.33
 
-Samples were drawn using NUTS(diag_e) at Fri Apr 29 11:27:44 2022.
+Samples were drawn using NUTS(diag_e) at Fri Apr 29 15:24:19 2022.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -701,7 +701,7 @@ theta_0[15,3] 0.33       0 0.06 0.22 0.33  0.46  1523 1.00
 theta_0[15,4] 0.20       0 0.05 0.11 0.20  0.31  1263 1.00
 theta_0[15,5] 0.18       0 0.05 0.10 0.18  0.28  1479 1.00
 
-Samples were drawn using NUTS(diag_e) at Fri Apr 29 11:28:04 2022.
+Samples were drawn using NUTS(diag_e) at Fri Apr 29 15:24:39 2022.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -876,7 +876,7 @@ p[68] 0.11    0.00 0.14 0.00 0.06  0.52   888 1.00
 p[69] 0.17    0.01 0.18 0.01 0.10  0.66   816 1.00
 p[70] 0.18    0.01 0.19 0.01 0.10  0.67  1223 1.00
 
-Samples were drawn using NUTS(diag_e) at Fri Apr 29 11:28:24 2022.
+Samples were drawn using NUTS(diag_e) at Fri Apr 29 15:25:00 2022.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -1095,7 +1095,7 @@ new_pred[68] 0.38    0.01 0.27 0.02 0.33  0.92  1257 1.00
 new_pred[69] 0.20    0.01 0.19 0.01 0.14  0.72  1003 1.00
 new_pred[70] 0.20    0.01 0.20 0.01 0.13  0.76  1198 1.00
 
-Samples were drawn using NUTS(diag_e) at Fri Apr 29 11:28:44 2022.
+Samples were drawn using NUTS(diag_e) at Fri Apr 29 15:25:21 2022.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -1191,8 +1191,8 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 <p>In terms of more didactic material, Michael Clark’s <a href="https://m-clark.github.io/bayesian-basics/">Bayesian Basics</a> is a nice introduction to Bayes. You may also enjoy Rasmus Bååth’s <a href="http://www.sumsar.net/files/posts/2017-01-15-bayesian-computation-with-stan-and-farmer-jons/stan_exercise.html">exercises</a>, which are both an introduction to both Stan and Bayesian inference.</p>
 <p><strong>Reference</strong></p>
 <ul>
-<li><p><a href="https://mc-stan.org/docs/2_18/bayes-stats-stan/index.html">Stan Manual</a>: The canonical reference. You answer is probably somewhere in here, if you can find it.</p></li>
-<li><p><a href="https://mc-stan.org/docs/2_18/bayes-stats-stan/example-models-part.html#example-models.part">Stan Example Models</a>: A huge number of example implementations. Part of the Stan Manual.</p></li>
+<li><p><a href="https://mc-stan.org/docs/2_29/stan-users-guide/">Stan Manual</a>: The canonical reference. You answer is probably somewhere in here, if you can find it.</p></li>
+<li><p><a href="https://mc-stan.org/docs/2_29/stan-users-guide/example-models.html#example-models.part">Stan Example Models</a>: A huge number of example implementations. Part of the Stan Manual.</p></li>
 <li><p><a href="https://mc-stan.org/docs/2_18/functions-reference/">Stan Function Reference</a>: Function documentation for Stan functions.</p></li>
 </ul>
 
@@ -1287,6 +1287,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alexpghayes/quarto-blog">blog source</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
 
 
 

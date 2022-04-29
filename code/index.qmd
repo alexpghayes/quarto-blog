@@ -19,8 +19,8 @@ My research code, as well as miscellaneous personal projects in various stages o
 
 I am particularly interested in the design of statistical software and have been contributed to ROpenSci [statistical software reviewing guidelines](https://ropensci.org/stat-software-review/), as well as early versions of the [tidymodels implementation principles](https://github.com/tidymodels/model-implementation-principles). I have some long form explorations of modeling software design on my blog:
 
-- [testing statistical software](../posts/2019-06-07_testing-statistical-software/)
-- [type stable estimation](../posts/2019-05-21_type-stable-estimation/)
+- [testing statistical software](../post/2019-06-07_testing-statistical-software/)
+- [type stable estimation](../post/2019-05-21_type-stable-estimation/)
 
 I review for the Journal of Open Source Software and the R Journal.
 

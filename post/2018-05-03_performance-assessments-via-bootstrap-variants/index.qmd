@@ -322,13 +322,13 @@ Given how it can be difficult to keep track of which metric should be calculated
 
 When you have fewer than 20,000 data points, it's reasonable to use the optimism bootstrap with $B = 200$ to $B = 400$. When you have more data, cross-validation[^4] or simply splitting the data becomes more reliable. Any steps taken to develop a model should be performed on each bootstrap dataset. For example, if you use LASSO for feature selection and then fit a model, the feature selection step needs to be included in the bootstrap procedure.
 
-[^4]: Cross validation is much less stable than the bootstrap on data sets with less than 20,000 data points (@steyerberg2001). Frank Harrell has run a number of simulations showing that you need at least 100 repetitions of 10-fold cross-validation to get accurate error estimates at this data size (@harrell2015). Here's [one such simulation](http://biostat.mc.vanderbilt.edu/wiki/pub/Main/RmS/logistic.val.pdf).
+[^4]: Cross validation is much less stable than the bootstrap on data sets with less than 20,000 data points (@steyerberg2001). Frank Harrell has run a number of simulations showing that you need at least 100 repetitions of 10-fold cross-validation to get accurate error estimates at this data size (@harrell2015).
 
 In some studies (@steyerberg2001) the 0.632 and 0.632+ estimators have similar performance. Asymptotically, the 0.632 estimator is equivalent to the optimism bootstrap (@efron1994)[^5]. It isn't clear if one is preferrable over the other in finite samples, so I'd just stick with the estimator your audience is most likely to already be familiar with. You should be fine so long as you avoid using the *bootstrap in sample error* estimate.
 
 [^5]: The relevant chapter can be [found online](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.473.2742&rep=rep1&type=pdf). You may also enjoy the draft of Frank Harrell's [new book](http://www.fharrell.com/doc/bbr.pdf).
 
-If you are interested in comparing several models, it probably isn't sufficient to compare the sampling distributions of these error measures. If you fit multiple models on the same bootstrap datasets, the bootstrap samples will have an impact on model performance. Hierarchicals models are a good way to model this. Once you have your bootstrapped error estimates, Max Kuhn's [tidyposterior](https://topepo.github.io/tidyposterior/articles/Getting_Started.html) package can help you take the next step when comparing models.
+If you are interested in comparing several models, it probably isn't sufficient to compare the sampling distributions of these error measures. If you fit multiple models on the same bootstrap datasets, the bootstrap samples will have an impact on model performance. Hierarchical models are a good way to model this. Once you have your bootstrapped error estimates, the [tidyposterior](https://tidyposterior.tidymodels.org/) package can help you take the next step when comparing models.
 
 If you're interested, stick around for future posts, where I'll cover the process of building predictive models and how to select from several predictive models.
 
