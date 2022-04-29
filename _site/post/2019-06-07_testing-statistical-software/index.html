@@ -322,31 +322,16 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <section id="an-example-of-an-easily-verifiable-reference-implementation" class="level4">
 <h4 class="anchored" data-anchor-id="an-example-of-an-easily-verifiable-reference-implementation">An example of an easily verifiable reference implementation</h4>
 <p>Consider <em>Algorithm 1</em> of <span class="citation" data-cites="allen_sparse_2013-1">Allen and Weylandt (<a href="#ref-allen_sparse_2013-1" role="doc-biblioref">2013</a>)</span>:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="sfpca_algorithm_1.png" class="img-fluid figure-img" alt="TODO."></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">TODO</figcaption><p></p>
-</figure>
-</div>
+<p><img src="sfpca_algorithm_1.png" class="img-fluid" alt="Psuedo-code for the SFPCA algorithm."></p>
 <p>You can find a MATLAB reference implementation <a href="http://www.stat.rice.edu/~gallen/software/sfpca/">here</a>. It looks like:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="sfpca_ref_impl.png" class="img-fluid figure-img" alt="TODO."></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">TODO</figcaption><p></p>
-</figure>
-</div>
+<p><img src="sfpca_ref_impl.png" class="img-fluid" alt="Screen of the SFPCA reference implementation."></p>
 <p>This is a good reference implementation because the pseudocode is close enough to the actual code that we can be confident that the translation is correct almost by eyeballing it. I ended up <a href="https://github.com/alexpghayes/gsoc_moma_application">implementing</a> this algorithm in both R and C++ and testing against this reference implementation. Curious parties read the correctness test <a href="https://github.com/alexpghayes/gsoc_moma_application/blob/master/tests/testthat/test-sfpca.R">here</a>.</p>
 <p>Note that my test is really an integration test, making sure the entire computation is correct. I don’t do any tests on sub-function or calculations, although it would be good to write a unit test for the soft thresholding function.</p>
 </section>
 <section id="a-reference-implementation-that-is-more-difficult-to-verify" class="level4">
 <h4 class="anchored" data-anchor-id="a-reference-implementation-that-is-more-difficult-to-verify">A reference implementation that is more difficult to verify</h4>
 <p>In other cases, the connection between the reference implementation and the algorithm pseudocode is less clear. For example, consider Algorithm 2 of <span class="citation" data-cites="cho_intelligent_2018">Cho, Kim, and Rohe (<a href="#ref-cho_intelligent_2018" role="doc-biblioref">2018</a>)</span>:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="adaptive_impute.png" class="img-fluid figure-img" alt="TODO."></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">TODO</figcaption><p></p>
-</figure>
-</div>
+<p><img src="adaptive_impute.png" class="img-fluid" alt="Screenshot of psuedocode for the AdaptiveImpute matrix completion algorithm."></p>
 <p>You can read the corresponding reference implementation <a href="https://github.com/chojuhee/hello-world/blob/master/Adi_Rfunction%20(original)#L97">here</a>. While the code does perform the computations outlined in the algorithm pseudocode, it is much harder to make the connection between the two.</p>
 <p>The first deviation is in <code>AdaptImpute()</code>, which truncates the reconstructed SVD to within user specified bounds. The paper discusses this computation, but the discussion is somewhat informal, and the truncation doesn’t appear in the pseudocode. The second deviation is in the subfunction <code>SVD.F()</code>, which uses some linear algebra tricks to calculate the sum of squared singular values. Both of these deviations make it more difficult to declare the reference implementation obviously correct<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
 <p><strong>Aside</strong>: While it’s nice for the algorithm pseudocode to match up nicely with the reference implementation, there are good reasons why this might not be the case. Often the psuedocode will express abstract concepts that are easier to understand when we omit lower level computational details. In cases like this, it’s essential to have good documentation linking the reference implementation and the pseudocode.</p>
@@ -568,7 +553,7 @@ Simpson, Gavin L. 2018. <span>“Modelling Palaeoecological Time Series Using Ge
 Alex Hayes. 2019. <span>“Testing Statistical Software.”</span> June 7,
 2019. <a href="https://www.alexpghayes.com/post/2019-06-07_testing-statistical-software">https://www.alexpghayes.com/post/2019-06-07_testing-statistical-software</a>.
 </div></div></section></div></main> <!-- /main -->
-<script type="application/javascript">
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
   const anchorJS = new window.AnchorJS();

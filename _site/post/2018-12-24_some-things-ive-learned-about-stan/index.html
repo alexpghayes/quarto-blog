@@ -448,7 +448,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This didn’t run at all, and in fact was not even syntactically correct, but it was a starting point:</p>
-<p><img src="stan_syntax_check.png" class="img-fluid" alt="todo"></p>
+<p><img src="stan_syntax_check.png" class="img-fluid" alt="Screenshot of RStudio with emphasis around button to run Stan syntax check"></p>
 <p>I got stuck here for quite a while, but the Modern Statistical Workflow slack kindly pointed out that:</p>
 <ul>
 <li><code>theta_0</code> and <code>theta_1</code> needed to be arrays of <code>simplex</code>s</li>
@@ -558,7 +558,7 @@ alpha[3] 427145.8 173526.8 212211.0 144019.2 308301.4 804984.9     1 2.11
 alpha[4] 525718.6 192718.8 241149.8 187486.6 404614.1 951796.0     2 1.96
 alpha[5] 437993.4 210197.6 245454.9 128395.4 279577.4 860000.9     1 2.33
 
-Samples were drawn using NUTS(diag_e) at Fri Apr 29 00:16:04 2022.
+Samples were drawn using NUTS(diag_e) at Fri Apr 29 11:27:44 2022.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -701,7 +701,7 @@ theta_0[15,3] 0.33       0 0.06 0.22 0.33  0.46  1523 1.00
 theta_0[15,4] 0.20       0 0.05 0.11 0.20  0.31  1263 1.00
 theta_0[15,5] 0.18       0 0.05 0.10 0.18  0.28  1479 1.00
 
-Samples were drawn using NUTS(diag_e) at Fri Apr 29 00:16:25 2022.
+Samples were drawn using NUTS(diag_e) at Fri Apr 29 11:28:04 2022.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -876,7 +876,7 @@ p[68] 0.11    0.00 0.14 0.00 0.06  0.52   888 1.00
 p[69] 0.17    0.01 0.18 0.01 0.10  0.66   816 1.00
 p[70] 0.18    0.01 0.19 0.01 0.10  0.67  1223 1.00
 
-Samples were drawn using NUTS(diag_e) at Fri Apr 29 00:16:46 2022.
+Samples were drawn using NUTS(diag_e) at Fri Apr 29 11:28:24 2022.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -1095,7 +1095,7 @@ new_pred[68] 0.38    0.01 0.27 0.02 0.33  0.92  1257 1.00
 new_pred[69] 0.20    0.01 0.19 0.01 0.14  0.72  1003 1.00
 new_pred[70] 0.20    0.01 0.20 0.01 0.13  0.76  1198 1.00
 
-Samples were drawn using NUTS(diag_e) at Fri Apr 29 00:17:07 2022.
+Samples were drawn using NUTS(diag_e) at Fri Apr 29 11:28:44 2022.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -1217,7 +1217,7 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 Alex Hayes. 2018. <span>“Some Things i’ve Learned about Stan.”</span>
 December 24, 2018. <a href="https://www.alexpghayes.com/post/2018-12-24_some-things-ive-learned-about-stan">https://www.alexpghayes.com/post/2018-12-24_some-things-ive-learned-about-stan</a>.
 </div></div></section></div></main> <!-- /main -->
-<script type="application/javascript">
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
   const anchorJS = new window.AnchorJS();

@@ -247,7 +247,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
@@ -280,7 +280,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <p>There has been a lot of pushback around the idea of a column of dataframes with the Python community, largely on the basis that it is not a performant data structure<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. This misses the point. The compute time in these workflows comes from model fitting, and afterwards we just want to keep track of things<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
 <p>Anyway, there’s a lot more to say about the workflow conceptually, but for now, it is time to show some code and see how things work in practice. For this post, I am going to recreate the analysis that Hadley does in his linked presentation above, which makes use of the <a href="https://pypi.org/project/gapminder/">gapminder</a> data. The gapminder data consists of life expectancies for 142 counties, reported every 5 years from 1952 to 2007.</p>
 </section>
-<section id="setting-the-scene" class="level2">
+<section id="setting-the-scene" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="setting-the-scene">Setting the scene</h2>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -415,27 +415,27 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 </div>
 <p>To get a feel for the data, lets plot the life expectancy of each country over time, facetting by continent<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell page-columns page-full" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> sns.FacetGrid(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>gapminder,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">'continent'</span>,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    col<span class="op">=</span><span class="st">'continent'</span>,</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    col_wrap<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">3</span>,</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    aspect<span class="op">=</span><span class="dv">16</span><span class="op">/</span><span class="dv">9</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>).<span class="bu">map</span>(plt.plot, <span class="st">'year'</span>, <span class="st">'lifeExp'</span>)</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-3-output-1.png" width="1355" height="1139"></p>
+<div class="cell-output cell-output-display column-page">
+<p><img src="index_files/figure-html/cell-3-output-1.png" width="1013" height="851"></p>
 </div>
 </div>
 </section>
-<section id="step-1-specifying-models-to-fit" class="level2">
+<section id="step-1-specifying-models-to-fit" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="step-1-specifying-models-to-fit">Step 1: specifying models to fit</h2>
 <p>Following Hadley’s presentation, suppose we would like to summarize the trend for each country by fitting a linear regression to the data from each country. So we have a correspondence 1 model ~ data from 1 country, and want to set up our data frame so that each row corresponds to data from a single country.</p>
 <p><code>groupby()</code> plus a list-comprehension handles this nicely, leveraging the fact that <code>gapminder.groupby('country')</code> is an iterable. In R, you could also use <code>group_by()</code> for this step, or additionally <code>nest()</code> or <code>rowwise()</code>, two <code>tidyverse</code> specification abstractions.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell page-columns page-full" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this works because grouped dataframes in pandas are iterable</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># and because you can pretty much treat series objects like</span></span>
@@ -448,7 +448,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># the downside of putting weird stuff into pandas dataframes is that</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># the dataframes print poorly</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>models</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display column-page" data-execution_count="3">
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -535,7 +535,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-3-iterative-information-extraction" class="level2">
+<section id="step-3-iterative-information-extraction" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="step-3-iterative-information-extraction">Step 3: iterative information extraction</h2>
 <p>Now that we’ve fit all of our models, we can extract information from them. Here I’ll define some helper functions very much in the spirit of <code>broom</code>. When you don’t own the model classes you’re using, you pretty much have to write extractor functions to do this; see Michael Chow’s excellent <a href="https://mchow.com/posts/2020-02-24-single-dispatch-data-science/">blog post</a> showing how to handle this in an elegant way.</p>
 <p>Even if you do own the model objects you’re using, I recommend extractor functions over class methods. This is because, during EDA, you typically fit some expensive models once, and then repeatedly investigate them–you can modify an extractor function and use it right away, but if you modify a method for a model class, you’ll have to refit all the model objects. This leads to slow iteration.</p>
@@ -578,9 +578,9 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We sanity check the helper functions by seeing if they work on a single model object before working with the entire list-column of models.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell page-columns page-full" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tidy(models.fit[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display column-page" data-execution_count="7">
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -622,9 +622,9 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
+<div class="cell page-columns page-full" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>glance(models.fit[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display column-page" data-execution_count="8">
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -661,9 +661,9 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 </div>
 <p><code>augment()</code> actually takes two inputs, where one input is the model object, and the other is the training data used to fit that model object.</p>
-<div class="cell" data-execution_count="9">
+<div class="cell page-columns page-full" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>augment(models.fit[<span class="dv">0</span>], models.data[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display column-page" data-execution_count="9">
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -819,7 +819,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 </div>
 <p>Now we are ready to iterate over the list-column of models. Again, we leverage list-comprehensions. For <code>tidy()</code> and <code>glance()</code> these comprehension are straightforward, but for <code>augment()</code>, which will consume elements from two columns at once, we will need to do something a little fancier. In R we could use <code>purrr::map2()</code> or <code>purrr::pmap()</code>, but the Pythonic idiom here is to use <code>zip()</code> together with tuple unpacking.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell column-page" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>models[<span class="st">'tidied'</span>] <span class="op">=</span> [tidy(fit) <span class="cf">for</span> fit <span class="kw">in</span> models.fit]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>models[<span class="st">'glanced'</span>] <span class="op">=</span> [glance(fit) <span class="cf">for</span> fit <span class="kw">in</span> models.fit]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -830,9 +830,9 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 <p><strong>Note for R users</strong>: In R the calls to <code>tidy()</code>, etc, would typically live inside a <code>mutate()</code> call. The <code>pandas</code> equivalent is <code>assign</code>, but <code>pandas</code> doesn’t leverage non-standard evaluation and I typically don’t use <code>assign()</code> unless I really want to leverage method chaining for some reason. Normally I save method chaining for data manipulation once I have a flat dataframe, and otherwise I operate entirely via list comprehensions.</p>
 <p>Anyway, the print method garbles the hell out of our results but whatever.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell page-columns page-full" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>models</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell-output cell-output-display column-page" data-execution_count="11">
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -942,7 +942,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 </div>
 </section>
-<section id="flattening-the-dataframe" class="level2">
+<section id="flattening-the-dataframe" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="flattening-the-dataframe">Flattening the dataframe</h2>
 <p>Our final step before we can recreate Hadley’s plots is to flatten or “unnest” the dataframe. <code>pandas</code> has no unnest method, but the following has served me well so far to unnest a single column. This will not play well with dataframes with MultiIndexes, which I recommend avoiding.</p>
 <div class="cell" data-execution_count="12">
@@ -953,7 +953,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df.join(unnested).drop(columns<span class="op">=</span>value_col)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If we unnest just the <code>glance()</code> results we get:</p>
-<div class="cell" data-execution_count="13">
+<div class="cell page-columns page-full" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>glance_results <span class="op">=</span> unnest(models, <span class="st">'glanced'</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># equivalently</span></span>
@@ -967,7 +967,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>glance_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display column-page" data-execution_count="13">
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -1185,22 +1185,22 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 </div>
 <p>Now we could ask a question like “what countries seem to have the most linear trends in life expectancy?” and use R-squared as a measure of this.</p>
-<div class="cell" data-execution_count="14">
+<div class="cell page-columns page-full" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> (</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    sns.FacetGrid(</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        data<span class="op">=</span>glance_results.sort_values(<span class="st">'rsquared'</span>),</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        height<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        height<span class="op">=</span><span class="dv">5</span>,</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        aspect<span class="op">=</span><span class="dv">16</span><span class="op">/</span><span class="dv">9</span></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">map</span>(plt.scatter, <span class="st">'rsquared'</span>, <span class="st">'country'</span>)</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-15-output-1.png" width="1354" height="756"></p>
+<div class="cell-output cell-output-display column-page">
+<p><img src="index_files/figure-html/cell-15-output-1.png" width="842" height="468"></p>
 </div>
 </div>
 <p>Okay so this plot is awful but I don’t have the patience at the moment to make it better. We could also look at residuals for individual fits to inspect them for any patterns that might indicate systematic error.</p>
-<div class="cell" data-execution_count="15">
+<div class="cell page-columns page-full" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>augment_results <span class="op">=</span> unnest(models, <span class="st">'augmented'</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> (</span>
@@ -1209,12 +1209,12 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        col<span class="op">=</span><span class="st">'continent'</span>, </span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        col_wrap<span class="op">=</span><span class="dv">2</span>,</span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        hue<span class="op">=</span><span class="st">'continent'</span>,</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        height<span class="op">=</span><span class="dv">5</span>, aspect<span class="op">=</span><span class="dv">16</span><span class="op">/</span><span class="dv">9</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        height<span class="op">=</span><span class="dv">4</span>, aspect<span class="op">=</span><span class="dv">16</span><span class="op">/</span><span class="dv">13</span>)</span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">map</span>(plt.plot, <span class="st">'year'</span>, <span class="st">'resid'</span>)</span>
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-16-output-1.png" width="1696" height="1427"></p>
+<div class="cell-output cell-output-display column-page">
+<p><img src="index_files/figure-html/cell-16-output-1.png" width="935" height="1139"></p>
 </div>
 </div>
 <p>It would be nice to add smooths by continent as Hadley does but again I don’t have the patience or masochistic urge to figure out how to do that. In any case, there are some clear trends in the residuals, especially for Africa, which suggest that some further modeling is a good idea.</p>
@@ -1249,7 +1249,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 Alex Hayes. 2020. <span>“Many Models Workflows in Python i.”</span>
 August 25, 2020. <a href="https://www.alexpghayes.com/post/2020-08-25_many-models-workflows-in-python-part-i">https://www.alexpghayes.com/post/2020-08-25_many-models-workflows-in-python-part-i</a>.
 </div></div></section></div></main> <!-- /main -->
-<script type="application/javascript">
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
   const anchorJS = new window.AnchorJS();

@@ -192,7 +192,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">many models workflows in python ii</h1>
-            <p class="subtitle lead"></p><p>good stuff but python envs are still a PITA</p><p></p>
+            <p class="subtitle lead"></p><p>a tidymodels workflow in python using list columns in pandas dataframes, now with hyperparameter sweep and parallelism</p><p></p>
                           <div class="quarto-categories">
                 <div class="quarto-category">python</div>
                 <div class="quarto-category">workflow</div>
@@ -240,17 +240,17 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
 
 <p>In this followup to <a href="../many-models-workflows-in-python-part-i/">my earlier post</a> on modeling workflows in Python, I demonstrate how to integrate sample splitting, parallel processing, exception handling and caching into many-models workflows. I also discuss some differences between exploration/inference-centric workflows and tuning-centric workflows.</p>
-<section id="motivating-example" class="level2">
+<section id="motivating-example" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="motivating-example">Motivating example</h2>
 <p>We will work with the <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-07-28">Palmer Penguin</a> dataset, which contains various biological measures on three species of penguins. Our goal will be to cluster the penguins into groups that correspond to their species using their bill length, bill depth, flipper length and body mass. We’ll use a Gaussian Mixture Model for clustering. Caveat: my goal here is to demonstrate a workflow, not good science.</p>
 <p>We’ll start by pulling the data into Python and taking a look.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell page-columns page-full" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> pd.read_csv(<span class="st">'https://tinyurl.com/palmerpenguincsv'</span>).dropna()</span>
@@ -263,7 +263,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
+<div class="cell-output cell-output-display column-body-outset" data-execution_count="1">
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -497,25 +497,25 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
     training observations and 67 test observations
     
 
-    In fold 1 there are 269
+    In fold 1 there are 267
     training observations and 67 test observations
     
 
-    In fold 2 there are 268
+    In fold 2 there are 266
     training observations and 67 test observations
     
 
-    In fold 3 there are 267
+    In fold 3 there are 269
     training observations and 66 test observations
     
 
-    In fold 4 there are 270
+    In fold 4 there are 272
     training observations and 66 test observations
     </code></pre>
 </div>
 </div>
 <p>Now that we have cross validation folds, we want to create a grid of parameters to explore over. Here we leverage <code>sklearn</code>’s <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ParameterGrid.html">ParameterGrid</a> object, which basically takes a Cartesian product that we can iterate over, as well as coerce to a data frame.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell page-columns page-full" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> ParameterGrid</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> ParameterGrid({</span>
@@ -525,7 +525,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>model_grid <span class="op">=</span> pd.DataFrame(param_grid)</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display column-body-outset" data-execution_count="4">
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -568,7 +568,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 </div>
 <p>Now we are going to do something a little tricky. We are going to create a new column of <code>model_grid</code> that contains the results from fitting a GMM to each split from the CV object. In particular, each element in this column will itself be a list with <code>num_folds</code> elements. That is, we will create a list-column <code>cv_fits</code> were each element of <code>model_grid.cv_fits</code> is itself a list. To work with these structures it is easiest to define a helper function that fits a GMM to each CV split for a single combination of hyperparameters.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell page-columns page-full" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_gmm_vfold(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    folds: VFoldCV, </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">**</span>hyperparameters</span>
@@ -590,7 +590,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display column-body-outset" data-execution_count="5">
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -640,7 +640,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 <p><strong>Note</strong>: To get our cross validated fits, we iterated over <code>param_grid</code> and stored results in <code>model_grid</code>. It’s essential that the row indices match up between these objects. Here they match by construction, but be careful if you start to play with this structure. For example, one alternative (and frequently convenient approach) here is to create a <code>model_grid</code> object based on <code>itertools.product(param_grid, resamples)</code> rather than just <code>param_grid</code>. This avoids nesting lists in list-columns, at the cost of inefficiency in terms of storage. This route is more fiddly than it looks.</p>
 <p>Anyway, now that we have training fits, we want to compute out of sample performance estimates. In our case, we’ll use a measure of clustering quality known at the Adjusted Rand Score. Again we use nested list comprehensions to get out of sample estimates for all CV splits.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell page-columns page-full" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> adjusted_rand_score</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> oos_vfold_ars(</span>
@@ -668,7 +668,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display column-body-outset" data-execution_count="6">
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -687,35 +687,35 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <td>full</td>
       <td>2</td>
       <td>[GaussianMixture(n_components=2, n_init=5, ran...</td>
-      <td>[0.5773597889666247, 0.681909510769608, 0.7301...</td>
+      <td>[0.6393736747675747, 0.6868372766779334, 0.582...</td>
     </tr>
     <tr>
       <th>1</th>
       <td>full</td>
       <td>3</td>
       <td>[GaussianMixture(n_components=3, n_init=5, ran...</td>
-      <td>[0.7847295244771586, 0.6827179469291318, 0.892...</td>
+      <td>[0.9203075242889042, 0.5284651662794326, 1.0, ...</td>
     </tr>
     <tr>
       <th>2</th>
       <td>full</td>
       <td>4</td>
       <td>[GaussianMixture(n_components=4, n_init=5, ran...</td>
-      <td>[0.6156643872800062, 0.8044127524239013, 0.823...</td>
+      <td>[0.6988842021671452, 0.7076009213237968, 0.803...</td>
     </tr>
     <tr>
       <th>3</th>
       <td>full</td>
       <td>5</td>
       <td>[GaussianMixture(n_components=5, n_init=5, ran...</td>
-      <td>[0.5054853824225147, 0.6453882312873984, 0.632...</td>
+      <td>[0.5688679676431607, 0.5818016435606298, 0.716...</td>
     </tr>
     <tr>
       <th>4</th>
       <td>full</td>
       <td>6</td>
       <td>[GaussianMixture(n_components=6, n_init=5, ran...</td>
-      <td>[0.5568538569170978, 0.4055011787288985, 0.687...</td>
+      <td>[0.5441775154582934, 0.6712697694245447, 0.667...</td>
     </tr>
   </tbody>
 </table>
@@ -762,7 +762,7 @@ dtype: object</code></pre>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-9-output-1.png" width="589" height="422"></p>
+<p><img src="index_files/figure-html/cell-9-output-1.png" width="589" height="423"></p>
 </div>
 </div>
 <p>Higher Adjusted Rand Scores are better, so this initial pass of modeling suggests that we should use three clusters. This is reassuring, since we know there are three species of penguin in the dataset!</p>
@@ -916,7 +916,7 @@ dtype: object</code></pre>
 Alex Hayes. 2021. <span>“Many Models Workflows in Python Ii.”</span>
 March 28, 2021. <a href="https://www.alexpghayes.com/post/2021-03-28_many-models-workflows-in-python-part-ii">https://www.alexpghayes.com/post/2021-03-28_many-models-workflows-in-python-part-ii</a>.
 </div></div></section></div></main> <!-- /main -->
-<script type="application/javascript">
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
   const anchorJS = new window.AnchorJS();

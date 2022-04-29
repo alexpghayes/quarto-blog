@@ -67,13 +67,13 @@ In practice, most people end up writing a reference implementation and checking 
 
 Consider *Algorithm 1* of @allen_sparse_2013-1:
 
-![TODO](sfpca_algorithm_1.png){fig-alt="TODO."}
+![](sfpca_algorithm_1.png){fig-alt="Psuedo-code for the SFPCA algorithm."}
 
 You can find a MATLAB reference implementation [here][sfpca_reference_implementation]. It looks like:
 
 [sfpca_reference_implementation]: http://www.stat.rice.edu/~gallen/software/sfpca/
 
-![TODO](sfpca_ref_impl.png){fig-alt="TODO."}
+![](sfpca_ref_impl.png){fig-alt="Screen of the SFPCA reference implementation."}
 
 This is a good reference implementation because the pseudocode is close enough to the actual code that we can be confident that the translation is correct almost by eyeballing it. I ended up [implementing][gsoc_repo] this algorithm in both R and C++ and testing against this reference implementation. Curious parties read the correctness test [here][gsoc_test]. 
 
@@ -88,7 +88,7 @@ Note that my test is really an integration test, making sure the entire computat
 In other cases, the connection between the reference implementation and the algorithm pseudocode is less clear. For example, consider Algorithm 2 of @cho_intelligent_2018:
 
 
-![TODO](adaptive_impute.png){fig-alt="TODO."}
+![](adaptive_impute.png){fig-alt="Screenshot of psuedocode for the AdaptiveImpute matrix completion algorithm."}
 
 You can read the corresponding reference implementation [here][adaptive_impute_reference]. While the code does perform the computations outlined in the algorithm pseudocode, it is much harder to make the connection between the two.
 

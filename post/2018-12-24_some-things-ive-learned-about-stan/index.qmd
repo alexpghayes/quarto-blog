@@ -265,7 +265,7 @@ model {
 
 This didn't run at all, and in fact was not even syntactically correct, but it was a starting point:
 
-![](stan_syntax_check.png){fig-alt="todo"}
+![](stan_syntax_check.png){fig-alt="Screenshot of RStudio with emphasis around button to run Stan syntax check"}
 
 I got stuck here for quite a while, but the Modern Statistical Workflow slack kindly pointed out that:
 

@@ -77,12 +77,13 @@ To get a feel for the data, lets plot the life expectancy of each country over t
 [^6]: Aside: I have found plotting in Python to be a largely unpleasant experience. At this point, I've pretty much settled on `seaborn` as my go-to plotting library, and I use `sns.FacetGrid` for almost everything, even when I don't need facetting, because enough of my `ggplot2` intuition carries over that I can mostly get things done.
 
 ```{python}
+#| column: page
 p = sns.FacetGrid(
     data=gapminder,
     hue='continent',
     col='continent',
     col_wrap=2,
-    height=4,
+    height=3,
     aspect=16/9
 ).map(plt.plot, 'year', 'lifeExp')
 
@@ -96,6 +97,7 @@ Following Hadley's presentation, suppose we would like to summarize the trend fo
 `groupby()` plus a list-comprehension handles this nicely, leveraging the fact that `gapminder.groupby('country')` is an iterable. In R, you could also use `group_by()` for this step, or additionally `nest()` or `rowwise()`, two `tidyverse` specification abstractions.
 
 ```{python}
+#| column: page
 models = pd.DataFrame({
     # this works because grouped dataframes in pandas are iterable
     # and because you can pretty much treat series objects like
@@ -187,22 +189,26 @@ def augment(fit, data):
 We sanity check the helper functions by seeing if they work on a single model object before working with the entire list-column of models.
 
 ```{python}
+#| column: page
 tidy(models.fit[0])
 ```
 
 ```{python}
+#| column: page
 glance(models.fit[0])
 ```
 
 `augment()` actually takes two inputs, where one input is the model object, and the other is the training data used to fit that model object.
 
 ```{python}
+#| column: page
 augment(models.fit[0], models.data[0])
 ```
 
 Now we are ready to iterate over the list-column of models. Again, we leverage list-comprehensions. For `tidy()` and `glance()` these comprehension are straightforward, but for `augment()`, which will consume elements from two columns at once, we will need to do something a little fancier. In R we could use `purrr::map2()` or `purrr::pmap()`, but the Pythonic idiom here is to use `zip()` together with tuple unpacking.
 
 ```{python}
+#| column: page
 models['tidied'] = [tidy(fit) for fit in models.fit]
 models['glanced'] = [glance(fit) for fit in models.fit]
 
@@ -217,6 +223,7 @@ models['augmented'] = [
 Anyway, the print method garbles the hell out of our results but whatever.
 
 ```{python}
+#| column: page
 models
 ```
 
@@ -235,6 +242,7 @@ def unnest(df, value_col):
 If we unnest just the `glance()` results we get:
 
 ```{python}
+#| column: page
 glance_results = unnest(models, 'glanced')
 
 # equivalently
@@ -253,10 +261,11 @@ glance_results
 Now we could ask a question like "what countries seem to have the most linear trends in life expectancy?" and use R-squared as a measure of this.
 
 ```{python}
+#| column: page
 p = (
     sns.FacetGrid(
         data=glance_results.sort_values('rsquared'),
-        height=8,
+        height=5,
         aspect=16/9
     )
     .map(plt.scatter, 'rsquared', 'country')
@@ -267,6 +276,7 @@ plt.show()
 Okay so this plot is awful but I don't have the patience at the moment to make it better. We could also look at residuals for individual fits to inspect them for any patterns that might indicate systematic error.
 
 ```{python}
+#| column: page
 augment_results = unnest(models, 'augmented')
 
 p = (
@@ -275,7 +285,7 @@ p = (
         col='continent', 
         col_wrap=2,
         hue='continent',
-        height=5, aspect=16/9)
+        height=4, aspect=16/13)
     .map(plt.plot, 'year', 'resid')
 )
 plt.show()

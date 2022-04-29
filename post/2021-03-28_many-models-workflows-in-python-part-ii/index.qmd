@@ -16,6 +16,7 @@ We will work with the [Palmer Penguin](https://github.com/rfordatascience/tidytu
 We'll start by pulling the data into Python and taking a look.
 
 ```{python}
+#| column: body-outset
 import pandas as pd
 
 penguins = pd.read_csv('https://tinyurl.com/palmerpenguincsv').dropna()
@@ -121,6 +122,7 @@ Now that we have cross validation folds, we want to create a grid of parameters 
 
 
 ```{python}
+#| column: body-outset
 from sklearn.model_selection import ParameterGrid
 
 param_grid = ParameterGrid({
@@ -136,6 +138,7 @@ Now we are going to do something a little tricky. We are going to create a new c
 
 
 ```{python}
+#| column: body-outset
 def fit_gmm_vfold(
     folds: VFoldCV, 
     **hyperparameters
@@ -165,6 +168,7 @@ Anyway, now that we have training fits, we want to compute out of sample perform
 
 
 ```{python}
+#| column: body-outset
 from sklearn.metrics import adjusted_rand_score
 
 def oos_vfold_ars(
