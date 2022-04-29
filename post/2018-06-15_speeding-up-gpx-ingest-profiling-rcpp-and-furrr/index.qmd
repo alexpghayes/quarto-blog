@@ -1,0 +1,414 @@
+---
+title: "speeding up GPX ingest: profiling, Rcpp and furrr"
+subtitle: |
+  a demonstration of how to profile r code on a toy problem
+date: "2018-06-15"
+categories: [code performance, rstats]
+execute: 
+  error: true
+---
+
+This post is a casual case study in speeding up R code. I work through several iterations of a function to read and process GPS running data from Strava stored in the GPX format. Along the way I describe how to visualize code bottlenecks with `profvis` and briefly touch on fast compiled code with `Rcpp` and parallelization with `furrr`.
+
+## The problem: tidying trajectories in GPX files
+
+I record my runs on my phone using Strava. Strava stores the GPS recordings in GPX files, which are XML files that follow some additional conventions. They start with some metadata and then contain a list of GPS readings taken at one second intervals with longitude, latitude, elevation and timestap information. I wanted to approximate my speed at each time point in the GPS record, as well as my distance traveled since the previous GPS recordings.
+
+Below I have an example of a GPX file that contains three GPS readings. First I create a vector that contains the names off my GPX files, and then I subset to the files that contain running data. I choose to work with the third run as a canonical example, and show a subset of the recording with three GPS readings.
+
+```{r}
+library(tidyverse)
+library(here)
+
+# file contain run data
+act_files <- dir(here::here("post", "2018-06-15_speeding-up-gpx-ingest-profiling-rcpp-and-furrr", "2018-04-17-activities-alex"),
+                 full.names = TRUE)
+run_files <- act_files[str_detect(act_files, "Run")]
+
+# example file we'll work with
+fname <- run_files[3]
+
+# subset of example
+all <- read_lines(fname)
+mini_idx <- c(1:20, 5897:5899)
+cat(all[mini_idx], sep = "\n")
+```
+
+The part we want is in the `<trkseg>` tags. We'd like to turn this into a tidy dataframe where each row represents one GPS reading and the columns contain information like speed, distance, traveled, elevation gained, etc.
+
+## GPX reader version 0: using plotKML::readGPX
+
+Using `plotKML::readGPX` we can read the representative file into R:
+
+```{r}
+trajectory <- gpx::read_gpx(fname)$tracks |> 
+  as_tibble() |> 
+  unnest() |> 
+  janitor::clean_names() |> 
+  select(-extensions, segment_id)
+  
+trajectory
+```
+
+We want to compare location at $t$ and $t - 1$, so we create a lagged column of longitudes and latitudes. We put longitude and latitude together into a vector to play well with `raster::pointDistance`, which we'll use to compute the great circle distance between two points.
+
+```{r}
+lagged <- trajectory |> 
+    mutate(x = map2(longitude, latitude, c),  # create lagged position, this means the 
+           x_old = lag(x),         # first row isn't complete
+           t_old = lag(time)) |> 
+    slice(-1)                      # remove incomplete first row
+
+lagged
+```
+
+It turns out this data is not contiguous. Strava has a feature called autopause which detects pauses in runs (for example, at a stoplight), and GPS readings during paused periods are not include in the GPX files[^1]. GPS readings typically happen once every second. I plotted the time gaps between readings and realized that time gaps greater than three seconds between two GPS recordings indicated a pause. This lets me break the run down into a series of contigous segments:
+
+[^1]: It took me a two months to realize this, mostly because I didn't plot enough of the data. If you're curous how Strava detects paused movement, you can read more [here](https://medium.com/strava-engineering/improving-auto-pause-for-everyone-13f253c66f9e). It seems to involve more if-statements than fun models.
+
+```{r}
+segmented <- lagged |> 
+  mutate(rest = as.numeric(time - t_old),     # seconds
+         new_segment = as.numeric(rest > 3),  
+         segment = cumsum(new_segment)) |>
+  
+  # don't want t_old to be from previous segment
+  group_by(segment) |> 
+  slice(-1)  
+    
+segmented
+```
+
+Now I calculate some information about each time point and segment that I'll use in downstream analyses:
+
+```{r}
+lonlat_dist <- partial(raster::pointDistance, lonlat = TRUE)
+
+useful <- segmented |> 
+  mutate(
+    seg_length = max(time) - min(t_old),    # seconds
+    dx = map2_dbl(x, x_old, lonlat_dist),   # meters
+    dx = 0.000621371 * dx,                  # miles
+    dt = rest / 60^2,                       # hours
+    speed = dx / dt,                        # mph
+    pace = 60 * dt / dx,                    # min / mile
+    elevation = elevation                   # feet
+  ) |> 
+  dplyr::select(-elevation, -x, -x_old, -t_old, -new_segment) |> 
+  ungroup()
+
+useful
+```
+
+We can quickly visualize instantaneous speed throughout the run:
+
+```{r}
+ggplot(useful, aes(time, speed, group = segment)) +
+  geom_point() +
+  geom_line(alpha = 0.5) +
+  labs(title = "Speed throughout example run",
+       y = "Speed (mph)") +
+  theme(axis.title.x = element_blank())
+```
+
+We can see two short pauses present in the run at around 18:08 and 18:17.
+
+We're going to use the code above a whole bunch, so we wrap it up into a helper function. I'm not sure that `raster::pointDistance` is the best option for calculating the distance between two points, so we use a `dist_func` argument to make it easy to switch out.
+
+```{r}
+get_metrics <- function(gps_df, dist_func = lonlat_dist)  {
+  gps_df |> 
+    mutate(x = map2(longitude, latitude, c),
+           x_old = lag(x),
+           t_old = lag(time)) |> 
+    slice(-1) |> 
+    mutate(rest = as.numeric(time - t_old),
+           new_segment = as.numeric(rest > 3),
+           segment = cumsum(new_segment) + 1) |>
+    group_by(segment) |> 
+    slice(-1) |>
+    mutate(seg_length = max(time) - min(t_old),
+           dx = map2_dbl(x, x_old, dist_func),
+           dx = 0.000621371 * dx, 
+           dt = rest / 60^2,    
+           speed = dx / dt,       
+           pace = 60 * dt / dx) |>
+    dplyr::select(-x, -x_old, -t_old, -new_segment, -rest) |> 
+    ungroup()
+}
+```
+
+This means our initial `read_gpx` function is just two lines:
+
+```{r}
+read_gpx0 <- function(fname) {
+  gps_df <- gpx::read_gpx(fname)$tracks |> 
+    as_tibble() |> 
+    unnest() |> 
+    janitor::clean_names() |> 
+    select(-extensions, -segment_id)
+  
+  get_metrics(gps_df)
+}
+```
+
+We can use `profvis::profvis` to create an interactive visualization of how long it takes to read the example file.
+
+```{r}
+library(profvis)
+
+profvis(read_gpx0(fname))
+```
+
+In the default view, the horizontal axis represents time and the box represents the call stack. All the boxes above `plotKML::readGPX` are functions called by `plotKML::readGPX`. Here it seems like `plotKML::readGPX` takes about 400 milliseconds to run. So about half the time is spent reading in the file, and half calculating metrics. Most of the time calculating metrics is in `raster::pointDistance`, which is fairly up the call stack - you may have to click and drag the plot to see it.
+
+## GPX reader version 1: no more plotKML::GPX
+
+Then I broke my R library and couldn't use `plotKML::readGPX` for a little while. Since GPX files are XML files, I used the `xml2` package as a replacement. `xml2` has a function `as_list` that let me treat the XML as an R list. We extract the relevant portion of the list and `purrr::map_dfr` each GPS recording into a row of a `tibble`.
+
+```{r}
+library(xml2)
+
+run_xml <- read_xml(fname)
+run_list <- as_list(run_xml)
+gps_pts <- run_list$gpx$trk$trkseg
+
+extract_gps_point <- function(point) {
+  tibble(
+    longitude = attr(point, "lon"),
+    latitude = attr(point, "lat"),
+    ele = point$ele[[1]],
+    time = point$time[[1]]
+  )
+}
+
+map_dfr(gps_pts, extract_gps_point)
+```
+
+Then we wrap this in a function.
+
+```{r}
+read_gpx1 <- function(fname) {
+  run_xml <- read_xml(fname)
+  run_list <- as_list(run_xml)
+  
+  extract_gps_point <- function(point) {
+    tibble(
+      longitude = attr(point, "lon"),
+      latitude = attr(point, "lat"),
+      ele = point$ele[[1]],
+      time = point$time[[1]]
+    )
+  }
+  
+  gps_df <- map_dfr(run_list$gpx$trk$trkseg, extract_gps_point)
+  get_metrics(gps_df)
+}
+```
+
+The next part is critical when trying to speed up code: **test that the new code does the same thing as the old code**.
+
+```{r}
+library(testthat)
+
+expected <- read_gpx0(fname)
+result_1 <- read_gpx1(fname)
+
+# silence means everything went well
+expect_equal(expected, result_1)
+```
+
+This turned out to be too slow, so we profile and see which lines are taking the most amount of time.
+
+```{r}
+profvis(read_gpx1(fname))
+```
+
+Here we see that we spend most of our time on the functions `as_list` and `tibble`.
+
+# GPX reader version 2: no more tibble
+
+`tibble`s are somewhat heavy objects, and we can bind lists together instead of `tibble`s, so let's try that next. We only change one line from `read_gpx1`.
+
+```{r}
+read_gpx2 <- function(fname) {
+  run_xml <- read_xml(fname)
+  run_list <- as_list(run_xml)
+  
+  extract_gps_point <- function(point) {
+    list(longitude = attr(point, "lon"),
+         latitude = attr(point, "lat"),
+         ele = point$ele[[1]],
+         time = point$time[[1]])
+  }
+  
+  gps_df <- map_dfr(run_list$gpx$trk$trkseg, extract_gps_point)
+  get_metrics(gps_df)
+}
+
+result_2 <- read_gpx2(fname)
+expect_equal(expected, result_2)
+```
+
+Our results are still as expected, which is good.  We profile again to see if we've done any better, which we have. Now we're at about 1.5 seconds instead of 2.5 seconds.
+
+```{r}
+profvis(read_gpx2(fname))
+```
+
+I needed to this for about fifty files though, so this was still slow enough to be somewhat frustrating. Now `xml2::as_list` is really killing us. 
+
+## GPX reader version 3: now with more xml2
+
+Luckily, we can use `xml2` to manipulate the XML via a fast C package instead. For this next part I tried functions exported by `xml2` until they worked and occasionally read the documentation.
+
+```{r}
+read_gpx_xml <- function(fname) {
+  # get the interested nodes
+  run_xml <- read_xml(fname)
+  trk <- xml_child(run_xml, 2)
+  trkseg <- xml_child(trk, 2)
+  trkpts <- xml_children(trkseg)  # nodeset where each node is a GPS reading
+  
+  # get the longitude and latitude for each node
+  latlon_list <- xml_attrs(trkpts)  
+  latlon <- do.call(rbind, latlon_list)
+  
+  # get the time and elevation for each node
+  ele_time_vec <- xml_text(xml_children(trkpts))
+  ele_time <- matrix(ele_time_vec, ncol = 2, byrow = TRUE)
+  colnames(ele_time) <- c("ele", "time")
+  
+  as_tibble(cbind(latlon, ele_time))
+}
+
+read_gpx3 <- function(fname) {
+  gps_df <- read_gpx_xml(fname)
+  get_metrics(gps_df)
+}
+
+result_3 <- read_gpx3(fname)
+expect_equal(expected, result_3)
+```
+
+Again we see if there's anywhere else we can speed things up:
+
+```{r}
+profvis(read_gpx3(fname))
+```
+
+We're way faster, taking less than half a second! Now the most time is spent on `raster::pointDistance`, which we call a ton of times. What does `pointDistance` do? It takes two pairs `(lat1, lon1)` and `(lat2, lon2)` the distance between them[^2].
+
+[^2]: We can't calculate the distance using the L2 norm because longitude and latitude are spherical coordinates, not Euclidean coordinates.
+
+## GPX reader version 4: drop into Rcpp
+
+Next I Googled how to perform this calculation myself and found [this](http://www.movable-type.co.uk/scripts/latlong.html#ellipsoid) and [this](https://www.r-bloggers.com/great-circle-distance-calculations-in-r/). The `Rcpp` implementation looks like:
+
+```{r engine = "Rcpp"}
+#include <Rcpp.h>
+
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+double haversine_dist(const NumericVector p1, const NumericVector p2) {
+  
+  double lat1 = p1[0] * M_PI / 180;
+  double lon1 = p1[1] * M_PI / 180;
+  double lat2 = p2[0] * M_PI / 180;
+  double lon2 = p2[1] * M_PI / 180;
+  
+  double d_lat = lat2 - lat1;
+  double d_lon = lon2 - lon1;
+  
+  double a = pow(sin(d_lat / 2.0), 2) + 
+    cos(lat1) * cos(lat2) * pow(sin(d_lon / 2.0), 2);
+  double c = 2 * asin(std::min(1.0, sqrt(a)));
+  
+  return 6378137 * c; // 6378137 is the radius of the earth in meters
+}
+```
+
+The haversine distance is fast to calculate at the cost of some small error, which we can see below:
+
+```{r}
+p1 <- c(0, 0)
+p2 <- c(1, 1)
+
+dist_expected <- raster::pointDistance(p1, p2, lonlat = TRUE)
+dist_result <- haversine_dist(p1, p2)
+
+dist_result - dist_expected
+```
+
+It turns out that "small error" on the geological scale is big error on the neighborhood run scale. Put all together, the C++ version looks like:
+
+```{r}
+read_gpx4 <- function(fname) {
+  gps_df <- read_gpx_xml(fname)
+  get_metrics(gps_df, dist_func = haversine_dist)
+}
+```
+
+We profile one more time:
+
+```{r}
+profvis(read_gpx4(fname))
+```
+
+Now it takes only about 0.1 seconds, but the result isn't accurate enough anymore. I wasn't in the mood to implement a more precise great circle distance calculation, but hopefully this illustrates the general principle of dropping into `Rcpp` and also why it's important to test when profiling.
+
+## Comparing the various GPX readers
+
+Now we can compare how long each version takes using the `bench` package.
+
+```{r}
+library(bench)
+
+mark(
+  read_gpx0(fname),
+  read_gpx1(fname),
+  read_gpx2(fname),
+  read_gpx3(fname),
+  read_gpx4(fname),
+  iterations = 5,   # how many times to run everything. 5 is very low.
+  relative = TRUE,
+  check = FALSE     # since readgpx4 isn't right, will error without this
+)
+```
+
+Here timings are relative. We see that `read_gpx4` is about ten times faster than `read_gpx1` and two times faster than `read_gpx0`.
+
+## Embarrassing parallelization with `furrr`
+
+In the end, I needed to do this for about fifty files. Since we can process each file independently of the other files, this operation is *embarrassingly parallel*. I actually wanted to use this data, so I didn't use the C++ haversine distance function. We can write with a single `map` call to process all the files at once:
+
+```{r}
+run_files_subset <- run_files[1:10]
+
+map_dfr(run_files_subset, read_gpx3, .id = "run")
+```
+
+Which means we can also write this as a parallelized `map` call with `furrr` like so:
+
+```{r}
+library(furrr)
+plan(multiprocess)
+
+future_map_dfr(run_files_subset, read_gpx3, .id = "run")
+```
+
+Note that other than loading `furrr` and calling `plan(multiprocess)` all we've had to do to get parallelism is to call `furrr::future_map_dfr`, which has exactly the same API as `purrr::map_dfr`. My computer has two cores, meaning there's a maximum possible speedup of two, and we achieve nearly that:
+
+```{r}
+mark( 
+  map_dfr(run_files_subset, read_gpx3, .id = "run"),
+  future_map_dfr(run_files_subset, read_gpx3, .id = "run"),
+  iterations = 5,
+  relative = TRUE
+)
+```
+
+## Wrap Up
+
+This was a low stakes exercise in speeding up R code. By the time I'd written all of these it would have been several hundred times faster to use `read_gpx0` and just save the results to a `.rds` file. Still, it was fun to work through the profiling workflow and I look forward to enterprising strangers on the internet pointing out places where things can get faster still.

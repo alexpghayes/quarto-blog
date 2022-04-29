@@ -1,31 +1,31 @@
 [
   {
     "listing": "/posts.html",
-    "items": []
+    "items": [
+      "/post/2021-03-28_many-models-workflows-in-python-part-ii/index.html",
+      "/post/2020-08-25_many-models-workflows-in-python-part-i/index.html",
+      "/post/2020-05-04_using-the-data-twice/index.html",
+      "/post/2020-05-01_elon-musk-send-tweet/index.html",
+      "/post/2020-03-22_to-transform-or-not-to-transform/index.html",
+      "/post/2020-01-06_overfitting-a-guide-tour/index.html",
+      "/post/2019-08-31_consistency-and-the-linear-probability-model/index.html",
+      "/post/2019-07-26_an-annotated-bibliography-on-stochastic-blockmodels/index.html",
+      "/post/2019-06-07_testing-statistical-software/index.html",
+      "/post/2019-05-21_type-stable-estimation/index.html",
+      "/post/2019-04-13_implementing-the-superlearner-with-tidymodels/index.html",
+      "/post/2019-01-31_overlapping-confidence-intervals-correcting-bad-intuition/index.html",
+      "/post/2018-12-24_some-things-ive-learned-about-stan/index.html",
+      "/post/2018-10-23_understanding-multinomial-regression-with-partial-dependence-plots/index.html",
+      "/post/2018-08-10_a-summer-with-rstudio/index.html",
+      "/post/2018-06-15_speeding-up-gpx-ingest-profiling-rcpp-and-furrr/index.html",
+      "/post/2018-05-16_comparing-runs-with-riegels-formula-and-gams/index.html",
+      "/post/2018-05-03_performance-assessments-via-bootstrap-variants/index.html",
+      "/post/2017-10-18_gradient-checks/index.html",
+      "/post/2017-08-07_gentle-tidy-eval/index.html"
+    ]
   },
   {
     "listing": "/blog.html",
-    "items": [
-      "/blog/2021-03-28_many-models-workflows-in-python-part-ii/index.html",
-      "/blog/2020-08-25_many-models-workflows-in-python-part-i/index.html",
-      "/blog/2020-05-04_using-the-data-twice/index.html",
-      "/blog/2020-05-01_elon-musk-send-tweet/index.html",
-      "/blog/2020-03-22_to-transform-or-not-to-transform/index.html",
-      "/blog/2020-01-06_overfitting-a-guide-tour/index.html",
-      "/blog/2019-08-31_consistency-and-the-linear-probability-model/index.html",
-      "/blog/2019-07-26_an-annotated-bibliography-on-stochastic-blockmodels/index.html",
-      "/blog/2019-06-07_testing-statistical-software/index.html",
-      "/blog/2019-05-21_type-stable-estimation/index.html",
-      "/blog/2019-04-13_implementing-the-superlearner-with-tidymodels/index.html",
-      "/blog/2019-01-31_overlapping-confidence-intervals-correcting-bad-intuition/index.html",
-      "/blog/2018-12-24_some-things-ive-learned-about-stan/index.html",
-      "/blog/2018-10-23_understanding-multinomial-regression-with-partial-dependence-plots/index.html",
-      "/blog/2018-08-10_a-summer-with-rstudio/index.html",
-      "/blog/2018-06-15_speeding-up-gpx-ingest-profiling-rcpp-and-furrr/index.html",
-      "/blog/2018-05-16_comparing-runs-with-riegels-formula-and-gams/index.html",
-      "/blog/2018-05-03_performance-assessments-via-bootstrap-variants/index.html",
-      "/blog/2017-10-18_gradient-checks/index.html",
-      "/blog/2017-08-07_gentle-tidy-eval/index.html"
-    ]
+    "items": []
   }
 ]

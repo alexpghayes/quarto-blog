@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-99.9.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alex Hayes">
+<meta name="dcterms.date" content="2019-05-21">
+
+<title>alex hayes - type stable estimation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G6PQFW2XSK"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="alex hayes - type stable estimation">
+<meta property="og:site-name" content="alex hayes">
+<meta name="twitter:title" content="alex hayes - type stable estimation">
+<meta name="twitter:creator" content="@alexpghayes">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">alex hayes</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">about</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html">posts</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../papers/index.html">papers</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../code/index.html">code</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../teaching/index.html">teaching</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talks/index.html">talks</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/alexpghayes"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/alexpghayes"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">type stable estimation</h1>
+            <p class="subtitle lead"></p><p>my thesis about why modeling software is by and large an enormous mess</p><p></p>
+                          <div class="quarto-categories">
+                <div class="quarto-category">statistical software</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Alex Hayes <a href="https://orcid.org/0000-0002-4985-5160" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 21, 2019</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#what-is-good-modeling-software" id="toc-what-is-good-modeling-software" class="nav-link" data-scroll-target="#what-is-good-modeling-software">What is good modeling software?</a></li>
+  <li><a href="#objects-in-play" id="toc-objects-in-play" class="nav-link" data-scroll-target="#objects-in-play">Objects in play</a></li>
+  <li><a href="#principles-for-type-stable-estimation" id="toc-principles-for-type-stable-estimation" class="nav-link" data-scroll-target="#principles-for-type-stable-estimation">Principles for type stable estimation</a></li>
+  <li><a href="#types-and-classes" id="toc-types-and-classes" class="nav-link" data-scroll-target="#types-and-classes">Types and classes</a></li>
+  <li><a href="#two-approaches-to-object-orientation" id="toc-two-approaches-to-object-orientation" class="nav-link" data-scroll-target="#two-approaches-to-object-orientation">Two approaches to object orientation</a>
+  <ul class="collapse">
+  <li><a href="#object-orientation-enables-polymorphism" id="toc-object-orientation-enables-polymorphism" class="nav-link" data-scroll-target="#object-orientation-enables-polymorphism">Object orientation enables polymorphism</a></li>
+  <li><a href="#aside-multiple-dispatch" id="toc-aside-multiple-dispatch" class="nav-link" data-scroll-target="#aside-multiple-dispatch">Aside: multiple dispatch</a></li>
+  </ul></li>
+  <li><a href="#just-say-no-to-inheritance" id="toc-just-say-no-to-inheritance" class="nav-link" data-scroll-target="#just-say-no-to-inheritance">Just say no to inheritance</a></li>
+  <li><a href="#the-bizarre-and-occasionally-beautiful-world-of-s3" id="toc-the-bizarre-and-occasionally-beautiful-world-of-s3" class="nav-link" data-scroll-target="#the-bizarre-and-occasionally-beautiful-world-of-s3">The bizarre and occasionally beautiful world of S3</a>
+  <ul class="collapse">
+  <li><a href="#willy-nilly-and-diabolical-construction-of-model-objects" id="toc-willy-nilly-and-diabolical-construction-of-model-objects" class="nav-link" data-scroll-target="#willy-nilly-and-diabolical-construction-of-model-objects">Willy-nilly and diabolical construction of model objects</a></li>
+  </ul></li>
+  <li><a href="#convenience-functions" id="toc-convenience-functions" class="nav-link" data-scroll-target="#convenience-functions">Convenience functions</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/2019-05-21_type-stable-estimation/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>This post discusses how the mathematical objects we use in formal data modeling are represented in statistical software. First I introduce these objects, then I argue that each object should be represented by a distinct type. Next I present three principles to ensure the type system is statistically meaningful. These principles suggest that existing modeling software has an overly crude type system. I believe a finer type system in statistical packages would result in more intuitive interfaces while increasing extensibility and reducing possibilities for methodological errors.</p>
+<p>Along the way, I briefly discuss the difference between a type and a class, and some of the tradeoffs we make when using object orientation for statistical modeling. After remaining language agnostic up to this point, I dive into the practical difficulties of modeling with the S3 class system from R, although I also mention Python and Julia briefly. You’ll get the most out of this post if you’ve read the chapters on <a href="https://adv-r.hadley.nz/oo.html">Object Orientation</a> in Hadley Wickham’s <em>Advanced R</em>.</p>
+</section>
+<section id="what-is-good-modeling-software" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-good-modeling-software">What is good modeling software?</h2>
+<p>Unfortunately, not all modeling code is good code<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. But what makes modeling code good? Here is what I find most important:</p>
+<ul>
+<li><strong>Correctness</strong>: The code returns computationally correct results, and this has been verified by extensive testing<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</li>
+<li><strong>Documentation</strong>: It is easy to determine what computation the code has actually performed.</li>
+<li><strong>Intuitive interface</strong>: Users can easily make the software do what they want it to do.</li>
+<li><strong>Extensibility</strong>: Researchers can extend the software to broader classes or models and build on existing work.</li>
+<li><strong>Readability</strong>: It is easy to understand the code base, such that the method can be translated into other languages or reimplemented in different manners.</li>
+<li><strong>Performance</strong>: The code runs quickly, uses minimal memory and scales to large data<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</li>
+</ul>
+<p>For the purpose of this post, extensibility turns out to be the most important.</p>
+</section>
+<section id="objects-in-play" class="level2">
+<h2 class="anchored" data-anchor-id="objects-in-play">Objects in play</h2>
+<p>Broadly speaking, there are three stages in formal data modeling:</p>
+<ol type="1">
+<li>Identification</li>
+<li>Estimation</li>
+<li>Inference</li>
+</ol>
+<p>In the identification stage, data analysts make assumptions about the data generating processing and determine which <strong>models</strong> may be appropriate for their data. They then determine which properties of those models they would like to estimate. These targets are called <strong>estimands</strong>. Both of these steps are largely conceptual work.</p>
+<p>In the estimation stage, the analyst chooses an <strong>estimator</strong> to use for each estimand. Different estimators have different statistical properties under different data generating process. Again, selecting an appropriate estimator is conceptual work. Next comes actual estimation, where the analyst uses statistical software to calculate actual estimates for their estimands of interest. This happens on the computer. Analysts typically want to know the value of a whole collection of estimands: we call the corresponding collection of estimates a <strong>fit</strong><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<p>Finally, in the inference stage, an analyst interprets the resulting fit and comes to substantive conclusions. To do so, they perform follow-up computations that combine multiple estimands together, estimate new fits and compare existing fits.</p>
+<p>To make the computational parts of this process easy for users and developers, we have to create code objects that correspond to the mathematical objects of models, estimands and estimators. Unfortunately, the distinctions between statistical objects have been widely disregarded in modeling software, resulting in mass conflation of models, estimators, and the algorithms used to compute estimators.</p>
+</section>
+<section id="principles-for-type-stable-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="principles-for-type-stable-estimation">Principles for type stable estimation</h2>
+<p>I propose the following three principles to organize statistical software:</p>
+<ol type="1">
+<li><p><strong>Provide types that correspond to <em>fits</em> and <em>fit specifications</em> </strong>. Users need to be able to specify collections of estimands, and also to specify estimators they would like to use for each estimand. In existing modeling software, estimand and estimator selection is almost always implicit and inflexible. For example, <code>stats::lm()</code> always calculates a fixed set of estimates with fixed estimators for the linear model via fixed algorithms. We should fundamentally work with <em>fit specifications</em>, declarative requests describing what to calculate, and <em>fits</em>, the collections of resulting estimates.</p></li>
+<li><p><strong>Estimate uniquely</strong>. For any given estimand, only calculate estimates with a single estimator. That is, you should never have two different estimates for the same estimand living in the same fit object. Also, fits with different sets of estimands should have different types.</p></li>
+<li><p><strong>Define methods by their required estimator inputs</strong>. If two statistical procedures operate on distinct estimators, their methods must be distinct. This requirement ensures that we do not define methods if they are not statistically meaningful.</p></li>
+</ol>
+<p>When a modeling package meets these requirements, I say that it performs type stable estimation, although this is somewhat an abuse of language. Nonetheless, I believe these principles are the minimal conditions that result in consistent statistical software. Primarily these rules suggest that we need a much finer type system for statistical objects than those currently in use. Note that these principles are not tied to any particular form of object-orientation.</p>
+</section>
+<section id="types-and-classes" class="level2">
+<h2 class="anchored" data-anchor-id="types-and-classes">Types and classes</h2>
+<p>A <strong>type</strong> is an abstract definition of the kinds of operations you can perform on an object<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. A <strong>class</strong> is an implementation of a <strong>type</strong>. I’m advocating for a type system with statistically meaningful types, together with type stability. Type stability means that “you can predict the output type based only on the types of its inputs”, to paraphrase the <a href="https://principles.tidyverse.org/out-type-stability.html">tidyverse principles</a>. The idea is that we want to design our types to represent the modeling problem space, so that logic errors become easily identifiable type mismatches<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
+<p>I’ve phrased my principles in terms of types rather than classes because the particular implementations matter less than the contract that describes how those objects work. Notably, I am <em>not</em> advocating for static typing or type safety.</p>
+</section>
+<section id="two-approaches-to-object-orientation" class="level2">
+<h2 class="anchored" data-anchor-id="two-approaches-to-object-orientation">Two approaches to object orientation</h2>
+<p>To implement types, we need to use some form of object oriented programming. Recall from <em>Advanced R</em> the two main approaches to object-oriented programming:</p>
+<blockquote class="blockquote">
+<ul>
+<li>In encapsulated OOP, methods belong to objects or classes, and method calls typically look like <code>object.method(arg1, arg2)</code>. This is called encapsulated because the object encapsulates both data (with fields) and behaviour (with methods), and is the paradigm found in most popular languages.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>In [generic function] OOP, methods belong to generic functions, and method calls look like ordinary function calls: <code>generic(object, arg2, arg3)</code>. This is called functional because from the outside it looks like a regular function call, and internally the components are also functions.</li>
+</ul>
+</blockquote>
+<p>In practice, however, we do not have much choice at all. Most languages only provide first class support for a single form of object orientation. Python primarily supports encapsulated OOP. R and Julia primarily support functional OOP. This last bit isn’t quite correct, as R provides support for encapsulated OOP via <code>R6</code> classes, but there is a long standing tradition of functional OOP for modeling. In Julia you can recreate encapsulated OOP as well, but again, this type of code is not idiomatic to the best of my knowledge<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</p>
+<p>Personally I’m convinced modeling methods should belong to generic functions, not classes, but again, it’s a bit of a moot point<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>.</p>
+<section id="object-orientation-enables-polymorphism" class="level3">
+<h3 class="anchored" data-anchor-id="object-orientation-enables-polymorphism">Object orientation enables polymorphism</h3>
+<p>While modeling software makes use of object orientation, I want to point out that the motivation is often different from traditional reasons. One classic take motivates object orientation by arguing that classes allow developers to make fields private. This forces developers to use the class interface, decoupling interface from implementation and (theoretically) making it easier to reason about complex systems.</p>
+<p>In the modeling contexts, our motivation is different, and we use object orientation primarily to take advantage of polymorphism<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>. We do the same statistical computations over and over, on slightly different objects. Think about prediction. We do prediction with literally thousands of different models. Polymorphism solves an interface problem more than anything else, allowing <code>predict()</code> to mean “calculate <span class="math inline">\(\mathbb{E}(Y|X^*)\)</span>” regardless of the underlying model.</p>
+<p>Imagine the modeling world without polymorphism. Now you need a different <code>predict_linear_model()</code>, <code>predict_logistic_reg()</code>, etc, etc, and you immediately end up with a redundant and polluted namespace. From this point of view, classes are only attributes that enable polymorphic dispatch.</p>
+<p>If we don’t use some sort of object-orientation, we effectively reduce modeling code to functions that return collections of estimates, and functions that operate on those estimates. If you’ve used R long enough, you’ve almost certainly come across professor code that does exactly this: it throws a bunch of matrices and vectors into a list and calls it a day<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>. This also makes it near impossible to extend the method: how do you distinguish between those estimates and an arbitrary collection of arrays in a list?</p>
+</section>
+<section id="aside-multiple-dispatch" class="level3">
+<h3 class="anchored" data-anchor-id="aside-multiple-dispatch">Aside: multiple dispatch</h3>
+<p>In my ideal world, statistical methods would not only correspond to functional OOP methods for generic functions, but the generic functions would allow for multiple dispatch. Multiple dispatch means that generic functions determine which method to call based on all of their arguments, rather than just the first argument, as is the case with R’s S3 class system.</p>
+<p>In fact, both R and Julia have multiple dispatch. In R, multiple dispatch is part of the S4 class system (R has three total classes systems if you’ve been keeping track: S3, R6 and S4). But pretty much no one enjoys S4 except geneticists with stockholm syndrome. Also, S4 is too complicated to establish as a broad standard<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>.</p>
+<p>Julia, however, has excellent support for multiple dispatch, and makes heavy use of multiple dispatch idioms throughout the language. See the glorious <a href="https://github.com/JuliaStats/Distributions.jl"><code>Distributions.jl</code></a> package for some examples of how pleasant this can make things. At some point I may give Julia a more serious try, but right now the R community is too welcoming and the Julia statistics ecosystem too nascent for me to do much more than keep a half-hearted eye on the language<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>.</p>
+</section>
+</section>
+<section id="just-say-no-to-inheritance" class="level2">
+<h2 class="anchored" data-anchor-id="just-say-no-to-inheritance">Just say no to inheritance</h2>
+<p>Most programmers who I talk to have similar opinions about encapsulated OOP: (1) it’s magical when you get it right, (2) it’s awful when you get it wrong, and (3) it’s pretty damn hard to get it right. Typically, we think about inheritance as a mechanism for reusing code and following that sweet, sweet mandate that we Don’t Repeated Ourselves<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>. The primary tool we use to prevent repeated code is inheritance.</p>
+<p>The issue with inheritance is that it works best in closed contexts, when you know what you’d like to do ahead of time, and potential changes to the fundamental logic of workflow and computation are small.</p>
+<p>This is decidedly not the case with statistical modeling. Researchers are constantly coming up with new techniques that operate outside the current modeling idioms and extending existing models in unexpected ways.</p>
+<p>As a result, it’s hard to make encapsulated model objects extensible<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>. Consider the case of a researcher who comes up with a new diagnostic for linear regression. How should they implement their method in an encapulated OOP modeling world?</p>
+<p>One option is for the researcher to open pull requests to popular packages the define linear regression classes. This creates a lot of extra friction for the researcher, who doesn’t want to deal with the idiosyncracy of those packages or delays in getting pull requests approved, or the difficulty of developing the software privately before the paper is released, etc. Also, how many packages should they make pull requests to? All of the ones that implement linear regression? Only some? Which ones?</p>
+<p>A second option is for the researcher to define a new class <code>B</code> themselves, and to either subclass or superclass the existing implementation <code>A</code>. Suppose they subclass <code>A</code>. First observe that doing so will violate the principle of unique estimation if they are proposing a new estimator for an existing estimand.</p>
+<p>But even if the researcher has come up with an entirely new estimand, when someone goes to extend class <code>B</code>, what should they inherit from? The original class? The extended class? Both? As this chain of extension continues, it probably makes less and less sense for these classes to share code, and in any case you quickly find yourself in the hellscape of multiple inheritance.</p>
+<p>A third, and more palatable option, is to inherit from an interface or some notion of an abstract class. I’m curious to explore this idea more, but haven’t spent much time on it just yet.</p>
+</section>
+<section id="the-bizarre-and-occasionally-beautiful-world-of-s3" class="level2">
+<h2 class="anchored" data-anchor-id="the-bizarre-and-occasionally-beautiful-world-of-s3">The bizarre and occasionally beautiful world of S3</h2>
+<p>If anyone from the Julia community is reading this, this is the point where I apologize, because I haven’t used Julia at all for modeling, and so my discussion of generic function OOP for modeling is really just some commentary on using R’s S3 class system for modeling. Buckle up, it’s a wild ride.</p>
+<p>The primary benefit of S3 is that it is extensible. This is also the primary downside of S3. For example, if you come from an encapsulated OOP background, you will probably be horrified to learn that R lets you set the class of any object on the fly, like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get a collection of OLS related estimates</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># from the linear model</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(hp <span class="sc">~</span> mpg <span class="sc">+</span> am, <span class="at">data =</span> mtcars)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "lm"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># oh god the horror</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(fit) <span class="ot">&lt;-</span> <span class="st">"curious_george"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "curious_george"</code></pre>
+</div>
+</div>
+<p>There is also no such thing as a private field in S3, so you can modify any element of an S3 object at will. For the most part I find the generic functions of S3 to be a pleasant fit for statistical modeling, but I’d like to highlight some of the anti-patterns I come across more frequently.</p>
+<section id="willy-nilly-and-diabolical-construction-of-model-objects" class="level3">
+<h3 class="anchored" data-anchor-id="willy-nilly-and-diabolical-construction-of-model-objects">Willy-nilly and diabolical construction of model objects</h3>
+<p>Since there are no formal constructors for S3 objects, you have very few guarantees about S3 objects you come across in wild. Package authors often create S3 objects in different ways in different places<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>. Then it’s a fun game of Russian roulette for downstream users and developers to figure out which version of the object they actually got. Trying to write reliable code to process and extend these objects is fraught with difficulty since you’re trying to build on top of a house of cards.</p>
+<p>In R <code>lm</code> objects are a canonical example. A bunch of people wanted to replicate the functionality of <code>lm</code> objects without writing their own methods, so they just subclassed <code>lm</code>. This works to varying degrees, but makes <code>lm</code> objects difficult to reason about.</p>
+<p>Similarly, at some point <code>anova()</code> went from a function for calculating F-tests to a general purpose tool for model comparison. Everybody and their grandma has come up with something vaguely F-test or AIC related and slammed it into the resulting <code>anova</code> object. Try to manage all the possible results is not fun. You can see how <code>broom</code> tries to <code>tidy()</code> <code>anova</code> objects <a href="https://github.com/tidymodels/broom/blob/master/R/stats-anova-tidiers.R#L31">here</a>. Every time I try this and it actually works I am somewhat astonished.</p>
+<p>The solution to this problem is to use <a href="https://adv-r.hadley.nz/s3.html#s3-classes">constructors and validators</a>, as described in <em>Advanced R</em>. I highly, highly recommend reading that chapter carefully. Hopefully this advice will start filtering down and bring some sanity to the madness. I suspect there’ll be mixed success, mostly because doing S3 right takes a fair amount of work, and nobody has time for that.</p>
+<p>Also note that using validators doesn’t actually go very far toward solving the S3 object construction issue in modeling. Once you have estimates in hand, there is often no way to tell which estimator they came from. So you could do something like construct an <code>lm</code> object using HC1 covariance estimates and the resulting object can be exactly the same in terms of fields and types as a true <code>lm</code> object, just with slightly different values for the covariance matrix. There’s no way to detect this (to my knowledge) without knowing how a given object was constructed.</p>
+</section>
+</section>
+<section id="convenience-functions" class="level2">
+<h2 class="anchored" data-anchor-id="convenience-functions">Convenience functions</h2>
+<p>One common pattern in R is to allow users to fit many different models via a single function, such as <code>glm()</code>, <code>lme4::glmer()</code>, <code>brms::brm()</code>, etc. I refer to these functions as convenience functions. Sometimes these functions only allow users to get fits from a single estimator per model (<code>glm()</code> and <code>brms::brm()</code>), sometimes users can get fits corresponding to multiple estimators (<code>lme4::lmer()</code> and <code>stats::arima()</code>) and sometimes both estimators and models are allowed to vary (<code>metafor::rma()</code>).</p>
+<p>The practical implications of this have come up a lot in <code>broom</code>, where having a single class represent fits from multiple models (or estimators) somewhat frequently leads to a headache.</p>
+<p>I’m curious to think more about this approach. On one hand, this sort of high-level interface is undeniably useful and user-friendly. Putting “inferentially close” models close to each other in user-interface space is a smart idea. On the other hand, the resulting objects are often quite difficult to program with and extend. Using constructors would go a long way towards making things nicer.</p>
+<p>This is also one circumstance where I think inheritance is a good idea. It’s useful to give objects constructed from the same convenience function a consistent class. Most R packages authors do this. It less common to respect estimand uniqueness and give the resulting objects meaningful subclasses<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>. For example, poisson and binomial GLMs are both <code>glm</code> objects, which makes it difficult to write methods extending poisson GLMs but not binomial GLMs.</p>
+<p>If you are a package author exporting convenience functions, I strongly encourage you to: use a class (<code>glm</code>) to prevent code duplication, but also use give objects meaningful subclasses (<code>poisson_fit</code>, <code>binomial_fit</code>) to enable other people to program on top of the results.</p>
+</section>
+<section id="takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
+<ol type="1">
+<li>We should be thinking in terms of estimators, estimands and unique estimation, but we aren’t.</li>
+<li>The extensibility of modeling code depends heavily on OOP design decisions.</li>
+<li>Current practices in the S3 modeling world aren’t quite enough to build reliable software on top of. That said, S3 is still probably better than S4.</li>
+</ol>
+<p>Thanks to Amos Elberg, Achim Zeileis, Matthieu Stigler, Keiran Thompson, Adam Kelleher, Max Kuhn and Colin Carroll for an interesting discussion on OOP for modeling, as well as the numerous <code>broom</code> contributors who discussed object orientation <a href="https://github.com/tidymodels/broom/issues/663">in this <code>broom</code> issue</a>. I encourage interested parties to take a read for more concrete examples of some of the principles I’ve discussed here.</p>
+<p>You can also watch me struggle to articulate related ideas about estimand uniqueness in <code>parsnip</code> issues <a href="https://github.com/tidymodels/parsnip/issues/19">#19</a> and <a href="https://github.com/tidymodels/parsnip/issues/54">#54</a>, although my thinking has changed somewhat since then. I also include more concrete examples of types and methods we should differentiate between in those issues.</p>
+<p>I would also like to pass on Colin Carroll’s recommendation of <em>A Philosophy of Software Design</em> by John Ousterhout, which is excellent.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1" role="doc-endnote"><p>In practice, you should be more suspicious of modeling code than other types of code, because the people who write statistical code often have limited knowledge of software engineering. <a href="https://notstatschat.rbind.io/2019/02/04/how-do-you-tell-what-packages-to-trust/">How do you tell what packages to trust?</a> by Thomas Lumley has a short but informative discussion aimed at helping users make smart choices.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Here I mean that code computes what it promises to compute. This does not imply in any way inferential correctness, which I take to be the user’s responsibility.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>I am sure that a large group finds it controversial that I have placed performance lowest on this list of desirables. I have done this for several reasons. The first is you get most bang for your buck by enabling data analysts to work with the first 1-2 Gb of data. Working with small data is much lower on the <a href="https://hackernoon.com/the-ai-hierarchy-of-needs-18f111fcc007">data science heirarchy of needs</a> than working with large data.</p>
+<p>Beyond this, making modeling software acceptably fast on more than a gigabyte of data is a serious software engineering task. Statisticians and other researchers typically have minimal background in software engineering, and it is inefficient for them to do this work. Instead they should focus on an initial implementation that (1) works on small to medium-ish data, and (2) can be easily translated to a more performant implementation.</p>
+<p>Third, statistical methods are often designed with small to medium data in mind. It doesn’t make sense to develop performant implementations for these techniques if they are statistically inappropriate, unnecessary or computationally inefficient to apply at scale.</p>
+<p>Finally, a persistent belief in the open source community is that users select software primarily based on technical merit and performance. In my opinion, this is not true. I think users end up using software for a myriad of chaotic reasons, and I’m increasingly convinced a kind and welcoming community is more important than anything else. Hadley Wickham has <a href="https://twitter.com/hadleywickham/status/1018013583840428032">commented</a> that he thinks community and technical merit interact in a multiplicative fashion.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>To be slightly more formal, here a model is a set of probability distributions, an estimand is functional (property) of a statistical model, an estimator is a function from data into the value space of an estimand, and an algorithm is a set of instructions a computer can carry out describing how to evaluate an estimator at a particular point. I have another post in the works that goes into much more detail differentiating between these objects.</p>
+<p>Note that the machine learning community frequently refers to random forests, etc, as models. This is something of an abuse of language – it’s more accurate to think of a random forest as an estimator for the conditional mean (which has corresponding estimand <span class="math inline">\(\mathbb{E}(Y|X)\)</span>), under an implicit i.i.d. model.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>This definition may be somewhat foreign for R users, since R doesn’t really have a notion of a type. In Python, you can think of abstract classes as defining types. Similarly, classes with virtual methods define something akin to a type in C++, as do interfaces in Java. In R’s S3 class system, there is no way to define a type, you just have to implement a class (S4 and R6 do allow abstract classes, however).<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>First: this is blatant plagiarism of this <a href="https://softwareengineering.stackexchange.com/a/59614/336870">SO answer</a>.</p>
+<p>Second: John Myles White <a href="http://www.johnmyleswhite.com/notebook/2016/12/12/type-safety-and-statistical-computing/">previously explored</a> what he called “statistical type safety”, where he defined type safety with the following:</p>
+<blockquote class="blockquote">
+<p>A language is type-safe if the only operations that can be performed on data in the language are those sanctioned by the type of the data.</p>
+</blockquote>
+<p>He then envisioned a type system for data (think: random sample from controlled experiment vs observational data vs …), where you could only do statistically justified operations on each particular type of observation.</p>
+<p>I think this is an interesting and appealing idea, but suspect it is also a doomed one, mostly because statisticians themselves can’t agree on which methods are appropriate in many cases. And even if you could define an inferentially safe type system for clean data, I doubt you could extend it to dirty data.</p>
+<p>Anyway, I mention this all because you should go read the post, and also to point out that my goal is not quite so lofty. I don’t want a type system that describes data, but rather a type system that describes estimation. I think this is several orders of magnitude easier, and an accomplishable task. I give up on the goal of inferential correctness and am instead interested in understandability and extensibility as my major goals.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>See <a href="https://stackoverflow.com/questions/33755737/julia-oop-or-not">this SO question</a> for some discussion of encapsulated OOP in Julia.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>There is a slowly growing trend of R6 modeling packages in R. In all honesty, I find this (also R6 in general) rather distasteful on purely aesthetic grounds. If you really need reference semantics, R6 may make sense, but it’s a good idea to wrap the underlying R6 object in an S3 burrito. This matches existing modeling conventions and makes code more readable.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>R, Python and Julia don’t really allow users to make fields private, although there are some limited exceptions. You may or may not find this horrifying depending on your background.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>If you are curious how to write object-oriented R, I again recommend Hadley Wickham’s <a href="https://adv-r.hadley.nz/oo.html"><em>Advanced R</em></a>. I’m not versed enough in Python and Julia to recommend resources, but would love to get suggestions!<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>You can <a href="https://stackoverflow.com/questions/12100856/combining-s4-and-s3-methods-in-a-single-function">mix S3 and S4</a>, but it isn’t pretty, and it’s unrealistic to expect most researchers implementing new methods to have the know-how, making S4 unviable.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>I do suspect that now would be the time for an enterprising young programmer to make the switch to Julia and try to build new statistical software there before they copy design patterns from R and Python and inherent a mountain of unnecessary technical debt.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p>I should note that I’m increasingly convinced that repeating yourself is the correct solution in many contexts when you’re developing modeling code. Modeling code does not form a large interconnected system – each estimator typically stands on its own, and interacts with very few other estimators. Code sharing may prevent repeated code when computations are repeated in multiple estimators, but it’s a bad idea to tie the implementations together then the calculations are for conceptual distinct objects. This has come up a lot in <code>broom</code>, where ramming everything through <code>tidy.lm()</code> has turned <code>tidy.lm()</code> into a fragile hairball.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14" role="doc-endnote"><p>I should add that extensibility is especially important in modeling contexts by virtual of the fact modeling software is often written by professors who have neither the time, inclination nor skills to maintain their work over the long run. A fairly common occurence is for a professor to produce a single release that later gets discovered, patched and turned in a healthy code base by someone who needs to use the technique on a regular basis. By the time this has happen, the original researcher has often moved on to new topics.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15" role="doc-endnote"><p>Creating model objects with <code>structure()</code> is frequently a code smell for this.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16" role="doc-endnote"><p>Somewhat miraculously, the only package I know of that gives objects created with a convenience function informative subclasses is <code>glmnet</code>. Well, <code>parsnip</code> does as well, but mostly because I harangued Max into it.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{hayes2019,
+  author = {Alex Hayes},
+  title = {Type Stable Estimation},
+  date = {2019-05-21},
+  url = {https://www.alexpghayes.com/post/2019-05-21_type-stable-estimation},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-hayes2019" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Alex Hayes. 2019. <span>“Type Stable Estimation.”</span> May 21, 2019.
+<a href="https://www.alexpghayes.com/post/2019-05-21_type-stable-estimation">https://www.alexpghayes.com/post/2019-05-21_type-stable-estimation</a>.
+</div></div></section></div></main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

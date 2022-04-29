@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-99.9.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alex Hayes">
+<meta name="dcterms.date" content="2020-05-04">
+
+<title>alex hayes - using the data twice</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G6PQFW2XSK"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="alex hayes - using the data twice">
+<meta property="og:site-name" content="alex hayes">
+<meta name="twitter:title" content="alex hayes - using the data twice">
+<meta name="twitter:creator" content="@alexpghayes">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">alex hayes</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">about</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html">posts</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../papers/index.html">papers</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../code/index.html">code</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../teaching/index.html">teaching</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talks/index.html">talks</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/alexpghayes"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/alexpghayes"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">using the data twice</h1>
+            <p class="subtitle lead"></p><p>my best attempt at explaining why frequentism is about sampling procedures</p><p></p>
+                          <div class="quarto-categories">
+                <div class="quarto-category">math stat</div>
+                <div class="quarto-category">foundations of stat</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Alex Hayes <a href="https://orcid.org/0000-0002-4985-5160" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 4, 2020</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-setting-the-key-idea" id="toc-the-setting-the-key-idea" class="nav-link active" data-scroll-target="#the-setting-the-key-idea">The setting &amp; the key idea</a></li>
+  <li><a href="#what-does-using-the-data-twice-mean" id="toc-what-does-using-the-data-twice-mean" class="nav-link" data-scroll-target="#what-does-using-the-data-twice-mean">What does “using the data twice” mean?</a></li>
+  <li><a href="#sequential-decision-making" id="toc-sequential-decision-making" class="nav-link" data-scroll-target="#sequential-decision-making">Sequential decision making</a></li>
+  <li><a href="#slight-generalization-a-two-stage-estimation-problem" id="toc-slight-generalization-a-two-stage-estimation-problem" class="nav-link" data-scroll-target="#slight-generalization-a-two-stage-estimation-problem">Slight generalization: a two-stage estimation problem</a></li>
+  <li><a href="#just-use-the-sampling-distribution-of-the-procedure-they-said.-it-will-be-easy-they-said." id="toc-just-use-the-sampling-distribution-of-the-procedure-they-said.-it-will-be-easy-they-said." class="nav-link" data-scroll-target="#just-use-the-sampling-distribution-of-the-procedure-they-said.-it-will-be-easy-they-said.">Just use the sampling distribution of the procedure, they said. It will be easy, they said.</a></li>
+  <li><a href="#dealing-with-procedures-in-real-life" id="toc-dealing-with-procedures-in-real-life" class="nav-link" data-scroll-target="#dealing-with-procedures-in-real-life">Dealing with procedures in real life</a></li>
+  <li><a href="#the-end" id="toc-the-end" class="nav-link" data-scroll-target="#the-end">The End</a>
+  <ul class="collapse">
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/2020-05-04_using-the-data-twice/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Berna Devezer, Danielle Navarro, Joachim Vandekerckhove, and Erkan Ozge Buzbas recently posted a <a href="http://biorxiv.org/lookup/doi/10.1101/2020.04.26.048306">pre-print</a>, <span class="citation" data-cites="devezer_case_2020">Devezer et al. (<a href="#ref-devezer_case_2020" role="doc-biblioref">2020</a>)</span>, responding to various claims within the open science community<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. In particular, they explore the following claims:</p>
+<ol type="1">
+<li><p>reproducibility of an effect can be used to demarcate scientific claims and non-scientific claims,</p></li>
+<li><p>data should not be used twice in a data analysis, and</p></li>
+<li><p>exploratory data analysis is characterized by poor statistical practice.</p></li>
+</ol>
+<p>I find the arguments presented against these claims compelling, and anticipate directing many people to <span class="citation" data-cites="devezer_case_2020">Devezer et al. (<a href="#ref-devezer_case_2020" role="doc-biblioref">2020</a>)</span> in the future. This post is largely a re-expression of some ideas in their paper in language that feels slightly more natural to me.</p>
+<section id="the-setting-the-key-idea" class="level2">
+<h2 class="anchored" data-anchor-id="the-setting-the-key-idea">The setting &amp; the key idea</h2>
+<p>In a data analysis, we observe a sample <span class="math inline">\(X_1, ..., X_n\)</span> and compute some estimate from the sample. The properties of the estimate depend on every step we take to report our final result; for example, if we fit a linear regression, look at residuals, add a spline term, and report predictions from the model with the spline term, these decisions influence the sampling distribution of the final predictions.</p>
+<p>The fact that our entire procedure matters leads to a lot of confusion.</p>
+</section>
+<section id="what-does-using-the-data-twice-mean" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-using-the-data-twice-mean">What does “using the data twice” mean?</h2>
+<p>While reading <span class="citation" data-cites="devezer_case_2020">Devezer et al. (<a href="#ref-devezer_case_2020" role="doc-biblioref">2020</a>)</span> I found it useful to think about three interpretations of the phrase “using the data twice”.</p>
+<ol type="1">
+<li><p><strong>Sequential decision making</strong>. A data analyst computes an estimate, and uses it to inform the next step of their data analysis. This is in my mind the most traditional meaning of “using the data twice” (although for bayesians “using the data twice” might more commonly mean using the data to <a href="https://statmodeling.stat.columbia.edu/2016/03/25/28321/">pick your priors</a>).</p></li>
+<li><p><strong>Deriving new estimators by conditioning an estimating estimator on another statistic</strong>. There is a classic result in mathematical statistics that says if you calculate <span class="math inline">\(\mathbb E(U|T)\)</span> where <span class="math inline">\(U\)</span> is unbiased and <span class="math inline">\(T\)</span> is sufficient, good things happen. This can be thought of as using the data twice.</p></li>
+<li><p><strong>Reusing data during computations</strong>. For example, as you might with in-sample risk estimation or empirical bayes. <span class="citation" data-cites="devezer_case_2020">Devezer et al. (<a href="#ref-devezer_case_2020" role="doc-biblioref">2020</a>)</span> isn’t about computational data reuse, but I kept reading “using the data twice” and thinking computationally (especially with the T-statistic example). I was better able to follow the paper after blocking out “computational data reuse” as a separate thing.</p></li>
+</ol>
+<p>I am going to focus on sequential decision making.</p>
+</section>
+<section id="sequential-decision-making" class="level2">
+<h2 class="anchored" data-anchor-id="sequential-decision-making">Sequential decision making</h2>
+<p>Let’s first consider an example that most people would consider an obvious and unacceptable “double use” of data. Suppose we do a one sample T-test, but we only report the test statistic (call it <span class="math inline">\(T_1\)</span>) if the p-value is less than 0.05. If the p-value is greater than 0.05, we will instead report some other more significant test statistic <span class="math inline">\(T_2\)</span>.</p>
+<p>Under a two-sided alternative, the p-value of <span class="math inline">\(T_1\)</span> is <span class="math inline">\(p = 1 - \phi_{n-1}(|T_1|) + \phi_{n-1}(-|T_1|)\)</span> where <span class="math inline">\(\phi_n\)</span> is cdf of a T-distribution with <span class="math inline">\(n\)</span> degrees of freedom. Now our overall, actual test statistic is</p>
+<p><span class="math display">\[
+   T = T_1 \, \mathbf 1(p &lt; 0.05) + T_2 \, \mathbf 1(p \ge 0.05),
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf 1\)</span> denotes an indicator function. If you decide between reporting <span class="math inline">\(T_1\)</span> or <span class="math inline">\(T_2\)</span> based on <span class="math inline">\(p\)</span> with a threshold of 0.05, you are using this test statistic. If you compute <span class="math inline">\(T\)</span> but report that you did <span class="math inline">\(T_2\)</span>, not realizing that entire procedure to arrive at <span class="math inline">\(T_2\)</span> is important, someone else will go to calculate your p-value as</p>
+<p><span class="math display">\[
+  P(|T_2(X_1, ..., X_n)| &gt; T_2(x_1, ..., x_n))
+\]</span></p>
+<p>where <span class="math inline">\(T_2(x_1, ..., x_n)\)</span> describes the observed test statistic and <span class="math inline">\(T_2(X_1, ..., X_n)\)</span> is the random variable corresponding to <span class="math inline">\(T_2\)</span>. But really, they need to calculate the p-value as</p>
+<p><span class="math display">\[
+  P(|T(X_1, ..., X_n)| &gt; T(x_1, ..., x_n))
+\]</span></p>
+<p>and so they will be <em>using the wrong p-value</em>, and they will think they are doing <span class="math inline">\(T_2\)</span>, a test with some nice set of properties, when in fact they are doing the test <span class="math inline">\(T\)</span>, which may not have any nice properties at all, and in fact is likely a very bad test from an inferential perspective, at least based on typical choices of <span class="math inline">\(T_2\)</span> amongst social scientists doing null hypothesis testing.</p>
+</section>
+<section id="slight-generalization-a-two-stage-estimation-problem" class="level2">
+<h2 class="anchored" data-anchor-id="slight-generalization-a-two-stage-estimation-problem">Slight generalization: a two-stage estimation problem</h2>
+<p>Suppose we want to estimate some parameter <span class="math inline">\(\theta\)</span> from a sample <span class="math inline">\(X_1, ..., X_n\)</span>. First we will compute some point estimate <span class="math inline">\(T^{(1)}\)</span>. We will look at <span class="math inline">\(T^{(1)}\)</span> and make some decision based on <span class="math inline">\(T^{(1)}\)</span>. In particular, we will choose one of <span class="math inline">\(k\)</span> estimators <span class="math inline">\(T^{(2)}_1, ..., T^{(2)}_k\)</span> and report the estimate from this estimator. We have some decision function, <span class="math inline">\(f\)</span>, that, given <span class="math inline">\(T^{(1)}\)</span>, we use to choose which of the second stage estimators we will report. In particular, if <span class="math inline">\(T^{(1)} \in A_j\)</span>, where <span class="math inline">\(A_1, ..., A_k\)</span> partition the space of possible estimates from <span class="math inline">\(T^{(1)}\)</span>, we will report results from the second stage estimator <span class="math inline">\(T^{(2)}_j\)</span>. So our overall estimator is given by</p>
+<p><span class="math display">\[
+  T = T^{(2)}_{f(T^{(1)})} = T^{(2)}_1 \, \mathbf 1( T^{(1)} \in A_1) +  
+    ... + T^{(2)}_k \, \mathbf 1( T^{(1)} \in A_k).
+\]</span></p>
+<p>The common admonition against using the data twice is directed at researchers who use the <em>unconditional</em> sampling distribution of whichever <span class="math inline">\(T^{(2)}_j\)</span> they selected. Gelman made this mistake famous on his blog and in <span class="citation" data-cites="gelman_statistical_2014">Gelman and Loken (<a href="#ref-gelman_statistical_2014" role="doc-biblioref">2014</a>)</span>, where he defined the “garden of forking paths” in data analysis. <span class="citation" data-cites="mayo_statistical_2018">Mayo (<a href="#ref-mayo_statistical_2018" role="doc-biblioref">2018</a>)</span> refers to this “biasing selection effects.”</p>
+<p>So how do we do correct inference when our estimation procedure involves sequential decision making? There are two possibilities: (1) we can use sampling distribution of <span class="math inline">\(T\)</span> (i.e.&nbsp;the sampling distribution of the entire procedure), or (2) we can use the sampling distribution of <span class="math inline">\(T | \{T^{(1)} = t_1\}\)</span>, which equals the sampling distribution of <span class="math inline">\(T^{(2)}_j | \{T^{(1)} = t_1\}\)</span> (i.e.&nbsp;the sampling distribution of the final estimator we selected, conditional on selecting that estimator).</p>
+<p>I had a major confusion on my first reading of the paper when I assumed that we would only ever want to do inference unconditionally on the whole procedure (i.e.&nbsp;using <span class="math inline">\(T\)</span>). In particular, I misread <span class="citation" data-cites="devezer_case_2020">Devezer et al. (<a href="#ref-devezer_case_2020" role="doc-biblioref">2020</a>)</span> as claiming that the unconditional distribution of <span class="math inline">\(T\)</span> has nice properties. This is neither true, nor the claim they make! <span class="citation" data-cites="devezer_case_2020">Devezer et al. (<a href="#ref-devezer_case_2020" role="doc-biblioref">2020</a>)</span> instead makes the point that <em>if you condition <span class="math inline">\(T\)</span> on the decisions you made</em> (i.e.&nbsp;use <span class="math inline">\(T^{(2)}_j | \{T^{(1)} = t_1\}\)</span> for inference) you can still do inference, and if you made decisions based on nice statistics the conditioning might even improve the properties of your estimator<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>It’ll probably help to be a bit more concrete about the difference between correct unconditional inference and correct conditional inference. Consider backwards stepwise regression. In backwards stepwise regression, we fit a linear model on the full original data with OLS, and then iteratively remove terms with the largest p-value until all the remaining p-values are less than <span class="math inline">\(\alpha = 0.05\)</span>. Suppose our data has three predictors <span class="math inline">\(X_1, X_2\)</span> and <span class="math inline">\(X_3\)</span>, and we run backwards stepwise regression. In the full model <span class="math inline">\(X_3\)</span> has the largest p-value, and we remove it. Then we refit on <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> and both terms have p-values less than 0.05, so we stop and report this final model.</p>
+<p>Correct conditional inference in this case will produce probabilities statements like:</p>
+<blockquote class="blockquote">
+<p>Under a Gaussian linear model with three predictors <span class="math inline">\(X_1, X_2\)</span> and <span class="math inline">\(X_3\)</span>, if we perform backwards stepwise regression and remove <span class="math inline">\(X_3\)</span> from the model, and then stop, the <span class="math inline">\(\alpha\)</span>-level confidence set for the model coefficients returned from the final OLS model will have coverage level <span class="math inline">\(\gamma_1\)</span>.</p>
+</blockquote>
+<p>Correct unconditional inference in this case will produce probabilities statements like:</p>
+<blockquote class="blockquote">
+<p>Under a Gaussian linear model with three predictors <span class="math inline">\(X_1, X_2\)</span> and <span class="math inline">\(X_3\)</span>, the <span class="math inline">\(\alpha\)</span>-level confidence set for the model coefficients returned from the final OLS model will have coverage level <span class="math inline">\(\gamma_2\)</span>.</p>
+</blockquote>
+<p>Personally I find the unconditional inference much more useful than the conditional inference. For this particular example, note that both <span class="math inline">\(\gamma_1\)</span> and <span class="math inline">\(\gamma_2\)</span> will be atrocious, but hopefully this illustrates the general point about interpretation<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>As further examples, the Benjamini-Hochberg procedure results in <em>unconditional</em> false discovery control, whereas selective inference<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> can only be interpreted <em>conditional</em> on the selected penalty parameter <span class="math inline">\(\lambda\)</span>.</p>
+</section>
+<section id="just-use-the-sampling-distribution-of-the-procedure-they-said.-it-will-be-easy-they-said." class="level2">
+<h2 class="anchored" data-anchor-id="just-use-the-sampling-distribution-of-the-procedure-they-said.-it-will-be-easy-they-said.">Just use the sampling distribution of the procedure, they said. It will be easy, they said.</h2>
+<p>The real problem is that data analysts might go through many, many decisions before arriving at some final estimate, but the mental process of selecting amongst several competing estimators is not well defined. If a data analyst looks at a residual plot and judges the residuals to be fine based on some gut intuition, this “decision” cannot be encoded formally. If you ask the analyst “what procedure did you follow to get this estimate?” so that you can evaluate the properties of that procedure, most analysts can’t tell you. Humans behaviors do not follow well-specified algorithms, or at least not algorithms that we can elicit. This means that frequentist properties of most procedures carried out by humans aren’t well-defined.</p>
+<p>Even though data analytic procedures may not be well-defined, they can definitely be good! For example, consider updating a model after investigating model diagnostics, a poorly defined procedure that most statisticians nonetheless find essential.</p>
+<p>Pre-registration essentially tries to fix ill-definedness of procedures. Pre-registration asks people to describe the procedure they use to arrive at an estimate so that other people can evaluate the properties of that procedure. This transparency is admirable, and in general, I am fully on board with pushing the scientific community to specify more explicitly the procedures they are using to analyze data. But pre-registration only applies to situations when scientists can follow fixed procedures to learn new things.</p>
+<p>Critiques of pre-registration often point out that if you require data analytic procedures to be strictly algorithmic, you give up on a large swathe of (heretofore productive!) science. There is also the fact that knowing the sampling distribution and properties of an estimator does not mean that those properties are good, or that inference based on that estimator is warranted.</p>
+</section>
+<section id="dealing-with-procedures-in-real-life" class="level2">
+<h2 class="anchored" data-anchor-id="dealing-with-procedures-in-real-life">Dealing with procedures in real life</h2>
+<p>Statisticians have known that the sampling distribution of the entire procedure matters for a long time. Current practice is a mixture of recognizing this fact when there’s some solution with provably nice properties, and ignoring it, appealing to intuition, or hoping it doesn’t matter when working the sampling distribution of the entire procedure is intractable.</p>
+<p>Here are some ways statisticians handle the mismatch between sampling distributions of procedures and unconditional sampling distributions of individual estimators:</p>
+<ol type="1">
+<li><p>Being aware of the (potentially large) discrepancy between the sampling distributions, or interpreting results as conditional on decisions made by the data analyst.</p></li>
+<li><p>Heuristically trying to limit the dependence between decisions during data analysis and the measures of interest.</p></li>
+<li><p>Assessing the stability of a inference by comparing results from a variety of procedures (i.e.&nbsp;multiverse analysis).</p></li>
+<li><p>Simulating or bootstrapping entire procedures if possible to assess unconditional properties of the properties.</p></li>
+<li><p>Transparently describing the entire data analytic procedure, as well as releasing code and data.</p></li>
+</ol>
+<p>Frank Harrell’s <em>Regression Modeling Strategies</em> deserves special note for providing practical advice on performing inference using the sampling distribution of the entire estimation procedure, and I believe is famous for being one of the first textbooks to emphasize the importance of procedures (<span class="citation" data-cites="harrell_regression_2015">Harrell (<a href="#ref-harrell_regression_2015" role="doc-biblioref">2015</a>)</span>). Another great textbook that carefully considers procedures is <span class="citation" data-cites="shalizi_advanced_2018">Shalizi (<a href="#ref-shalizi_advanced_2018" role="doc-biblioref">2018</a>)</span>.</p>
+</section>
+<section id="the-end" class="level2">
+<h2 class="anchored" data-anchor-id="the-end">The End</h2>
+<p><span class="citation" data-cites="devezer_case_2020">Devezer et al. (<a href="#ref-devezer_case_2020" role="doc-biblioref">2020</a>)</span> point out that to understand the properties of your estimator, you need to consider the sampling distribution of your estimation procedure, either conditionally or unconditionally. Understanding the form and properties of the sampling distribution is a key piece to much of the ongoing discussion about pre-registration.</p>
+<p>Personally, I am curious about justification for frequentist inference using iterative model development procedures. What kind of guarantees can we make when we formally consider, say, model selection. One interesting prospect seems to be decision-analytic inference that doesn’t rely on the sampling distribution of the entire procedure. For example, <span class="citation" data-cites="van_calster_calibration_2016">Van Calster et al. (<a href="#ref-van_calster_calibration_2016" role="doc-biblioref">2016</a>)</span> proves that any prognostic model that satisfies a criterion they call “moderate calibration” is not harmful, as measured by a clinical utility score called Net Benefit<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. Notably, calibration can be assessed for any predictive model, regardless of how analysts arrived at the model itself.</p>
+<section id="acknowledgements" class="level3">
+<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>I would like to thank Dr.&nbsp;Devezer and Dr.&nbsp;Buzbas for an extensive discussion and feedback on this post!</p>
+
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-baumgaertner_model-centric_2018" class="csl-entry" role="doc-biblioentry">
+Baumgaertner, Bert, Berna Devezer, Erkan O. Buzbas, and Luis G. Nardin. 2018. <span>“A <span>Model</span>-<span>Centric</span> <span>Analysis</span> of <span>Openness</span>, <span>Replication</span>, and <span>Reproducibility</span>.”</span> <em>arXiv:1811.04525 [Stat]</em>, November. <a href="http://arxiv.org/abs/1811.04525">http://arxiv.org/abs/1811.04525</a>.
+</div>
+<div id="ref-devezer_case_2020" class="csl-entry" role="doc-biblioentry">
+Devezer, Berna, Danielle J. Navarro, Joachim Vandekerckhove, and Erkan Ozge Buzbas. 2020. <span>“The Case for Formal Methodology in Scientific Reform.”</span> Preprint. Scientific Communication; Education. <a href="https://doi.org/10.1101/2020.04.26.048306">https://doi.org/10.1101/2020.04.26.048306</a>.
+</div>
+<div id="ref-gelman_statistical_2014" class="csl-entry" role="doc-biblioentry">
+Gelman, Andrew, and Eric Loken. 2014. <span>“The <span>Statistical</span> <span>Crisis</span> in <span>Science</span>.”</span> <a href="http://www.stat.columbia.edu/~gelman/research/published/ForkingPaths.pdf">http://www.stat.columbia.edu/~gelman/research/published/ForkingPaths.pdf</a>.
+</div>
+<div id="ref-harrell_regression_2015" class="csl-entry" role="doc-biblioentry">
+Harrell, Frank E. 2015. <em>Regression Modeling Strategies: With Applications to Linear Models, Logistic and Ordinal Regression, and Survival Analysis</em>. Second edition. Springer Series in Statistics. Cham Heidelberg New York: Springer.
+</div>
+<div id="ref-mayo_statistical_2018" class="csl-entry" role="doc-biblioentry">
+Mayo, Deborah G. 2018. <em>Statistical <span>Inference</span> as <span>Severe</span> <span>Testing</span>: <span>How</span> to <span>Get</span> <span>Beyond</span> the <span>Statistics</span> <span>Wars</span></em>. 1st ed. Cambridge University Press. <a href="https://doi.org/10.1017/9781107286184">https://doi.org/10.1017/9781107286184</a>.
+</div>
+<div id="ref-navarro_between_2018" class="csl-entry" role="doc-biblioentry">
+Navarro, Danielle J. 2018. <span>“Between the Devil and the Deep Blue Sea: <span>Tensions</span> Between Scientific Judgement and Statistical Model Selection,”</span> 12. <a href="https://link.springer.com/article/10.1007/s42113-018-0019-z">https://link.springer.com/article/10.1007/s42113-018-0019-z</a>.
+</div>
+<div id="ref-shalizi_advanced_2018" class="csl-entry" role="doc-biblioentry">
+Shalizi, Cosma Rohilla. 2018. <em>Advanced <span>Data</span> <span>Analysis</span> from an <span>Elementary</span> <span>Point</span> of <span>View</span></em>. <a href="https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf">https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf</a>.
+</div>
+<div id="ref-van_calster_calibration_2016" class="csl-entry" role="doc-biblioentry">
+Van Calster, Ben, Daan Nieboer, Yvonne Vergouwe, Bavo De Cock, Michael J. Pencina, and Ewout W. Steyerberg. 2016. <span>“A Calibration Hierarchy for Risk Models Was Defined: From Utopia to Empirical Data.”</span> <em>Journal of Clinical Epidemiology</em> 74 (June): 167–76. <a href="https://doi.org/10.1016/j.jclinepi.2015.12.005">https://doi.org/10.1016/j.jclinepi.2015.12.005</a>.
+</div>
+</div></section><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1" role="doc-endnote"><p>See also the classics <span class="citation" data-cites="baumgaertner_model-centric_2018">Baumgaertner et al. (<a href="#ref-baumgaertner_model-centric_2018" role="doc-biblioref">2018</a>)</span> and <span class="citation" data-cites="navarro_between_2018">Navarro (<a href="#ref-navarro_between_2018" role="doc-biblioref">2018</a>)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Thanks to Dr.&nbsp;Buzbas for an edifying comment about this.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Note that in the unconditional case the properties of your estimate from <span class="math inline">\(T\)</span> also depend on all the estimators <span class="math inline">\(T^{(2)}_{i \neq j}\)</span> that you didn’t end up using!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>P-values for the LASSO basically.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>I would be very grateful to learn about other similar inferences that rely on narrow properties of the estimates<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{hayes2020,
+  author = {Alex Hayes},
+  title = {Using the Data Twice},
+  date = {2020-05-04},
+  url = {https://www.alexpghayes.com/post/2020-05-04_using-the-data-twice},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-hayes2020" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Alex Hayes. 2020. <span>“Using the Data Twice.”</span> May 4, 2020. <a href="https://www.alexpghayes.com/post/2020-05-04_using-the-data-twice">https://www.alexpghayes.com/post/2020-05-04_using-the-data-twice</a>.
+</div></div></section></div></main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

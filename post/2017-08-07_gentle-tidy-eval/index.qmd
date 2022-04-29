@@ -1,0 +1,112 @@
+---
+title: "gentle tidy eval with examples"
+subtitle: |
+  copy-pasteable example code for programming with the tidyverse.
+date: "2017-08-07"
+categories: [rstats, tidyverse, notes to self]
+execute:
+  echo: true
+  message: false
+  warning: false
+---
+
+I've been using the tidy eval framework introduced with `dplyr 0.7` for about two months now, and it's time for an update to my original post on tidy eval. My goal is not to explain tidy eval to you, but rather to show you some simple examples that you can easily generalize from.
+
+```{r, message = FALSE}
+library(tidyverse)
+
+starwars
+```
+
+## Using strings to refer to column names
+
+To refer to columns in a data frame with strings, we need to convert those strings into symbol objects with `rlang::sym` and `rlang::syms`. We then use the created symbol objects in dplyr functions with the prefixes `!!` and `!!!`. This is because `dplyr` verbs expect input that looks like code. Using the `sym/syms` functions we can convert strings into objects that look like code.
+
+```{r}
+mass <- rlang::sym("mass")                        # create a single symbol
+groups <- rlang::syms(c("homeworld", "species"))  # create a list of symbols
+
+starwars %>%
+  group_by(!!!groups) %>%               # use list of symbols with !!!
+  summarize(avg_mass = mean(!!mass))    # use single symbol with !!
+```
+
+The usage `mass <- rlang::sym("mass")` is Hadley approved:
+
+```{r echo=FALSE}
+blogdown::shortcode("tweet", "885993307968593920")
+```
+
+I believe it is also the current tidyverse code style standard. We use `rlang::sym` and `rlang::syms` identically inside functions.
+
+```{r}
+summarize_by <- function(df, groups, to_summarize) {
+  df %>%
+    group_by(!!!rlang::syms(groups)) %>%
+    summarize(summarized_mean = mean(!!rlang::sym(to_summarize)))
+}
+
+summarize_by(starwars, c("homeworld", "species"), "mass")
+```
+
+## Details about unquoting
+
+`!!` and `!!!` are syntactic sugar on top of the functions `UQ()` and `UQS()`, respectively. It used to be that `!!` and `!!!` had low operator precedence, meaning that in terms of PEMDAS they came pretty much last. But now we can use them more intuitively:
+
+```{r}
+homeworld <- rlang::sym("homeworld")
+
+filter(starwars, !!homeworld == "Alderaan")
+```
+
+We can also use `UQ` and `UQS` directly to be explicit about what we're unquoting.
+
+```{r}
+filter(starwars, UQ(homeworld) == "Alderaan")
+```
+
+## Creating non-standard functions
+
+Sometimes it is nice to write functions that use accept non-standard inputs, like `dplyr` verbs. For example, we might want to write a function with the same effect as
+
+```{r}
+starwars %>% 
+  group_by(homeworld, species) %>% 
+  summarize(avg_mass = mean(mass))
+```
+
+To this we need to capture our input in `quosures` with `quo` and `quos` when programming interactively.
+
+```{r}
+groups <- quos(homeworld, species)   # capture a list of variables as raw input
+mass <- quo(mass)                    # capture a single variable as raw input
+
+starwars %>% 
+  group_by(!!!groups) %>%            # use !!! to access variables from `quos`
+  summarize(avg_mass = sum(!!mass))  # use !! to access the variable in `quo`
+```
+
+There's some nice symmetry here in that we unwrap both `rlang::sym` and `quo` with `!!` and both `rlang::syms` and `quos` with `!!!`.
+
+We might be interested in using this behavior in a function. To do this we replace calls to `quo` with calls to `enquo`.
+
+```{r}
+summarize_by <- function(df, to_summarize, ...) {
+
+  to_summarize <- enquo(to_summarize)  # enquo captures a single argument
+  groups <- quos(...)                  # quos captures multiple arguments
+
+  df %>%
+    group_by(!!!groups) %>%                 # unwrap quos with !!!
+    summarize(summ = sum(!!to_summarize))   # unwrap enquo with !!
+}
+```
+
+Now our function call is non-standardized. Note that `quos` can capture an arbitrary number of arguments, like we have here. So both of the following calls are valid
+
+```{r}
+summarize_by(starwars, mass, homeworld)
+summarize_by(starwars, mass, homeworld, species)
+```
+
+For more details, see the [programming with `dplyr` vignette](http://dplyr.tidyverse.org/articles/programming.html).

@@ -16,34 +16,34 @@ In recent applied work on the Twitter media ecosystem, we have found that Twitte
 **Solving the model representation problem with broom**  
 2019-01-25, `rstudio::conf(2019)`  
 
-The R objects used to represent model fits are notoriously inconsistent, making data analysis inconvenient and frustrating. The broom package resolves this issue by defining a consistent way to represent model fits. By summarizing essential information about fits in tidy tibbles, broom makes it easy to programmatically work with model objects. Combining broom with list-columns results in an especially powerful way to work with many model fits at once. This talk will feature several case studies demonstrating how broom resolves common problems in data analysis. [video](https://resources.rstudio.com/rstudio-conf-2019/solving-the-model-representation-problem-with-broom), [slides](https://github.com/alexpghayes/workshops_presentations/blob/master/2019-01-18-rstudioconf-broom-talk.pdf)
+The R objects used to represent model fits are notoriously inconsistent, making data analysis inconvenient and frustrating. The broom package resolves this issue by defining a consistent way to represent model fits. By summarizing essential information about fits in tidy tibbles, broom makes it easy to programmatically work with model objects. Combining broom with list-columns results in an especially powerful way to work with many model fits at once. This talk will feature several case studies demonstrating how broom resolves common problems in data analysis. [video](https://resources.rstudio.com/rstudio-conf-2019/solving-the-model-representation-problem-with-broom), [slides](https://github.com/alexpghayes/rstudioconf2019-broom-talk)
 
 **Solving the model representation problem with broom**  
 2018-09-19, Statistics Graduate Student Seminar  
-[slides](https://github.com/alexpghayes/workshops_presentations/blob/main/2018-09-19-solving-the-model-representation-problem-with-broom.pdf)
+[slides](https://github.com/alexpghayes/sgsa-seminar-broom-talk)
 
 **Convenient data analysis with broom**  
 2018-11-30, RStudio Webinar Series  
 
-Broom is a package that converts statistical objects into tibbles. This consistent structure makes it easier to accomplish many standard modelling tasks. In this webinar I'll demonstrate how to use to broom to work with many models at once. We'll see how broom makes it easier to visualize models, work with bootstrapped fits and assess model diagnostics. [video](https://resources.rstudio.com/webinars/convenient-analysis-with-broom-alex-hayes), [slides](https://github.com/alexpghayes/workshops_presentations/blob/main/2018-11-14-rstudio-broom-webinar.pdf)
+Broom is a package that converts statistical objects into tibbles. This consistent structure makes it easier to accomplish many standard modelling tasks. In this webinar I'll demonstrate how to use to broom to work with many models at once. We'll see how broom makes it easier to visualize models, work with bootstrapped fits and assess model diagnostics. [video](https://resources.rstudio.com/webinars/convenient-analysis-with-broom-alex-hayes), [slides](https://github.com/alexpghayes/rstudio-webinar-broom)
 
 **Solving the model representation problem with broom**  
 2018-09-19, Madison R User Group  
-[slides](https://github.com/alexpghayes/workshops_presentations/blob/master/2018-09-19-solving-the-model-representation-problem-with-broom.pdf)
+[slides](https://github.com/alexpghayes/madison-r-user-group-broom-talk)
 
 ## slides from various informal presentations
 
 **Identifiability of homophily and contagion in social networks**  
 2022-02-23, Madison Networks Reading Group  
-[slides](todo)
+[slides](https://github.com/alexpghayes/2022-02-23-networks-reading-contagion)
 
 **Triangles & networks**  
 2021-02-17, STAT 992 Seminar on Tensors  
-[slides](todo)
+[slides](https://github.com/alexpghayes/stat992-tensor-seminar-triangles-slides)
 
 **A new way to think about citations**  
 2020-11-17, Rohe Lab Group Meeting  
-[slides](todo)
+[slides](https://github.com/alexpghayes/rohe-lab-citation-impute-slides)
 
 **The linear probability model**  
 2019-11-19, STAT 992 Seminar Course presentation  
@@ -51,13 +51,20 @@ Broom is a package that converts statistical objects into tibbles. This consiste
 
 **rstudio internship progress update**  
 2018-07-23, RStudio tidyverse team  
-[slides](todo)
+[slides](https://github.com/alexpghayes/rstudio-internship-broom-progress-update)
 
-**Locally Interpretable Model-Agnostic Explanations**
+**Locally Interpretable Model-Agnostic Explanations**  
 2018-03-29, Rice DataSci club  
-[slides](todo)
+[slides](https://github.com/alexpghayes/rice-data-sci-lime-talk)
 
 **Your First R Package**  
 2018-02-22, Rice DataSci club  
-[slides](todo)
+[slides](https://github.com/alexpghayes/rice-data-sci-first-r-package-workshop)
 
+**COMP 540 Prediction Project Advice**  
+2018-03-09, Rice University  
+[slides](https://github.com/alexpghayes/comp540-kaggle-project-advice)
+
+**Super Learner**  
+2018-01-23, Allen Lab Group Journal Club  
+[slides](https://github.com/alexpghayes/allen-journal-club-superlearner-slides)

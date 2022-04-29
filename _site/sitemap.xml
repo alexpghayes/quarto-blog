@@ -2,15 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.alexpghayes.com/code/index.html</loc>
-    <lastmod>2022-04-28T21:29:53.830Z</lastmod>
+    <lastmod>2022-04-29T03:54:16.088Z</lastmod>
   </url>
   <url>
     <loc>https://www.alexpghayes.com/index.html</loc>
-    <lastmod>2022-04-28T21:46:30.680Z</lastmod>
+    <lastmod>2022-04-29T05:17:47.602Z</lastmod>
   </url>
   <url>
     <loc>https://www.alexpghayes.com/papers/index.html</loc>
-    <lastmod>2022-04-28T21:45:59.133Z</lastmod>
+    <lastmod>2022-04-29T03:58:53.089Z</lastmod>
   </url>
   <url>
     <loc>https://www.alexpghayes.com/posts/2017-08-07_gentle-tidy-eval/index.html</loc>
@@ -78,15 +78,15 @@
   </url>
   <url>
     <loc>https://www.alexpghayes.com/posts.html</loc>
-    <lastmod>2022-04-28T20:13:11.906Z</lastmod>
+    <lastmod>2022-04-29T05:27:15.220Z</lastmod>
   </url>
   <url>
     <loc>https://www.alexpghayes.com/talks/index.html</loc>
-    <lastmod>2022-04-28T21:29:57.514Z</lastmod>
+    <lastmod>2022-04-29T03:55:36.212Z</lastmod>
   </url>
   <url>
     <loc>https://www.alexpghayes.com/teaching/index.html</loc>
-    <lastmod>2022-04-28T21:29:55.407Z</lastmod>
+    <lastmod>2022-04-29T03:54:17.198Z</lastmod>
   </url>
   <url>
     <loc>https://www.alexpghayes.com/posts/2020-08-25_many-models-workflows-in-python-part-i/index.html</loc>
@@ -102,7 +102,7 @@
   </url>
   <url>
     <loc>https://www.alexpghayes.com/blog.html</loc>
-    <lastmod>2022-04-29T01:41:39.454Z</lastmod>
+    <lastmod>2022-04-29T03:53:27.670Z</lastmod>
   </url>
   <url>
     <loc>https://www.alexpghayes.com/blog/2020-05-01_elon-musk-send-tweet/index.html</loc>
@@ -135,5 +135,85 @@
   <url>
     <loc>https://www.alexpghayes.com/blog/2019-08-31_consistency-and-the-linear-probability-model/index.html</loc>
     <lastmod>2022-04-29T01:40:54.904Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2018-05-03_performance-assessments-via-bootstrap-variants/index.html</loc>
+    <lastmod>2022-04-29T05:07:19.861Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2018-05-16_comparing-runs-with-riegels-formula-and-gams/index.html</loc>
+    <lastmod>2022-04-29T05:08:51.402Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2018-06-15_speeding-up-gpx-ingest-profiling-rcpp-and-furrr/index.html</loc>
+    <lastmod>2022-04-29T05:09:15.212Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2018-08-10_a-summer-with-rstudio/index.html</loc>
+    <lastmod>2022-04-29T05:09:18.809Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2018-10-23_understanding-multinomial-regression-with-partial-dependence-plots/index.html</loc>
+    <lastmod>2022-04-29T05:21:46.322Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2018-12-24_some-things-ive-learned-about-stan/index.html</loc>
+    <lastmod>2022-04-29T05:17:57.092Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2019-01-31_overlapping-confidence-intervals-correcting-bad-intuition/index.html</loc>
+    <lastmod>2022-04-29T05:21:43.653Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2019-04-13_implementing-the-superlearner-with-tidymodels/index.html</loc>
+    <lastmod>2022-04-29T05:21:41.995Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2019-05-21_type-stable-estimation/index.html</loc>
+    <lastmod>2022-04-29T05:21:40.806Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2019-06-07_testing-statistical-software/index.html</loc>
+    <lastmod>2022-04-29T05:21:39.339Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2019-07-26_an-annotated-bibliography-on-stochastic-blockmodels/index.html</loc>
+    <lastmod>2022-04-29T05:21:38.232Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2019-08-31_consistency-and-the-linear-probability-model/index.html</loc>
+    <lastmod>2022-04-29T05:27:14.197Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2020-01-06_overfitting-a-guide-tour/index.html</loc>
+    <lastmod>2022-04-29T05:25:26.904Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2020-03-22_to-transform-or-not-to-transform/index.html</loc>
+    <lastmod>2022-04-29T05:20:28.576Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2020-05-01_elon-musk-send-tweet/index.html</loc>
+    <lastmod>2022-04-29T05:20:27.239Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2020-05-04_using-the-data-twice/index.html</loc>
+    <lastmod>2022-04-29T05:20:26.036Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2020-08-25_many-models-workflows-in-python-part-i/index.html</loc>
+    <lastmod>2022-04-29T05:19:55.729Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2021-03-28_many-models-workflows-in-python-part-ii/index.html</loc>
+    <lastmod>2022-04-29T05:19:06.060Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2017-08-07_gentle-tidy-eval/index.html</loc>
+    <lastmod>2022-04-29T05:04:56.817Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.alexpghayes.com/post/2017-10-18_gradient-checks/index.html</loc>
+    <lastmod>2022-04-29T05:05:37.749Z</lastmod>
   </url>
 </urlset>

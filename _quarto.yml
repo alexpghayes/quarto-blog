@@ -14,7 +14,7 @@ website:
     right:
       - text: about
         file: index.qmd
-      - blog.qmd
+      - posts.qmd
       - papers/index.qmd
       - code/index.qmd
       - teaching/index.qmd
@@ -23,6 +23,7 @@ website:
         href: https://github.com/alexpghayes
       - icon: twitter
         href: https://twitter.com/alexpghayes
+  google-analytics: "G-G6PQFW2XSK"
 
 format:
   html:

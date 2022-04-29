@@ -1,0 +1,234 @@
+---
+title: "type stable estimation"
+subtitle: |
+  my thesis about why modeling software is an enormous mess
+date: "2019-05-21"
+execute:
+  echo: true
+categories: [statistical software]
+---
+
+## Abstract
+    
+This post discusses how the mathematical objects we use in formal data modeling are represented in statistical software. First I introduce these objects, then I argue that each object should be represented by a distinct type. Next I present three principles to ensure the type system is statistically meaningful. These principles suggest that existing modeling software has an overly crude type system. I believe a finer type system in statistical packages would result in more intuitive interfaces while increasing extensibility and reducing possibilities for methodological errors.
+
+Along the way, I briefly discuss the difference between a type and a class, and some of the tradeoffs we make when using object orientation for statistical modeling. After remaining language agnostic up to this point, I dive into the practical difficulties of modeling with the S3 class system from R, although I also mention Python and Julia briefly. You'll get the most out of this post if you've read the chapters on [Object Orientation][advanced_r_oop] in Hadley Wickham's *Advanced R*.
+
+[advanced_r_oop]: https://adv-r.hadley.nz/oo.html
+
+## What is good modeling software?
+
+Unfortunately, not all modeling code is good code[^not_all_good]. But what makes modeling code good? Here is what I find most important:
+
+[^not_all_good]: In practice, you should be more suspicious of modeling code than other types of code, because the people who write statistical code often have limited knowledge of software engineering. [How do you tell what packages to trust?][lumley_post] by Thomas Lumley has a short but informative discussion aimed at helping users make smart choices.
+
+[lumley_post]: https://notstatschat.rbind.io/2019/02/04/how-do-you-tell-what-packages-to-trust/
+
+- **Correctness**: The code returns computationally correct results, and this has been verified by extensive testing[^computational_correctness].
+- **Documentation**: It is easy to determine what computation the code has actually performed.
+- **Intuitive interface**: Users can easily make the software do what they want it to do.
+- **Extensibility**: Researchers can extend the software to broader classes or models and build on existing work.
+- **Readability**: It is easy to understand the code base, such that the method can be translated into other languages or reimplemented in different manners.
+- **Performance**: The code runs quickly, uses minimal memory and scales to large data[^scalability].
+
+[^computational_correctness]: Here I mean that code computes what it promises to compute. This does not imply in any way inferential correctness, which I take to be the user's responsibility.
+
+[^scalability]: I am sure that a large group finds it controversial that I have placed performance lowest on this list of desirables. I have done this for several reasons. The first is you get most bang for your buck by enabling data analysts to work with the first 1-2 Gb of data. Working with small data is much lower on the [data science heirarchy of needs][data_science_needs] than working with large data.
+
+    Beyond this, making modeling software acceptably fast on more than a gigabyte of data is a serious software engineering task. Statisticians and other researchers typically have minimal background in software engineering, and it is inefficient for them to do this work. Instead they should focus on an initial implementation that (1) works on small to medium-ish data, and (2) can be easily translated to a more performant implementation.
+    
+    Third, statistical methods are often designed with small to medium data in mind. It doesn't make sense to develop performant implementations for these techniques if they are statistically inappropriate, unnecessary or computationally inefficient to apply at scale.
+    
+    Finally, a persistent belief in the open source community is that users select software primarily based on technical merit and performance. In my opinion, this is not true. I think users end up using software for a myriad of chaotic reasons, and I'm increasingly convinced a kind and welcoming community is more important than anything else. Hadley Wickham has [commented][hadley_multiplicative] that he thinks community and technical merit interact in a multiplicative fashion.
+
+[data_science_needs]: https://hackernoon.com/the-ai-hierarchy-of-needs-18f111fcc007
+[hadley_multiplicative]: https://twitter.com/hadleywickham/status/1018013583840428032
+
+For the purpose of this post, extensibility turns out to be the most important.
+
+## Objects in play
+
+Broadly speaking, there are three stages in formal data modeling:
+
+1. Identification
+2. Estimation
+3. Inference
+
+In the identification stage, data analysts make assumptions about the data generating processing and determine which **models** may be appropriate for their data. They then determine which properties of those models they would like to estimate. These targets are called **estimands**. Both of these steps are largely conceptual work.
+
+In the estimation stage, the analyst chooses an **estimator** to use for each estimand. Different estimators have different statistical properties under different data generating process. Again, selecting an appropriate estimator is conceptual work. Next comes actual estimation, where the analyst uses statistical software to calculate actual estimates for their estimands of interest. This happens on the computer. Analysts typically want to know the value of a whole collection of estimands: we call the corresponding collection of estimates a **fit**[^definitions].
+
+[^definitions]: To be slightly more formal, here a model is a set of probability distributions, an estimand is functional (property) of a statistical model, an estimator is a function from data into the value space of an estimand, and an algorithm is a set of instructions a computer can carry out describing how to evaluate an estimator at a particular point. I have another post in the works that goes into much more detail differentiating between these objects.
+
+    Note that the machine learning community frequently refers to random forests, etc, as models. This is something of an abuse of language -- it's more accurate to think of a random forest as an estimator for the conditional mean (which has corresponding estimand $\mathbb{E}(Y|X)$), under an implicit i.i.d. model.
+
+Finally, in the inference stage, an analyst interprets the resulting fit and comes to substantive conclusions. To do so, they perform follow-up computations that combine multiple estimands together, estimate new fits and compare existing fits.
+
+To make the computational parts of this process easy for users and developers, we have to create code objects that correspond to the mathematical objects of models, estimands and estimators. Unfortunately, the distinctions between statistical objects have been widely disregarded in modeling software, resulting in mass conflation of models, estimators, and the algorithms used to compute estimators.
+
+## Principles for type stable estimation
+
+I propose the following three principles to organize statistical software:
+
+1. **Provide types that correspond to *fits* and *fit specifications* **. Users need to be able to specify collections of estimands, and also to specify estimators they would like to use for each estimand. In existing modeling software, estimand and estimator selection is almost always implicit and inflexible. For example, `stats::lm()` always calculates a fixed set of estimates with fixed estimators for the linear model via fixed algorithms. We should fundamentally work with *fit specifications*, declarative requests describing what to calculate, and *fits*, the collections of resulting estimates.
+
+2. **Estimate uniquely**. For any given estimand, only calculate estimates with a single estimator. That is, you should never have two different estimates for the same estimand living in the same fit object. Also, fits with different sets of estimands should have different types.
+
+3. **Define methods by their required estimator inputs**. If two statistical procedures operate on distinct estimators, their methods must be distinct. This requirement ensures that we do not define methods if they are not statistically meaningful.
+
+When a modeling package meets these requirements, I say that it performs type stable estimation, although this is somewhat an abuse of language. Nonetheless, I believe these principles are the minimal conditions that result in consistent statistical software. Primarily these rules suggest that we need a much finer type system for statistical objects than those currently in use. Note that these principles are not tied to any particular form of object-orientation.
+
+## Types and classes
+
+A **type** is an abstract definition of the kinds of operations you can perform on an object[^type_examples]. A **class** is an implementation of a **type**. I'm advocating for a type system with statistically meaningful types, together with type stability. Type stability means that "you can predict the output type based only on the types of its inputs", to paraphrase the [tidyverse principles](https://principles.tidyverse.org/out-type-stability.html). The idea is that we want to design our types to represent the modeling problem space, so that logic errors become easily identifiable type mismatches[^jmw_type_safety].
+
+[^type_examples]: This definition may be somewhat foreign for R users, since R doesn't really have a notion of a type. In Python, you can think of abstract classes as defining types. Similarly, classes with virtual methods define something akin to a type in C++, as do interfaces in Java. In R's S3 class system, there is no way to define a type, you just have to implement a class (S4 and R6 do allow abstract classes, however).
+
+[^jmw_type_safety]: First: this is blatant plagiarism of this [SO answer](https://softwareengineering.stackexchange.com/a/59614/336870).
+
+    Second: John Myles White [previously explored][jmw_post] what he called "statistical type safety", where he defined type safety with the following:
+
+    > A language is type-safe if the only operations that can be performed on data in the language are those sanctioned by the type of the data.
+    
+    He then envisioned a type system for data (think: random sample from controlled experiment vs observational data vs ...), where you could only do statistically justified operations on each particular type of observation.
+    
+    I think this is an interesting and appealing idea, but suspect it is also a doomed one, mostly because statisticians themselves can't agree on which methods are appropriate in many cases. And even if you could define an inferentially safe type system for clean data, I doubt you could extend it to dirty data.
+    
+    Anyway, I mention this all because you should go read the post, and also to point out that my goal is not quite so lofty. I don't want a type system that describes data, but rather a type system that describes estimation. I think this is several orders of magnitude easier, and an accomplishable task. I give up on the goal of inferential correctness and am instead interested in understandability and extensibility as my major goals.
+
+I've phrased my principles in terms of types rather than classes because the particular implementations matter less than the contract that describes how those objects work. Notably, I am *not* advocating for static typing or type safety.
+
+## Two approaches to object orientation
+
+To implement types, we need to use some form of object oriented programming. Recall from *Advanced R* the two main approaches to object-oriented programming:
+
+> - In encapsulated OOP, methods belong to objects or classes, and method calls typically look like `object.method(arg1, arg2)`. This is called encapsulated because the object encapsulates both data (with fields) and behaviour (with methods), and is the paradigm found in most popular languages.
+
+> - In [generic function] OOP, methods belong to generic functions, and method calls look like ordinary function calls: `generic(object, arg2, arg3)`. This is called functional because from the outside it looks like a regular function call, and internally the components are also functions.
+
+In practice, however, we do not have much choice at all. Most languages only provide first class support for a single form of object orientation. Python primarily supports encapsulated OOP. R and Julia primarily support functional OOP. This last bit isn't quite correct, as R provides support for encapsulated OOP via `R6` classes, but there is a long standing tradition of functional OOP for modeling. In Julia you can recreate encapsulated OOP as well, but again, this type of code is not idiomatic to the best of my knowledge[^julia_encapsulated].
+
+[^julia_encapsulated]: See [this SO question](https://stackoverflow.com/questions/33755737/julia-oop-or-not) for some discussion of encapsulated OOP in Julia.
+
+Personally I'm convinced modeling methods should belong to generic functions, not classes, but again, it's a bit of a moot point[^growing_R6_trend].
+
+[^growing_R6_trend]: There is a slowly growing trend of R6 modeling packages in R. In all honesty, I find this (also R6 in general) rather distasteful on purely aesthetic grounds. If you really need reference semantics, R6 may make sense, but it's a good idea to wrap the underlying R6 object in an S3 burrito. This matches existing modeling conventions and makes code more readable.
+
+### Object orientation enables polymorphism
+
+While modeling software makes use of object orientation, I want to point out that the motivation is often different from traditional reasons. One classic take motivates object orientation by arguing that classes allow developers to make fields private. This forces developers to use the class interface, decoupling interface from implementation and (theoretically) making it easier to reason about complex systems.
+
+In the modeling contexts, our motivation is different, and we use object orientation primarily to take advantage of polymorphism[^no_private_fields]. We do the same statistical computations over and over, on slightly different objects. Think about prediction. We do prediction with literally thousands of different models. Polymorphism solves an interface problem more than anything else, allowing `predict()` to mean "calculate $\mathbb{E}(Y|X^*)$" regardless of the underlying model.
+
+Imagine the modeling world without polymorphism. Now you need a different `predict_linear_model()`, `predict_logistic_reg()`, etc, etc, and you immediately end up with a redundant and polluted namespace. From this point of view, classes are only attributes that enable polymorphic dispatch.
+
+[^no_private_fields]: R, Python and Julia don't really allow users to make fields private, although there are some limited exceptions. You may or may not find this horrifying depending on your background.
+
+If we don't use some sort of object-orientation, we effectively reduce modeling code to functions that return collections of estimates, and functions that operate on those estimates. If you've used R long enough, you've almost certainly come across professor code that does exactly this: it throws a bunch of matrices and vectors into a list and calls it a day[^how_to_write_oop_code]. This also makes it near impossible to extend the method: how do you distinguish between those estimates and an arbitrary collection of arrays in a list?
+
+[^how_to_write_oop_code]: If you are curious how to write object-oriented R, I again recommend Hadley Wickham's [*Advanced R*][advanced_r_oop]. I'm not versed enough in Python and Julia to recommend resources, but would love to get suggestions!
+
+### Aside: multiple dispatch
+
+In my ideal world, statistical methods would not only correspond to functional OOP methods for generic functions, but the generic functions would allow for multiple dispatch. Multiple dispatch means that generic functions determine which method to call based on all of their arguments, rather than just the first argument, as is the case with R's S3 class system.
+
+In fact, both R and Julia have multiple dispatch. In R, multiple dispatch is part of the S4 class system (R has three total classes systems if you've been keeping track: S3, R6 and S4). But pretty much no one enjoys S4 except geneticists with stockholm syndrome. Also, S4 is too complicated to establish as a broad standard[^mixing_s3_and_s4].
+
+[^mixing_s3_and_s4]: You can [mix S3 and S4](https://stackoverflow.com/questions/12100856/combining-s4-and-s3-methods-in-a-single-function), but it isn't pretty, and it's unrealistic to expect most researchers implementing new methods to have the know-how, making S4 unviable.
+
+Julia, however, has excellent support for multiple dispatch, and makes heavy use of multiple dispatch idioms throughout the language. See the glorious [`Distributions.jl`][distributions_link] package for some examples of how pleasant this can make things. At some point I may give Julia a more serious try, but right now the R community is too welcoming and the Julia statistics ecosystem too nascent for me to do much more than keep a half-hearted eye on the language[^julia_guilt].
+
+[distributions_link]: https://github.com/JuliaStats/Distributions.jl
+
+[^julia_guilt]: I do suspect that now would be the time for an enterprising young programmer to make the switch to Julia and try to build new statistical software there before they copy design patterns from R and Python and inherent a mountain of unnecessary technical debt.
+
+## Just say no to inheritance
+
+Most programmers who I talk to have similar opinions about encapsulated OOP: (1) it's magical when you get it right, (2) it's awful when you get it wrong, and (3) it's pretty damn hard to get it right. Typically, we think about inheritance as a mechanism for reusing code and following that sweet, sweet mandate that we Don't Repeated Ourselves[^dry_comment]. The primary tool we use to prevent repeated code is inheritance.
+
+[^dry_comment]: I should note that I'm increasingly convinced that repeating yourself is the correct solution in many contexts when you're developing modeling code. Modeling code does not form a large interconnected system -- each estimator typically stands on its own, and interacts with very few other estimators. Code sharing may prevent repeated code when computations are repeated in multiple estimators, but it's a bad idea to tie the implementations together then the calculations are for conceptual distinct objects. This has come up a lot in `broom`, where ramming everything through `tidy.lm()` has turned `tidy.lm()` into a fragile hairball.
+
+The issue with inheritance is that it works best in closed contexts, when you know what you'd like to do ahead of time, and potential changes to the fundamental logic of workflow and computation are small.
+
+This is decidedly not the case with statistical modeling. Researchers are constantly coming up with new techniques that operate outside the current modeling idioms and extending existing models in unexpected ways.
+
+As a result, it's hard to make encapsulated model objects extensible[^extensibility_note]. Consider the case of a researcher who comes up with a new diagnostic for linear regression. How should they implement their method in an encapulated OOP modeling world?
+
+[^extensibility_note]: I should add that extensibility is especially important in modeling contexts by virtual of the fact modeling software is often written by professors who have neither the time, inclination nor skills to maintain their work over the long run. A fairly common occurence is for a professor to produce a single release that later gets discovered, patched and turned in a healthy code base by someone who needs to use the technique on a regular basis. By the time this has happen, the original researcher has often moved on to new topics.
+
+One option is for the researcher to open pull requests to popular packages the define linear regression classes. This creates a lot of extra friction for the researcher, who doesn't want to deal with the idiosyncracy of those packages or delays in getting pull requests approved, or the difficulty of developing the software privately before the paper is released, etc. Also, how many packages should they make pull requests to? All of the ones that implement linear regression? Only some? Which ones?
+
+A second option is for the researcher to define a new class `B` themselves, and to either subclass or superclass the existing implementation `A`. Suppose they subclass `A`. First observe that doing so will violate the principle of unique estimation if they are proposing a new estimator for an existing estimand.
+
+But even if the researcher has come up with an entirely new estimand, when someone goes to extend class `B`, what should they inherit from? The original class? The extended class? Both? As this chain of extension continues, it probably makes less and less sense for these classes to share code, and in any case you quickly find yourself in the hellscape of multiple inheritance.
+
+A third, and more palatable option, is to inherit from an interface or some notion of an abstract class. I'm curious to explore this idea more, but haven't spent much time on it just yet.
+
+## The bizarre and occasionally beautiful world of S3
+
+If anyone from the Julia community is reading this, this is the point where I apologize, because I haven't used Julia at all for modeling, and so my discussion of generic function OOP for modeling is really just some commentary on using R's S3 class system for modeling. Buckle up, it's a wild ride.
+
+The primary benefit of S3 is that it is extensible. This is also the primary downside of S3. For example, if you come from an encapsulated OOP background, you will probably be horrified to learn that R lets you set the class of any object on the fly, like this:
+
+```{r}
+# get a collection of OLS related estimates
+# from the linear model
+fit <- lm(hp ~ mpg + am, data = mtcars)
+class(fit)
+
+# oh god the horror
+class(fit) <- "curious_george"
+class(fit)
+```
+
+There is also no such thing as a private field in S3, so you can modify any element of an S3 object at will. For the most part I find the generic functions of S3 to be a pleasant fit for statistical modeling, but I'd like to highlight some of the anti-patterns I come across more frequently.
+
+### Willy-nilly and diabolical construction of model objects
+
+Since there are no formal constructors for S3 objects, you have very few guarantees about S3 objects you come across in wild. Package authors often create S3 objects in different ways in different places[^structure_smell]. Then it's a fun game of Russian roulette for downstream users and developers to figure out which version of the object they actually got. Trying to write reliable code to process and extend these objects is fraught with difficulty since you're trying to build on top of a house of cards.
+
+[^structure_smell]: Creating model objects with `structure()` is frequently a code smell for this.
+
+In R `lm` objects are a canonical example. A bunch of people wanted to replicate the functionality of `lm` objects without writing their own methods, so they just subclassed `lm`. This works to varying degrees, but makes `lm` objects difficult to reason about.
+
+Similarly, at some point `anova()` went from a function for calculating F-tests to a general purpose tool for model comparison. Everybody and their grandma has come up with something vaguely F-test or AIC related and slammed it into the resulting `anova` object. Try to manage all the possible results is not fun. You can see how `broom` tries to `tidy()` `anova` objects [here][tidy_anova]. Every time I try this and it actually works I am somewhat astonished.
+
+[tidy_anova]: https://github.com/tidymodels/broom/blob/master/R/stats-anova-tidiers.R#L31
+
+The solution to this problem is to use [constructors and validators][s3], as described in *Advanced R*. I highly, highly recommend reading that chapter carefully. Hopefully this advice will start filtering down and bring some sanity to the madness. I suspect there'll be mixed success, mostly because doing S3 right takes a fair amount of work, and nobody has time for that.
+
+[s3]: https://adv-r.hadley.nz/s3.html#s3-classes
+
+Also note that using validators doesn't actually go very far toward solving the S3 object construction issue in modeling. Once you have estimates in hand, there is often no way to tell which estimator they came from. So you could do something like construct an `lm` object using HC1 covariance estimates and the resulting object can be exactly the same in terms of fields and types as a true `lm` object, just with slightly different values for the covariance matrix. There's no way to detect this (to my knowledge) without knowing how a given object was constructed.
+
+## Convenience functions
+
+One common pattern in R is to allow users to fit many different models via a single function, such as `glm()`, `lme4::glmer()`, `brms::brm()`, etc. I refer to these functions as convenience functions. Sometimes these functions only allow users to get fits from a single estimator per model (`glm()` and `brms::brm()`), sometimes users can get fits corresponding to multiple estimators (`lme4::lmer()` and `stats::arima()`) and sometimes both estimators and models are allowed to vary (`metafor::rma()`).
+
+The practical implications of this have come up a lot in `broom`, where having a single class represent fits from multiple models (or estimators) somewhat frequently leads to a headache.
+
+I'm curious to think more about this approach. On one hand, this sort of high-level interface is undeniably useful and user-friendly. Putting "inferentially close" models close to each other in user-interface space is a smart idea. On the other hand, the resulting objects are often quite difficult to program with and extend. Using constructors would go a long way towards making things nicer.
+
+This is also one circumstance where I think inheritance is a good idea. It's useful to give objects constructed from the same convenience function a consistent class. Most R packages authors do this. It less common to respect estimand uniqueness and give the resulting objects meaningful subclasses[^glmnet]. For example, poisson and binomial GLMs are both `glm` objects, which makes it difficult to write methods extending poisson GLMs but not binomial GLMs.
+
+[^glmnet]: Somewhat miraculously, the only package I know of that gives objects created with a convenience function informative subclasses is `glmnet`. Well, `parsnip` does as well, but mostly because I harangued Max into it.
+
+If you are a package author exporting convenience functions, I strongly encourage you to: use a class (`glm`) to prevent code duplication, but also use give objects meaningful subclasses (`poisson_fit`, `binomial_fit`) to enable other people to program on top of the results.
+
+## Takeaways
+
+1. We should be thinking in terms of estimators, estimands and unique estimation, but we aren't.
+1. The extensibility of modeling code depends heavily on OOP design decisions.
+1. Current practices in the S3 modeling world aren't quite enough to build reliable software on top of. That said, S3 is still probably better than S4.
+
+Thanks to Amos Elberg, Achim Zeileis, Matthieu Stigler, Keiran Thompson, Adam Kelleher, Max Kuhn and Colin Carroll for an interesting discussion on OOP for modeling, as well as the numerous `broom` contributors who discussed object orientation [in this `broom` issue][coeftest_issue]. I encourage interested parties to take a read for more concrete examples of some of the principles I've discussed here.
+
+[coeftest_issue]: https://github.com/tidymodels/broom/issues/663
+[jmw_post]: http://www.johnmyleswhite.com/notebook/2016/12/12/type-safety-and-statistical-computing/
+
+You can also watch me struggle to articulate related ideas about estimand uniqueness in `parsnip` issues [#19][what_is_a_model] and [#54][differentiating], although my thinking has changed somewhat since then. I also include more concrete examples of types and methods we should differentiate between in those issues.
+
+[what_is_a_model]: https://github.com/tidymodels/parsnip/issues/19
+[differentiating]: https://github.com/tidymodels/parsnip/issues/54
+
+I would also like to pass on Colin Carroll's recommendation of *A Philosophy of Software Design* by John Ousterhout, which is excellent.
