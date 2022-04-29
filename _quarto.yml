@@ -24,6 +24,10 @@ website:
       - icon: twitter
         href: https://twitter.com/alexpghayes
   google-analytics: "G-G6PQFW2XSK"
+  page-footer: 
+    right:
+      - text: blog source
+        href: https://github.com/alexpghayes/quarto-blog
 
 format:
   html:
