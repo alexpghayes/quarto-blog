@@ -14,7 +14,7 @@ website:
     right:
       - text: about
         file: index.qmd
-      - posts.qmd
+      - blog.qmd
       - papers/index.qmd
       - code/index.qmd
       - teaching/index.qmd

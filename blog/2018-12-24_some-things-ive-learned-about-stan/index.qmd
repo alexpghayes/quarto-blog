@@ -1,0 +1,772 @@
+---
+title: "some things i've learned about stan"
+subtitle: |
+  at long last i wrote a stan program that worked, and i took some notes along the way
+date: "2018-12-24"
+---
+
+## Motivation
+
+Yesterday, for the first time ever, I coded up a model in Stan and it actually did what I wanted. My current knowledge of Stan is, at best, nascent, but I'll show you the process I went through to write my first Stan program, pointing out what I wish I'd known along the way.
+
+My goal is to provide a quick and dirty introduction to Stan, hopefully enough to get you started without having to dig into the manual yourself. My focus here is on the language, not Bayesian inference.
+
+If you're looking for the tutorial portion, scroll down to the section called **The bare minimum to get started with Stan**.
+
+## What is Stan and why might you want to use it?
+
+Stan is Tensorflow for generative statistical models. Just like Tensorflow lets you write the forward pass of a neural net and fits the net for you, Stan lets you write out a generative model and then gives you samples from the posterior.
+
+The big win is flexibility, and creativity: if you can dream up a generative model and write it in Stan, much of the work to use that model in practice is done[^1].
+
+[^1]: The other nice thing about Stan is that you end using the same estimator for all your models. This means there's no context switching when you move to a different estimator and have to remember how to do inference all over again.
+
+Like Tensorflow, the downside is the low-level interface, which can be inconvenient for day-to-day work. Luckily, Stan has [`brms`][brms], a much higher level interface that provides a huge amount of infrastructure to make repetitive tasks easy.
+
+## The long road to actually writing Stan
+
+I first learned about Stan from Gelman's [blog](http://andrewgelman.com/) about three years ago, and first used the Stan ecosystem  when I was running into convergence issues with `lme4` and my advisor suggested `rstanarm`:
+
+```{r}
+#| echo: false
+blogdown::shortcode("tweet", "880583179593146368")
+```
+
+My senior year I took [Daniel Kowal's](http://www.danielrkowal.com/) fantastic Bayes course. In that class we didn't use Stan, but I got comfortable with Bayesian inference and MCMC and I started using [`brms`][brms], [`loo`][loo] and [`bayesplot`][bayesplot] for personal projects.
+
+Intermittently I've tried to code up models in raw Stan. I've probably tried to code up a model in Stan ten or so times before this, always hitting some roadblock along the way.
+
+In retrospect, I should have just sat down and read the [manual][stan_manual] sooner, but I really dislike learning new languages by reading dense technical documentation[^2].
+
+[^2]: After reading [What nobody tells you about documention][types_of_doc], I'd classify most existing Stan resources as Reference and How To Guides. I think there's a lot of opportunity to introduce the language to a broader audience via more introductory tutorials.
+
+  I also think there'd be a lot of value in a publicly available set of Stan exercises, where you would practice translating models from math to Stan, and from Stan to math.
+
+[types_of_doc]: https://www.divio.com/blog/documentation/
+
+## The bare minimum to get started with Stan
+
+### What programs look like
+
+I'm not going to formally describe the structure of a Stan program. If you haven't seen Stan code before, I think a much better approach is to go read a bunch of Stan, even if it doesn't make sense. I'd start by taking a look through the [example models][stan_example_models] in the Stan manual, then reading [blog posts][savage_blog]. The first thing you want to pay attention to is the different "blocks," and what goes in `data` versus `parameters` versus `model`.
+
+To get you started, here's simple linear regression on a single predictor, taken from the Stan manual:
+
+```{{stan}}
+data {
+  int<lower=0> N;
+  vector[N] x;
+  vector[N] y;
+}
+
+parameters {
+  real alpha;
+  real beta;
+  real<lower=0> sigma;
+}
+
+model {
+  y ~ normal(alpha + beta * x, sigma);
+}
+```
+
+Note that every line ends with a semi-colon (`;`).
+
+### Types
+
+There are two scalar types in Stan programs: `int`s and `real`s. Integers are discrete and real numbers are continuous. You should think about these like single numbers.
+
+Unlike R, you'll need to declare any objects you want to work with before you start working with them. For example
+
+```{{stan}}
+real alpha;
+```
+
+says that `alpha` is a number you want to use. Numbers can have upper and lower bounds (for example, you'll want numbers representing variances to be non-negative):
+
+```{{stan}}
+real<lower=0> alpha;
+```
+
+Integers can promoted to reals, but reals are never demoted to integers. The other two objects you should know about are `vector`s and `matrix`s. `vector`s and `matrix`s contain `real` elements. When you declare `vector`s and `matrix`s, you have to tell Stan how big they are:
+
+```{{stan}}
+vector[N] x;    // a vector with N elements
+matrix[N, M] A; // an N x M matrix
+```
+
+If you declare variable bounds, you do that before the brackets:
+
+```{{stan}}
+vector<lower=0, upper=1>[N] p;
+```
+
+You can index into vectors much like other mathematical libraries, and do things like matrix-vector multiplication:
+
+```{{stan}}
+x[1]
+A[2, 3]
+
+A * x       // matrix vector multiplication
+x' * A * x  // calculating a quadratic form (aprostrophe means transpose)
+```
+
+Basic arithmetic is probably enough to get you started, but when you need to know how to do more mathematical operations, you'll want to consult the [function reference][function_reference]. Be sure to bookmark both the function reference and the manual itself.
+
+[function_reference]: https://mc-stan.org/docs/2_18/functions-reference/
+
+There are some other building blocks, but they are really just icing on top of this cake. For example, if you need a `vector` with elements constrained to sum to one, you'll want to use `simplex`. But to understand `simplex`, you really only need to understand what a `vector` is.
+
+### Arrays & Dimension
+
+The fundamental objects in Stan are `int`s, `real`s, `vector`s and `matrix`s. Oftentimes, we'll want to work with collections of these objects. For this we need one final ingredient: arrays. Arrays in Stan work much like Numpy arrays, or MATLAB arrays, but declaring them is slightly more involved.
+
+Suppose we want to work with an integer array. Then we might write
+
+```{{stan}}
+int Y[N, M];
+```
+
+which means we want an `N` by `M` array, where each element of the array is an integer (each element in an array must be the same type). If you wanted integers between 0 and 5, you would write:
+
+```{{stan}}
+int<lower=0, upper=5> Y[N, M];
+```
+
+Note that *type* goes first, and the array dimensions come after the variable name. That is, if we write:
+
+```{{stan}}
+vector[p] theta[N];
+```
+
+it means we want an *array* with `N` elements, where each element is `vector` with `p` elements.
+
+### Writing & Debugging Stan
+
+When you first get started, I recommend copy-pasting existing Stan code and modifying it, rather than writing the code from scratch. When I write Stan, I typically keep several tabs open that just have Stan models on them, and when I get stuck I scan through them for lines that look like they might work.
+
+I write Stan in RStudio. My best friend is the `Check` button, which runs the Stan parser and tells you if there are any syntax errors. Sometimes I can understand the error message, but I often end up Googling them.
+
+For runtime errors, my only trick at the moment is to use the `print()` function, which works in Stan much like it does in R.
+
+## Success: a first Stan program
+
+Suppose we have $N$ survey respondents that each answer $Q$ questions, where each question has $A$ possible answers. There are two groups of respondents and we would like to: (1) compare how their response probabilities differ, and (2) given a new set of responses, predict which group they belong in.
+
+Before you write any code at all, I highly recommend you write your model down on paper. Scribbling down something like the following always clarifies my thinking.
+
+Let $R_{i, j}$ be the response of the $i^{th}$ respondent to the $j^{th}$ question, and let $y_i \in \{0, 1\}$ be their group membership. Then suppose
+
+\begin{align}
+&R_{i, j} | \theta_j \sim \mathrm{Categorical}(\theta_j) \\
+&\theta_j | y_i \sim \mathrm{Dirichlet}(5)
+\end{align}
+
+So we let each group have a different distribution of responses to each question, and shrink these distributions toward each other with a Dirichlet prior with 5 pseudo-counts in each response category. This regularization makes sense if a-priori you expect the two groups to respond in similar ways.
+
+Let's start by generating some fake data from our proposed data generating process. First we input some problem size parameters and the Dirichlet prior:
+
+```{r}
+library(tidyverse)
+
+set.seed(27)
+
+Q <- 15
+A <- 5
+
+alpha <- rep(5, A)
+
+theta_0 <- gtools::rdirichlet(Q, alpha)
+theta_1 <- gtools::rdirichlet(Q, alpha)
+```
+
+Now we figure out how to sample once:
+
+```{r}
+sample_one <- function(theta) {
+
+  R <- numeric(Q)
+
+  for (q in 1:Q)
+    R[q] <- sample(1:A, 1, prob = theta[q, ])
+
+  names(R) <- paste0("q", 1:Q)
+  as.list(R)
+}
+```
+
+which naturally leads into sampling $n$ times
+
+```{r}
+sample_n <- function(theta, n, id) {
+  samples <- map_dfr(1:n, ~sample_one(theta))
+  samples <- add_column(samples, y = id, .before = TRUE)
+  mutate_all(samples, as.integer)
+}
+```
+
+Then we sample 35 times from group 0 and 35 times from group 1, and look at the resulting data:
+
+```{r}
+df <- sample_n(theta_0, 35, id = 0) %>%
+  bind_rows(sample_n(theta_1, 35, id = 1))
+
+df
+```
+
+Now we need some Stan code. I started by copy-pasting the code from [this blog post][savage_post] by Jim Savage, which solves a related (but more complicated) problem. Then I blindly played with things and somehow ended up with this:
+
+[savage_post]: https://khakieconomics.github.io/2018/03/12/Tried-modeling-your-features-for-classification.html 
+
+
+```{{stan}}
+// survey_0.stan
+
+data {
+  int N;           // number of respondents
+  int Q;           // number of questions
+  int A;           // number of possible answers to each question
+
+  int y[N];        // group membership for each user
+  int R[N, Q];     // responses to questions
+}
+
+parameters {
+  vector[Q] alpha; // dirichlet prior
+
+  matrix[Q, A] theta_0;
+  matrix[Q, A] theta_1;
+}
+
+model {
+
+  for (q in 1:Q) {
+    to_vector(theta_0[q, ]) ~ dirichlet(alpha);
+    to_vector(theta_1[q, ]) ~ dirichlet(alpha);
+
+    for (i in 1:N) {
+
+      if (y[i] == 0) {
+        R[i, q] ~ multinomial(to_vector(theta_0[q, ]));
+      }
+
+      if (y[i] == 1) {
+        R[i, q] ~ multinomial(to_vector(theta_1[q, ]));
+      }
+
+      }
+    }
+  }
+}
+```
+
+This didn't run at all, and in fact was not even syntactically correct, but it was a starting point:
+
+![](stan_syntax_check.png){fig-alt="todo"}
+
+I got stuck here for quite a while, but the Modern Statistical Workflow slack kindly pointed out that:
+
+- `theta_0` and `theta_1` needed to be arrays of `simplex`s
+- There's an extra `}` (oops!)
+- The correct way to index into a matrix is `theta_1[q, :]`, not `theta_1[q, :]`
+
+At this point I finally realized I needed to read the Stan manual in earnest, and I decided to solve a simpler problem, where both group 0 and group 1 have the same parameter `theta`. This eventually resulted in the following:
+
+```{stan output.var = "m1"}
+// survey_1.stan
+
+data {
+  int N;        // number of respondents
+  int Q;        // number of questions
+  int A;        // number of possible answers to each question
+
+  int R[N, Q];  // responses to questions
+}
+
+parameters {
+  vector<lower=0>[A] alpha;  // dirichlet prior parameter
+  simplex[A] theta[Q];       // response probabilities for each question
+}
+
+model {
+
+  for (q in 1:Q) {
+
+    theta[q] ~ dirichlet(alpha);
+
+    for (i in 1:N) {
+      R[i, q] ~ categorical(theta[q]);
+    }
+  }
+}
+```
+
+Now we compile the model. Compilation takes around a minute or two, and if you mainly use R and Python like I do, it takes a while to get used to. Then we set up some Stan options:
+
+```{r}
+library(rstan)
+
+# prevent tedious re-compilation during interactive Stan dev
+rstan_options(auto_write = TRUE)
+
+# use multiple cores during sampling. i typically leave one
+# core free to keep my potato of a computer from lagging wildly
+# during sampling
+options(mc.cores = parallel::detectCores())
+```
+
+For this blog post, I'm using `stan` chunks in my `.Rmd` file, but if you're following along, you should put the Stan code into a file `survey_1.stan`. In general, I recommend keeping each version of your model in a separate `.stan` file.
+
+Anyways, you would run:
+
+```{{r}}
+m1_path <- "path/to/survey_1.stan"
+m1 <- stan_model(m1_path)
+```
+
+Now that the model has compiled, we can shove some data into a list and sample from it.
+
+```{r}
+data <- list(
+  R = as.matrix(select(df, -y)),
+  N = nrow(df),
+  y = df$y,
+  Q = Q,
+  A = A
+)
+
+# `refresh = 0` hides the highly verbose messages that are
+# the default during sampling. if you are using multiple cores
+# you may also want to set `show_progress = FALSE`, which
+# prevents the those messages from showing up in a pop-up window
+
+fit1 <- sampling(m1, data = data, chains = 2, iter = 1000, refresh = 0)
+
+print(fit1, pars = "alpha", probs = c(0.025, 0.5, 0.975))
+```
+
+It works! That's great, sampling is actually happening. Here I realized that I should actually pass `alpha` to `sampling`, and that I'd actually given it a hyperprior by accident. So I changed this, and gave group 0 and group 1 different parameters `theta`, resulting in:
+
+```{stan output.var = "m2"}
+// survey_2.stan
+
+data {
+  int N;  // number of respondents
+  int Q;  // number of questions
+  int A;  // number of possible answers to each question
+
+  int<lower=0, upper=1> y[N];     // binary feature for user
+  int<lower=1, upper=5> R[N, Q];  // responses to questions
+
+  vector<lower=0>[A] alpha;       // dirichlet prior parameter
+}
+
+parameters {
+  // response probabilities for each question
+  simplex[A] theta_0[Q];  // for group 0
+  simplex[A] theta_1[Q];  // for group 1
+}
+
+model {
+
+  for (q in 1:Q) {
+
+    theta_0[q] ~ dirichlet(alpha);
+    theta_1[q] ~ dirichlet(alpha);
+
+    for (i in 1:N) {
+
+      if (y[i] == 0) {
+        R[i, q] ~ categorical(theta_0[q]);
+      }
+
+      if (y[i] == 1) {
+        R[i, q] ~ categorical(theta_1[q]);
+      }
+
+    }
+  }
+}
+```
+
+We compile this and give it `alpha`, then take a look at the resulting `theta_0`:
+
+```{r}
+data <- list(
+  R = as.matrix(select(df, -y)),
+  N = nrow(df),
+  y = df$y,
+  Q = Q,
+  A = A,
+  alpha = alpha
+)
+
+fit2 <- sampling(m2, data = data, chains = 2, iter = 1000, refresh = 0)
+print(fit2, pars = "theta_0", probs = c(0.025, 0.5, 0.975))
+```
+
+At this point I has happy with the core logic of the model, so I used ShinyStan to check MCMC diagnostics and make sure that all the chains were mixing, etc:
+
+```{{r}}
+shinystan::launch_shinystan(fit2)
+```
+
+That all checked out, which isn't a surprise, since we're effectively estimating a bunch of proportions, so it would be weird if things started exploding.
+
+But really, my original idea was to see how well this model would predict respondent group, so we need to do some more work.
+
+I wanted $P(y = 0)$ given a person's set of responses $R_{i1}, ..., R_{iA}$. This was one of those instances were I was intimated by how to figure that out, but then it all became clear with a minute or two of pen and paper work.
+
+Bayes rule gives us that $P(y_i = 0 | R_{i1}, ..., R_{iA})$ equals
+
+\begin{align}
+P(R_{i1}, ..., R_{iA} | y_i = 0) P(y_i = 0) \over
+   P(R_{i1}, ..., R_{iA} | y_i = 0) P(y_i = 0) +
+   P(R_{i1}, ..., R_{iA} | y_i = 1) P(y_i = 1)
+\end{align}
+
+to deal with $P(y_i = 0)$ and $P(y_i = 1)$ we need a prior on $y$. I just assumed that $P(y_i = 0) = P(y_i = 1) = 0.5$, so those terms cancel. Next we can also assume that questions are independent from other questions, and continue with:
+
+\begin{align}
+&= {\prod_{j=1}^A P(R_{ij} | y_i = 0)  \over
+  \prod_{j=1}^A P(R_{ij} | y_i = 0) + \prod_{j=1}^A P(R_{ij} | y_i = 1)} \\
+&= {\prod_{j=1}^A \theta_{j, 0} \over
+  \prod_{j=1}^A \theta_{j, 0} + \prod_{j=1}^A \theta_{j, 1}}
+\end{align}
+
+This is notationally intense because of all the indices, but hopefully the idea is clear. In any case, this doesn't involve any sampling, so we code it up in the generated quantities block:
+
+```{stan output.var = "m3"}
+// survey_3.stan
+
+data {
+  int N;  // number of respondents
+  int Q;  // number of questions
+  int A;  // number of possible answers to each question
+
+  int<lower=0, upper=1> y[N];     // binary feature for user
+  int<lower=1, upper=5> R[N, Q];  // responses to questions
+
+  vector<lower=0>[A] alpha;       // dirichlet prior parameter
+}
+
+parameters {
+  // response probabilities for each question
+  simplex[A] theta_0[Q];  // for group 0
+  simplex[A] theta_1[Q];  // for group 1
+}
+
+model {
+
+  for (q in 1:Q) {
+
+    theta_0[q] ~ dirichlet(alpha);
+    theta_1[q] ~ dirichlet(alpha);
+
+    for (i in 1:N) {
+
+      if (y[i] == 0) {
+        R[i, q] ~ categorical(theta_0[q]);
+      }
+
+      if (y[i] == 1) {
+        R[i, q] ~ categorical(theta_1[q]);
+      }
+
+    }
+  }
+}
+
+generated quantities {
+
+  vector<lower=0, upper=1>[N] p; // probability each user is in class 0
+
+  for (i in 1:N) {
+
+    // probability of user's response for each response
+    vector[Q] pr_0;  // if they are in class 0
+    vector[Q] pr_1;  // if they are in class 1
+
+    for (q in 1:Q) {
+      
+      // get the actual response
+      int response = R[i, q];
+      
+      // get the corresponding theta, which is also
+      // the probability we're interested in
+      pr_0[q] = theta_0[q, response];
+      pr_1[q] = theta_1[q, response];
+
+    }
+
+    // multiply response probabilities for each question together
+    // and then normalize
+    p[i] = prod(pr_0) / (prod(pr_0) + prod(pr_1));
+  }
+}
+
+```
+
+And we can throw this all at Stan and see what happens:
+
+```{r}
+fit3 <- sampling(m3, data = data, chains = 2, iter = 1000)
+print(fit3, pars = "p", probs = c(0.025, 0.5, 0.975))
+```
+
+When $Q$ gets big, we can have this `p` get wonky, turning into exact zeros or ones. At this point I remembered that multiplying probabilities together can cause an explosion because things get small very quickly, and computers do not like small numbers.
+
+We can do the [standard trick][log_sum_exp] and take sums in log space, rather than multiplying in the original space to fix this. At the same time, let's add in some prediction functionality. There are a [couple ways][stan_prediction] to do this at the moment.
+
+I decided to pass unlabelled data into Stan, and wrote a function to prevent duplicate code. The function goes in its own block. It took me a while to figure out how to get the [function signature][func_ref] right, and how [variable scoping][scope] worked, but I eventually got to:
+
+[log_sum_exp]: https://www.xarg.org/2016/06/the-log-sum-exp-trick-in-machine-learning/
+[stan_prediction]: https://medium.com/@alex.pavlakis/making-predictions-from-stan-models-in-r-3e349dfac1ed
+[scope]: https://groups.google.com/forum/#!topic/stan-users/lybDQTpMWRw
+
+
+```{stan output.var = "m4"}
+// survey_4.stan
+
+functions {
+
+  /**
+   * class_prob
+   *
+   * Given an array of responses and probabilities for each response
+   *  for class 0 and class 1, calculate the probability that each
+   *  respondent is in class 0 via Bayes rule. In the training set,
+   *  the actual class of respondent `i` is given by `y[i]`.
+   *
+   * We assume that responses to different questions are independent
+   *  and that each class is equally likely. That is, we take
+   *  P(y=1) = P(y=0) = 0.5, and thus these terms cancel.
+   *
+   * @param R A 2-array of integers, where each row corresponds to a
+   *  a respondent, and each column corresponds to a question. Elements
+   *  can be 1, 2, ..., A.
+   *
+   * @param theta_0 A 2-array of response probabilities for class 0.
+   *  That is, `theta_0[q, r]` is the probability of (integer-valued)
+   *  response `r` to question number `q`.
+   *
+   * @param theta_1 A 2-array of response probabilities for class 1.
+   *
+   * @return A vector of probabilities that each user is in class 0.
+   *  This vector has the same number of elements as there are rows
+   *  in R.
+   */
+   
+  // note the type signatures here!
+  vector class_prob(int[,] R, vector[] theta_0, vector[] theta_1) {
+
+    real p_0;
+    real p_1;
+
+    int N = dims(R)[1];
+    int Q = dims(R)[2];
+
+    vector[N] p;
+
+    for (i in 1:N) {
+    
+      vector[Q] pr_0;
+      vector[Q] pr_1;
+
+      for (q in 1:Q) {
+
+        pr_0[q] = theta_0[q, R[i, q]];
+        pr_1[q] = theta_1[q, R[i, q]];
+
+      }
+
+      // take the product of probabilities across all questions
+      // since we assume responses to different questions are
+      // independent. work in log space for numerical stability
+
+      p_0 = exp(sum(log(pr_0)));
+      p_1 = exp(sum(log(pr_1)));
+
+      p[i] = p_0 / (p_0 + p_1);
+    }
+
+    return(p);
+  }
+}
+
+data {
+  int Q;      // number of questions
+  int A;      // number of possible answers to each question
+
+  int N;      // number of respondents
+  int new_N;  // number of unlabelled respondents
+
+  int<lower=1, upper=5> R[N, Q];          // responses to questions (train)
+  int<lower=1, upper=5> new_R[new_N, Q];  // responses to questions (test)
+
+  int<lower=0, upper=1> y[N];             // binary feature for user
+
+  vector<lower=0>[A] alpha;               // dirichlet prior parameter
+}
+
+parameters {
+  // response probabilities for each question
+  simplex[A] theta_0[Q];  // for group 0
+  simplex[A] theta_1[Q];  // for group 1
+}
+
+model {
+
+  for (q in 1:Q) {
+
+    theta_0[q] ~ dirichlet(alpha);
+    theta_1[q] ~ dirichlet(alpha);
+
+    for (i in 1:N) {
+
+      if (y[i] == 0) {
+        R[i, q] ~ categorical(theta_0[q]);
+      }
+
+      if (y[i] == 1) {
+        R[i, q] ~ categorical(theta_1[q]);
+      }
+    }
+  }
+}
+
+generated quantities {
+  vector[N] pred = class_prob(R, theta_0, theta_1);
+  vector[new_N] new_pred = class_prob(new_R, theta_0, theta_1);
+}
+```
+
+Now we need to generate a test set to predict on, and do the prediction.
+
+```{r}
+new_df <- sample_n(theta_0, 35, id = 0) %>%
+  bind_rows(sample_n(theta_1, 35, id = 1))
+
+new_data <- list(
+  R = as.matrix(select(df, -y)),
+  N = nrow(df),
+  y = df$y,
+  new_R = as.matrix(select(new_df, -y)),
+  new_N = nrow(new_df),
+  Q = Q,
+  A = A,
+  alpha = alpha
+)
+
+fit4 <- sampling(m4, data = new_data, chains = 2, iter = 1000, refresh = 0)
+print(fit4, pars = "new_pred", probs = c(0.025, 0.5, 0.975))
+```
+
+Again, you can have a go with `shinystan::launch_shinystan(fit4)` to check the MCMC diagnostics. We can quickly calculate accuracy on the test set using a prediction threshold of 0.5:
+
+```{r}
+library(tidybayes)
+
+# here `tidybayes::spread_draws()` and `tidybayes::median_qi()`
+# save an immense amount of headache
+
+pred <- fit4 %>%
+  spread_draws(new_pred[i]) %>%
+  median_qi(new_pred[i]) %>% 
+  mutate(.pred = if_else(`new_pred[i]` > 0.5, 0, 1))
+
+acc <- round(mean(pred$.pred == new_df$y), 2)
+cat("The classification accuracy is:", acc)
+```
+
+Originally I was planning to compare to the LASSO, since this model was inspired by a [tweet][inspiration] that used the LASSO, but I'm running out of steam a bit so will leave that be for the moment (although I do think it would be cool to try the [`ExclusiveLasso`][lasso] to select at most a single response to each question as important).
+
+[inspiration]: https://twitter.com/AndrewCutler13/status/1075535228792422400
+[lasso]: https://dataslingers.github.io/ExclusiveLasso/
+
+Finally, we can also look at how group 0 and group 1 differ by plotting `theta_0` and `theta_1`. We munge a little bit first
+
+```{r}
+theta_0_draws <- fit4 %>%  
+  spread_samples(theta_0[i, j])
+
+theta_1_draws <- fit4 %>%  
+  spread_samples(theta_1[i, j])
+
+theta_draws <- theta_0_draws %>% 
+  left_join(theta_1_draws)
+```
+
+and then can visualize response probabilities by question and class
+
+```{r}
+library(ggplot2)
+
+theta_draws %>% 
+  gather(group, theta, theta_0, theta_1) %>% 
+  mutate(
+    group = if_else(group == "theta_0", "Group 0", "Group 1"),
+    question = i,
+    response = j
+  ) %>% 
+  ggplot(aes(theta, fill = group, color = group)) +
+  geom_density(alpha = 0.5) +
+  facet_grid(
+    rows = vars(question),
+    cols = vars(response)
+  ) +
+  labs(
+    title = "Estimated probability of each response by question and group",
+    subtitle = "Columns correspond to response, rows to questions",
+    x = "Probability of response") +
+  theme(
+    legend.position = "none",
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+```
+
+The data is made up, so this isn't terribly interesting, but if these were actual responses to a survey there might be something here.
+
+At this point, we've got the Stan part of things working, the rest of our job is just figuring out how to munge the samples back in R.
+
+## The End
+
+This is pretty much everything I've figured out how to do in Stan. Thanks to all the people who have taken the time to answer my questions. I'm enjoying Stan quite a bit and look forward to learning more. If you have comments on how the code or documentation in the post could be improved, please let me know!
+
+## Resources
+
+**Getting help**
+
+- [The Stan Forums][forums]: If you have a question, this is probably the best place to ask it. It's expected that you've already read most of the manual.
+
+[forums]: https://discourse.mc-stan.org
+
+**Blogs and tutorials**
+
+I recommend that you read much more Stan than you write as you're getting started. Reading lots of Stan will acquaint you with what is possible and general conventions. [khakieconomics][savage_blog] by Jim Savage is my favorite place to read about both Stan and clever generative modeling. Mikhail Popov has a [great notebook on time series innovations][popov_notebook].
+
+In terms of more didactic material, Michael Clark's [Bayesian Basics][mclark] is a nice introduction to Bayes. You may also enjoy Rasmus Bååth's [exercises][farmer_jon], which are both an introduction to both Stan and Bayesian inference.
+
+[savage_blog]: https://khakieconomics.github.io/
+[popov_notebook]: http://paws-public.wmflabs.org/paws-public/User:MPopov_(WMF)/intervention-analysis-rstan.ipynb
+[mclark]: https://m-clark.github.io/bayesian-basics/
+[farmer_jon]: http://www.sumsar.net/files/posts/2017-01-15-bayesian-computation-with-stan-and-farmer-jons/stan_exercise.html
+
+**Reference**
+
+- [Stan Manual][stan_manual]: The canonical reference. You answer is probably somewhere in here, if you can find it.
+
+- [Stan Example Models][stan_example_models]: A huge number of example implementations. Part of the Stan Manual.
+
+- [Stan Function Reference][func_ref]: Function documentation for Stan functions.
+
+[brms]: https://github.com/paul-buerkner/brms
+[loo]: http://mc-stan.org/loo/
+[bayesplot]: http://mc-stan.org/bayesplot/
+
+[stan_manual]: https://mc-stan.org/docs/2_18/bayes-stats-stan/index.html
+[stan_example_models]: https://mc-stan.org/docs/2_18/bayes-stats-stan/example-models-part.html#example-models.part
+[func_ref]: https://mc-stan.org/docs/2_18/functions-reference/
+

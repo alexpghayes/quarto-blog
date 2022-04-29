@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.257">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alex Hayes">
+<meta name="dcterms.date" content="2018-12-24">
+
+<title>alex hayes - some things i’ve learned about stan</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="alex hayes - some things i’ve learned about stan">
+<meta property="og:site-name" content="alex hayes">
+<meta name="twitter:title" content="alex hayes - some things i’ve learned about stan">
+<meta name="twitter:creator" content="@alexpghayes">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">alex hayes</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">about</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html">posts</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../papers/index.html">papers</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../code/index.html">code</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../teaching/index.html">teaching</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talks/index.html">talks</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/alexpghayes"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/alexpghayes"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">some things i’ve learned about stan</h1>
+            <p class="subtitle lead"></p><p>at long last i wrote a stan program that worked, and i took some notes along the way</p><p></p>
+                </div>
+  </div>
+    
+  
+
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Alex Hayes <a href="https://orcid.org/0000-0002-4985-5160" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2018-12-24</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#what-is-stan-and-why-might-you-want-to-use-it" id="toc-what-is-stan-and-why-might-you-want-to-use-it" class="nav-link" data-scroll-target="#what-is-stan-and-why-might-you-want-to-use-it">What is Stan and why might you want to use it?</a></li>
+  <li><a href="#the-long-road-to-actually-writing-stan" id="toc-the-long-road-to-actually-writing-stan" class="nav-link" data-scroll-target="#the-long-road-to-actually-writing-stan">The long road to actually writing Stan</a></li>
+  <li><a href="#the-bare-minimum-to-get-started-with-stan" id="toc-the-bare-minimum-to-get-started-with-stan" class="nav-link" data-scroll-target="#the-bare-minimum-to-get-started-with-stan">The bare minimum to get started with Stan</a>
+  <ul class="collapse">
+  <li><a href="#what-programs-look-like" id="toc-what-programs-look-like" class="nav-link" data-scroll-target="#what-programs-look-like">What programs look like</a></li>
+  <li><a href="#types" id="toc-types" class="nav-link" data-scroll-target="#types">Types</a></li>
+  <li><a href="#arrays-dimension" id="toc-arrays-dimension" class="nav-link" data-scroll-target="#arrays-dimension">Arrays &amp; Dimension</a></li>
+  <li><a href="#writing-debugging-stan" id="toc-writing-debugging-stan" class="nav-link" data-scroll-target="#writing-debugging-stan">Writing &amp; Debugging Stan</a></li>
+  </ul></li>
+  <li><a href="#success-a-first-stan-program" id="toc-success-a-first-stan-program" class="nav-link" data-scroll-target="#success-a-first-stan-program">Success: a first Stan program</a></li>
+  <li><a href="#the-end" id="toc-the-end" class="nav-link" data-scroll-target="#the-end">The End</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/posts/2018-12-24_some-things-ive-learned-about-stan/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+<p>Yesterday, for the first time ever, I coded up a model in Stan and it actually did what I wanted. My current knowledge of Stan is, at best, nascent, but I’ll show you the process I went through to write my first Stan program, pointing out what I wish I’d known along the way.</p>
+<p>My goal is to provide a quick and dirty introduction to Stan, hopefully enough to get you started without having to dig into the manual yourself. My focus here is on the language, not Bayesian inference.</p>
+<p>If you’re looking for the tutorial portion, scroll down to the section called <strong>The bare minimum to get started with Stan</strong>.</p>
+</section>
+<section id="what-is-stan-and-why-might-you-want-to-use-it" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-stan-and-why-might-you-want-to-use-it">What is Stan and why might you want to use it?</h2>
+<p>Stan is Tensorflow for generative statistical models. Just like Tensorflow lets you write the forward pass of a neural net and fits the net for you, Stan lets you write out a generative model and then gives you samples from the posterior.</p>
+<p>The big win is flexibility, and creativity: if you can dream up a generative model and write it in Stan, much of the work to use that model in practice is done<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>Like Tensorflow, the downside is the low-level interface, which can be inconvenient for day-to-day work. Luckily, Stan has <a href="https://github.com/paul-buerkner/brms"><code>brms</code></a>, a much higher level interface that provides a huge amount of infrastructure to make repetitive tasks easy.</p>
+</section>
+<section id="the-long-road-to-actually-writing-stan" class="level2">
+<h2 class="anchored" data-anchor-id="the-long-road-to-actually-writing-stan">The long road to actually writing Stan</h2>
+<p>I first learned about Stan from Gelman’s <a href="http://andrewgelman.com/">blog</a> about three years ago, and first used the Stan ecosystem when I was running into convergence issues with <code>lme4</code> and my advisor suggested <code>rstanarm</code>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p>{{% tweet "880583179593146368" %}}</p>
+</div>
+</div>
+<p>My senior year I took <a href="http://www.danielrkowal.com/">Daniel Kowal’s</a> fantastic Bayes course. In that class we didn’t use Stan, but I got comfortable with Bayesian inference and MCMC and I started using <a href="https://github.com/paul-buerkner/brms"><code>brms</code></a>, <a href="http://mc-stan.org/loo/"><code>loo</code></a> and <a href="http://mc-stan.org/bayesplot/"><code>bayesplot</code></a> for personal projects.</p>
+<p>Intermittently I’ve tried to code up models in raw Stan. I’ve probably tried to code up a model in Stan ten or so times before this, always hitting some roadblock along the way.</p>
+<p>In retrospect, I should have just sat down and read the <a href="https://mc-stan.org/docs/2_18/bayes-stats-stan/index.html">manual</a> sooner, but I really dislike learning new languages by reading dense technical documentation<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>I also think there’d be a lot of value in a publicly available set of Stan exercises, where you would practice translating models from math to Stan, and from Stan to math.</p>
+</section>
+<section id="the-bare-minimum-to-get-started-with-stan" class="level2">
+<h2 class="anchored" data-anchor-id="the-bare-minimum-to-get-started-with-stan">The bare minimum to get started with Stan</h2>
+<section id="what-programs-look-like" class="level3">
+<h3 class="anchored" data-anchor-id="what-programs-look-like">What programs look like</h3>
+<p>I’m not going to formally describe the structure of a Stan program. If you haven’t seen Stan code before, I think a much better approach is to go read a bunch of Stan, even if it doesn’t make sense. I’d start by taking a look through the <a href="https://mc-stan.org/docs/2_18/bayes-stats-stan/example-models-part.html#example-models.part">example models</a> in the Stan manual, then reading <a href="https://khakieconomics.github.io/">blog posts</a>. The first thing you want to pay attention to is the different “blocks,” and what goes in <code>data</code> versus <code>parameters</code> versus <code>model</code>.</p>
+<p>To get you started, here’s simple linear regression on a single predictor, taken from the Stan manual:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{stan}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">data {</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">  int&lt;lower=0&gt; N;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in">  vector[N] x;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">  vector[N] y;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="in">parameters {</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="in">  real alpha;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="in">  real beta;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="in">  real&lt;lower=0&gt; sigma;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="in">model {</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="in">  y ~ normal(alpha + beta * x, sigma);</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that every line ends with a semi-colon (<code>;</code>).</p>
+</section>
+<section id="types" class="level3">
+<h3 class="anchored" data-anchor-id="types">Types</h3>
+<p>There are two scalar types in Stan programs: <code>int</code>s and <code>real</code>s. Integers are discrete and real numbers are continuous. You should think about these like single numbers.</p>
+<p>Unlike R, you’ll need to declare any objects you want to work with before you start working with them. For example</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{stan}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="in">real alpha;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>says that <code>alpha</code> is a number you want to use. Numbers can have upper and lower bounds (for example, you’ll want numbers representing variances to be non-negative):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{stan}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="in">real&lt;lower=0&gt; alpha;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Integers can promoted to reals, but reals are never demoted to integers. The other two objects you should know about are <code>vector</code>s and <code>matrix</code>s. <code>vector</code>s and <code>matrix</code>s contain <code>real</code> elements. When you declare <code>vector</code>s and <code>matrix</code>s, you have to tell Stan how big they are:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{stan}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="in">vector[N] x;    // a vector with N elements</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">matrix[N, M] A; // an N x M matrix</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you declare variable bounds, you do that before the brackets:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{stan}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="in">vector&lt;lower=0, upper=1&gt;[N] p;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can index into vectors much like other mathematical libraries, and do things like matrix-vector multiplication:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{stan}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="in">x[1]</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">A[2, 3]</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="in">A * x       // matrix vector multiplication</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="in">x' * A * x  // calculating a quadratic form (aprostrophe means transpose)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Basic arithmetic is probably enough to get you started, but when you need to know how to do more mathematical operations, you’ll want to consult the <a href="https://mc-stan.org/docs/2_18/functions-reference/">function reference</a>. Be sure to bookmark both the function reference and the manual itself.</p>
+<p>There are some other building blocks, but they are really just icing on top of this cake. For example, if you need a <code>vector</code> with elements constrained to sum to one, you’ll want to use <code>simplex</code>. But to understand <code>simplex</code>, you really only need to understand what a <code>vector</code> is.</p>
+</section>
+<section id="arrays-dimension" class="level3">
+<h3 class="anchored" data-anchor-id="arrays-dimension">Arrays &amp; Dimension</h3>
+<p>The fundamental objects in Stan are <code>int</code>s, <code>real</code>s, <code>vector</code>s and <code>matrix</code>s. Oftentimes, we’ll want to work with collections of these objects. For this we need one final ingredient: arrays. Arrays in Stan work much like Numpy arrays, or MATLAB arrays, but declaring them is slightly more involved.</p>
+<p>Suppose we want to work with an integer array. Then we might write</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{stan}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="in">int Y[N, M];</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>which means we want an <code>N</code> by <code>M</code> array, where each element of the array is an integer (each element in an array must be the same type). If you wanted integers between 0 and 5, you would write:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{stan}</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="in">int&lt;lower=0, upper=5&gt; Y[N, M];</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that <em>type</em> goes first, and the array dimensions come after the variable name. That is, if we write:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{stan}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="in">vector[p] theta[N];</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>it means we want an <em>array</em> with <code>N</code> elements, where each element is <code>vector</code> with <code>p</code> elements.</p>
+</section>
+<section id="writing-debugging-stan" class="level3">
+<h3 class="anchored" data-anchor-id="writing-debugging-stan">Writing &amp; Debugging Stan</h3>
+<p>When you first get started, I recommend copy-pasting existing Stan code and modifying it, rather than writing the code from scratch. When I write Stan, I typically keep several tabs open that just have Stan models on them, and when I get stuck I scan through them for lines that look like they might work.</p>
+<p>I write Stan in RStudio. My best friend is the <code>Check</code> button, which runs the Stan parser and tells you if there are any syntax errors. Sometimes I can understand the error message, but I often end up Googling them.</p>
+<p>For runtime errors, my only trick at the moment is to use the <code>print()</code> function, which works in Stan much like it does in R.</p>
+</section>
+</section>
+<section id="success-a-first-stan-program" class="level2">
+<h2 class="anchored" data-anchor-id="success-a-first-stan-program">Success: a first Stan program</h2>
+<p>Suppose we have <span class="math inline">\(N\)</span> survey respondents that each answer <span class="math inline">\(Q\)</span> questions, where each question has <span class="math inline">\(A\)</span> possible answers. There are two groups of respondents and we would like to: (1) compare how their response probabilities differ, and (2) given a new set of responses, predict which group they belong in.</p>
+<p>Before you write any code at all, I highly recommend you write your model down on paper. Scribbling down something like the following always clarifies my thinking.</p>
+<p>Let <span class="math inline">\(R_{i, j}\)</span> be the response of the <span class="math inline">\(i^{th}\)</span> respondent to the <span class="math inline">\(j^{th}\)</span> question, and let <span class="math inline">\(y_i \in \{0, 1\}\)</span> be their group membership. Then suppose</p>
+<p><span class="math display">\[\begin{align}
+&amp;R_{i, j} | \theta_j \sim \mathrm{Categorical}(\theta_j) \\
+&amp;\theta_j | y_i \sim \mathrm{Dirichlet}(5)
+\end{align}\]</span></p>
+<p>So we let each group have a different distribution of responses to each question, and shrink these distributions toward each other with a Dirichlet prior with 5 pseudo-counts in each response category. This regularization makes sense if a-priori you expect the two groups to respond in similar ways.</p>
+<p>Let’s start by generating some fake data from our proposed data generating process. First we input some problem size parameters and the Dirichlet prior:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ────────────────────────────────── tidyverse 1.3.1.9000 ──</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ ggplot2 3.3.5.9000     ✔ purrr   0.3.4.9000
+✔ tibble  3.1.7.9000     ✔ dplyr   1.0.8.9000
+✔ tidyr   1.2.0.9000     ✔ stringr 1.4.0.9000
+✔ readr   2.1.2.9000     ✔ forcats 0.5.1.9000</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">27</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>Q <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">5</span>, A)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>theta_0 <span class="ot">&lt;-</span> gtools<span class="sc">::</span><span class="fu">rdirichlet</span>(Q, alpha)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>theta_1 <span class="ot">&lt;-</span> gtools<span class="sc">::</span><span class="fu">rdirichlet</span>(Q, alpha)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we figure out how to sample once:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sample_one <span class="ot">&lt;-</span> <span class="cf">function</span>(theta) {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  R <span class="ot">&lt;-</span> <span class="fu">numeric</span>(Q)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Q)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    R[q] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>A, <span class="dv">1</span>, <span class="at">prob =</span> theta[q, ])</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(R) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"q"</span>, <span class="dv">1</span><span class="sc">:</span>Q)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.list</span>(R)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>which naturally leads into sampling <span class="math inline">\(n\)</span> times</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sample_n <span class="ot">&lt;-</span> <span class="cf">function</span>(theta, n, id) {</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  samples <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="sc">~</span><span class="fu">sample_one</span>(theta))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  samples <span class="ot">&lt;-</span> <span class="fu">add_column</span>(samples, <span class="at">y =</span> id, <span class="at">.before =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_all</span>(samples, as.integer)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then we sample 35 times from group 0 and 35 times from group 1, and look at the resulting data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(theta_0, <span class="dv">35</span>, <span class="at">id =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">sample_n</span>(theta_1, <span class="dv">35</span>, <span class="at">id =</span> <span class="dv">1</span>))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 70 × 16
+       y    q1    q2    q3    q4    q5    q6    q7    q8    q9   q10   q11   q12
+   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+ 1     0     4     1     1     5     4     5     1     1     5     4     1     3
+ 2     0     2     2     4     3     4     3     2     2     3     3     2     2
+ 3     0     4     2     5     3     5     1     2     4     3     3     2     2
+ 4     0     2     2     1     3     1     4     2     4     4     1     2     4
+ 5     0     5     1     4     4     4     1     4     4     4     1     2     1
+ 6     0     3     2     5     2     3     3     4     4     1     5     4     5
+ 7     0     1     4     2     1     3     3     2     1     4     1     4     1
+ 8     0     4     1     3     2     1     3     3     3     3     1     2     5
+ 9     0     5     1     1     1     3     1     4     4     3     1     1     3
+10     0     4     2     3     3     2     1     3     1     3     5     1     2
+# … with 60 more rows, and 3 more variables: q13 &lt;int&gt;, q14 &lt;int&gt;, q15 &lt;int&gt;</code></pre>
+</div>
+</div>
+<p>Now we need some Stan code. I started by copy-pasting the code from <a href="https://khakieconomics.github.io/2018/03/12/Tried-modeling-your-features-for-classification.html">this blog post</a> by Jim Savage, which solves a related (but more complicated) problem. Then I blindly played with things and somehow ended up with this:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{stan}</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="in">// survey_0.stan</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="in">data {</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="in">  int N;           // number of respondents</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="in">  int Q;           // number of questions</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="in">  int A;           // number of possible answers to each question</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="in">  int y[N];        // group membership for each user</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="in">  int R[N, Q];     // responses to questions</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="in">parameters {</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="in">  vector[Q] alpha; // dirichlet prior</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="in">  matrix[Q, A] theta_0;</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="in">  matrix[Q, A] theta_1;</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="in">model {</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="in">  for (q in 1:Q) {</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="in">    to_vector(theta_0[q, ]) ~ dirichlet(alpha);</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="in">    to_vector(theta_1[q, ]) ~ dirichlet(alpha);</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="in">    for (i in 1:N) {</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="in">      if (y[i] == 0) {</span></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="in">        R[i, q] ~ multinomial(to_vector(theta_0[q, ]));</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="in">      }</span></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a><span class="in">      if (y[i] == 1) {</span></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a><span class="in">        R[i, q] ~ multinomial(to_vector(theta_1[q, ]));</span></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a><span class="in">      }</span></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a><span class="in">      }</span></span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This didn’t run at all, and in fact was not even syntactically correct, but it was a starting point:</p>
+<p><img src="stan_syntax_check.png" class="img-fluid" alt="todo"></p>
+<p>I got stuck here for quite a while, but the Modern Statistical Workflow slack kindly pointed out that:</p>
+<ul>
+<li><code>theta_0</code> and <code>theta_1</code> needed to be arrays of <code>simplex</code>s</li>
+<li>There’s an extra <code>}</code> (oops!)</li>
+<li>The correct way to index into a matrix is <code>theta_1[q, :]</code>, not <code>theta_1[q, :]</code></li>
+</ul>
+<p>At this point I finally realized I needed to read the Stan manual in earnest, and I decided to solve a simpler problem, where both group 0 and group 1 have the same parameter <code>theta</code>. This eventually resulted in the following:</p>
+<div class="cell" data-output.var="m1">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">// survey_1.stan</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N;        <span class="co">// number of respondents</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> Q;        <span class="co">// number of questions</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> A;        <span class="co">// number of possible answers to each question</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> R[N, Q];  <span class="co">// responses to questions</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt;[A] alpha;  <span class="co">// dirichlet prior parameter</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">simplex</span>[A] theta[Q];       <span class="co">// response probabilities for each question</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">1</span>:Q) {</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    theta[q] ~ dirichlet(alpha);</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:N) {</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>      R[i, q] ~ categorical(theta[q]);</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we compile the model. Compilation takes around a minute or two, and if you mainly use R and Python like I do, it takes a while to get used to. Then we set up some Stan options:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: StanHeaders</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>rstan (Version 2.21.5, GitRev: 2e1f913d3ca3)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'rstan'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:tidyr':
+
+    extract</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prevent tedious re-compilation during interactive Stan dev</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rstan_options</span>(<span class="at">auto_write =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># use multiple cores during sampling. i typically leave one</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># core free to keep my potato of a computer from lagging wildly</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># during sampling</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For this blog post, I’m using <code>stan</code> chunks in my <code>.Rmd</code> file, but if you’re following along, you should put the Stan code into a file <code>survey_1.stan</code>. In general, I recommend keeping each version of your model in a separate <code>.stan</code> file.</p>
+<p>Anyways, you would run:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>m1_path <span class="ot">&lt;-</span> <span class="st">"path/to/survey_1.stan"</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(m1_path)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now that the model has compiled, we can shove some data into a list and sample from it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">R =</span> <span class="fu">as.matrix</span>(<span class="fu">select</span>(df, <span class="sc">-</span>y)),</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">nrow</span>(df),</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> df<span class="sc">$</span>y,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q =</span> Q,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> A</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co"># `refresh = 0` hides the highly verbose messages that are</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="co"># the default during sampling. if you are using multiple cores</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="co"># you may also want to set `show_progress = FALSE`, which</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="co"># prevents the those messages from showing up in a pop-up window</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(m1, <span class="at">data =</span> data, <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span>, <span class="at">refresh =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There were 178 divergent transitions after warmup. See
+https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+to find out why this is a problem and how to eliminate them.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There were 129 transitions after warmup that exceeded the maximum treedepth. Increase max_treedepth above 10. See
+https://mc-stan.org/misc/warnings.html#maximum-treedepth-exceeded</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Examine the pairs() plot to diagnose sampling problems</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The largest R-hat is 2.25, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#r-hat</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-ess</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-ess</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit1, <span class="at">pars =</span> <span class="st">"alpha"</span>, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Inference for Stan model: 4c369caef54d55bc60c9ffa6271f25e2.
+2 chains, each with iter=1000; warmup=500; thin=1; 
+post-warmup draws per chain=500, total post-warmup draws=1000.
+
+             mean  se_mean       sd     2.5%      50%    97.5% n_eff Rhat
+alpha[1] 428044.5 149487.2 189861.7 158573.4 335130.0 768014.7     2 1.92
+alpha[2] 505425.2 176352.0 225541.6 190134.2 394165.7 906866.4     2 1.92
+alpha[3] 427145.8 173526.8 212211.0 144019.2 308301.4 804984.9     1 2.11
+alpha[4] 525718.6 192718.8 241149.8 187486.6 404614.1 951796.0     2 1.96
+alpha[5] 437993.4 210197.6 245454.9 128395.4 279577.4 860000.9     1 2.33
+
+Samples were drawn using NUTS(diag_e) at Thu Apr 28 12:15:00 2022.
+For each parameter, n_eff is a crude measure of effective sample size,
+and Rhat is the potential scale reduction factor on split chains (at 
+convergence, Rhat=1).</code></pre>
+</div>
+</div>
+<p>It works! That’s great, sampling is actually happening. Here I realized that I should actually pass <code>alpha</code> to <code>sampling</code>, and that I’d actually given it a hyperprior by accident. So I changed this, and gave group 0 and group 1 different parameters <code>theta</code>, resulting in:</p>
+<div class="cell" data-output.var="m2">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">// survey_2.stan</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N;  <span class="co">// number of respondents</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> Q;  <span class="co">// number of questions</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> A;  <span class="co">// number of possible answers to each question</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>, <span class="kw">upper</span>=<span class="dv">1</span>&gt; y[N];     <span class="co">// binary feature for user</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>, <span class="kw">upper</span>=<span class="dv">5</span>&gt; R[N, Q];  <span class="co">// responses to questions</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt;[A] alpha;       <span class="co">// dirichlet prior parameter</span></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">// response probabilities for each question</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">simplex</span>[A] theta_0[Q];  <span class="co">// for group 0</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">simplex</span>[A] theta_1[Q];  <span class="co">// for group 1</span></span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">1</span>:Q) {</span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a>    theta_0[q] ~ dirichlet(alpha);</span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a>    theta_1[q] ~ dirichlet(alpha);</span>
+<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:N) {</span>
+<span id="cb38-28"><a href="#cb38-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-29"><a href="#cb38-29" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (y[i] == <span class="dv">0</span>) {</span>
+<span id="cb38-30"><a href="#cb38-30" aria-hidden="true" tabindex="-1"></a>        R[i, q] ~ categorical(theta_0[q]);</span>
+<span id="cb38-31"><a href="#cb38-31" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb38-32"><a href="#cb38-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-33"><a href="#cb38-33" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (y[i] == <span class="dv">1</span>) {</span>
+<span id="cb38-34"><a href="#cb38-34" aria-hidden="true" tabindex="-1"></a>        R[i, q] ~ categorical(theta_1[q]);</span>
+<span id="cb38-35"><a href="#cb38-35" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb38-36"><a href="#cb38-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-37"><a href="#cb38-37" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb38-38"><a href="#cb38-38" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb38-39"><a href="#cb38-39" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We compile this and give it <code>alpha</code>, then take a look at the resulting <code>theta_0</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">R =</span> <span class="fu">as.matrix</span>(<span class="fu">select</span>(df, <span class="sc">-</span>y)),</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">nrow</span>(df),</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> df<span class="sc">$</span>y,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q =</span> Q,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> A,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> alpha</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(m2, <span class="at">data =</span> data, <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span>, <span class="at">refresh =</span> <span class="dv">0</span>)</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit2, <span class="at">pars =</span> <span class="st">"theta_0"</span>, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Inference for Stan model: ab71355641fa4f454bfdbc6b4b405911.
+2 chains, each with iter=1000; warmup=500; thin=1; 
+post-warmup draws per chain=500, total post-warmup draws=1000.
+
+              mean se_mean   sd 2.5%  50% 97.5% n_eff Rhat
+theta_0[1,1]  0.23       0 0.05 0.14 0.23  0.34  1563 1.00
+theta_0[1,2]  0.20       0 0.05 0.12 0.20  0.30  1348 1.00
+theta_0[1,3]  0.12       0 0.04 0.05 0.11  0.21  1345 1.00
+theta_0[1,4]  0.32       0 0.06 0.20 0.31  0.44  1498 1.00
+theta_0[1,5]  0.13       0 0.04 0.06 0.13  0.23  1290 1.00
+theta_0[2,1]  0.23       0 0.05 0.14 0.23  0.34  1469 1.00
+theta_0[2,2]  0.42       0 0.06 0.30 0.42  0.54  1466 1.00
+theta_0[2,3]  0.10       0 0.04 0.04 0.10  0.19  1398 1.00
+theta_0[2,4]  0.13       0 0.04 0.06 0.13  0.23  1235 1.00
+theta_0[2,5]  0.12       0 0.04 0.04 0.11  0.21  1525 1.00
+theta_0[3,1]  0.20       0 0.05 0.11 0.20  0.31  1504 1.00
+theta_0[3,2]  0.17       0 0.05 0.09 0.16  0.27  1471 1.00
+theta_0[3,3]  0.22       0 0.05 0.12 0.21  0.33  1565 1.00
+theta_0[3,4]  0.17       0 0.05 0.08 0.16  0.27  1454 1.00
+theta_0[3,5]  0.25       0 0.05 0.15 0.25  0.36  1500 1.00
+theta_0[4,1]  0.20       0 0.05 0.10 0.20  0.30  1272 1.00
+theta_0[4,2]  0.15       0 0.04 0.08 0.15  0.23  1544 1.00
+theta_0[4,3]  0.35       0 0.06 0.23 0.35  0.49  1163 1.00
+theta_0[4,4]  0.15       0 0.05 0.07 0.15  0.26  1295 1.00
+theta_0[4,5]  0.15       0 0.05 0.07 0.15  0.25  1416 1.00
+theta_0[5,1]  0.20       0 0.05 0.11 0.20  0.31  1397 1.00
+theta_0[5,2]  0.25       0 0.06 0.15 0.25  0.37  1002 1.01
+theta_0[5,3]  0.20       0 0.05 0.11 0.20  0.31  1598 1.00
+theta_0[5,4]  0.18       0 0.05 0.09 0.18  0.29  1742 1.00
+theta_0[5,5]  0.16       0 0.05 0.08 0.16  0.26  1198 1.00
+theta_0[6,1]  0.26       0 0.06 0.16 0.26  0.38  1725 1.00
+theta_0[6,2]  0.13       0 0.04 0.07 0.13  0.22  1613 1.00
+theta_0[6,3]  0.29       0 0.06 0.19 0.28  0.41  1427 1.00
+theta_0[6,4]  0.12       0 0.04 0.05 0.11  0.20  1092 1.00
+theta_0[6,5]  0.20       0 0.05 0.11 0.20  0.31  1265 1.00
+theta_0[7,1]  0.15       0 0.04 0.07 0.15  0.24  1489 1.00
+theta_0[7,2]  0.34       0 0.07 0.21 0.34  0.47  1912 1.00
+theta_0[7,3]  0.18       0 0.05 0.10 0.18  0.28  1361 1.00
+theta_0[7,4]  0.22       0 0.06 0.12 0.21  0.34  1938 1.00
+theta_0[7,5]  0.12       0 0.04 0.05 0.11  0.21  1392 1.00
+theta_0[8,1]  0.20       0 0.05 0.11 0.19  0.30  1041 1.00
+theta_0[8,2]  0.26       0 0.06 0.17 0.26  0.37  1172 1.00
+theta_0[8,3]  0.17       0 0.05 0.08 0.16  0.27  1220 1.00
+theta_0[8,4]  0.23       0 0.05 0.14 0.23  0.34  1216 1.00
+theta_0[8,5]  0.14       0 0.05 0.06 0.13  0.23  1244 1.00
+theta_0[9,1]  0.13       0 0.04 0.06 0.13  0.22  1282 1.00
+theta_0[9,2]  0.15       0 0.05 0.07 0.15  0.25  1773 1.00
+theta_0[9,3]  0.25       0 0.05 0.15 0.25  0.37  1884 1.00
+theta_0[9,4]  0.23       0 0.06 0.14 0.23  0.35  1393 1.00
+theta_0[9,5]  0.23       0 0.06 0.13 0.23  0.35  1833 1.00
+theta_0[10,1] 0.37       0 0.06 0.26 0.37  0.50  1649 1.00
+theta_0[10,2] 0.10       0 0.04 0.04 0.10  0.19  1524 1.00
+theta_0[10,3] 0.20       0 0.05 0.11 0.20  0.31  1365 1.00
+theta_0[10,4] 0.15       0 0.04 0.07 0.15  0.25  1735 1.00
+theta_0[10,5] 0.18       0 0.05 0.10 0.18  0.29  1398 1.00
+theta_0[11,1] 0.26       0 0.06 0.17 0.26  0.37  1942 1.00
+theta_0[11,2] 0.28       0 0.06 0.18 0.28  0.41  1839 1.00
+theta_0[11,3] 0.15       0 0.05 0.07 0.15  0.26  1435 1.00
+theta_0[11,4] 0.19       0 0.05 0.10 0.18  0.28  1574 1.00
+theta_0[11,5] 0.12       0 0.04 0.05 0.11  0.21  1496 1.00
+theta_0[12,1] 0.25       0 0.06 0.15 0.25  0.37  1406 1.00
+theta_0[12,2] 0.25       0 0.06 0.15 0.24  0.36  1420 1.00
+theta_0[12,3] 0.22       0 0.05 0.13 0.21  0.33  1447 1.00
+theta_0[12,4] 0.12       0 0.04 0.05 0.11  0.21  1465 1.00
+theta_0[12,5] 0.17       0 0.05 0.09 0.16  0.28  1502 1.00
+theta_0[13,1] 0.13       0 0.04 0.06 0.13  0.23  1557 1.00
+theta_0[13,2] 0.22       0 0.05 0.12 0.22  0.33  1705 1.00
+theta_0[13,3] 0.16       0 0.05 0.08 0.16  0.26  1796 1.00
+theta_0[13,4] 0.30       0 0.06 0.19 0.30  0.43  1444 1.00
+theta_0[13,5] 0.18       0 0.05 0.10 0.18  0.29  1483 1.00
+theta_0[14,1] 0.17       0 0.05 0.09 0.16  0.26  1118 1.00
+theta_0[14,2] 0.23       0 0.05 0.14 0.23  0.35  1917 1.00
+theta_0[14,3] 0.18       0 0.05 0.10 0.18  0.30  1710 1.00
+theta_0[14,4] 0.22       0 0.05 0.13 0.22  0.32  1404 1.00
+theta_0[14,5] 0.20       0 0.05 0.11 0.20  0.30  1417 1.00
+theta_0[15,1] 0.17       0 0.05 0.08 0.17  0.27  1443 1.00
+theta_0[15,2] 0.12       0 0.04 0.05 0.11  0.20  1477 1.00
+theta_0[15,3] 0.33       0 0.06 0.22 0.33  0.46  1523 1.00
+theta_0[15,4] 0.20       0 0.05 0.11 0.20  0.31  1263 1.00
+theta_0[15,5] 0.18       0 0.05 0.10 0.18  0.28  1479 1.00
+
+Samples were drawn using NUTS(diag_e) at Thu Apr 28 12:15:19 2022.
+For each parameter, n_eff is a crude measure of effective sample size,
+and Rhat is the potential scale reduction factor on split chains (at 
+convergence, Rhat=1).</code></pre>
+</div>
+</div>
+<p>At this point I has happy with the core logic of the model, so I used ShinyStan to check MCMC diagnostics and make sure that all the chains were mixing, etc:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>shinystan<span class="sc">::</span><span class="fu">launch_shinystan</span>(fit2)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>That all checked out, which isn’t a surprise, since we’re effectively estimating a bunch of proportions, so it would be weird if things started exploding.</p>
+<p>But really, my original idea was to see how well this model would predict respondent group, so we need to do some more work.</p>
+<p>I wanted <span class="math inline">\(P(y = 0)\)</span> given a person’s set of responses <span class="math inline">\(R_{i1}, ..., R_{iA}\)</span>. This was one of those instances were I was intimated by how to figure that out, but then it all became clear with a minute or two of pen and paper work.</p>
+<p>Bayes rule gives us that <span class="math inline">\(P(y_i = 0 | R_{i1}, ..., R_{iA})\)</span> equals</p>
+<p><span class="math display">\[\begin{align}
+P(R_{i1}, ..., R_{iA} | y_i = 0) P(y_i = 0) \over
+   P(R_{i1}, ..., R_{iA} | y_i = 0) P(y_i = 0) +
+   P(R_{i1}, ..., R_{iA} | y_i = 1) P(y_i = 1)
+\end{align}\]</span></p>
+<p>to deal with <span class="math inline">\(P(y_i = 0)\)</span> and <span class="math inline">\(P(y_i = 1)\)</span> we need a prior on <span class="math inline">\(y\)</span>. I just assumed that <span class="math inline">\(P(y_i = 0) = P(y_i = 1) = 0.5\)</span>, so those terms cancel. Next we can also assume that questions are independent from other questions, and continue with:</p>
+<p><span class="math display">\[\begin{align}
+&amp;= {\prod_{j=1}^A P(R_{ij} | y_i = 0)  \over
+  \prod_{j=1}^A P(R_{ij} | y_i = 0) + \prod_{j=1}^A P(R_{ij} | y_i = 1)} \\
+&amp;= {\prod_{j=1}^A \theta_{j, 0} \over
+  \prod_{j=1}^A \theta_{j, 0} + \prod_{j=1}^A \theta_{j, 1}}
+\end{align}\]</span></p>
+<p>This is notationally intense because of all the indices, but hopefully the idea is clear. In any case, this doesn’t involve any sampling, so we code it up in the generated quantities block:</p>
+<div class="cell" data-output.var="m3">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">// survey_3.stan</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N;  <span class="co">// number of respondents</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> Q;  <span class="co">// number of questions</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> A;  <span class="co">// number of possible answers to each question</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>, <span class="kw">upper</span>=<span class="dv">1</span>&gt; y[N];     <span class="co">// binary feature for user</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>, <span class="kw">upper</span>=<span class="dv">5</span>&gt; R[N, Q];  <span class="co">// responses to questions</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt;[A] alpha;       <span class="co">// dirichlet prior parameter</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">// response probabilities for each question</span></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">simplex</span>[A] theta_0[Q];  <span class="co">// for group 0</span></span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">simplex</span>[A] theta_1[Q];  <span class="co">// for group 1</span></span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">1</span>:Q) {</span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>    theta_0[q] ~ dirichlet(alpha);</span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>    theta_1[q] ~ dirichlet(alpha);</span>
+<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:N) {</span>
+<span id="cb42-28"><a href="#cb42-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-29"><a href="#cb42-29" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (y[i] == <span class="dv">0</span>) {</span>
+<span id="cb42-30"><a href="#cb42-30" aria-hidden="true" tabindex="-1"></a>        R[i, q] ~ categorical(theta_0[q]);</span>
+<span id="cb42-31"><a href="#cb42-31" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb42-32"><a href="#cb42-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-33"><a href="#cb42-33" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (y[i] == <span class="dv">1</span>) {</span>
+<span id="cb42-34"><a href="#cb42-34" aria-hidden="true" tabindex="-1"></a>        R[i, q] ~ categorical(theta_1[q]);</span>
+<span id="cb42-35"><a href="#cb42-35" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb42-36"><a href="#cb42-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-37"><a href="#cb42-37" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb42-38"><a href="#cb42-38" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb42-39"><a href="#cb42-39" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-40"><a href="#cb42-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-41"><a href="#cb42-41" aria-hidden="true" tabindex="-1"></a><span class="kw">generated quantities</span> {</span>
+<span id="cb42-42"><a href="#cb42-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-43"><a href="#cb42-43" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>, <span class="kw">upper</span>=<span class="dv">1</span>&gt;[N] p; <span class="co">// probability each user is in class 0</span></span>
+<span id="cb42-44"><a href="#cb42-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-45"><a href="#cb42-45" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:N) {</span>
+<span id="cb42-46"><a href="#cb42-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-47"><a href="#cb42-47" aria-hidden="true" tabindex="-1"></a>    <span class="co">// probability of user's response for each response</span></span>
+<span id="cb42-48"><a href="#cb42-48" aria-hidden="true" tabindex="-1"></a>    <span class="dt">vector</span>[Q] pr_0;  <span class="co">// if they are in class 0</span></span>
+<span id="cb42-49"><a href="#cb42-49" aria-hidden="true" tabindex="-1"></a>    <span class="dt">vector</span>[Q] pr_1;  <span class="co">// if they are in class 1</span></span>
+<span id="cb42-50"><a href="#cb42-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-51"><a href="#cb42-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">1</span>:Q) {</span>
+<span id="cb42-52"><a href="#cb42-52" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb42-53"><a href="#cb42-53" aria-hidden="true" tabindex="-1"></a>      <span class="co">// get the actual response</span></span>
+<span id="cb42-54"><a href="#cb42-54" aria-hidden="true" tabindex="-1"></a>      <span class="dt">int</span> response = R[i, q];</span>
+<span id="cb42-55"><a href="#cb42-55" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb42-56"><a href="#cb42-56" aria-hidden="true" tabindex="-1"></a>      <span class="co">// get the corresponding theta, which is also</span></span>
+<span id="cb42-57"><a href="#cb42-57" aria-hidden="true" tabindex="-1"></a>      <span class="co">// the probability we're interested in</span></span>
+<span id="cb42-58"><a href="#cb42-58" aria-hidden="true" tabindex="-1"></a>      pr_0[q] = theta_0[q, response];</span>
+<span id="cb42-59"><a href="#cb42-59" aria-hidden="true" tabindex="-1"></a>      pr_1[q] = theta_1[q, response];</span>
+<span id="cb42-60"><a href="#cb42-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-61"><a href="#cb42-61" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb42-62"><a href="#cb42-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-63"><a href="#cb42-63" aria-hidden="true" tabindex="-1"></a>    <span class="co">// multiply response probabilities for each question together</span></span>
+<span id="cb42-64"><a href="#cb42-64" aria-hidden="true" tabindex="-1"></a>    <span class="co">// and then normalize</span></span>
+<span id="cb42-65"><a href="#cb42-65" aria-hidden="true" tabindex="-1"></a>    p[i] = prod(pr_0) / (prod(pr_0) + prod(pr_1));</span>
+<span id="cb42-66"><a href="#cb42-66" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb42-67"><a href="#cb42-67" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And we can throw this all at Stan and see what happens:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(m3, <span class="at">data =</span> data, <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit3, <span class="at">pars =</span> <span class="st">"p"</span>, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Inference for Stan model: fd4a6e98a27f86bc7d1b183e7c23c01a.
+2 chains, each with iter=1000; warmup=500; thin=1; 
+post-warmup draws per chain=500, total post-warmup draws=1000.
+
+      mean se_mean   sd 2.5%  50% 97.5% n_eff Rhat
+p[1]  0.57    0.01 0.26 0.07 0.59  0.96  1772 1.00
+p[2]  0.96    0.00 0.07 0.78 0.99  1.00   624 1.00
+p[3]  0.98    0.00 0.03 0.91 0.99  1.00   949 1.00
+p[4]  0.91    0.00 0.11 0.60 0.95  1.00  1110 1.00
+p[5]  0.31    0.01 0.23 0.02 0.25  0.82  1296 1.00
+p[6]  0.44    0.01 0.27 0.04 0.41  0.93  1354 1.00
+p[7]  0.83    0.01 0.18 0.35 0.90  0.99  1058 1.00
+p[8]  0.92    0.00 0.11 0.56 0.96  1.00   933 1.00
+p[9]  0.73    0.01 0.23 0.20 0.80  0.99  1386 1.00
+p[10] 0.95    0.00 0.07 0.76 0.98  1.00   803 1.00
+p[11] 0.99    0.00 0.01 0.96 1.00  1.00   744 1.00
+p[12] 0.83    0.01 0.18 0.29 0.89  0.99   855 1.00
+p[13] 0.79    0.01 0.21 0.22 0.85  0.99  1153 1.00
+p[14] 0.90    0.00 0.13 0.52 0.95  1.00   969 1.00
+p[15] 0.86    0.01 0.17 0.34 0.93  1.00   648 1.00
+p[16] 0.82    0.01 0.18 0.34 0.89  0.99   969 1.00
+p[17] 0.67    0.01 0.24 0.14 0.73  0.98  1761 1.00
+p[18] 0.93    0.00 0.11 0.57 0.97  1.00   873 1.00
+p[19] 0.89    0.00 0.13 0.45 0.93  1.00  1072 1.00
+p[20] 0.98    0.00 0.04 0.88 0.99  1.00  1073 1.00
+p[21] 0.92    0.00 0.12 0.52 0.96  1.00   896 1.00
+p[22] 0.89    0.01 0.14 0.43 0.95  1.00   552 1.01
+p[23] 0.98    0.00 0.04 0.90 0.99  1.00   797 1.00
+p[24] 0.59    0.01 0.25 0.10 0.63  0.96  1447 1.00
+p[25] 0.81    0.01 0.19 0.32 0.88  0.99  1149 1.00
+p[26] 0.86    0.01 0.16 0.39 0.92  1.00   754 1.00
+p[27] 0.64    0.01 0.25 0.11 0.69  0.98  1152 1.00
+p[28] 0.89    0.00 0.14 0.48 0.95  1.00  1261 1.00
+p[29] 0.93    0.00 0.09 0.66 0.96  1.00  1214 1.00
+p[30] 0.51    0.01 0.26 0.06 0.52  0.94  1563 1.00
+p[31] 0.91    0.00 0.12 0.54 0.95  1.00  1090 1.00
+p[32] 0.56    0.01 0.26 0.08 0.60  0.96  1198 1.00
+p[33] 0.65    0.01 0.23 0.16 0.70  0.97  1775 1.00
+p[34] 0.79    0.01 0.20 0.24 0.87  0.99  1477 1.00
+p[35] 0.95    0.00 0.07 0.75 0.97  1.00   935 1.00
+p[36] 0.47    0.01 0.26 0.05 0.46  0.93  1451 1.00
+p[37] 0.53    0.01 0.27 0.06 0.55  0.96  1742 1.00
+p[38] 0.30    0.01 0.25 0.01 0.23  0.88  1131 1.00
+p[39] 0.18    0.01 0.18 0.01 0.11  0.68  1135 1.00
+p[40] 0.26    0.01 0.23 0.01 0.18  0.83  1224 1.00
+p[41] 0.14    0.01 0.16 0.00 0.08  0.63   838 1.00
+p[42] 0.37    0.01 0.25 0.03 0.33  0.90  1471 1.00
+p[43] 0.14    0.01 0.17 0.00 0.07  0.61   808 1.00
+p[44] 0.31    0.01 0.24 0.02 0.25  0.82   989 1.00
+p[45] 0.10    0.00 0.14 0.00 0.05  0.51   794 1.00
+p[46] 0.58    0.01 0.25 0.09 0.60  0.96  1467 1.00
+p[47] 0.08    0.00 0.12 0.00 0.04  0.45   760 1.00
+p[48] 0.01    0.00 0.02 0.00 0.00  0.06   635 1.00
+p[49] 0.03    0.00 0.06 0.00 0.01  0.19   756 1.00
+p[50] 0.19    0.01 0.19 0.01 0.12  0.71   986 1.00
+p[51] 0.14    0.00 0.15 0.01 0.08  0.57  1129 1.00
+p[52] 0.29    0.01 0.22 0.02 0.23  0.80  1281 1.00
+p[53] 0.05    0.00 0.07 0.00 0.02  0.25   799 1.00
+p[54] 0.56    0.01 0.26 0.08 0.59  0.95  1655 1.00
+p[55] 0.29    0.01 0.23 0.01 0.22  0.82  1232 1.00
+p[56] 0.67    0.01 0.24 0.15 0.73  0.98  1416 1.00
+p[57] 0.13    0.00 0.15 0.00 0.07  0.63   957 1.00
+p[58] 0.32    0.01 0.24 0.02 0.26  0.85  1504 1.00
+p[59] 0.23    0.01 0.20 0.01 0.17  0.78  1074 1.00
+p[60] 0.01    0.00 0.02 0.00 0.00  0.06   816 1.00
+p[61] 0.09    0.00 0.12 0.00 0.04  0.43   836 1.00
+p[62] 0.44    0.01 0.27 0.03 0.43  0.94  1257 1.00
+p[63] 0.23    0.01 0.19 0.01 0.18  0.72  1192 1.00
+p[64] 0.01    0.00 0.03 0.00 0.00  0.07   801 1.00
+p[65] 0.21    0.01 0.20 0.01 0.14  0.74  1034 1.00
+p[66] 0.19    0.01 0.20 0.01 0.11  0.72  1243 1.00
+p[67] 0.05    0.00 0.08 0.00 0.02  0.26   833 1.00
+p[68] 0.11    0.00 0.14 0.00 0.06  0.52   888 1.00
+p[69] 0.17    0.01 0.18 0.01 0.10  0.66   816 1.00
+p[70] 0.18    0.01 0.19 0.01 0.10  0.67  1223 1.00
+
+Samples were drawn using NUTS(diag_e) at Thu Apr 28 12:15:39 2022.
+For each parameter, n_eff is a crude measure of effective sample size,
+and Rhat is the potential scale reduction factor on split chains (at 
+convergence, Rhat=1).</code></pre>
+</div>
+</div>
+<p>When <span class="math inline">\(Q\)</span> gets big, we can have this <code>p</code> get wonky, turning into exact zeros or ones. At this point I remembered that multiplying probabilities together can cause an explosion because things get small very quickly, and computers do not like small numbers.</p>
+<p>We can do the <a href="https://www.xarg.org/2016/06/the-log-sum-exp-trick-in-machine-learning/">standard trick</a> and take sums in log space, rather than multiplying in the original space to fix this. At the same time, let’s add in some prediction functionality. There are a <a href="https://medium.com/@alex.pavlakis/making-predictions-from-stan-models-in-r-3e349dfac1ed">couple ways</a> to do this at the moment.</p>
+<p>I decided to pass unlabelled data into Stan, and wrote a function to prevent duplicate code. The function goes in its own block. It took me a while to figure out how to get the <a href="https://mc-stan.org/docs/2_18/functions-reference/">function signature</a> right, and how <a href="https://groups.google.com/forum/#!topic/stan-users/lybDQTpMWRw">variable scoping</a> worked, but I eventually got to:</p>
+<div class="cell" data-output.var="m4">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">// survey_4.stan</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="kw">functions</span> {</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">/**</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co">   * class_prob</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co">   *</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co">   * Given an array of responses and probabilities for each response</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="co">   *  for class 0 and class 1, calculate the probability that each</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="co">   *  respondent is in class 0 via Bayes rule. In the training set,</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="co">   *  the actual class of respondent `i` is given by `y[i]`.</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="co">   *</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="co">   * We assume that responses to different questions are independent</span></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="co">   *  and that each class is equally likely. That is, we take</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="co">   *  P(y=1) = P(y=0) = 0.5, and thus these terms cancel.</span></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a><span class="co">   *</span></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="co">   * @param R A 2-array of integers, where each row corresponds to a</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="co">   *  a respondent, and each column corresponds to a question. Elements</span></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a><span class="co">   *  can be 1, 2, ..., A.</span></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="co">   *</span></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a><span class="co">   * @param theta_0 A 2-array of response probabilities for class 0.</span></span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a><span class="co">   *  That is, `theta_0[q, r]` is the probability of (integer-valued)</span></span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a><span class="co">   *  response `r` to question number `q`.</span></span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a><span class="co">   *</span></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a><span class="co">   * @param theta_1 A 2-array of response probabilities for class 1.</span></span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a><span class="co">   *</span></span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a><span class="co">   * @return A vector of probabilities that each user is in class 0.</span></span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a><span class="co">   *  This vector has the same number of elements as there are rows</span></span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a><span class="co">   *  in R.</span></span>
+<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a><span class="co">   */</span></span>
+<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb45-32"><a href="#cb45-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">// note the type signatures here!</span></span>
+<span id="cb45-33"><a href="#cb45-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span> class_prob(<span class="dt">int</span>[,] R, <span class="dt">vector</span>[] theta_0, <span class="dt">vector</span>[] theta_1) {</span>
+<span id="cb45-34"><a href="#cb45-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-35"><a href="#cb45-35" aria-hidden="true" tabindex="-1"></a>    <span class="dt">real</span> p_0;</span>
+<span id="cb45-36"><a href="#cb45-36" aria-hidden="true" tabindex="-1"></a>    <span class="dt">real</span> p_1;</span>
+<span id="cb45-37"><a href="#cb45-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-38"><a href="#cb45-38" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> N = dims(R)[<span class="dv">1</span>];</span>
+<span id="cb45-39"><a href="#cb45-39" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> Q = dims(R)[<span class="dv">2</span>];</span>
+<span id="cb45-40"><a href="#cb45-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-41"><a href="#cb45-41" aria-hidden="true" tabindex="-1"></a>    <span class="dt">vector</span>[N] p;</span>
+<span id="cb45-42"><a href="#cb45-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-43"><a href="#cb45-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:N) {</span>
+<span id="cb45-44"><a href="#cb45-44" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb45-45"><a href="#cb45-45" aria-hidden="true" tabindex="-1"></a>      <span class="dt">vector</span>[Q] pr_0;</span>
+<span id="cb45-46"><a href="#cb45-46" aria-hidden="true" tabindex="-1"></a>      <span class="dt">vector</span>[Q] pr_1;</span>
+<span id="cb45-47"><a href="#cb45-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-48"><a href="#cb45-48" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">1</span>:Q) {</span>
+<span id="cb45-49"><a href="#cb45-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-50"><a href="#cb45-50" aria-hidden="true" tabindex="-1"></a>        pr_0[q] = theta_0[q, R[i, q]];</span>
+<span id="cb45-51"><a href="#cb45-51" aria-hidden="true" tabindex="-1"></a>        pr_1[q] = theta_1[q, R[i, q]];</span>
+<span id="cb45-52"><a href="#cb45-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-53"><a href="#cb45-53" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb45-54"><a href="#cb45-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-55"><a href="#cb45-55" aria-hidden="true" tabindex="-1"></a>      <span class="co">// take the product of probabilities across all questions</span></span>
+<span id="cb45-56"><a href="#cb45-56" aria-hidden="true" tabindex="-1"></a>      <span class="co">// since we assume responses to different questions are</span></span>
+<span id="cb45-57"><a href="#cb45-57" aria-hidden="true" tabindex="-1"></a>      <span class="co">// independent. work in log space for numerical stability</span></span>
+<span id="cb45-58"><a href="#cb45-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-59"><a href="#cb45-59" aria-hidden="true" tabindex="-1"></a>      p_0 = exp(sum(log(pr_0)));</span>
+<span id="cb45-60"><a href="#cb45-60" aria-hidden="true" tabindex="-1"></a>      p_1 = exp(sum(log(pr_1)));</span>
+<span id="cb45-61"><a href="#cb45-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-62"><a href="#cb45-62" aria-hidden="true" tabindex="-1"></a>      p[i] = p_0 / (p_0 + p_1);</span>
+<span id="cb45-63"><a href="#cb45-63" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb45-64"><a href="#cb45-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-65"><a href="#cb45-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>(p);</span>
+<span id="cb45-66"><a href="#cb45-66" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb45-67"><a href="#cb45-67" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb45-68"><a href="#cb45-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-69"><a href="#cb45-69" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb45-70"><a href="#cb45-70" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> Q;      <span class="co">// number of questions</span></span>
+<span id="cb45-71"><a href="#cb45-71" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> A;      <span class="co">// number of possible answers to each question</span></span>
+<span id="cb45-72"><a href="#cb45-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-73"><a href="#cb45-73" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N;      <span class="co">// number of respondents</span></span>
+<span id="cb45-74"><a href="#cb45-74" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> new_N;  <span class="co">// number of unlabelled respondents</span></span>
+<span id="cb45-75"><a href="#cb45-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-76"><a href="#cb45-76" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>, <span class="kw">upper</span>=<span class="dv">5</span>&gt; R[N, Q];          <span class="co">// responses to questions (train)</span></span>
+<span id="cb45-77"><a href="#cb45-77" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>, <span class="kw">upper</span>=<span class="dv">5</span>&gt; new_R[new_N, Q];  <span class="co">// responses to questions (test)</span></span>
+<span id="cb45-78"><a href="#cb45-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-79"><a href="#cb45-79" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>, <span class="kw">upper</span>=<span class="dv">1</span>&gt; y[N];             <span class="co">// binary feature for user</span></span>
+<span id="cb45-80"><a href="#cb45-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-81"><a href="#cb45-81" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt;[A] alpha;               <span class="co">// dirichlet prior parameter</span></span>
+<span id="cb45-82"><a href="#cb45-82" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb45-83"><a href="#cb45-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-84"><a href="#cb45-84" aria-hidden="true" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb45-85"><a href="#cb45-85" aria-hidden="true" tabindex="-1"></a>  <span class="co">// response probabilities for each question</span></span>
+<span id="cb45-86"><a href="#cb45-86" aria-hidden="true" tabindex="-1"></a>  <span class="dt">simplex</span>[A] theta_0[Q];  <span class="co">// for group 0</span></span>
+<span id="cb45-87"><a href="#cb45-87" aria-hidden="true" tabindex="-1"></a>  <span class="dt">simplex</span>[A] theta_1[Q];  <span class="co">// for group 1</span></span>
+<span id="cb45-88"><a href="#cb45-88" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb45-89"><a href="#cb45-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-90"><a href="#cb45-90" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb45-91"><a href="#cb45-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-92"><a href="#cb45-92" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">1</span>:Q) {</span>
+<span id="cb45-93"><a href="#cb45-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-94"><a href="#cb45-94" aria-hidden="true" tabindex="-1"></a>    theta_0[q] ~ dirichlet(alpha);</span>
+<span id="cb45-95"><a href="#cb45-95" aria-hidden="true" tabindex="-1"></a>    theta_1[q] ~ dirichlet(alpha);</span>
+<span id="cb45-96"><a href="#cb45-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-97"><a href="#cb45-97" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:N) {</span>
+<span id="cb45-98"><a href="#cb45-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-99"><a href="#cb45-99" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (y[i] == <span class="dv">0</span>) {</span>
+<span id="cb45-100"><a href="#cb45-100" aria-hidden="true" tabindex="-1"></a>        R[i, q] ~ categorical(theta_0[q]);</span>
+<span id="cb45-101"><a href="#cb45-101" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb45-102"><a href="#cb45-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-103"><a href="#cb45-103" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (y[i] == <span class="dv">1</span>) {</span>
+<span id="cb45-104"><a href="#cb45-104" aria-hidden="true" tabindex="-1"></a>        R[i, q] ~ categorical(theta_1[q]);</span>
+<span id="cb45-105"><a href="#cb45-105" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb45-106"><a href="#cb45-106" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb45-107"><a href="#cb45-107" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb45-108"><a href="#cb45-108" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb45-109"><a href="#cb45-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-110"><a href="#cb45-110" aria-hidden="true" tabindex="-1"></a><span class="kw">generated quantities</span> {</span>
+<span id="cb45-111"><a href="#cb45-111" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[N] pred = class_prob(R, theta_0, theta_1);</span>
+<span id="cb45-112"><a href="#cb45-112" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[new_N] new_pred = class_prob(new_R, theta_0, theta_1);</span>
+<span id="cb45-113"><a href="#cb45-113" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we need to generate a test set to predict on, and do the prediction.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>new_df <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(theta_0, <span class="dv">35</span>, <span class="at">id =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">sample_n</span>(theta_1, <span class="dv">35</span>, <span class="at">id =</span> <span class="dv">1</span>))</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">R =</span> <span class="fu">as.matrix</span>(<span class="fu">select</span>(df, <span class="sc">-</span>y)),</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">nrow</span>(df),</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> df<span class="sc">$</span>y,</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">new_R =</span> <span class="fu">as.matrix</span>(<span class="fu">select</span>(new_df, <span class="sc">-</span>y)),</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">new_N =</span> <span class="fu">nrow</span>(new_df),</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q =</span> Q,</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> A,</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> alpha</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>fit4 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(m4, <span class="at">data =</span> new_data, <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span>, <span class="at">refresh =</span> <span class="dv">0</span>)</span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit4, <span class="at">pars =</span> <span class="st">"new_pred"</span>, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Inference for Stan model: 7d8c081efce19d64ef1af0a50d09efed.
+2 chains, each with iter=1000; warmup=500; thin=1; 
+post-warmup draws per chain=500, total post-warmup draws=1000.
+
+             mean se_mean   sd 2.5%  50% 97.5% n_eff Rhat
+new_pred[1]  0.53    0.01 0.26 0.08 0.54  0.94  1116 1.00
+new_pred[2]  0.76    0.01 0.21 0.23 0.83  0.99  1226 1.00
+new_pred[3]  0.42    0.01 0.27 0.04 0.39  0.91  1149 1.01
+new_pred[4]  0.54    0.01 0.27 0.06 0.54  0.96  1223 1.00
+new_pred[5]  0.84    0.01 0.17 0.39 0.91  0.99  1040 1.00
+new_pred[6]  0.91    0.00 0.10 0.63 0.95  1.00   855 1.00
+new_pred[7]  0.66    0.01 0.25 0.12 0.72  0.98  1117 1.00
+new_pred[8]  0.76    0.01 0.22 0.16 0.83  0.99  1050 1.00
+new_pred[9]  0.36    0.01 0.27 0.02 0.29  0.91  1255 1.00
+new_pred[10] 0.72    0.01 0.23 0.20 0.79  0.98   964 1.00
+new_pred[11] 0.79    0.01 0.20 0.26 0.86  0.99   869 1.00
+new_pred[12] 0.98    0.00 0.04 0.88 0.99  1.00   988 1.00
+new_pred[13] 0.72    0.01 0.23 0.17 0.78  0.99   950 1.00
+new_pred[14] 0.66    0.01 0.25 0.14 0.71  0.98  1211 1.00
+new_pred[15] 0.93    0.00 0.11 0.59 0.97  1.00   739 1.00
+new_pred[16] 0.19    0.01 0.20 0.01 0.11  0.73   935 1.00
+new_pred[17] 0.75    0.01 0.22 0.19 0.81  0.99   869 1.00
+new_pred[18] 0.55    0.01 0.28 0.05 0.55  0.98  1231 1.00
+new_pred[19] 0.53    0.01 0.28 0.05 0.54  0.96  1089 1.00
+new_pred[20] 0.79    0.01 0.20 0.25 0.86  0.99  1097 1.00
+new_pred[21] 0.94    0.00 0.10 0.66 0.98  1.00   511 1.01
+new_pred[22] 0.49    0.01 0.27 0.06 0.48  0.94   802 1.00
+new_pred[23] 0.86    0.01 0.16 0.38 0.92  1.00   981 1.00
+new_pred[24] 0.64    0.01 0.24 0.12 0.68  0.97  1260 1.00
+new_pred[25] 0.72    0.01 0.23 0.15 0.80  0.98  1015 1.00
+new_pred[26] 0.31    0.01 0.25 0.02 0.24  0.88  1156 1.00
+new_pred[27] 0.81    0.01 0.18 0.32 0.88  0.99   777 1.00
+new_pred[28] 0.89    0.00 0.14 0.47 0.94  1.00   995 1.00
+new_pred[29] 0.62    0.01 0.26 0.08 0.67  0.97  1182 1.00
+new_pred[30] 0.92    0.00 0.11 0.59 0.96  1.00   737 1.00
+new_pred[31] 0.83    0.01 0.18 0.37 0.89  0.99  1028 1.00
+new_pred[32] 0.90    0.00 0.13 0.52 0.95  1.00  1081 1.00
+new_pred[33] 0.49    0.01 0.27 0.05 0.50  0.93  1274 1.00
+new_pred[34] 0.39    0.01 0.26 0.03 0.35  0.91  1203 1.00
+new_pred[35] 0.66    0.01 0.25 0.13 0.70  0.98  1033 1.00
+new_pred[36] 0.24    0.01 0.22 0.01 0.17  0.81   861 1.00
+new_pred[37] 0.64    0.01 0.25 0.12 0.69  0.97  1234 1.00
+new_pred[38] 0.53    0.01 0.26 0.07 0.55  0.96  1194 1.00
+new_pred[39] 0.47    0.01 0.27 0.06 0.46  0.94  1237 1.00
+new_pred[40] 0.07    0.00 0.11 0.00 0.03  0.38   853 1.00
+new_pred[41] 0.11    0.00 0.15 0.00 0.05  0.56   931 1.00
+new_pred[42] 0.12    0.00 0.14 0.00 0.06  0.51   912 1.00
+new_pred[43] 0.53    0.01 0.27 0.06 0.55  0.96  1066 1.00
+new_pred[44] 0.82    0.01 0.19 0.26 0.90  0.99   801 1.00
+new_pred[45] 0.39    0.01 0.27 0.02 0.34  0.92  1057 1.00
+new_pred[46] 0.12    0.00 0.14 0.00 0.06  0.57   998 1.00
+new_pred[47] 0.76    0.01 0.22 0.22 0.83  0.99  1055 1.00
+new_pred[48] 0.30    0.01 0.24 0.02 0.23  0.83  1011 1.00
+new_pred[49] 0.37    0.01 0.25 0.03 0.32  0.87   998 1.00
+new_pred[50] 0.14    0.01 0.16 0.00 0.08  0.63   872 1.00
+new_pred[51] 0.14    0.01 0.16 0.00 0.07  0.60   865 1.00
+new_pred[52] 0.71    0.01 0.24 0.13 0.76  0.99  1223 1.00
+new_pred[53] 0.26    0.01 0.23 0.01 0.18  0.82  1013 1.00
+new_pred[54] 0.21    0.01 0.20 0.01 0.14  0.74   915 1.00
+new_pred[55] 0.08    0.00 0.12 0.00 0.03  0.43   651 1.00
+new_pred[56] 0.26    0.01 0.22 0.02 0.20  0.80  1249 1.00
+new_pred[57] 0.05    0.00 0.08 0.00 0.02  0.29   700 1.00
+new_pred[58] 0.14    0.01 0.16 0.00 0.08  0.60   886 1.00
+new_pred[59] 0.53    0.01 0.27 0.06 0.55  0.96  1222 1.00
+new_pred[60] 0.47    0.01 0.28 0.04 0.44  0.95  1196 1.00
+new_pred[61] 0.05    0.00 0.09 0.00 0.02  0.34   669 1.00
+new_pred[62] 0.08    0.00 0.11 0.00 0.04  0.40   993 1.00
+new_pred[63] 0.50    0.01 0.25 0.06 0.49  0.93  1197 1.00
+new_pred[64] 0.11    0.00 0.14 0.00 0.06  0.55   794 1.01
+new_pred[65] 0.84    0.01 0.17 0.35 0.90  0.99   833 1.00
+new_pred[66] 0.65    0.01 0.25 0.15 0.70  0.98  1047 1.00
+new_pred[67] 0.32    0.01 0.25 0.02 0.25  0.84  1111 1.00
+new_pred[68] 0.38    0.01 0.27 0.02 0.33  0.92  1257 1.00
+new_pred[69] 0.20    0.01 0.19 0.01 0.14  0.72  1003 1.00
+new_pred[70] 0.20    0.01 0.20 0.01 0.13  0.76  1198 1.00
+
+Samples were drawn using NUTS(diag_e) at Thu Apr 28 12:15:59 2022.
+For each parameter, n_eff is a crude measure of effective sample size,
+and Rhat is the potential scale reduction factor on split chains (at 
+convergence, Rhat=1).</code></pre>
+</div>
+</div>
+<p>Again, you can have a go with <code>shinystan::launch_shinystan(fit4)</code> to check the MCMC diagnostics. We can quickly calculate accuracy on the test set using a prediction threshold of 0.5:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidybayes)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># here `tidybayes::spread_draws()` and `tidybayes::median_qi()`</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># save an immense amount of headache</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> fit4 <span class="sc">%&gt;%</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread_draws</span>(new_pred[i]) <span class="sc">%&gt;%</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">median_qi</span>(new_pred[i]) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.pred =</span> <span class="fu">if_else</span>(<span class="st">`</span><span class="at">new_pred[i]</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `gather_()` was deprecated in tidyr 1.2.0.
+Please use `gather()` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>acc <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">mean</span>(pred<span class="sc">$</span>.pred <span class="sc">==</span> new_df<span class="sc">$</span>y), <span class="dv">2</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The classification accuracy is:"</span>, acc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The classification accuracy is: 0.51</code></pre>
+</div>
+</div>
+<p>Originally I was planning to compare to the LASSO, since this model was inspired by a <a href="https://twitter.com/AndrewCutler13/status/1075535228792422400">tweet</a> that used the LASSO, but I’m running out of steam a bit so will leave that be for the moment (although I do think it would be cool to try the <a href="https://dataslingers.github.io/ExclusiveLasso/"><code>ExclusiveLasso</code></a> to select at most a single response to each question as important).</p>
+<p>Finally, we can also look at how group 0 and group 1 differ by plotting <code>theta_0</code> and <code>theta_1</code>. We munge a little bit first</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>theta_0_draws <span class="ot">&lt;-</span> fit4 <span class="sc">%&gt;%</span>  </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread_samples</span>(theta_0[i, j])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: 'spread_samples' is deprecated.
+Use 'spread_draws' instead.
+See help("Deprecated") and help("tidybayes-deprecated").</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>theta_1_draws <span class="ot">&lt;-</span> fit4 <span class="sc">%&gt;%</span>  </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread_samples</span>(theta_1[i, j])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: 'spread_samples' is deprecated.
+Use 'spread_draws' instead.
+See help("Deprecated") and help("tidybayes-deprecated").</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>theta_draws <span class="ot">&lt;-</span> theta_0_draws <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(theta_1_draws)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = c("i", "j", ".chain", ".iteration", ".draw")</code></pre>
+</div>
+</div>
+<p>and then can visualize response probabilities by question and class</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>theta_draws <span class="sc">%&gt;%</span> </span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(group, theta, theta_0, theta_1) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">if_else</span>(group <span class="sc">==</span> <span class="st">"theta_0"</span>, <span class="st">"Group 0"</span>, <span class="st">"Group 1"</span>),</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">question =</span> i,</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">response =</span> j</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(theta, <span class="at">fill =</span> group, <span class="at">color =</span> group)) <span class="sc">+</span></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(</span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">vars</span>(question),</span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">vars</span>(response)</span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Estimated probability of each response by question and group"</span>,</span>
+<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Columns correspond to response, rows to questions"</span>,</span>
+<span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Probability of response"</span>) <span class="sc">+</span></span>
+<span id="cb58-20"><a href="#cb58-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb58-21"><a href="#cb58-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb58-22"><a href="#cb58-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb58-23"><a href="#cb58-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb58-24"><a href="#cb58-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The data is made up, so this isn’t terribly interesting, but if these were actual responses to a survey there might be something here.</p>
+<p>At this point, we’ve got the Stan part of things working, the rest of our job is just figuring out how to munge the samples back in R.</p>
+</section>
+<section id="the-end" class="level2">
+<h2 class="anchored" data-anchor-id="the-end">The End</h2>
+<p>This is pretty much everything I’ve figured out how to do in Stan. Thanks to all the people who have taken the time to answer my questions. I’m enjoying Stan quite a bit and look forward to learning more. If you have comments on how the code or documentation in the post could be improved, please let me know!</p>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<p><strong>Getting help</strong></p>
+<ul>
+<li><a href="https://discourse.mc-stan.org">The Stan Forums</a>: If you have a question, this is probably the best place to ask it. It’s expected that you’ve already read most of the manual.</li>
+</ul>
+<p><strong>Blogs and tutorials</strong></p>
+<p>I recommend that you read much more Stan than you write as you’re getting started. Reading lots of Stan will acquaint you with what is possible and general conventions. <a href="https://khakieconomics.github.io/">khakieconomics</a> by Jim Savage is my favorite place to read about both Stan and clever generative modeling. Mikhail Popov has a <a href="http://paws-public.wmflabs.org/paws-public/User:MPopov_(WMF)/intervention-analysis-rstan.ipynb">great notebook on time series innovations</a>.</p>
+<p>In terms of more didactic material, Michael Clark’s <a href="https://m-clark.github.io/bayesian-basics/">Bayesian Basics</a> is a nice introduction to Bayes. You may also enjoy Rasmus Bååth’s <a href="http://www.sumsar.net/files/posts/2017-01-15-bayesian-computation-with-stan-and-farmer-jons/stan_exercise.html">exercises</a>, which are both an introduction to both Stan and Bayesian inference.</p>
+<p><strong>Reference</strong></p>
+<ul>
+<li><p><a href="https://mc-stan.org/docs/2_18/bayes-stats-stan/index.html">Stan Manual</a>: The canonical reference. You answer is probably somewhere in here, if you can find it.</p></li>
+<li><p><a href="https://mc-stan.org/docs/2_18/bayes-stats-stan/example-models-part.html#example-models.part">Stan Example Models</a>: A huge number of example implementations. Part of the Stan Manual.</p></li>
+<li><p><a href="https://mc-stan.org/docs/2_18/functions-reference/">Stan Function Reference</a>: Function documentation for Stan functions.</p></li>
+</ul>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1" role="doc-endnote"><p>The other nice thing about Stan is that you end using the same estimator for all your models. This means there’s no context switching when you move to a different estimator and have to remember how to do inference all over again.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>After reading <a href="https://www.divio.com/blog/documentation/">What nobody tells you about documention</a>, I’d classify most existing Stan resources as Reference and How To Guides. I think there’s a lot of opportunity to introduce the language to a broader audience via more introductory tutorials.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{hayes2018,
+  author = {Alex Hayes},
+  title = {Some Things i’ve Learned about Stan},
+  date = {2018-12-24},
+  url = {https://www.alexpghayes.com/posts/2018-12-24_some-things-ive-learned-about-stan},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-hayes2018" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Alex Hayes. 2018. <span>“Some Things i’ve Learned about Stan.”</span>
+December 24, 2018. <a href="https://www.alexpghayes.com/posts/2018-12-24_some-things-ive-learned-about-stan">https://www.alexpghayes.com/posts/2018-12-24_some-things-ive-learned-about-stan</a>.
+</div></div></section></div></main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.257">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alex Hayes">
+<meta name="dcterms.date" content="2018-08-10">
+
+<title>alex hayes - a summer with rstudio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="alex hayes - a summer with rstudio">
+<meta property="og:site-name" content="alex hayes">
+<meta name="twitter:title" content="alex hayes - a summer with rstudio">
+<meta name="twitter:creator" content="@alexpghayes">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">alex hayes</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">about</a>
+  </li>  
+  <li class="dropdown-header">
+ posts.qmd</li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../papers/index.html">papers</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../code/index.html">code</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../teaching/index.html">teaching</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talks/index.html">talks</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/alexpghayes"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/alexpghayes"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">a summer with rstudio</h1>
+            <p class="subtitle lead"></p><p>good shit</p><p></p>
+                </div>
+  </div>
+    
+  
+
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Alex Hayes <a href="https://orcid.org/0000-0002-4985-5160" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2018-08-10</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#logistics" id="toc-logistics" class="nav-link active" data-scroll-target="#logistics">Logistics</a></li>
+  <li><a href="#rstudio-work-week" id="toc-rstudio-work-week" class="nav-link" data-scroll-target="#rstudio-work-week">RStudio &amp; Work Week</a></li>
+  <li><a href="#development-approach" id="toc-development-approach" class="nav-link" data-scroll-target="#development-approach">Development approach</a></li>
+  <li><a href="#what-i-worked-on" id="toc-what-i-worked-on" class="nav-link" data-scroll-target="#what-i-worked-on">What I worked on</a></li>
+  <li><a href="#next-steps-for-broom" id="toc-next-steps-for-broom" class="nav-link" data-scroll-target="#next-steps-for-broom">Next steps for broom</a></li>
+  <li><a href="#things-i-learned" id="toc-things-i-learned" class="nav-link" data-scroll-target="#things-i-learned">Things I learned</a>
+  <ul class="collapse">
+  <li><a href="#technical-takeaways" id="toc-technical-takeaways" class="nav-link" data-scroll-target="#technical-takeaways">Technical takeaways</a></li>
+  <li><a href="#open-source" id="toc-open-source" class="nav-link" data-scroll-target="#open-source">Open source</a></li>
+  <li><a href="#working-remotely" id="toc-working-remotely" class="nav-link" data-scroll-target="#working-remotely">Working remotely</a></li>
+  </ul></li>
+  <li><a href="#what-was-most-rewarding" id="toc-what-was-most-rewarding" class="nav-link" data-scroll-target="#what-was-most-rewarding">What was most rewarding</a></li>
+  <li><a href="#what-could-have-gone-differently" id="toc-what-could-have-gone-differently" class="nav-link" data-scroll-target="#what-could-have-gone-differently">What could have gone differently</a></li>
+  <li><a href="#thank-you" id="toc-thank-you" class="nav-link" data-scroll-target="#thank-you">Thank you!</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/blog/2018-08-10_a-summer-with-rstudio/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Today is the last day of my summer internship with <a href="https://www.rstudio.com/">RStudio</a>. This is the first year that RStudio has had an official <a href="https://blog.rstudio.com/2018/02/12/summer-interns/">internship program</a>, and I couldn’t be happier to have been a part of it.</p>
+<p>My mandate for the summer has been to make <a href="https://broom.tidyverse.org/"><code>broom</code></a> better. My project was advised by both <a href="http://varianceexplained.org">Dave Robinson</a> and <a href="http://appliedpredictivemodeling.com/blog/">Max Kuhn</a>. Dave originally wrote the <code>broom</code> package and acted as my primary mentor. Max got to sign all my paperwork and answer an unending stream of questions over Slack while he was trying to get work done.</p>
+<section id="logistics" class="level2">
+<h2 class="anchored" data-anchor-id="logistics">Logistics</h2>
+<p>After submitting my application in March, I had video interviews with both Dave and Max<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Apparently things went well because a few days later RStudio sent me some paperwork to sign. Onboarding was all done online and was quick and painless. I started work in early June. I spent my second week on the job in Nashville for RStudio’s work week, where I met most of the RStudio employees and other interns. The rest of the summer I worked from home.</p>
+</section>
+<section id="rstudio-work-week" class="level2">
+<h2 class="anchored" data-anchor-id="rstudio-work-week">RStudio &amp; Work Week</h2>
+<p>RStudio work week was a blast. I spent the first day star-struck. For the most part we were working, but there were interludes for an intern lunch and a couple short presentations. Each work day finished with a round of lightning talks from RStudio employees and Vandy biostats professors and students. Never before in my life have I seen so many fantastic and hilarious presentations in such a short period of time.</p>
+<p>RStudio also had entertainment and dinner planned at a Nashville venue each evening. This was a nice way to put faces to names given that the company is mostly remote.</p>
+<p>More than anything, I was surprised by how personable and empathetic everyone was. I’ve never worked for a tech company before, and I had originally envisioned a somewhat introverted and nerdy cast. This could not have been further from the truth. As I talked with other employees and tried to figure out exactly what RStudio does, people kept emphasizing the importance of empathy paired with technical skills.</p>
+<p>I also finally learned how RStudio makes money: they sell professional products to other companies. These products are RStudio Server Pro, Shiny Server Pro, and RStudio Connect, all of which facilitate some form of shared internal data science infrastructure. I still haven’t used them but I have a vague idea of when they might be useful.</p>
+</section>
+<section id="development-approach" class="level2">
+<h2 class="anchored" data-anchor-id="development-approach">Development approach</h2>
+<p>Working with Dave was incredibly empowering. I highly recommend working with Dave if you ever get the chance.</p>
+<p>Our general strategy was to have one or two video calls each week. Typically we each had some priorities for <code>broom</code> development and would set priorities and hash out any major decisions together. Occasionally I’d pitch Dave on some overambitious project – he pretty much was always all in.</p>
+<p>For the most part I had free rein to make pretty much whatever changes I felt like. Dave would occasionally comment on issues, but for the most part I was just having at on my own. This freedom was awesome.</p>
+</section>
+<section id="what-i-worked-on" class="level2">
+<h2 class="anchored" data-anchor-id="what-i-worked-on">What I worked on</h2>
+<p>The big win of the summer was the <a href="https://www.tidyverse.org/articles/2018/07/broom-0-5-0/"><code>broom 0.5.0</code></a> release. <code>broom 0.5.0</code> featured:</p>
+<ul>
+<li>A move to tibble output instead of data frames</li>
+<li>An entirely new test suite</li>
+<li>A complete documentation overhaul</li>
+<li>Several new vignettes</li>
+<li>~10 new tidiers (mostly contributed)</li>
+<li>Tons of bug fixes (mostly contributed)</li>
+</ul>
+<p>I won’t rehash the details, which you can find at the tidyverse blog post I linked to above, but suffice it to say the release was pretty big. A couple weeks ago I gave a presentation to the tidyverse team on my work; those slides (rough) are <a href="https://github.com/alexpghayes/workshops_presentations/blob/master/2018-07-23-broom-progress-update.pdf">here</a>.</p>
+</section>
+<section id="next-steps-for-broom" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps-for-broom">Next steps for broom</h2>
+<p>Since the <code>broom 0.5.0</code> release I’ve been focused on making broom more extensible and consistent. So far this has included:</p>
+<ul>
+<li>Moving broom into the <a href="https://github.com/tidymodels"><code>tidymodels</code></a> organization</li>
+<li>A new approach to exporting generics</li>
+<li>Moving the test suite to the <a href="https://github.com/alexpghayes/modeltests"><code>modeltests</code></a> package</li>
+<li>Another vignette on <a href="https://broom.tidyverse.org/articles/external-tidiers.html">extending broom</a>.</li>
+<li>A new approach to standardized return documentation</li>
+<li>Experiments with rewriting the core <code>augment()</code> logic for increased consistency</li>
+</ul>
+<p>You can track broom’s long term goals in <a href="https://github.com/tidymodels/broom/issues/484">this thread</a>.</p>
+</section>
+<section id="things-i-learned" class="level2">
+<h2 class="anchored" data-anchor-id="things-i-learned">Things I learned</h2>
+<section id="technical-takeaways" class="level3">
+<h3 class="anchored" data-anchor-id="technical-takeaways">Technical takeaways</h3>
+<p>Broom is basically three R generics plus a hundred or so methods for each of those generics. None of the methods are especially long – I’d be surprised if any is more than 100 lines of code. This means that most of the technical problems in broom are isolated and easy to fix, because they don’t interact with other moving components (Dana and Tim, the <code>ggplot2</code> and <code>Shiny</code> interns would sometimes spends several days on the same heinous bug, which I fortunately avoided!).</p>
+<p>The hard part of broom is not the technical aspect of writing the tidiers, but rather the design aspect of deciding what tidiers should do. Especially for models that you’ve never used before, this can be unclear.</p>
+<p>I will say that working with model objects in R is a special kind of frustrating in which everybody partially follows some conventions, but you never know which ones<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. For the first time in my life I found myself using test driven development.</p>
+<p>I didn’t produce the cleanest git history of all time, but I also didn’t bork anything up massively either, which I consider a success. I did break the build twice (?), so apologies if that affected you.</p>
+<p>At the beginning of the summer, RStudio offered me a laptop to develop on, which I declined. That was a mistake. My personal computer is getting old and, more critically, runs Windows, which made some development tasks painful (revdep checks for example). The time to get to familiar with a fast new MBP from RStudio was definitely work it.</p>
+</section>
+<section id="open-source" class="level3">
+<h3 class="anchored" data-anchor-id="open-source">Open source</h3>
+<p>I spent the first two weeks of my internship on full time bug-resolution and PR duty. <code>broom</code> relies on contributors for bug reports, feedback on documentation, development ideas and sanity checks. Perhaps most importantly, writing code is more fun when you know people are using it<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<div class="quarto-figure quarto-figure-right">
+<figure class="figure">
+<p><img src="broom_readme.png" class="img-fluid figure-img" alt="TODO"></p>
+</figure>
+</div>
+<p>My takeaways from this time was that community matters. A lot. I was surprised by the number of PRs from 12+ months ago that came back to glorious life. In general, I tried to bring enthusiasm to all my Github activity. I also embraced the emoji more fully as a tool for clarifying tone.</p>
+<p>I’m realizing that my willingness to contributor to open source projects (and even to use other packages) has a lot to do with how I feel about the community. Life is short, and I like writing code for kind people. The broom contributors have been fantastic to work with, and I look forward to continued collaboration.</p>
+<p>I’ve adopted a philosophy of <em>Merge now, refactor later</em>. Merged PRs generate enthusiasm, and if you need to go back and make some changes down the line, that’s okay in a project like broom. Similarly, I’ve tried to remember to have all contributors list themselves as contributors in the package description: if you put in the time to make a PR, you should get credit for it.</p>
+<p>It’s become increasingly clear that broom’s success depends on high quality PRs. The people who write new tidiers typically have domain knowledge that Dave and I don’t, and it’s best to have a frequent user of a model write the tidying methods. A large portion of the summer has been spent writing documentation to make it easier to contribute these tidiers.</p>
+</section>
+<section id="working-remotely" class="level3">
+<h3 class="anchored" data-anchor-id="working-remotely">Working remotely</h3>
+<p>I’m a fan of working remotely. Personally, I tried to stick to the 9 - 5 schedule fairly closely, with exceptions for errands and bike rides. It’s nice to not have someone looking over your shoulder, but I definitely found that I needed to be proactive about get work done. When I deviated too far from my schedule I found that I wasn’t as productive and that my stress levels went up.</p>
+<p>This internship was also my first 40 hour / week job. Writing code for 8 hours a day is exhausting. I started drinking a second coffee at 5 pm to kick my brain back into gear for socializing and getting out of the house. I worked in a coffee-shop one day a week or so.</p>
+<p>I also started scheduling social time a few days ahead of time, because if I didn’t I found I wasn’t leaving the house enough. I was lucky to be living with my hyperactive family this summer, but anticipate that I would have needed to be even more socially proactive if I were working remotely in an apartment on my own.</p>
+</section>
+</section>
+<section id="what-was-most-rewarding" class="level2">
+<h2 class="anchored" data-anchor-id="what-was-most-rewarding">What was most rewarding</h2>
+<p>The best of my summer was the success of the <code>Beginner Friendly</code> tag on Github issues. A number of people make their first ever PRs to <code>broom</code>, and that made me really happy. I remember having a hard time getting into open source, and I’d like to make that transition easier for others if I can (keep an eye for an upcoming post on how to make your first PR!).</p>
+<p>!broom_beginner_friendly.png){fig-align=“right” fig-alt=“TODO”}</p>
+<p>I also enjoyed feeling empowered to make design decisions for broom and the level of freedom I had in setting my own goals and playing around in the code base.</p>
+<p>Spending time with the other interns was another highlight. We had a weekly intern-only coffee chat and private slack channel that featured a lot emotional support, technical support and the party parrot emoji.</p>
+<p>Finally, working with broom has exposed me to a broad variety of statistical models. Over the course of the summer I’ve been writing up and slowly revising an essay on software abstractions for modeling software. Working on broom has inspired a number of interesting conversations in this vein that I look forward to continuing.</p>
+</section>
+<section id="what-could-have-gone-differently" class="level2">
+<h2 class="anchored" data-anchor-id="what-could-have-gone-differently">What could have gone differently</h2>
+<p>In somewhat typical fashion, I started way more projects than I could finish. Trying to wrap these up, or even just document their current status, has been somewhat stressful.</p>
+<p>The one downside of my particular supervision situation was a lack of code review. It would have been nice to get some feedback on my code.</p>
+<p>Really, though, I have no complaints and would do it all again in a heartbeat. Working on modeling interfaces for RStudio has been the dream job and I hope I have opportunities to do similar work in the future.</p>
+</section>
+<section id="thank-you" class="level2">
+<h2 class="anchored" data-anchor-id="thank-you">Thank you!</h2>
+<p>My summer would not have been possible without RStudio’s internship program. Thanks to everyone who answered my questions in the RStudio slack and on Github, especially Hadley, Jenny and Jim. Dave and Max deserve special mention not only for being fantastic mentors, but also for putting up with a large number of my uninformed but nonetheless strongly held opinions.</p>
+<p>If you find yourself applying to an RStudio internship program in the future, feel free to reach out on Twitter or to shoot me an email.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1" role="doc-endnote"><p>I had met both Dave and Max before these calls. I met Dave at Data Day Texas 2018 in January. I’d emailed Max some modeling questions earlier in the year, and had made some PRs to both <code>broom</code> and <code>recipes</code>. I’d also met Hadley several times through the Rice Statistics department.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>If you’re involved in modeling package development, check out <a href="https://github.com/alexpghayes/principles"><code>principles</code></a>, a collection of notes on good practices for developing modeling packages.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>I’ve also found that my willingness to write code is much higher when I have write access to a repository. There’s just less friction getting things done.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{hayes2018,
+  author = {Alex Hayes},
+  title = {A Summer with Rstudio},
+  date = {2018-08-10},
+  url = {https://www.alexpghayes.com/blog/2018-08-10_a-summer-with-rstudio},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-hayes2018" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Alex Hayes. 2018. <span>“A Summer with Rstudio.”</span> August 10, 2018.
+<a href="https://www.alexpghayes.com/blog/2018-08-10_a-summer-with-rstudio">https://www.alexpghayes.com/blog/2018-08-10_a-summer-with-rstudio</a>.
+</div></div></section></div></main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

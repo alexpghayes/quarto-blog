@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-99.9.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>alex hayes - blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-subtitle','listing-description','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+  </script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="alex hayes - blog">
+<meta property="og:site-name" content="alex hayes">
+<meta name="twitter:title" content="alex hayes - blog">
+<meta name="twitter:creator" content="@alexpghayes">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">alex hayes</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">about</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./blog.html" aria-current="page">blog</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./papers/index.html">papers</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./code/index.html">code</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./teaching/index.html">teaching</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./talks/index.html">talks</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/alexpghayes"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/alexpghayes"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">blog</h1>
+                </div>
+  </div>
+    
+  
+
+
+
+  <div class="quarto-title-meta">
+
+      
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(20)</span></div></div></div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+
+
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1616907600000" data-listing-file-modified-sort="1651181213325" data-listing-reading-time-sort="12.795">
+<div class="body">
+<a href="./blog/2021-03-28_many-models-workflows-in-python-part-ii/index.html">
+<h3 class="no-anchor listing-title">
+many models workflows in python: part ii
+</h3>
+<div class="listing-subtitle">
+<p>good stuff but python envs are still a PITA</p>
+</div>
+<div class="listing-description">
+In this followup to <a href="../many-models-workflows-in-python-part-i/">my earlier post</a> on modeling workflows in Python, I demonstrate how to integrate sample splitting, parallel processing, exception handling and caching into many-models workflows. I also discuss some differences between exploration/inference-centric workflows and tuning-centric workflows.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2021-03-28_many-models-workflows-in-python-part-ii/index.html">
+<div class="listing-date">
+Mar 28, 2021
+</div>
+<div class="listing-reading-time">
+12 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1598331600000" data-listing-file-modified-sort="1651163963413" data-listing-reading-time-sort="12.975">
+<div class="body">
+<a href="./blog/2020-08-25_many-models-workflows-in-python-part-i/index.html">
+<h3 class="no-anchor listing-title">
+many models workflows in python: part i
+</h3>
+<div class="listing-subtitle">
+<p>python modeling with list columns</p>
+</div>
+<div class="listing-description">
+This summer I worked on my first substantial research project in Python. I’ve used Python for a number of small projects before, but this was the first time that it was important for me to have an efficient workflow for working with many models at once. In R, I spend almost all of my time using a ‘many models’ workflow that leverages list-columns in <code>tibble</code>s and a hefty amount of <code>tidyverse</code> manipulation. It’s taken me a while to find a similar workflow in Python that I like, and so I’m documenting it here for myself and other parties who might benefit.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2020-08-25_many-models-workflows-in-python-part-i/index.html">
+<div class="listing-date">
+Aug 25, 2020
+</div>
+<div class="listing-reading-time">
+12 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1588568400000" data-listing-file-modified-sort="1651196497728" data-listing-reading-time-sort="10.205">
+<div class="body">
+<a href="./blog/2020-05-04_using-the-data-twice/index.html">
+<h3 class="no-anchor listing-title">
+using the data twice
+</h3>
+<div class="listing-subtitle">
+<p>ur gonna have to think a carefully about the sampling distribution</p>
+</div>
+<div class="listing-description">
+Berna Devezer, Danielle Navarro, Joachim Vandekerckhove, and Erkan Ozge Buzbas recently posted a <a href="http://biorxiv.org/lookup/doi/10.1101/2020.04.26.048306">pre-print</a>, <span class="citation" data-cites="devezer_case_2020">Devezer et al. (2020)</span>, responding to various claims within the open science community<sup>1</sup>. In particular, they explore the following claims:
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2020-05-04_using-the-data-twice/index.html">
+<div class="listing-date">
+May 4, 2020
+</div>
+<div class="listing-reading-time">
+10 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1588309200000" data-listing-file-modified-sort="1651177509942" data-listing-reading-time-sort="2.035">
+<div class="body">
+<a href="./blog/2020-05-01_elon-musk-send-tweet/index.html">
+<h3 class="no-anchor listing-title">
+synthetic control: elon’s tweet tanked tesla’s stock
+</h3>
+<div class="listing-subtitle">
+<p>you didn’t need math to tell you this was true but have some anyway</p>
+</div>
+<div class="listing-description">
+At 2020-05-01 15:11:26 UTC Elon Musk tweeted
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2020-05-01_elon-musk-send-tweet/index.html">
+<div class="listing-date">
+May 1, 2020
+</div>
+<div class="listing-reading-time">
+2 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-listing-date-sort="1584853200000" data-listing-file-modified-sort="1651026147394" data-listing-reading-time-sort="15.04">
+<div class="body">
+<a href="./blog/2020-03-22_to-transform-or-not-to-transform/index.html">
+<h3 class="no-anchor listing-title">
+to transform or not to transform
+</h3>
+<div class="listing-subtitle">
+<p>you can just do a likelihood ratio test, i took some notes on how</p>
+</div>
+<div class="listing-description">
+You may have heard that it is impossible to compare models when the outcome has been transformed in one model but not the other. This is not the case. Models fit to transformed data implicitly model the original data as well as the transformed data, and it is relatively straightforward to calculate the corresponding likelihoods. In this post, I’ll show you how to calculate these induced likelihoods. This will allow you to compare models fit to transformed data with models fit to the original, untransformed data.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2020-03-22_to-transform-or-not-to-transform/index.html">
+<div class="listing-date">
+Mar 22, 2020
+</div>
+<div class="listing-reading-time">
+15 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-listing-date-sort="1578290400000" data-listing-file-modified-sort="1651024700243" data-listing-reading-time-sort="19.575">
+<div class="body">
+<a href="./blog/2020-01-06_overfitting-a-guide-tour/index.html">
+<h3 class="no-anchor listing-title">
+overfitting: a guided tour
+</h3>
+<div class="listing-subtitle">
+<p>A little bit more than the standard bias-variance decomposition.</p>
+</div>
+<div class="listing-description">
+This post introduces overfitting, describes how overfitting influences both prediction and inference problems, provides supervised and unsupervised examples of overfitting, and presents a fundamental relationship between train and test error. The goal is to provide some additional intuition beyond material covered in introductory machine learning resources.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2020-01-06_overfitting-a-guide-tour/index.html">
+<div class="listing-date">
+Jan 6, 2020
+</div>
+<div class="listing-reading-time">
+19 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-listing-date-sort="1567227600000" data-listing-file-modified-sort="1651037046171" data-listing-reading-time-sort="17.7">
+<div class="body">
+<a href="./blog/2019-08-31_consistency-and-the-linear-probability-model/index.html">
+<h3 class="no-anchor listing-title">
+consistency and the linear probability model
+</h3>
+<div class="listing-subtitle">
+<p>welp</p>
+</div>
+<div class="listing-description">
+A while back Twitter once again lost its collective mind and decided to rehash the logistic regression versus linear probability model debate for the umpteenth time. The genesis for this new round of chaos was <span class="citation" data-cites="gomila_logistic_2019">Gomila (2019)</span>, a pre-print by Robin Gomila, a grad student in pyschology at Princeton<sup>1</sup>. You can get a taste of the discussion in the replies to the announcement:
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2019-08-31_consistency-and-the-linear-probability-model/index.html">
+<div class="listing-date">
+Aug 31, 2019
+</div>
+<div class="listing-reading-time">
+17 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-listing-date-sort="1564117200000" data-listing-file-modified-sort="1651025309958" data-listing-reading-time-sort="12.41">
+<div class="body">
+<a href="./blog/2019-07-26_an-annotated-bibliography-on-stochastic-blockmodels/index.html">
+<h3 class="no-anchor listing-title">
+an annotated bibliography on stochastic blockmodels
+</h3>
+<div class="listing-subtitle">
+<p>some papers i wish people had told me i should read as someone starting a spectral networks project</p>
+</div>
+<div class="listing-description">
+I’ve been reading a lot of papers on network analysis recently. I thought I’d write down some takeaways and point out papers that I’ve found helpful. This collection of papers is centered around the stochastic blockmodel, and is intended to be introductory rather than comprehensive. I’ve included a few papers with other miscellaneous tidbits of interest.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2019-07-26_an-annotated-bibliography-on-stochastic-blockmodels/index.html">
+<div class="listing-date">
+Jul 26, 2019
+</div>
+<div class="listing-reading-time">
+12 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="8" data-listing-date-sort="1559883600000" data-listing-file-modified-sort="1651032453972" data-listing-reading-time-sort="16.715">
+<div class="body">
+<a href="./blog/2019-06-07_testing-statistical-software/index.html">
+<h3 class="no-anchor listing-title">
+testing statistical software
+</h3>
+<div class="listing-subtitle">
+<p>it’s pretty involved to do right</p>
+</div>
+<div class="listing-description">
+Recently I’ve been implementing and attempting to extend some computationally intense methods. These methods are from papers published in the last several years, and haven’t made their way into mainstream software libraries yet. So I’ve been spending a lot of time reading research code, and I’d like to share what I’ve learned.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2019-06-07_testing-statistical-software/index.html">
+<div class="listing-date">
+Jun 7, 2019
+</div>
+<div class="listing-reading-time">
+16 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="9" data-listing-date-sort="1558414800000" data-listing-file-modified-sort="1651025992300" data-listing-reading-time-sort="21.18">
+<div class="body">
+<a href="./blog/2019-05-21_type-stable-estimation/index.html">
+<h3 class="no-anchor listing-title">
+type stable estimation
+</h3>
+<div class="listing-subtitle">
+<p>my thesis about why modeling software is by and large an enormous mess</p>
+</div>
+<div class="listing-description">
+This post discusses how the mathematical objects we use in formal data modeling are represented in statistical software. First I introduce these objects, then I argue that each object should be represented by a distinct type. Next I present three principles to ensure the type system is statistically meaningful. These principles suggest that existing modeling software has an overly crude type system. I believe a finer type system in statistical packages would result in more intuitive interfaces while increasing extensibility and reducing possibilities for methodological errors.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2019-05-21_type-stable-estimation/index.html">
+<div class="listing-date">
+May 21, 2019
+</div>
+<div class="listing-reading-time">
+21 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="10" data-listing-date-sort="1555131600000" data-listing-file-modified-sort="1651043042264" data-listing-reading-time-sort="13.85">
+<div class="body">
+<a href="./blog/2019-04-13_implementing-the-superlearner-with-tidymodels/index.html">
+<h3 class="no-anchor listing-title">
+implementing the super learner with tidymodels
+</h3>
+<div class="listing-subtitle">
+<p>todo</p>
+</div>
+<div class="listing-description">
+In this post I demonstrate how to implement the Super Learner using <a href="https://github.com/tidymodels/"><code>tidymodels</code></a> infrastructure. The Super Learner is an ensembling strategy that relies on cross-validation to determine how to combine predictions from many models. <code>tidymodels</code> provides low-level predictive modeling infrastructure that makes the implementation rather slick. The goal of this post is to show how you can use this infrastructure to build new methods with consistent, tidy behavior. You’ll get the most out of this post if you’ve used <a href="https://tidymodels.github.io/rsample/"><code>rsample</code></a>, <a href="https://tidymodels.github.io/recipes/"><code>recipes</code></a> and <a href="https://tidymodels.github.io/parsnip/"><code>parsnip</code></a> before and are comfortable working with list-columns.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2019-04-13_implementing-the-superlearner-with-tidymodels/index.html">
+<div class="listing-date">
+Apr 13, 2019
+</div>
+<div class="listing-reading-time">
+13 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="11" data-listing-date-sort="1548914400000" data-listing-file-modified-sort="1651036207546" data-listing-reading-time-sort="8.34">
+<div class="body">
+<a href="./blog/2019-01-31_overlapping-confidence-intervals-correcting-bad-intuition/index.html">
+<h3 class="no-anchor listing-title">
+overlapping confidence intervals: correcting bad intuition
+</h3>
+<div class="listing-subtitle">
+<p>homework problem gone over invested</p>
+</div>
+<div class="listing-description">
+In this post I work through a recent homework exercise that illustrates why you shouldn’t compare means by checking for confidence interval overlap. I calculate the type I error rate of this procedure for a simple case. This reveals where our intuition goes wrong: namely, we can recover the confidence interval heuristic by confusing standard deviations and variances.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2019-01-31_overlapping-confidence-intervals-correcting-bad-intuition/index.html">
+<div class="listing-date">
+Jan 31, 2019
+</div>
+<div class="listing-reading-time">
+8 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="12" data-listing-date-sort="1545631200000" data-listing-file-modified-sort="1651165798637" data-listing-reading-time-sort="23.03">
+<div class="body">
+<a href="./blog/2018-12-24_some-things-ive-learned-about-stan/index.html">
+<h3 class="no-anchor listing-title">
+some things i’ve learned about stan
+</h3>
+<div class="listing-subtitle">
+<p>at long last i wrote a stan program that worked, and i took some notes along the way</p>
+</div>
+<div class="listing-description">
+Yesterday, for the first time ever, I coded up a model in Stan and it actually did what I wanted. My current knowledge of Stan is, at best, nascent, but I’ll show you the process I went through to write my first Stan program, pointing out what I wish I’d known along the way.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2018-12-24_some-things-ive-learned-about-stan/index.html">
+<div class="listing-date">
+Dec 24, 2018
+</div>
+<div class="listing-reading-time">
+23 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="13" data-listing-date-sort="1540270800000" data-listing-file-modified-sort="1651026225880" data-listing-reading-time-sort="6.62">
+<div class="body">
+<a href="./blog/2018-10-23_understanding-multinomial-regression-with-partial-dependence-plots/index.html">
+<h3 class="no-anchor listing-title">
+understanding multinomial regression with partial dependence plots
+</h3>
+<div class="listing-subtitle">
+<p>multinomial regression wasn’t clicking so i wrote code to help</p>
+</div>
+<div class="listing-description">
+This post assumes you are familiar with logistic regression and that you just fit your first or second multinomial logistic regression model. While there is an interpretation for the coefficients in a multinomial regression, that interpretation is relative to a base class, which may not be the most useful. Partial dependence plots are an alternative way to understand multinomial regression, and in fact can be used to understand any predictive model. This post explains what partial dependence plots are and how to create them using R.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2018-10-23_understanding-multinomial-regression-with-partial-dependence-plots/index.html">
+<div class="listing-date">
+Oct 23, 2018
+</div>
+<div class="listing-reading-time">
+6 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="14" data-listing-date-sort="1533877200000" data-listing-file-modified-sort="1651026538221" data-listing-reading-time-sort="9.35">
+<div class="body">
+<a href="./blog/2018-08-10_a-summer-with-rstudio/index.html">
+<h3 class="no-anchor listing-title">
+a summer with rstudio
+</h3>
+<div class="listing-subtitle">
+<p>good shit</p>
+</div>
+<div class="listing-description">
+Today is the last day of my summer internship with <a href="https://www.rstudio.com/">RStudio</a>. This is the first year that RStudio has had an official <a href="https://blog.rstudio.com/2018/02/12/summer-interns/">internship program</a>, and I couldn’t be happier to have been a part of it.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2018-08-10_a-summer-with-rstudio/index.html">
+<div class="listing-date">
+Aug 10, 2018
+</div>
+<div class="listing-reading-time">
+9 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="15" data-listing-date-sort="1529038800000" data-listing-file-modified-sort="1651166244670" data-listing-reading-time-sort="12.605">
+<div class="body">
+<a href="./blog/2018-06-15_speeding-up-gpx-ingest-profiling-rcpp-and-furrr/index.html">
+<h3 class="no-anchor listing-title">
+speeding up GPX ingest: profiling, Rcpp and furrr
+</h3>
+<div class="listing-subtitle">
+profiling your way to happiness, or possibly bikeshedding
+</div>
+<div class="listing-description">
+This post is a casual case study in speeding up R code. I work through several iterations of a function to read and process GPS running data from Strava stored in the GPX format. Along the way I describe how to visualize code bottlenecks with <code>profvis</code> and briefly touch on fast compiled code with <code>Rcpp</code> and parallelization with <code>furrr</code>.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2018-06-15_speeding-up-gpx-ingest-profiling-rcpp-and-furrr/index.html">
+<div class="listing-date">
+Jun 15, 2018
+</div>
+<div class="listing-reading-time">
+12 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="16" data-listing-date-sort="1526446800000" data-listing-file-modified-sort="1651177250032" data-listing-reading-time-sort="10.345">
+<div class="body">
+<a href="./blog/2018-05-16_comparing-runs-with-riegels-formula-and-gams/index.html">
+<h3 class="no-anchor listing-title">
+comparing runs with riegel’s formula and gams
+</h3>
+<div class="listing-subtitle">
+i’ve been looking for an excuse to play with gams forever
+</div>
+<div class="listing-description">
+Runners often vary the distance and intensity of their workouts. In this post I demonstrate how to compare runs of different lengths using Riegel’s formula. The formula accurately describes the trade-off between run distance and average speed for aerobic runs up to about a half-marathon in length. Using my Strava data, I demonstrate how to use Riegel’s formula to measure the difficulty of runs on a standardized scale and briefly investigate how my fitness has changed over time with GAMs.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2018-05-16_comparing-runs-with-riegels-formula-and-gams/index.html">
+<div class="listing-date">
+May 16, 2018
+</div>
+<div class="listing-reading-time">
+10 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="17" data-listing-date-sort="1525323600000" data-listing-file-modified-sort="1651177222949" data-listing-reading-time-sort="12.7">
+<div class="body">
+<a href="./blog/2018-05-03_performance-assessments-via-bootstrap-variants/index.html">
+<h3 class="no-anchor listing-title">
+predictive performance via bootstrap variants
+</h3>
+<div class="listing-subtitle">
+<p>i got curious so i coded these up</p>
+</div>
+<div class="listing-description">
+When we build a predictive model, we are interested in how the model will perform on data it hasn’t seen before. If we have lots of data, we can split it into training and test sets to assess model performance. If we don’t have lots of data, it’s better to fit a model using all of the available data and to assess its predictive performance using resampling techniques. The bootstrap is one such resampling technique. This post discusses several variants of the bootstrap that are appropriate for estimating predictive performance.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2018-05-03_performance-assessments-via-bootstrap-variants/index.html">
+<div class="listing-date">
+May 3, 2018
+</div>
+<div class="listing-reading-time">
+12 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="18" data-listing-date-sort="1508302800000" data-listing-file-modified-sort="1651025098221" data-listing-reading-time-sort="3.28">
+<div class="body">
+<a href="./blog/2017-10-18_gradient-checks/index.html">
+<h3 class="no-anchor listing-title">
+numerical gradient checks
+</h3>
+<div class="listing-subtitle">
+<p>I can’t take gradients correctly so this code checks if I did it right.</p>
+</div>
+<div class="listing-description">
+Suppose you have some loss function <span class="math inline">\(\mathcal{L}(\beta) : \mathbb{R}^n \to \mathbb{R}\)</span> you want to minimize with respect to some model parameters <span class="math inline">\(\beta\)</span>. You understand how gradient descent works and you have a correct implementation of <span class="math inline">\(\mathcal{L}\)</span> but aren’t sure if you took the gradient correctly or implemented it correctly in code.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2017-10-18_gradient-checks/index.html">
+<div class="listing-date">
+Oct 18, 2017
+</div>
+<div class="listing-reading-time">
+3 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="19" data-listing-date-sort="1502082000000" data-listing-file-modified-sort="1651025153796" data-listing-reading-time-sort="3.11">
+<div class="body">
+<a href="./blog/2017-08-07_gentle-tidy-eval/index.html">
+<h3 class="no-anchor listing-title">
+gentle tidy eval with examples
+</h3>
+<div class="listing-subtitle">
+<p>Copy-pasteable example code for people who want to program around the tidyverse.</p>
+</div>
+<div class="listing-description">
+I’ve been using the tidy eval framework introduced with <code>dplyr 0.7</code> for about two months now, and it’s time for an update to my original post on tidy eval. My goal is not to explain tidy eval to you, but rather to show you some simple examples that you can easily generalize from.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/2017-08-07_gentle-tidy-eval/index.html">
+<div class="listing-date">
+Aug 7, 2017
+</div>
+<div class="listing-reading-time">
+3 min
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
