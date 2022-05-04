@@ -417,7 +417,7 @@ credit_sl <- super_learner(
 )
 ```
 
-Since we inherit the tidymodels `predict()` conventions, getting a holdout ROC curve is as easy as:
+Since we inherit the tidymodels `predict()` conventions, getting a holdout ROC curve is as easy as: 
 
 ```{r}
 pred <- predict(credit_sl, credit_test, type = "prob")
