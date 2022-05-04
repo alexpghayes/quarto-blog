@@ -50,3 +50,19 @@ redirects <- c(post_redirects, hugo_redirects)
 # write the _redirect file
 writeLines(redirects, here::here("_site", "_redirects"))
 ```
+
+```{r}
+#| eval: false
+
+# quick code to test that everything has been redirected to a place
+# that works / doesn't result in a 404 error
+
+library(httr)
+
+urls <- glue::glue("https://www.alexpghayes.com{hugo_redirected_to}")
+
+responses <- purrr::map(urls, GET)
+codes <- purrr::map_dbl(responses, status_code)
+stopifnot(all(codes == 200))
+```
+
