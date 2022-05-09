@@ -168,7 +168,7 @@ Generally, the more flexible a modeling tool, the more likely it is that you can
 
 When you work with really flexible tools like Stan, you can also write down a model where some parameters just aren't identified. For example, consider `alpha` and `beta` in the following:
 
-```{{stan}}
+``` stan
 data {
   int<lower=0> N;
   vector[N] y;

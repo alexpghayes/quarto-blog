@@ -33,9 +33,7 @@ starwars %>%
 
 The usage `mass <- rlang::sym("mass")` is Hadley approved:
 
-```{r echo=FALSE}
-blogdown::shortcode("tweet", "885993307968593920")
-```
+{{< tweet id=885993307968593920 hide_thread=true align=center >}}
 
 I believe it is also the current tidyverse code style standard. We use `rlang::sym` and `rlang::syms` identically inside functions.
 

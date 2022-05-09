@@ -27,13 +27,18 @@ I'll walk through this step by step in R code, and then we'll wrap it up into a 
 
 You'll want to load the requisite packages with:
 
-```{r message = FALSE}
+```{r}
+#| message: false
 library(tidymodels)
 library(tidyr)
 library(tune)
 library(modeldata)
 
 library(furrr)
+
+opts <- furrr_options(
+  seed = TRUE
+)
 
 # use `plan(sequential)` to effectively convert all
 # subsequent `future_map*` calls to `map*`
@@ -104,7 +109,7 @@ recipe <- data %>%
 recipe
 ```
 
-Now we can wrap up the first step and fit each of these trees on the full dataset. Here I use [`furrr::future_map()`](https://davisvaughan.github.io/furrr/) to do this in parallel, taking advantage of the embarrassingly parallel nature of model fitting.
+Now we can wrap up the first step and fit each of these trees on the full dataset. Here I use [`furrr::future_map()`](https://davisvaughan.github.io/furrr/) to do this in parallel, taking advantage of the embarrassingly parallel nature of model fitting. We pass `opts` to `.options` to get into the habit of using parallelism-safe random number generation, which will be important in just a moment.
 
 ```{r}
 prepped <- prep(recipe, training = data)
@@ -113,7 +118,7 @@ x <- juice(prepped, all_predictors())
 y <- juice(prepped, all_outcomes())
 
 full_fits <- spec_df %>% 
-  mutate(fit = future_map(spec, fit_xy, x, y))
+  mutate(fit = future_map(spec, fit_xy, x, y, .options = opts))
 
 full_fits
 ```
@@ -152,8 +157,8 @@ The fitting procedure is then the longest part of the whole process, and looks l
 ```{r}
 cv_fits <- crossed %>%
   mutate(
-    prepped = future_map(splits, prepper, recipe),
-    fit = future_map2(spec, prepped, fit_on_fold)
+    prepped = future_map(splits, prepper, recipe, .options = opts),
+    fit = future_map2(spec, prepped, fit_on_fold, .options = opts)
   )
 ```
 
@@ -190,8 +195,8 @@ drop_last_column <- function(df) df[, -ncol(df)]
 
 holdout_preds <- cv_fits %>% 
   mutate(
-    raw_preds = future_pmap(list(fit, splits, prepped), predict_helper),
-    preds = future_map(raw_preds, drop_last_column)
+    raw_preds = future_pmap(list(fit, splits, prepped), predict_helper, .options = opts),
+    preds = future_map(raw_preds, drop_last_column, .options = opts)
   )
 
 holdout_preds %>% 
@@ -270,8 +275,8 @@ new_data <- head(iris)
 
 base_preds <- full_fits %>% 
   mutate(  
-    raw_preds = future_map(fit, predict_helper, new_data, prepped),
-    preds = future_map(raw_preds, drop_last_column)
+    raw_preds = future_map(fit, predict_helper, new_data, prepped, .options = opts),
+    preds = future_map(raw_preds, drop_last_column, .options = opts)
   ) %>% 
   spread_nested_predictions()
 
@@ -313,8 +318,8 @@ super_learner <- function(library, recipe, meta_spec, data) {
   
   cv_fits <- expand_grid(folds, library) %>%
     mutate(
-      prepped = future_map(splits, prepper, recipe),
-      fit = future_pmap(list(spec, prepped), fit_on_fold)
+      prepped = future_map(splits, prepper, recipe, .options = opts),
+      fit = future_pmap(list(spec, prepped), fit_on_fold, .options = opts)
     )
   
   prepped <- prep(recipe, training = data)
@@ -323,12 +328,12 @@ super_learner <- function(library, recipe, meta_spec, data) {
   y <- juice(prepped, all_outcomes())
   
   full_fits <- library %>% 
-    mutate(fit = future_map(spec, fit_xy, x, y))
+    mutate(fit = future_map(spec, fit_xy, x, y, .options = opts))
   
   holdout_preds <- cv_fits %>% 
     mutate(
-      raw_preds = future_pmap(list(fit, splits, prepped), predict_helper),
-      preds = future_map(raw_preds, drop_last_column)
+      raw_preds = future_pmap(list(fit, splits, prepped), predict_helper, .options = opts),
+      preds = future_map(raw_preds, drop_last_column, .options = opts)
     ) %>% 
     spread_nested_predictions() %>% 
     select(-obs)
@@ -350,8 +355,8 @@ predict.super_learner <- function(x, new_data, type = c("class", "prob")) {
   
   new_preds <- x$full_fits %>% 
     mutate(
-      raw_preds = future_map(fit, predict_helper, new_data, x$recipe),
-      preds = future_map(raw_preds, drop_last_column)
+      raw_preds = future_map(fit, predict_helper, new_data, x$recipe, .options = opts),
+      preds = future_map(raw_preds, drop_last_column, .options = opts)
     ) %>% 
     spread_nested_predictions() %>% 
     select(-obs)

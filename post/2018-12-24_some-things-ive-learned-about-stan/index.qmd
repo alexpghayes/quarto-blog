@@ -26,12 +26,7 @@ Like Tensorflow, the downside is the low-level interface, which can be inconveni
 
 ## The long road to actually writing Stan
 
-I first learned about Stan from Gelman's [blog](http://andrewgelman.com/) about three years ago, and first used the Stan ecosystem  when I was running into convergence issues with `lme4` and my advisor suggested `rstanarm`:
-
-```{r}
-#| echo: false
-blogdown::shortcode("tweet", "880583179593146368")
-```
+I first learned about Stan from Gelman's [blog](http://andrewgelman.com/) about three years ago, and first used the Stan ecosystem  when I was running into convergence issues with `lme4` and my advisor suggested `rstanarm`.
 
 My senior year I took [Daniel Kowal's](http://www.danielrkowal.com/) fantastic Bayes course. In that class we didn't use Stan, but I got comfortable with Bayesian inference and MCMC and I started using [`brms`][brms], [`loo`][loo] and [`bayesplot`][bayesplot] for personal projects.
 
@@ -324,7 +319,7 @@ For this blog post, I'm using `stan` chunks in my `.Rmd` file, but if you're fol
 
 Anyways, you would run:
 
-```{{r}}
+``` r
 m1_path <- "path/to/survey_1.stan"
 m1 <- stan_model(m1_path)
 ```
@@ -350,7 +345,7 @@ fit1 <- sampling(m1, data = data, chains = 2, iter = 1000, refresh = 0)
 print(fit1, pars = "alpha", probs = c(0.025, 0.5, 0.975))
 ```
 
-It works! That's great, sampling is actually happening. Here I realized that I should actually pass `alpha` to `sampling`, and that I'd actually given it a hyperprior by accident. So I changed this, and gave group 0 and group 1 different parameters `theta`, resulting in:
+It works! That's great, sampling is actually happening. We get a lot warnings from Stan when we fit this model; these tell us that something is probably wrong. Here I realized that I should actually pass `alpha` to `sampling`, and that I'd actually given it a hyperprior by accident. So I changed this, and gave group 0 and group 1 different parameters `theta`, resulting in:
 
 ```{stan output.var = "m2"}
 // survey_2.stan
@@ -410,7 +405,7 @@ fit2 <- sampling(m2, data = data, chains = 2, iter = 1000, refresh = 0)
 print(fit2, pars = "theta_0", probs = c(0.025, 0.5, 0.975))
 ```
 
-At this point I has happy with the core logic of the model, so I used ShinyStan to check MCMC diagnostics and make sure that all the chains were mixing, etc:
+Note that the warnings go away! The new model actually makes sense, and as a consequence no longer stretches the sampler to a breaking point. At this point I has happy with the core logic of the model, so I used ShinyStan to check MCMC diagnostics and make sure that all the chains were mixing, etc:
 
 ``` r
 shinystan::launch_shinystan(fit2)
@@ -670,7 +665,7 @@ print(fit4, pars = "new_pred", probs = c(0.025, 0.5, 0.975))
 Again, you can have a go with `shinystan::launch_shinystan(fit4)` to check the MCMC diagnostics. We can quickly calculate accuracy on the test set using a prediction threshold of 0.5:
 
 ```{r}
-#\ warning: false
+#| warning: false
 library(tidybayes)
 
 # here `tidybayes::spread_draws()` and `tidybayes::median_qi()`

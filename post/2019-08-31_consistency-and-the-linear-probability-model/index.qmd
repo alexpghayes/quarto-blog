@@ -13,10 +13,7 @@ A while back Twitter once again lost its collective mind and decided to rehash t
 
 [^reached_out]: Before writing this blog post, Robin kindly answered a number of my questions about his paper over Twitter DM. I also reached out to get his comments on a draft of this post before publishing it.
 
-```{r}
-#| echo: false
-blogdown::shortcode("tweet", "1149419090693513216")
-```
+{{< tweet id=1149419090693513216 align=center hide_media=true >}}
 
 So I decided to learn some more about the linear probability model (LPM), which has been on my todo list since Michael Weylandt suggested it as an example for a paper I'm working on. In this post I'll introduce the LPM, and then spend a bunch of time discussing when OLS is a consistent estimator.
 
