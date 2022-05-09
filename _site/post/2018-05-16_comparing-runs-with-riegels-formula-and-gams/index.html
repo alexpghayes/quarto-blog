@@ -246,7 +246,8 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <section id="changing-fitness-over-time-with-gams" class="level2">
 <h2 class="anchored" data-anchor-id="changing-fitness-over-time-with-gams">Changing fitness over time with GAMs</h2>
 <p>Now I use a Generalized Additive Model to understand how my fitness changes over time, following <span class="citation" data-cites="simpson">Simpson (<a href="#ref-simpson" role="doc-biblioref">2018</a>)</span>. Using <code>mgcv</code> I fit a model of the form:</p>
-<p><span class="math display">\[\mathrm{riegel\_5k\_time}_i = f(t_i) + \varepsilon_i \qquad \varepsilon_i \sim \mathrm{Normal}(0, \sigma^2)\]</span> where <span class="math inline">\(t_i\)</span> is the number of days since my first run and <span class="math inline">\(f\)</span> is a smooth function. I also fit a model of the same form but with additional continuous autoregressive (1) structure in case there is residual autocorrelation in the time series after fitting the model.</p>
+<p><span class="math display">\[\mathrm{riegel\_5k\_time}_i = f(t_i) + \varepsilon_i \qquad \varepsilon_i \sim \mathrm{Normal}(0, \sigma^2)\]</span></p>
+<p>where <span class="math inline">\(t_i\)</span> is the number of days since my first run and <span class="math inline">\(f\)</span> is a smooth function. I also fit a model of the same form but with additional continuous autoregressive (1) structure in case there is residual autocorrelation in the time series after fitting the model.</p>
 <p>Both models fit the data well, but the CAR(1) structure turns out to be unnecessary. We briefly inspect the original model:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">

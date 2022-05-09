@@ -378,20 +378,18 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <p>But you often <em>can</em> fit nearly unidentifiable models, where small perturbations to your data lead to dramatic changes in your estimates. I’m going to avoid details about conditioning and numerical stability here; for a concrete example you can read more about near unidentifiability in <code>lme4</code> in <a href="https://rpubs.com/jimsavage/scale_issues">this post</a> by Camelia Simoiu and Jim Savage.</p>
 <p>Generally, the more flexible a modeling tool, the more likely it is that you can fit an unindentifiable or near unidentifiable model. I find an example from <span class="citation" data-cites="simpson_modelling_2018">Simpson (<a href="#ref-simpson_modelling_2018" role="doc-biblioref">2018</a>)</span> particularly interesting, where a model with a smooth through time together with CAR(1) structure on the residuals leads to <a href="https://github.com/gavinsimpson/frontiers-palaeo-additive-modelling/blob/master/manuscript.Rmd#L339">fitting issues</a> due to identification challenges.</p>
 <p>When you work with really flexible tools like Stan, you can also write down a model where some parameters just aren’t identified. For example, consider <code>alpha</code> and <code>beta</code> in the following:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{stan}</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="in">data {</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="in">  int&lt;lower=0&gt; N;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="in">  vector[N] y;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="in">parameters {</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="in">  real alpha;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="in">  real beta;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="in">  real&lt;lower=0&gt; sigma;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="in">model {</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="in">  y ~ normal(alpha + beta, sigma);</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; N;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[N] y;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> alpha;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> beta;</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; sigma;</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  y ~ normal(alpha + beta, sigma);</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Here <code>alpha + beta</code> is identified, but <code>alpha</code> and <code>beta</code> individually aren’t.</p>
 <p>My limited impression is that it’s pretty hard to write tests for poorly conditioned problems. I mostly wanted to include this discussion here to encourage package authors to think about how identifiability might come up in their own work.</p>
 <p>I’d also like to mention Gelman’s <a href="https://statmodeling.stat.columbia.edu/2008/05/13/the_folk_theore/">folk theorem</a> here, which says:</p>

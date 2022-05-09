@@ -250,21 +250,20 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>starwars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 87 × 14
-   name  hei…¹  mass hai…² ski…³ eye…⁴ bir…⁵ sex   gen…⁶ hom…⁷ spe…⁸ films veh…⁹
-   &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;lis&gt; &lt;lis&gt;
- 1 Luke…   172    77 blond fair  blue   19   male  masc… Tato… Human &lt;chr&gt; &lt;chr&gt;
- 2 C-3PO   167    75 &lt;NA&gt;  gold  yell… 112   none  masc… Tato… Droid &lt;chr&gt; &lt;chr&gt;
- 3 R2-D2    96    32 &lt;NA&gt;  whit… red    33   none  masc… Naboo Droid &lt;chr&gt; &lt;chr&gt;
- 4 Dart…   202   136 none  white yell…  41.9 male  masc… Tato… Human &lt;chr&gt; &lt;chr&gt;
- 5 Leia…   150    49 brown light brown  19   fema… femi… Alde… Human &lt;chr&gt; &lt;chr&gt;
- 6 Owen…   178   120 brow… light blue   52   male  masc… Tato… Human &lt;chr&gt; &lt;chr&gt;
- 7 Beru…   165    75 brown light blue   47   fema… femi… Tato… Human &lt;chr&gt; &lt;chr&gt;
- 8 R5-D4    97    32 &lt;NA&gt;  whit… red    NA   none  masc… Tato… Droid &lt;chr&gt; &lt;chr&gt;
- 9 Bigg…   183    84 black light brown  24   male  masc… Tato… Human &lt;chr&gt; &lt;chr&gt;
-10 Obi-…   182    77 aubu… fair  blue…  57   male  masc… Stew… Human &lt;chr&gt; &lt;chr&gt;
-# … with 77 more rows, abbreviated variable names ¹​height, ²​hair_color,
-#   ³​skin_color, ⁴​eye_color, ⁵​birth_year, ⁶​gender, ⁷​homeworld, ⁸​species,
-#   ⁹​vehicles, and 1 more variable: starships &lt;list&gt;</code></pre>
+   name     height  mass hair_color skin_color eye_color birth_year sex   gender
+   &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+ 1 Luke Sk…    172    77 blond      fair       blue            19   male  mascu…
+ 2 C-3PO       167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
+ 3 R2-D2        96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
+ 4 Darth V…    202   136 none       white      yellow          41.9 male  mascu…
+ 5 Leia Or…    150    49 brown      light      brown           19   fema… femin…
+ 6 Owen La…    178   120 brown, gr… light      blue            52   male  mascu…
+ 7 Beru Wh…    165    75 brown      light      blue            47   fema… femin…
+ 8 R5-D4        97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
+ 9 Biggs D…    183    84 black      light      brown           24   male  mascu…
+10 Obi-Wan…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
 </div>
 <section id="using-strings-to-refer-to-column-names" class="level2">
@@ -296,11 +295,9 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 </div>
 <p>The usage <code>mass &lt;- rlang::sym("mass")</code> is Hadley approved:</p>
-<div class="cell">
-<div class="cell-output-display">
-<p>{{% tweet "885993307968593920" %}}</p>
-</div>
-</div>
+<blockquote class="twitter-tweet blockquote" data-conversation="none" align="center" data-width="550" data-lang="en" data-theme="light"><p lang="en" dir="ltr">FWIW I think blah &lt;- enquo(blah) is better style. No need for prefix</p>— Hadley Wickham (@hadleywickham) <a href="https://twitter.com/hadleywickham/status/885993307968593920?ref_src=twsrc%5Etfw">July 14, 2017</a></blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 <p>I believe it is also the current tidyverse code style standard. We use <code>rlang::sym</code> and <code>rlang::syms</code> identically inside functions.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>summarize_by <span class="ot">&lt;-</span> <span class="cf">function</span>(df, groups, to_summarize) {</span>
@@ -338,14 +335,13 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(starwars, <span class="sc">!!</span>homeworld <span class="sc">==</span> <span class="st">"Alderaan"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 14
-  name   hei…¹  mass hai…² ski…³ eye…⁴ bir…⁵ sex   gen…⁶ hom…⁷ spe…⁸ films veh…⁹
-  &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;lis&gt; &lt;lis&gt;
-1 Leia …   150    49 brown light brown    19 fema… femi… Alde… Human &lt;chr&gt; &lt;chr&gt;
-2 Bail …   191    NA black tan   brown    67 male  masc… Alde… Human &lt;chr&gt; &lt;chr&gt;
-3 Raymu…   188    79 brown light brown    NA male  masc… Alde… Human &lt;chr&gt; &lt;chr&gt;
-# … with abbreviated variable names ¹​height, ²​hair_color, ³​skin_color,
-#   ⁴​eye_color, ⁵​birth_year, ⁶​gender, ⁷​homeworld, ⁸​species, ⁹​vehicles, and 1
-#   more variable: starships &lt;list&gt;</code></pre>
+  name      height  mass hair_color skin_color eye_color birth_year sex   gender
+  &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 Leia Org…    150    49 brown      light      brown             19 fema… femin…
+2 Bail Pre…    191    NA black      tan        brown             67 male  mascu…
+3 Raymus A…    188    79 brown      light      brown             NA male  mascu…
+# … with 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
 </div>
 <p>We can also use <code>UQ</code> and <code>UQS</code> directly to be explicit about what we’re unquoting.</p>
@@ -353,14 +349,13 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(starwars, <span class="fu">UQ</span>(homeworld) <span class="sc">==</span> <span class="st">"Alderaan"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 14
-  name   hei…¹  mass hai…² ski…³ eye…⁴ bir…⁵ sex   gen…⁶ hom…⁷ spe…⁸ films veh…⁹
-  &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;lis&gt; &lt;lis&gt;
-1 Leia …   150    49 brown light brown    19 fema… femi… Alde… Human &lt;chr&gt; &lt;chr&gt;
-2 Bail …   191    NA black tan   brown    67 male  masc… Alde… Human &lt;chr&gt; &lt;chr&gt;
-3 Raymu…   188    79 brown light brown    NA male  masc… Alde… Human &lt;chr&gt; &lt;chr&gt;
-# … with abbreviated variable names ¹​height, ²​hair_color, ³​skin_color,
-#   ⁴​eye_color, ⁵​birth_year, ⁶​gender, ⁷​homeworld, ⁸​species, ⁹​vehicles, and 1
-#   more variable: starships &lt;list&gt;</code></pre>
+  name      height  mass hair_color skin_color eye_color birth_year sex   gender
+  &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 Leia Org…    150    49 brown      light      brown             19 fema… femin…
+2 Bail Pre…    191    NA black      tan        brown             67 male  mascu…
+3 Raymus A…    188    79 brown      light      brown             NA male  mascu…
+# … with 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
 </div>
 </section>

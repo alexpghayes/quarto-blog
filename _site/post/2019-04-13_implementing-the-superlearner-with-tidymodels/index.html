@@ -296,15 +296,19 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(furrr)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># use `plan(sequential)` to effectively convert all</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># subsequent `future_map*` calls to `map*`</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># calls. this will result in sequential execution of </span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># embarassingly parallel model fitting procedures</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># but may prevent R from getting angry at parallelism</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(multicore)  </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">27</span>)  <span class="co"># the one true seed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>opts <span class="ot">&lt;-</span> <span class="fu">furrr_options</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># use `plan(sequential)` to effectively convert all</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># subsequent `future_map*` calls to `map*`</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># calls. this will result in sequential execution of </span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># embarassingly parallel model fitting procedures</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># but may prevent R from getting angry at parallelism</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(multicore)  </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">27</span>)  <span class="co"># the one true seed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We’ll build a super learner on the <code>iris</code> dataset, which is build into R. <code>iris</code> looks like:</p>
 <div class="cell">
@@ -421,7 +425,7 @@ Operations:
 PCA extraction with all_predictors()</code></pre>
 </div>
 </div>
-<p>Now we can wrap up the first step and fit each of these trees on the full dataset. Here I use <a href="https://davisvaughan.github.io/furrr/"><code>furrr::future_map()</code></a> to do this in parallel, taking advantage of the embarrassingly parallel nature of model fitting.</p>
+<p>Now we can wrap up the first step and fit each of these trees on the full dataset. Here I use <a href="https://davisvaughan.github.io/furrr/"><code>furrr::future_map()</code></a> to do this in parallel, taking advantage of the embarrassingly parallel nature of model fitting. We pass <code>opts</code> to <code>.options</code> to get into the habit of using parallelism-safe random number generation, which will be important in just a moment.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>prepped <span class="ot">&lt;-</span> <span class="fu">prep</span>(recipe, <span class="at">training =</span> data)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -429,88 +433,9 @@ PCA extraction with all_predictors()</code></pre>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">juice</span>(prepped, <span class="fu">all_outcomes</span>())</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>full_fits <span class="ot">&lt;-</span> spec_df <span class="sc">%&gt;%</span> </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fit =</span> <span class="fu">future_map</span>(spec, fit_xy, x, y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>full_fits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fit =</span> <span class="fu">future_map</span>(spec, fit_xy, x, y, <span class="at">.options =</span> opts))</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>full_fits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 3
    spec      model_id fit     
@@ -532,24 +457,24 @@ numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
 <h2 class="anchored" data-anchor-id="step-2-getting-holdout-predictions">Step 2: Getting holdout predictions</h2>
 <p>We’ll use <a href="https://tidymodels.github.io/rsample/"><code>rsample</code></a> to generate the resampled datasets for 10-fold cross-validation, like so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(data, <span class="at">v =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(data, <span class="at">v =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We will want to fit a model on each fold, which is a mapping operation like before. We define a helper that will fit one of our trees (defined by a <code>parsnip</code> model specification) on a given fold, and pass the data in the form of a trained <code>recipe</code> object, which we call <code>prepped</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fit_on_fold <span class="ot">&lt;-</span> <span class="cf">function</span>(spec, prepped) {</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">juice</span>(prepped, <span class="fu">all_predictors</span>())</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">juice</span>(prepped, <span class="fu">all_outcomes</span>())</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_xy</span>(spec, x, y)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fit_on_fold <span class="ot">&lt;-</span> <span class="cf">function</span>(spec, prepped) {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">juice</span>(prepped, <span class="fu">all_predictors</span>())</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">juice</span>(prepped, <span class="fu">all_outcomes</span>())</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_xy</span>(spec, x, y)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we create a <code>tibble</code> containing all combinations of the cross-validation resamples and all the tree specifications:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># note that tidyr::crossing() used to work for this operation but no</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># longer does</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>crossed <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(folds, spec_df)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>crossed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># note that tidyr::crossing() used to work for this operation but no</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># longer does</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>crossed <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(folds, spec_df)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>crossed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 100 × 4
    splits           id     spec      model_id
@@ -569,254 +494,62 @@ numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
 </div>
 <p>The fitting procedure is then the longest part of the whole process, and looks like:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>cv_fits <span class="ot">&lt;-</span> crossed <span class="sc">%&gt;%</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">prepped =</span> <span class="fu">future_map</span>(splits, prepper, recipe),</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">fit =</span> <span class="fu">future_map2</span>(spec, prepped, fit_on_fold)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: UNRELIABLE VALUE: Future ('&lt;none&gt;') unexpectedly generated random
-numbers without specifying argument 'seed'. There is a risk that those random
-numbers are not statistically sound and the overall results might be invalid.
-To fix this, specify 'seed=TRUE'. This ensures that proper, parallel-safe random
-numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
-'seed=NULL', or set option 'future.rng.onMisuse' to "ignore".</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cv_fits <span class="ot">&lt;-</span> crossed <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">prepped =</span> <span class="fu">future_map</span>(splits, prepper, recipe, <span class="at">.options =</span> opts),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">fit =</span> <span class="fu">future_map2</span>(spec, prepped, fit_on_fold, <span class="at">.options =</span> opts)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now that we have our fits, we need to get holdout predictions. Recall that we trained each fit on the <code>analysis()</code> set, but we want to get holdout predictions using the <code>assessment()</code> set. There are a lot of moving pieces here, so we define a prediction helper function that includes the original row number of each prediction:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>predict_helper <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, new_data, recipe) {</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># new_data can either be an rsample::rsplit object</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># or a data frame of genuinely new data</span></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">inherits</span>(new_data, <span class="st">"rsplit"</span>)) {</span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    obs <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(new_data, <span class="at">data =</span> <span class="st">"assessment"</span>)</span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># never forget to bake when predicting with recipes!</span></span>
-<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    new_data <span class="ot">&lt;-</span> <span class="fu">bake</span>(recipe, <span class="fu">assessment</span>(new_data))</span>
-<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>    obs <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(new_data)</span>
-<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>    new_data <span class="ot">&lt;-</span> <span class="fu">bake</span>(recipe, new_data)</span>
-<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># if you want to generalize this code to a regression</span></span>
-<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># super learner, you'd need to set `type = "response"` here</span></span>
-<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(fit, new_data, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="at">obs =</span> obs, <span class="at">.before =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>predict_helper <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, new_data, recipe) {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># new_data can either be an rsample::rsplit object</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># or a data frame of genuinely new data</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">inherits</span>(new_data, <span class="st">"rsplit"</span>)) {</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    obs <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(new_data, <span class="at">data =</span> <span class="st">"assessment"</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># never forget to bake when predicting with recipes!</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    new_data <span class="ot">&lt;-</span> <span class="fu">bake</span>(recipe, <span class="fu">assessment</span>(new_data))</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    obs <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(new_data)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    new_data <span class="ot">&lt;-</span> <span class="fu">bake</span>(recipe, new_data)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># if you want to generalize this code to a regression</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># super learner, you'd need to set `type = "response"` here</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(fit, new_data, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="at">obs =</span> obs, <span class="at">.before =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we use our helper to get predictions for each fold, for each hyperparameter combination. First we get the complete set of predictions for each fold and save them in a list-column called <code>raw_preds</code>. Then, since the predictions are perfectly correlated (<code>.pred_setosa + .pred_versicolor + .pred_virginica = 1</code>), we drop the last column of predictions to avoid issues with metalearners sensitive to colinearity. Finally, the <code>preds</code> column will be a list-column, so we <code>unnest()</code> to take a look.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>drop_last_column <span class="ot">&lt;-</span> <span class="cf">function</span>(df) df[, <span class="sc">-</span><span class="fu">ncol</span>(df)]</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>holdout_preds <span class="ot">&lt;-</span> cv_fits <span class="sc">%&gt;%</span> </span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">raw_preds =</span> <span class="fu">future_pmap</span>(<span class="fu">list</span>(fit, splits, prepped), predict_helper),</span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">preds =</span> <span class="fu">future_map</span>(raw_preds, drop_last_column)</span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>holdout_preds <span class="sc">%&gt;%</span> </span>
-<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(preds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>drop_last_column <span class="ot">&lt;-</span> <span class="cf">function</span>(df) df[, <span class="sc">-</span><span class="fu">ncol</span>(df)]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>holdout_preds <span class="ot">&lt;-</span> cv_fits <span class="sc">%&gt;%</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">raw_preds =</span> <span class="fu">future_pmap</span>(<span class="fu">list</span>(fit, splits, prepped), predict_helper, <span class="at">.options =</span> opts),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">preds =</span> <span class="fu">future_map</span>(raw_preds, drop_last_column, <span class="at">.options =</span> opts)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>holdout_preds <span class="sc">%&gt;%</span> </span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(preds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,500 × 10
    splits           id     spec      model_id prepped  fit      raw_preds   obs
    &lt;list&gt;           &lt;chr&gt;  &lt;list&gt;       &lt;int&gt; &lt;list&gt;   &lt;list&gt;   &lt;list&gt;    &lt;int&gt;
- 1 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     17
- 2 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     29
- 3 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     41
- 4 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     42
- 5 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     56
- 6 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     64
- 7 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     65
- 8 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     96
- 9 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;    111
-10 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;    128
+ 1 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     15
+ 2 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     23
+ 3 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     29
+ 4 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     36
+ 5 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     37
+ 6 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     48
+ 7 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     56
+ 8 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     59
+ 9 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     70
+10 &lt;split [135/15]&gt; Fold01 &lt;spec[?]&gt;        1 &lt;recipe&gt; &lt;fit[+]&gt; &lt;tibble&gt;     89
 # … with 1,490 more rows, and 2 more variables: .pred_setosa &lt;dbl&gt;,
 #   .pred_versicolor &lt;dbl&gt;</code></pre>
 </div>
@@ -835,70 +568,70 @@ numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
 </ul>
 <p>We’re going to need to use this operation over and over again, so we’ll put it into a function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>spread_nested_predictions <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span> </span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(preds) <span class="sc">%&gt;%</span> </span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">id_cols =</span> obs,</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">names_from =</span> model_id,</span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_from =</span> <span class="fu">contains</span>(<span class="st">".pred"</span>)</span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>holdout_preds <span class="ot">&lt;-</span> <span class="fu">spread_nested_predictions</span>(holdout_preds)</span>
-<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>holdout_preds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>spread_nested_predictions <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(preds) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">id_cols =</span> obs,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">names_from =</span> model_id,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_from =</span> <span class="fu">contains</span>(<span class="st">".pred"</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>holdout_preds <span class="ot">&lt;-</span> <span class="fu">spread_nested_predictions</span>(holdout_preds)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>holdout_preds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 150 × 21
-     obs .pred…¹ .pred…² .pred…³ .pred…⁴ .pred…⁵ .pred…⁶ .pred…⁷ .pred…⁸ .pred…⁹
-   &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
- 1    17 0.986   0.986   0.986   0.986   0.986   0.986   0.986   0.986   0.986  
- 2    29 0.986   0.986   0.986   0.986   0.986   0.986   0.986   0.986   0.986  
- 3    41 0.986   0.986   0.986   0.986   0.986   0.986   0.986   0.986   0.986  
- 4    42 0.986   0.986   0.986   0.986   0.986   0.986   0.986   0.986   0.986  
- 5    56 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774
- 6    64 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774
- 7    65 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774
- 8    96 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774 0.00774
- 9   111 0.00725 0.00725 0.00725 0.00725 0.00725 0.00725 0.00947 0.00947 0.00947
-10   128 0.00725 0.00725 0.00725 0.00725 0.00725 0.00725 0.00947 0.00947 0.00947
-# … with 140 more rows, abbreviated variable names ¹​.pred_setosa_1,
-#   ²​.pred_setosa_2, ³​.pred_setosa_3, ⁴​.pred_setosa_4, ⁵​.pred_setosa_5,
-#   ⁶​.pred_setosa_6, ⁷​.pred_setosa_7, ⁸​.pred_setosa_8, ⁹​.pred_setosa_9, and 11
-#   more variables: .pred_setosa_10 &lt;dbl&gt;, .pred_versicolor_1 &lt;dbl&gt;,
+     obs .pred_setosa_1 .pred_setosa_2 .pred_setosa_3 .pred_setosa_4
+   &lt;int&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
+ 1    15        0.985          0.985          0.985          0.985  
+ 2    23        0.985          0.985          0.985          0.985  
+ 3    29        0.985          0.985          0.985          0.985  
+ 4    36        0.985          0.985          0.985          0.985  
+ 5    37        0.985          0.985          0.985          0.985  
+ 6    48        0.985          0.985          0.985          0.985  
+ 7    56        0.00758        0.00758        0.00758        0.00758
+ 8    59        0.00758        0.00758        0.00758        0.00758
+ 9    70        0.00758        0.00758        0.00758        0.00758
+10    89        0.00758        0.00758        0.00758        0.00758
+# … with 140 more rows, and 16 more variables: .pred_setosa_5 &lt;dbl&gt;,
+#   .pred_setosa_6 &lt;dbl&gt;, .pred_setosa_7 &lt;dbl&gt;, .pred_setosa_8 &lt;dbl&gt;,
+#   .pred_setosa_9 &lt;dbl&gt;, .pred_setosa_10 &lt;dbl&gt;, .pred_versicolor_1 &lt;dbl&gt;,
 #   .pred_versicolor_2 &lt;dbl&gt;, .pred_versicolor_3 &lt;dbl&gt;,
 #   .pred_versicolor_4 &lt;dbl&gt;, .pred_versicolor_5 &lt;dbl&gt;,
-#   .pred_versicolor_6 &lt;dbl&gt;, .pred_versicolor_7 &lt;dbl&gt;, …</code></pre>
+#   .pred_versicolor_6 &lt;dbl&gt;, .pred_versicolor_7 &lt;dbl&gt;,
+#   .pred_versicolor_8 &lt;dbl&gt;, .pred_versicolor_9 &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
 <p>We’re almost ready to fit a the metalearning model on top of these predictions, but first we need to join these predictions back to the original dataset using <code>obs</code> to recover the labels!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>meta_train <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">obs =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">right_join</span>(holdout_preds, <span class="at">by =</span> <span class="st">"obs"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Species, <span class="fu">contains</span>(<span class="st">".pred"</span>))</span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>meta_train</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>meta_train <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">obs =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">right_join</span>(holdout_preds, <span class="at">by =</span> <span class="st">"obs"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Species, <span class="fu">contains</span>(<span class="st">".pred"</span>))</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>meta_train</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 150 × 21
-   Species .pred…¹ .pr…² .pr…³ .pr…⁴ .pr…⁵ .pr…⁶ .pr…⁷ .pr…⁸ .pr…⁹ .pr…˟ .pred…˟
-   &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
- 1 setosa    0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.00791
- 2 setosa    0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.00708
- 3 setosa    0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.00791
- 4 setosa    0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.00709
- 5 setosa    0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.00709
- 6 setosa    0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.00724
- 7 setosa    0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.00757
- 8 setosa    0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.00692
- 9 setosa    0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.986 0.00725
-10 setosa    0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.985 0.00791
-# … with 140 more rows, abbreviated variable names ¹​.pred_setosa_1,
-#   ²​.pred_setosa_2, ³​.pred_setosa_3, ⁴​.pred_setosa_4, ⁵​.pred_setosa_5,
-#   ⁶​.pred_setosa_6, ⁷​.pred_setosa_7, ⁸​.pred_setosa_8, ⁹​.pred_setosa_9,
-#   ˟​.pred_setosa_10, ˟​.pred_versicolor_1, and 9 more variables:
+   Species .pred_setosa_1 .pred_setosa_2 .pred_setosa_3 .pred_setosa_4
+   &lt;fct&gt;            &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
+ 1 setosa           0.985          0.985          0.985          0.985
+ 2 setosa           0.986          0.986          0.986          0.986
+ 3 setosa           0.986          0.986          0.986          0.986
+ 4 setosa           0.986          0.986          0.986          0.986
+ 5 setosa           0.985          0.985          0.985          0.985
+ 6 setosa           0.985          0.985          0.985          0.985
+ 7 setosa           0.986          0.986          0.986          0.986
+ 8 setosa           0.985          0.985          0.985          0.985
+ 9 setosa           0.986          0.986          0.986          0.986
+10 setosa           0.986          0.986          0.986          0.986
+# … with 140 more rows, and 16 more variables: .pred_setosa_5 &lt;dbl&gt;,
+#   .pred_setosa_6 &lt;dbl&gt;, .pred_setosa_7 &lt;dbl&gt;, .pred_setosa_8 &lt;dbl&gt;,
+#   .pred_setosa_9 &lt;dbl&gt;, .pred_setosa_10 &lt;dbl&gt;, .pred_versicolor_1 &lt;dbl&gt;,
 #   .pred_versicolor_2 &lt;dbl&gt;, .pred_versicolor_3 &lt;dbl&gt;,
 #   .pred_versicolor_4 &lt;dbl&gt;, .pred_versicolor_5 &lt;dbl&gt;,
-#   .pred_versicolor_6 &lt;dbl&gt;, .pred_versicolor_7 &lt;dbl&gt;, …</code></pre>
+#   .pred_versicolor_6 &lt;dbl&gt;, .pred_versicolor_7 &lt;dbl&gt;,
+#   .pred_versicolor_8 &lt;dbl&gt;, .pred_versicolor_9 &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
 </section>
@@ -906,46 +639,46 @@ numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
 <h2 class="anchored" data-anchor-id="step-3-fit-the-metalearner">Step 3: Fit the metalearner</h2>
 <p>I’m going to use a multinomial regression as the metalearner. You can use any metalearner that does multiclass classification here, but I’m going with something simple because I don’t want to obscure the logic with additional hyperparameter search here.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># these settings correspond to multinomial regression</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="co"># with a small ridge penalty. the ridge penalty makes</span></span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co"># sure this doesn't explode when the number of columns  </span></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="co"># of heldout predictions is greater than the number of</span></span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="co"># observations in the original data set</span></span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="co"># in practice, you'll probably want to avoid base learner</span></span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="co"># libraries that large due to difficulties estimating</span></span>
-<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="co"># the relative performance of the base learners</span></span>
-<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>metalearner <span class="ot">&lt;-</span> <span class="fu">multinom_reg</span>(<span class="at">penalty =</span> <span class="fl">0.01</span>, <span class="at">mixture =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Species <span class="sc">~</span> ., meta_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># these settings correspond to multinomial regression</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># with a small ridge penalty. the ridge penalty makes</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># sure this doesn't explode when the number of columns  </span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># of heldout predictions is greater than the number of</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># observations in the original data set</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># in practice, you'll probably want to avoid base learner</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># libraries that large due to difficulties estimating</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># the relative performance of the base learners</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>metalearner <span class="ot">&lt;-</span> <span class="fu">multinom_reg</span>(<span class="at">penalty =</span> <span class="fl">0.01</span>, <span class="at">mixture =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Species <span class="sc">~</span> ., meta_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>That’s it! We’ve fit the super learner! Just like the training process, prediction itself proceeds involves two separate stages:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">head</span>(iris)</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="co"># run the new data through the library of base learners first</span></span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>base_preds <span class="ot">&lt;-</span> full_fits <span class="sc">%&gt;%</span> </span>
-<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(  </span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">raw_preds =</span> <span class="fu">future_map</span>(fit, predict_helper, new_data, prepped),</span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">preds =</span> <span class="fu">future_map</span>(raw_preds, drop_last_column)</span>
-<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread_nested_predictions</span>()</span>
-<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a><span class="co"># then through the metalearner</span></span>
-<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(metalearner, base_preds, <span class="at">type =</span> <span class="st">"prob"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">head</span>(iris)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># run the new data through the library of base learners first</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>base_preds <span class="ot">&lt;-</span> full_fits <span class="sc">%&gt;%</span> </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(  </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">raw_preds =</span> <span class="fu">future_map</span>(fit, predict_helper, new_data, prepped, <span class="at">.options =</span> opts),</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">preds =</span> <span class="fu">future_map</span>(raw_preds, drop_last_column, <span class="at">.options =</span> opts)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread_nested_predictions</span>()</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co"># then through the metalearner</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(metalearner, base_preds, <span class="at">type =</span> <span class="st">"prob"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   .pred_setosa .pred_versicolor .pred_virginica
          &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
-1        0.949           0.0384          0.0130
-2        0.949           0.0384          0.0130
-3        0.949           0.0384          0.0130
-4        0.949           0.0384          0.0130
-5        0.949           0.0384          0.0130
-6        0.949           0.0384          0.0130</code></pre>
+1        0.966           0.0209          0.0127
+2        0.966           0.0209          0.0127
+3        0.966           0.0209          0.0127
+4        0.966           0.0209          0.0127
+5        0.966           0.0209          0.0127
+6        0.966           0.0209          0.0127</code></pre>
 </div>
 </div>
 </section>
@@ -954,131 +687,131 @@ numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use
 <p>Now we can take all the code we’ve written up and encapsulate it into a single function (still relying on the helper functions we defined above).</p>
 <p>Note that this is a reference implementation and in practice I recommend following the <a href="https://github.com/tidymodels/model-implementation-principles">tidymodels recommendations</a> when implementing new methods. Luckily, we do end up inherit a fair amount of nice consistency from <code>parsnip</code> itself.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Fit the super learner!</span></span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param library A data frame with a column `spec` containing</span></span>
-<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'   complete `parsnip` model specifications for the base learners </span></span>
-<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="co">#'   and a column `model_id`.</span></span>
-<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param recipe An untrained `recipe` specifying data design</span></span>
-<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param meta_spec A singe `parsnip` model specification</span></span>
-<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="co">#'   for the metalearner.</span></span>
-<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param data The dataset to fit the super learner on.</span></span>
-<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return A list with class `"super_learner"` and three elements:</span></span>
-<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a><span class="co">#'   - `full_fits`: A tibble with list-column `fit` of fit</span></span>
-<span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a><span class="co">#'     base learners as parsnip `model_fit` objects</span></span>
-<span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb64-16"><a href="#cb64-16" aria-hidden="true" tabindex="-1"></a><span class="co">#'   - `metalearner`: The metalearner as a single parsnip</span></span>
-<span id="cb64-17"><a href="#cb64-17" aria-hidden="true" tabindex="-1"></a><span class="co">#'     `model_fit` object</span></span>
-<span id="cb64-18"><a href="#cb64-18" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb64-19"><a href="#cb64-19" aria-hidden="true" tabindex="-1"></a><span class="co">#'   - `recipe`: A trained version of the original recipe</span></span>
-<span id="cb64-20"><a href="#cb64-20" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb64-21"><a href="#cb64-21" aria-hidden="true" tabindex="-1"></a>super_learner <span class="ot">&lt;-</span> <span class="cf">function</span>(library, recipe, meta_spec, data) {</span>
-<span id="cb64-22"><a href="#cb64-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb64-23"><a href="#cb64-23" aria-hidden="true" tabindex="-1"></a>  folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(data, <span class="at">v =</span> <span class="dv">5</span>)</span>
-<span id="cb64-24"><a href="#cb64-24" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb64-25"><a href="#cb64-25" aria-hidden="true" tabindex="-1"></a>  cv_fits <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(folds, library) <span class="sc">%&gt;%</span></span>
-<span id="cb64-26"><a href="#cb64-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb64-27"><a href="#cb64-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">prepped =</span> <span class="fu">future_map</span>(splits, prepper, recipe),</span>
-<span id="cb64-28"><a href="#cb64-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">fit =</span> <span class="fu">future_pmap</span>(<span class="fu">list</span>(spec, prepped), fit_on_fold)</span>
-<span id="cb64-29"><a href="#cb64-29" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb64-30"><a href="#cb64-30" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb64-31"><a href="#cb64-31" aria-hidden="true" tabindex="-1"></a>  prepped <span class="ot">&lt;-</span> <span class="fu">prep</span>(recipe, <span class="at">training =</span> data)</span>
-<span id="cb64-32"><a href="#cb64-32" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb64-33"><a href="#cb64-33" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">juice</span>(prepped, <span class="fu">all_predictors</span>())</span>
-<span id="cb64-34"><a href="#cb64-34" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">juice</span>(prepped, <span class="fu">all_outcomes</span>())</span>
-<span id="cb64-35"><a href="#cb64-35" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb64-36"><a href="#cb64-36" aria-hidden="true" tabindex="-1"></a>  full_fits <span class="ot">&lt;-</span> library <span class="sc">%&gt;%</span> </span>
-<span id="cb64-37"><a href="#cb64-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">fit =</span> <span class="fu">future_map</span>(spec, fit_xy, x, y))</span>
-<span id="cb64-38"><a href="#cb64-38" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb64-39"><a href="#cb64-39" aria-hidden="true" tabindex="-1"></a>  holdout_preds <span class="ot">&lt;-</span> cv_fits <span class="sc">%&gt;%</span> </span>
-<span id="cb64-40"><a href="#cb64-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb64-41"><a href="#cb64-41" aria-hidden="true" tabindex="-1"></a>      <span class="at">raw_preds =</span> <span class="fu">future_pmap</span>(<span class="fu">list</span>(fit, splits, prepped), predict_helper),</span>
-<span id="cb64-42"><a href="#cb64-42" aria-hidden="true" tabindex="-1"></a>      <span class="at">preds =</span> <span class="fu">future_map</span>(raw_preds, drop_last_column)</span>
-<span id="cb64-43"><a href="#cb64-43" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
-<span id="cb64-44"><a href="#cb64-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">spread_nested_predictions</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb64-45"><a href="#cb64-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>obs)</span>
-<span id="cb64-46"><a href="#cb64-46" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb64-47"><a href="#cb64-47" aria-hidden="true" tabindex="-1"></a>  metalearner <span class="ot">&lt;-</span> <span class="fu">fit_xy</span>(meta_spec, holdout_preds, y)</span>
-<span id="cb64-48"><a href="#cb64-48" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb64-49"><a href="#cb64-49" aria-hidden="true" tabindex="-1"></a>  sl <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">full_fits =</span> full_fits, <span class="at">metalearner =</span> metalearner, <span class="at">recipe =</span> prepped)</span>
-<span id="cb64-50"><a href="#cb64-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(sl) <span class="ot">&lt;-</span> <span class="st">"super_learner"</span></span>
-<span id="cb64-51"><a href="#cb64-51" aria-hidden="true" tabindex="-1"></a>  sl</span>
-<span id="cb64-52"><a href="#cb64-52" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Fit the super learner!</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param library A data frame with a column `spec` containing</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'   complete `parsnip` model specifications for the base learners </span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co">#'   and a column `model_id`.</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param recipe An untrained `recipe` specifying data design</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param meta_spec A singe `parsnip` model specification</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co">#'   for the metalearner.</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param data The dataset to fit the super learner on.</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return A list with class `"super_learner"` and three elements:</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="co">#'   - `full_fits`: A tibble with list-column `fit` of fit</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="co">#'     base learners as parsnip `model_fit` objects</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="co">#'   - `metalearner`: The metalearner as a single parsnip</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="co">#'     `model_fit` object</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="co">#'   - `recipe`: A trained version of the original recipe</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>super_learner <span class="ot">&lt;-</span> <span class="cf">function</span>(library, recipe, meta_spec, data) {</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>  folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(data, <span class="at">v =</span> <span class="dv">5</span>)</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>  cv_fits <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(folds, library) <span class="sc">%&gt;%</span></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">prepped =</span> <span class="fu">future_map</span>(splits, prepper, recipe, <span class="at">.options =</span> opts),</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">fit =</span> <span class="fu">future_pmap</span>(<span class="fu">list</span>(spec, prepped), fit_on_fold, <span class="at">.options =</span> opts)</span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>  prepped <span class="ot">&lt;-</span> <span class="fu">prep</span>(recipe, <span class="at">training =</span> data)</span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">juice</span>(prepped, <span class="fu">all_predictors</span>())</span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">juice</span>(prepped, <span class="fu">all_outcomes</span>())</span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>  full_fits <span class="ot">&lt;-</span> library <span class="sc">%&gt;%</span> </span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">fit =</span> <span class="fu">future_map</span>(spec, fit_xy, x, y, <span class="at">.options =</span> opts))</span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>  holdout_preds <span class="ot">&lt;-</span> cv_fits <span class="sc">%&gt;%</span> </span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>      <span class="at">raw_preds =</span> <span class="fu">future_pmap</span>(<span class="fu">list</span>(fit, splits, prepped), predict_helper, <span class="at">.options =</span> opts),</span>
+<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>      <span class="at">preds =</span> <span class="fu">future_map</span>(raw_preds, drop_last_column, <span class="at">.options =</span> opts)</span>
+<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">spread_nested_predictions</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>obs)</span>
+<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a>  metalearner <span class="ot">&lt;-</span> <span class="fu">fit_xy</span>(meta_spec, holdout_preds, y)</span>
+<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a>  sl <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">full_fits =</span> full_fits, <span class="at">metalearner =</span> metalearner, <span class="at">recipe =</span> prepped)</span>
+<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(sl) <span class="ot">&lt;-</span> <span class="st">"super_learner"</span></span>
+<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a>  sl</span>
+<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We also write an S3 predict method:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>predict.super_learner <span class="ot">&lt;-</span> <span class="cf">function</span>(x, new_data, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"class"</span>, <span class="st">"prob"</span>)) {</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  type <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">arg_match</span>(type)</span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>  new_preds <span class="ot">&lt;-</span> x<span class="sc">$</span>full_fits <span class="sc">%&gt;%</span> </span>
-<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">raw_preds =</span> <span class="fu">future_map</span>(fit, predict_helper, new_data, x<span class="sc">$</span>recipe),</span>
-<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">preds =</span> <span class="fu">future_map</span>(raw_preds, drop_last_column)</span>
-<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
-<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">spread_nested_predictions</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>obs)</span>
-<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(x<span class="sc">$</span>metalearner, new_preds, <span class="at">type =</span> type)</span>
-<span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>predict.super_learner <span class="ot">&lt;-</span> <span class="cf">function</span>(x, new_data, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"class"</span>, <span class="st">"prob"</span>)) {</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  type <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">arg_match</span>(type)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  new_preds <span class="ot">&lt;-</span> x<span class="sc">$</span>full_fits <span class="sc">%&gt;%</span> </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">raw_preds =</span> <span class="fu">future_map</span>(fit, predict_helper, new_data, x<span class="sc">$</span>recipe, <span class="at">.options =</span> opts),</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">preds =</span> <span class="fu">future_map</span>(raw_preds, drop_last_column, <span class="at">.options =</span> opts)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">spread_nested_predictions</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>obs)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(x<span class="sc">$</span>metalearner, new_preds, <span class="at">type =</span> type)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Our helpers do assume that we’re working on a classification problem, but other than this we pretty much only rely on the <code>parsnip</code> API. This means we can mix and match parts to our hearts desire and things should still work<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. For example, we can build off the <code>parsnip</code> <a href="https://tidymodels.github.io/parsnip/articles/articles/Classification.html">classification vignette</a>, which starts like so:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we have to do this because `modeldata` doesn't use lazy data loading</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"credit_data"</span>)  </span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>data_split <span class="ot">&lt;-</span> credit_data <span class="sc">%&gt;%</span> </span>
-<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">initial_split</span>(<span class="at">strata =</span> <span class="st">"Status"</span>, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
-<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>credit_train <span class="ot">&lt;-</span> <span class="fu">training</span>(data_split)</span>
-<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a>credit_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(data_split)</span>
-<span id="cb66-10"><a href="#cb66-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-11"><a href="#cb66-11" aria-hidden="true" tabindex="-1"></a>credit_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Status <span class="sc">~</span> ., <span class="at">data =</span> credit_train) <span class="sc">%&gt;%</span></span>
-<span id="cb66-12"><a href="#cb66-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb66-13"><a href="#cb66-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we have to do this because `modeldata` doesn't use lazy data loading</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"credit_data"</span>)  </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>data_split <span class="ot">&lt;-</span> credit_data <span class="sc">%&gt;%</span> </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">initial_split</span>(<span class="at">strata =</span> <span class="st">"Status"</span>, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>credit_train <span class="ot">&lt;-</span> <span class="fu">training</span>(data_split)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>credit_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(data_split)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>credit_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Status <span class="sc">~</span> ., <span class="at">data =</span> credit_train) <span class="sc">%&gt;%</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>But now let’s fit a Super Learner based on a stack of MARS fits instead of a neural net. You could also mix in other arbitrary models<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. First we take a moment to set up the specification:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># needed due to a namespace bug at the moment,</span></span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="co"># but not in general</span></span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(earth)  </span>
-<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>credit_model <span class="ot">&lt;-</span> <span class="fu">mars</span>(<span class="at">mode =</span> <span class="st">"classification"</span>, <span class="at">prune_method =</span> <span class="st">"backward"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"earth"</span>)</span>
-<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>credit_hp_grid <span class="ot">&lt;-</span> <span class="fu">grid_random</span>(</span>
-<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">num_terms</span>() <span class="sc">%&gt;%</span> <span class="fu">range_set</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">30</span>)),</span>
-<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prod_degree</span>(),</span>
-<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">5</span></span>
-<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-14"><a href="#cb67-14" aria-hidden="true" tabindex="-1"></a>credit_library <span class="ot">&lt;-</span> <span class="fu">merge</span>(credit_model, credit_hp_grid) <span class="sc">%&gt;%</span> </span>
-<span id="cb67-15"><a href="#cb67-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">spec =</span> x) <span class="sc">%&gt;%</span> </span>
-<span id="cb67-16"><a href="#cb67-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model_id =</span> <span class="fu">row_number</span>())</span>
-<span id="cb67-17"><a href="#cb67-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-18"><a href="#cb67-18" aria-hidden="true" tabindex="-1"></a>credit_meta <span class="ot">&lt;-</span> <span class="fu">multinom_reg</span>(<span class="at">penalty =</span> <span class="dv">0</span>, <span class="at">mixture =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb67-19"><a href="#cb67-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># needed due to a namespace bug at the moment,</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># but not in general</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(earth)  </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>credit_model <span class="ot">&lt;-</span> <span class="fu">mars</span>(<span class="at">mode =</span> <span class="st">"classification"</span>, <span class="at">prune_method =</span> <span class="st">"backward"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"earth"</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>credit_hp_grid <span class="ot">&lt;-</span> <span class="fu">grid_random</span>(</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">num_terms</span>() <span class="sc">%&gt;%</span> <span class="fu">range_set</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">30</span>)),</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prod_degree</span>(),</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">5</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>credit_library <span class="ot">&lt;-</span> <span class="fu">merge</span>(credit_model, credit_hp_grid) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">spec =</span> x) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model_id =</span> <span class="fu">row_number</span>())</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>credit_meta <span class="ot">&lt;-</span> <span class="fu">multinom_reg</span>(<span class="at">penalty =</span> <span class="dv">0</span>, <span class="at">mixture =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we do the actual fitting and take a quick coffee break:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>credit_sl <span class="ot">&lt;-</span> <span class="fu">super_learner</span>(</span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  credit_library,</span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  credit_recipe,</span>
-<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  credit_meta,</span>
-<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>  credit_train</span>
-<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>credit_sl <span class="ot">&lt;-</span> <span class="fu">super_learner</span>(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  credit_library,</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  credit_recipe,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  credit_meta,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  credit_train</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Since we inherit the tidymodels <code>predict()</code> conventions, getting a holdout ROC curve is as easy as:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(credit_sl, credit_test, <span class="at">type =</span> <span class="st">"prob"</span>)</span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>pred <span class="sc">%&gt;%</span> </span>
-<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(credit_test) <span class="sc">%&gt;%</span> </span>
-<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(Status, .pred_bad) <span class="sc">%&gt;%</span></span>
-<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(credit_sl, credit_test, <span class="at">type =</span> <span class="st">"prob"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>pred <span class="sc">%&gt;%</span> </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(credit_test) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(Status, .pred_bad) <span class="sc">%&gt;%</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>

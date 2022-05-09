@@ -377,7 +377,8 @@ Y_i^* = f(X_i) + \varepsilon_i^*.
     \frac 2n \cdot \sum_{i=1}^n \mathrm{Cov} \left( \widehat Y_i, Y_i \right)
   }_\text{optimism}
 \end{align}
-\]</span> This relationship holds for most important loss functions. It means tells us that test error, or generalization error, is almost always higher than in-sample error evaluated on the training set. We call the amount by which the training error underestimates the test error the optimism; the more optimism, the greater the discrepancy between in-sample and out-of-sample error.</p>
+\]</span></p>
+<p>This relationship holds for most important loss functions. It means tells us that test error, or generalization error, is almost always higher than in-sample error evaluated on the training set. We call the amount by which the training error underestimates the test error the optimism; the more optimism, the greater the discrepancy between in-sample and out-of-sample error.</p>
 <p>We’ll discuss the implications the train-test error relationship more in a moment, but first let’s prove it. Feel free to skip the proof, although it relies only on basic properties of the expectation and variance.</p>
 <p><strong>Proof</strong>. We’ll follow the proof in <a href="http://www.stat.cmu.edu/~larry/=stat401/lecture-21.pdf">these course notes</a> by Larry Wasserman. Consider the <span class="math inline">\(i^{th}\)</span> observation. Then</p>
 <p><span class="math display">\[

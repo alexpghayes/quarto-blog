@@ -274,7 +274,8 @@ $ Species      &lt;fct&gt; setosa, setosa, setosa, setosa, setosa, setosa, setos
 <p>Recall that the probability of an event <span class="math inline">\(y = 1\)</span> given data <span class="math inline">\(x \in \mathbb R^p\)</span> in a logistic regression model is:</p>
 <p><span class="math display">\[
 P(y = 1|x) = {1 \over 1 + \exp(-\beta^T x)}
-\]</span> where <span class="math inline">\(\beta \in \mathbb R^p\)</span> is a coefficient vector. Multinomial logistic regression generalizes this relation by assuming that we have <span class="math inline">\(y \in \{1, 2, ..., K\}\)</span>. Then we have coefficient vectors <span class="math inline">\(\beta_1, ..., \beta_{k-1}\)</span> such that</p>
+\]</span></p>
+<p>where <span class="math inline">\(\beta \in \mathbb R^p\)</span> is a coefficient vector. Multinomial logistic regression generalizes this relation by assuming that we have <span class="math inline">\(y \in \{1, 2, ..., K\}\)</span>. Then we have coefficient vectors <span class="math inline">\(\beta_1, ..., \beta_{k-1}\)</span> such that</p>
 <p><span class="math display">\[
 P(y = k|x) = {\exp(\beta_k^T x) \over 1 + \sum_{k=1}^{K - 1} \exp(\beta_k^T x)}
 \]</span></p>

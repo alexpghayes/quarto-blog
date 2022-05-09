@@ -267,12 +267,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </section>
 <section id="the-long-road-to-actually-writing-stan" class="level2">
 <h2 class="anchored" data-anchor-id="the-long-road-to-actually-writing-stan">The long road to actually writing Stan</h2>
-<p>I first learned about Stan from Gelman’s <a href="http://andrewgelman.com/">blog</a> about three years ago, and first used the Stan ecosystem when I was running into convergence issues with <code>lme4</code> and my advisor suggested <code>rstanarm</code>:</p>
-<div class="cell">
-<div class="cell-output-display">
-<p>{{% tweet "880583179593146368" %}}</p>
-</div>
-</div>
+<p>I first learned about Stan from Gelman’s <a href="http://andrewgelman.com/">blog</a> about three years ago, and first used the Stan ecosystem when I was running into convergence issues with <code>lme4</code> and my advisor suggested <code>rstanarm</code>.</p>
 <p>My senior year I took <a href="http://www.danielrkowal.com/">Daniel Kowal’s</a> fantastic Bayes course. In that class we didn’t use Stan, but I got comfortable with Bayesian inference and MCMC and I started using <a href="https://github.com/paul-buerkner/brms"><code>brms</code></a>, <a href="http://mc-stan.org/loo/"><code>loo</code></a> and <a href="http://mc-stan.org/bayesplot/"><code>bayesplot</code></a> for personal projects.</p>
 <p>Intermittently I’ve tried to code up models in raw Stan. I’ve probably tried to code up a model in Stan ten or so times before this, always hitting some roadblock along the way.</p>
 <p>In retrospect, I should have just sat down and read the <a href="https://mc-stan.org/docs/2_29/stan-users-guide/">manual</a> sooner, but I really dislike learning new languages by reading dense technical documentation<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
@@ -498,10 +493,8 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 <p>For this blog post, I’m using <code>stan</code> chunks in my <code>.Rmd</code> file, but if you’re following along, you should put the Stan code into a file <code>survey_1.stan</code>. In general, I recommend keeping each version of your model in a separate <code>.stan</code> file.</p>
 <p>Anyways, you would run:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>m1_path <span class="ot">&lt;-</span> <span class="st">"path/to/survey_1.stan"</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(m1_path)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>m1_path <span class="ot">&lt;-</span> <span class="st">"path/to/survey_1.stan"</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(m1_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now that the model has compiled, we can shove some data into a list and sample from it.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
@@ -558,13 +551,13 @@ alpha[3] 427145.8 173526.8 212211.0 144019.2 308301.4 804984.9     1 2.11
 alpha[4] 525718.6 192718.8 241149.8 187486.6 404614.1 951796.0     2 1.96
 alpha[5] 437993.4 210197.6 245454.9 128395.4 279577.4 860000.9     1 2.33
 
-Samples were drawn using NUTS(diag_e) at Fri Apr 29 15:24:19 2022.
+Samples were drawn using NUTS(diag_e) at Mon May  9 16:23:16 2022.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
 </div>
 </div>
-<p>It works! That’s great, sampling is actually happening. Here I realized that I should actually pass <code>alpha</code> to <code>sampling</code>, and that I’d actually given it a hyperprior by accident. So I changed this, and gave group 0 and group 1 different parameters <code>theta</code>, resulting in:</p>
+<p>It works! That’s great, sampling is actually happening. We get a lot warnings from Stan when we fit this model; these tell us that something is probably wrong. Here I realized that I should actually pass <code>alpha</code> to <code>sampling</code>, and that I’d actually given it a hyperprior by accident. So I changed this, and gave group 0 and group 1 different parameters <code>theta</code>, resulting in:</p>
 <div class="cell" data-output.var="m2">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">// survey_2.stan</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -701,13 +694,13 @@ theta_0[15,3] 0.33       0 0.06 0.22 0.33  0.46  1523 1.00
 theta_0[15,4] 0.20       0 0.05 0.11 0.20  0.31  1263 1.00
 theta_0[15,5] 0.18       0 0.05 0.10 0.18  0.28  1479 1.00
 
-Samples were drawn using NUTS(diag_e) at Fri Apr 29 15:24:39 2022.
+Samples were drawn using NUTS(diag_e) at Mon May  9 16:23:36 2022.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
 </div>
 </div>
-<p>At this point I has happy with the core logic of the model, so I used ShinyStan to check MCMC diagnostics and make sure that all the chains were mixing, etc:</p>
+<p>Note that the warnings go away! The new model actually makes sense, and as a consequence no longer stretches the sampler to a breaking point. At this point I has happy with the core logic of the model, so I used ShinyStan to check MCMC diagnostics and make sure that all the chains were mixing, etc:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>shinystan<span class="sc">::</span><span class="fu">launch_shinystan</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>That all checked out, which isn’t a surprise, since we’re effectively estimating a bunch of proportions, so it would be weird if things started exploding.</p>
 <p>But really, my original idea was to see how well this model would predict respondent group, so we need to do some more work.</p>
@@ -876,7 +869,7 @@ p[68] 0.11    0.00 0.14 0.00 0.06  0.52   888 1.00
 p[69] 0.17    0.01 0.18 0.01 0.10  0.66   816 1.00
 p[70] 0.18    0.01 0.19 0.01 0.10  0.67  1223 1.00
 
-Samples were drawn using NUTS(diag_e) at Fri Apr 29 15:25:00 2022.
+Samples were drawn using NUTS(diag_e) at Mon May  9 16:23:56 2022.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -1095,7 +1088,7 @@ new_pred[68] 0.38    0.01 0.27 0.02 0.33  0.92  1257 1.00
 new_pred[69] 0.20    0.01 0.19 0.01 0.14  0.72  1003 1.00
 new_pred[70] 0.20    0.01 0.20 0.01 0.13  0.76  1198 1.00
 
-Samples were drawn using NUTS(diag_e) at Fri Apr 29 15:25:21 2022.
+Samples were drawn using NUTS(diag_e) at Mon May  9 16:24:17 2022.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -1103,24 +1096,18 @@ convergence, Rhat=1).</code></pre>
 </div>
 <p>Again, you can have a go with <code>shinystan::launch_shinystan(fit4)</code> to check the MCMC diagnostics. We can quickly calculate accuracy on the test set using a prediction threshold of 0.5:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#\ warning: false</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidybayes)</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># here `tidybayes::spread_draws()` and `tidybayes::median_qi()`</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># save an immense amount of headache</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> fit4 <span class="sc">%&gt;%</span></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread_draws</span>(new_pred[i]) <span class="sc">%&gt;%</span></span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">median_qi</span>(new_pred[i]) <span class="sc">%&gt;%</span> </span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.pred =</span> <span class="fu">if_else</span>(<span class="st">`</span><span class="at">new_pred[i]</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: `gather_()` was deprecated in tidyr 1.2.0.
-Please use `gather()` instead.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>acc <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">mean</span>(pred<span class="sc">$</span>.pred <span class="sc">==</span> new_df<span class="sc">$</span>y), <span class="dv">2</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The classification accuracy is:"</span>, acc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidybayes)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># here `tidybayes::spread_draws()` and `tidybayes::median_qi()`</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># save an immense amount of headache</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> fit4 <span class="sc">%&gt;%</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread_draws</span>(new_pred[i]) <span class="sc">%&gt;%</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">median_qi</span>(new_pred[i]) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.pred =</span> <span class="fu">if_else</span>(<span class="st">`</span><span class="at">new_pred[i]</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>acc <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">mean</span>(pred<span class="sc">$</span>.pred <span class="sc">==</span> new_df<span class="sc">$</span>y), <span class="dv">2</span>)</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The classification accuracy is:"</span>, acc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The classification accuracy is: 0.51</code></pre>
 </div>
@@ -1128,49 +1115,49 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 <p>Originally I was planning to compare to the LASSO, since this model was inspired by a <a href="https://twitter.com/AndrewCutler13/status/1075535228792422400">tweet</a> that used the LASSO, but I’m running out of steam a bit so will leave that be for the moment (although I do think it would be cool to try the <a href="https://dataslingers.github.io/ExclusiveLasso/"><code>ExclusiveLasso</code></a> to select at most a single response to each question as important).</p>
 <p>Finally, we can also look at how group 0 and group 1 differ by plotting <code>theta_0</code> and <code>theta_1</code>. We munge a little bit first</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>theta_0_draws <span class="ot">&lt;-</span> fit4 <span class="sc">%&gt;%</span>  </span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread_draws</span>(theta_0[i, j])</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>theta_1_draws <span class="ot">&lt;-</span> fit4 <span class="sc">%&gt;%</span>  </span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread_draws</span>(theta_1[i, j])</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>theta_draws <span class="ot">&lt;-</span> theta_0_draws <span class="sc">%&gt;%</span> </span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(theta_1_draws)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>theta_0_draws <span class="ot">&lt;-</span> fit4 <span class="sc">%&gt;%</span>  </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread_draws</span>(theta_0[i, j])</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>theta_1_draws <span class="ot">&lt;-</span> fit4 <span class="sc">%&gt;%</span>  </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread_draws</span>(theta_1[i, j])</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>theta_draws <span class="ot">&lt;-</span> theta_0_draws <span class="sc">%&gt;%</span> </span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(theta_1_draws)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Joining, by = c("i", "j", ".chain", ".iteration", ".draw")</code></pre>
 </div>
 </div>
 <p>and then can visualize response probabilities by question and class</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>theta_draws <span class="sc">%&gt;%</span> </span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(group, theta, theta_0, theta_1) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">if_else</span>(group <span class="sc">==</span> <span class="st">"theta_0"</span>, <span class="st">"Group 0"</span>, <span class="st">"Group 1"</span>),</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">question =</span> i,</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">response =</span> j</span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(theta, <span class="at">fill =</span> group, <span class="at">color =</span> group)) <span class="sc">+</span></span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(</span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">vars</span>(question),</span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">vars</span>(response)</span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Estimated probability of each response by question and group"</span>,</span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Columns correspond to response, rows to questions"</span>,</span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Probability of response"</span></span>
-<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
-<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
-<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>theta_draws <span class="sc">%&gt;%</span> </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(group, theta, theta_0, theta_1) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">if_else</span>(group <span class="sc">==</span> <span class="st">"theta_0"</span>, <span class="st">"Group 0"</span>, <span class="st">"Group 1"</span>),</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">question =</span> i,</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">response =</span> j</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(theta, <span class="at">fill =</span> group, <span class="at">color =</span> group)) <span class="sc">+</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">vars</span>(question),</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">vars</span>(response)</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Estimated probability of each response by question and group"</span>,</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Columns correspond to response, rows to questions"</span>,</span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Probability of response"</span></span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
+<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The data is made up, so this isn’t terribly interesting, but if these were actual responses there might be something here.</p>
