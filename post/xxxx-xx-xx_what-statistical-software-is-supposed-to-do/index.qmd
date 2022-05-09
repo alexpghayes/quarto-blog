@@ -1,0 +1,120 @@
+---
+title: "what statistical software is supposed to do"
+subtitle: |
+  todo
+date: "2022-05-14"
+categories: [statistical software]
+draft: true
+---
+
+# A Typology of
+
+## Abstract
+
+- clear defined contributions and expectations for research software
+- lots of discussion has focused on the needs of users doing data analysis
+- many people who use software are researchers and these people have different use cases
+- bad methods code
+- people in industry complaining that they cannot use shitty phd code in production
+
+the goals of academic researchers:
+
+1. get published
+2. have people use your method
+
+people who want to use software are often frustrated by the code from people who write software and yell at the people writing software that they need higher standards. i think partially this is because academics don't know how or understand what good code is, but i think this is also in large part because they are writing code that serves a different purpose
+
+## Introduction
+
+distinct set of expectations for reproducibility of analysis code. if method is accompanied by empirical results on that method, a separate set of "empirical" standards applies
+
+the value of the software is purpose-specific
+
+audience: people who produce methods but not software
+
+Typology:
+
+1. Pseudo-code
+    - Purpose: describe the algorithm for theoretical analysis
+1. Proof-of-concept implementation.
+    - Purpose: run on toy problems, small simulations
+    - Credit: should be a basic expectation of methods research
+    - possibly just a reference implementation wrapped up in a package
+    - Release: likely once
+    - Effort: hacked together in a couple afternoons
+1. Reference implementation.
+    - Purpose:
+    - Expectations to meet: be exceptionally readable
+    - breaks on anything beyond a toy problem?
+1. Middling
+    - Purpose: allow the method to be used on small and medium datasets, say up to a 1 Gb in size (glmnet-y)
+    - Not production grade, not feature complete
+    - Tentatively trustworthy
+    - Might not follow SWE best practices, internally potentially a mess
+    - Written by academic power users who can hack things out and get them done, although often inelegantly
+    - Big time investment
+1. Production-ready (spacy)
+    - Purpose: reliability, scale, feature-complete problem solving
+    - Follows SWE best practices
+    - A professional was likely involved in writing this code
+    - Maintained, responsive bug-fixes, lots of service work. not a single release, stable release cycle
+    - Tested, build system, documented
+
+i mean this taxonomy as a corrective to several ongoing pushes within research software engineering, which are pushing for SWE best practices for the sake of SWE best practices. these expectations are too high. expecting each new method to come accompanied by a production-grade package is absurd in terms of labor expectations, and doubly absurd when you realizing that academic methodologists are not rewarded or incentivized to write software by and large. software is often an extension of research and intended to further research, not to further data analysis or concrete data analytic problems.
+
+following software engineering best practices?
+
+software designed for problem solving: spacy. uses fancy algorithms but doesn't tell you what they are, and only implements a single methodology. hyperparameter tuning and method select happen by default. you can tune these things if you want via a config system.
+
+software for research: most R packages, NLTK for example. low-level, not very useful, primary good if you want to compare methods. which is something researchers do but not really something that engineers tend to do.
+
+
+
+
+    "Proof of concept"
+    1G ready: modern documentation and packaging system on pypi or CRAN. something like glmnet; moderate size real problems
+    Reference implementation: not in package, not for use by others, the primary goal is to be read and re-implemented by someone else. make it easy for someone else to make something usable
+    Reference implementation wrapped into package -- breaks on anything beyond a toy problem
+    Production: something like spacy
+
+Barely sufficient practices in scientific computing
+Ten simple rules for making research software more robust
+Good enough practices in scientific computing
+
+bronze, silver and gold // gradations between 1G level and production level
+
+the value of the software is purpose-specific
+
+audience: people who produce methods but not software
+
+
+    Support or maintenance of the software clarified
+    Document setup, use, and expectations of code
+
+From barely sufficient paper above
+
+Examples:
+
+software designed for problem solving: spacy. uses fancy algorithms but doesn't tell you what they are, and only implements a single methodology. hyperparameter tuning and method select happen by default. you can tune these things if you want via a config system.
+
+software for research: most R packages, NLTK for example. low-level, not very useful, primary good if you want to compare methods. which is something researchers do but not really something that engineers tend to do.
+
+software available influences the models we fit
+
+propose a path for methodology to reach people: theory paper -> tutorial -> software
+
+latex proliferation in econ
+
+if you have simulations you should share code   
+
+
+analysis code vs methods code. complaint from twitter about analysis code:
+
+    The more I dig into the code/data for which Psych Science papers receive open code/data badges, the more I come to think that these badges are basically openwashing. I can't remember the last time I found one with runnable code and usable data straight out of the box.
+
+https://twitter.com/russpoldrack/status/1501572647972261892?t=6cLXgyu7snWigs8O0_wK8g&s=09
+
+http://haines-lab.com/post/2022-01-23-automating-computational-reproducibility-with-r-using-renv-docker-and-github-actions/
+
+asking too much maintanence edition https://osf.io/preprints/socarxiv/8jwhk/
+

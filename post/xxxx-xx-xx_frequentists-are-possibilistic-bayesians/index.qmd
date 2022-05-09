@@ -1,0 +1,32 @@
+---
+title: "frequentists are possibilistic bayesians"
+subtitle: |
+  todo
+date: "2022-05-14"
+categories: [foundations of statistics, philosophy]
+draft: true
+---
+
+# Summary
+
+## A sketch of formal quantitative inference
+
+Let's talk about modeling, by which I mean formal modeling. At a high level, the idea of modeling is that we construct a (typically mathematical) formal system of interest.
+
+-   want to understand how the world works
+
+out there is the world. we don't really understand how it works, but we would like to.
+
+-   
+
+frequentists are possibilistic bayesians
+
+**TL; DR:** Frequentists are possibilistic Bayesians using a uniform possibility prior.
+
+One useful way to distinguish between frequentists and Bayesians is to consider how they represent a priori uncertainty. Here the story is pretty straightforward: both the frequentist and the Bayesian typically begin by constructing a likelihood function. This likelihood function is sometimes called an observation model; it describes the probability of observing data $X_1, ..., X_n$ for a given set of parameters $\theta$. 
+
+##
+
+in both cases you specify a set of possible observational models (often via a likelihood) indexed by some parameter theta
+
+That is, frequentist procedures can be thought of as specifying an observation model and a possibility measure of the parameters of the observation model and then conditioning the prior possibility measure on observed data to produce a posterior possibility measure.

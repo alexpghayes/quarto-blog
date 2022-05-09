@@ -1,0 +1,71 @@
+---
+title: "some incoherence in statistical critique"
+subtitle: |
+  todo
+date: "2022-05-14"
+categories: [statistical software]
+draft: true
+---
+
+Confused by: Yu's Veridical Data Science, Philip's "The Model Behind the Curtain"; i read them as implying an exact need for isomorphism. what constitutes representational adequacy? they don't say, so i can only infer. "truthful" representation?
+
+stark's climate change argument: so much uncertainty about what influences climate/temperature that it is impossible to even consider a model?? unclear what makes this model inadequate
+
+    Suppose there are multiple possible causes / structural mechanisms that lead to an outcome and you don't know which one happens, or if both do; if you start doing this inclusion of all possible mechanisms (1) just making them all work at the same time will be immensely difficult, and (2) massive identification issues
+
+    Hennig on IID as an assumption
+
+    Karl on the need to show that a modeling assumption leads to bad inference
+
+    Abigail Jacobs paper on construct validity -- do we tools beyond those from the construct validity literature when representing things that are not constructs?
+
+Another "realist" critique:
+
+https://www.biorxiv.org/content/10.1101/446237v1
+
+From the abstract:
+
+    Motivation Nowadays brain connectivity analysis has attracted tremendous attention and has been at the foreground of neuroscience research. Brain functional connectivity reveals the synchronization of brain systems through correlations in neurophysiological measures of brain activity. Growing evidence now suggests that the brain connectivity network experiences alternations with the presence of numerous neurological disorders, thus differential brain network analysis may provides new insights into disease pathologies. For the matrix-valued data in brain connectivity analysis, existing graphical model estimation methods assume a vector normal distribution that in essence requires the columns of the matrix data to be independent. It is obviously not true, they have limited applications. Among the few solutions on graphical model estimation under a matrix normal distribution, none of them tackle the estimation of differential graphs across different populations. This motivates us to consider the differential network for matrix-variate data to detect the brain connectivity alternation.
+
+    Results The primary interest is to detect spatial locations where the connectivity, in terms of the spatial partial correlation, differ across the two groups. To detect the brain connectivity alternation, we innovatively propose a Matrix-Variate Differential Network (MVDN) model. MVDN assumes that the matrix-variate data follows a matrix-normal distribution. We exploit the D-trace loss function and a Lasso-type penalty to directly estimate the spatial differential partial correlation matrix where the temporal information is fully excavated. We propose an ADMM algorithm for the Lasso penalized D-trace loss optimization problem. We investigate theoretical properties of the estimator. We show that under mild and regular conditions, the proposed method can identify all differential edges accurately with probability tending to 1 in high-dimensional setting where dimensions of matrix-valued data p, q and sample size n are all allowed to go to infinity. Simulation studies demonstrate that MVDN provides more accurate differential network estimation than that achieved by other state-of-the-art methods. We apply MVDN to Electroencephalography (EEG) dataset, which consists of 77 alcoholic individuals and 45 controls. The hub genes and differential interaction patterns identified are consistent with existing experimental studies.
+
+Hot Take: Popular election-prediction models (538, the economist) understate the thickness of the tails because they fail to take into account that American democracy is in a constant state of regime-change, both (a) in the tactics, strategies, and technologies each party uses to motivate voters; and (b) in the tactics, strategies and technologies each party uses either to suppress portions of the vote or to harvest portions of the vote. As a consequence of (a), they understate interstate covariance. As a consequence of (b), they understate the tendency of states where one party has had long-term control of the electoral system to manipulate voting in that party's favor.
+
+aleatoric estimates of epistemic uncertainty are pointless. if you believe things are truly irregular in their dependencies then you straight just can't use probabilities to model them at all. i don't think the solution is is more extreme probability distributions. i mean maybe you can get close by allowing more extreme, regular behavior (i.e. iid stuff), but like the issue is that things are fundamentally not iid and regularity assumptions for math aren't a good operationalization of the problem
+
+Predictivity
+
+Estimators have properties under models. Need to check if a given model is realistic. Low predictive power => not realistic. High predictive power doesn't necessarily imply a model is good. To Explain or To Predict explain. If you want to valid the interpretation of your estimator, you need to validate the particular properties of the model used to derive that estimator. Even then you might be okay under certain violations, although this will be hard to prove and you may need to demonstrate with simulation.
+
+Especially in a causal setting, the predictive model != the true model. Depending on who I am talking to at the time, this is either highly controversial, or blatantly obvious.
+
+Low prediction error !=> properties of models that give estimator desired interpretation hold -- TMLE seems like the logical conclusion / place to go
+Stability
+
+Other conceptions of stability that I found more useful.
+
+Hicks paper: second order, skeptical, exhaustive.
+A Hadamard well-posed (link to Bayesian brittleness paper)
+
+Different models have different estimands, so unclear how to compare them. "Algorithmic stability" is also sloppy use of language.
+Computability
+
+In applied problems, the amount of computation for a particular estimator is set. There's not much you can do to change this unless you do your own custom implementation or estimator. Both of these are part of Fancy Inference rather than Quotidian Inference, ya feel?
+Probability models
+
+Bin says: Want to move away from probability models and hypothesis testing (this part at least I am fully on board with, mostly because inference conditional on a Type I error control rate feels bizarre to me, not because this is unimportant, but because priveleging type I error over all over types of error feels like a very strong assumption to make)
+Perturbation intervals
+
+Would like to see them compared to stability selection (also complementary pairs)
+Still no interpretation without an underlying probability model
+Seems like a more useful idea would be to weaken the probabilistic assumptions and work on a non-parametric probability model instead.
+Strictly validates in a predictive setting. Would much prefer to see results that discuss a causal setting.
+
+"If you don't do prediction we don't need to do the more refined question of inference" ~ Bin
+
+"Highly unstable local description of the data" ~ Smaldino?
+
+If you don't believe in probability models, then the next place to go is mechanistic modeling? I do think we should talk with those people more because I don't think stats people have any clue what the general framework for inference is in that world.
+Prediction screening
+
+counter-example.

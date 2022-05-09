@@ -1,0 +1,60 @@
+---
+title: "three designs patterns for extending statistical software"
+subtitle: |
+  todo
+date: "2022-05-14"
+categories: [statistical software]
+draft: true
+---
+
+Explain lmtest() from estimand uniqueness point of view
+
+And ask Achim to review before posting
+
+Issues with bolting on:
+
+One object multiple estimates for same estimand -- violates unique estimate per estimand principle
+
+Only some methods are aware of the "correct" new estimates -- tidy vs vcov
+
+What should you do -- I believe fully recreate the functionality with desired minor change -- don't subclass, just build independently. The impulse is to subclass to avoid code duplication. Now you cant change original method implementation without affecting the second estimator
+
+
+data science design patterns: extending an existing estimator // note: at some point i think i sent Achim an email about co-writing a paper on this
+
+three approaches:
+
+    mutate class (butcher recommended approach)
+    entirely new class
+    generic function that returns estimates clearly detached from the rest of the estimates
+
+supervised: want predictive sufficient statistics. much later, use them to get transform.
+
+unsupervised: typically want transformation sufficient statistics, and the transformed data, both immediately. not recognizing these as separate things leads to lots of weird design patterns:
+
+scale/unscale in R
+
+formulas + terms objects
+
+Transformers in sklearn, recipes in R -- untrained vs trained actually correspond to totally different things: estimator vs transformation sufficient statistics
+
+lots of times the difference doesn't matter that much: transform once scenarios
+
+when it does start to matter: need to transform, do work, untransform (me rn); or when you need to transform a new data set using the same transformation
+
+@alexpghayes
+Author
+alexpghayes commented on Sep 23, 2020
+
+Big issue: often the names of the estimator and the estimates are the same, or only one of them is named. So we need naming conventions to distinguish between estimator and estimates. in statsmodels this is done with the Results suffix.
+@alexpghayes
+Author
+alexpghayes commented on Sep 23, 2020
+
+another reason why these classes often get combined is because you don't really need an estimator class that often. only use it once to construct estimates on your data. but it is weird for a property of estimates (i.e. method) to be "get this same type of estimate on a new data set", since this doesn't involve the estimates themselves at all. leads to a weird encapsulated OOP pattern I'll call copy-refit (i.e. sklearn pattern, what i did for fb over the summer). conceptually makes more sense (in encapsulated OOP) for the estimator to not actually have any instance methods, only static methods, and then reporting / introspection tools that are methods that ask questions of the form "what are the properties of this estimator, can we write it down, etc, etc".
+@alexpghayes
+Author
+alexpghayes commented on Sep 23, 2020
+
+difficulties: composition of transformations (when you need to preserve some nice attribute like sparsity)
+
