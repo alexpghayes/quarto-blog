@@ -17,6 +17,25 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -126,7 +145,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">what statistical software is supposed to do</h1>
-            <p class="subtitle lead"></p><p>todo</p><p></p>
+            <p class="subtitle lead"></p><p>i argue that expectations for research software should vary with the purpose of that software</p><p></p>
                           <div class="quarto-categories">
                 <div class="quarto-category">statistical software</div>
               </div>
@@ -163,11 +182,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#a-typology-of" id="toc-a-typology-of" class="nav-link active" data-scroll-target="#a-typology-of">A Typology of</a>
-  <ul class="collapse">
-  <li><a href="#abstract" id="toc-abstract" class="nav-link" data-scroll-target="#abstract">Abstract</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  </ul></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/xxxx-xx-xx_what-statistical-software-is-supposed-to-do/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
 </nav>
@@ -180,30 +195,20 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 
-<section id="a-typology-of" class="level1">
-<h1>A Typology of</h1>
-<section id="abstract" class="level2">
-<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
-<ul>
-<li>clear defined contributions and expectations for research software</li>
-<li>lots of discussion has focused on the needs of users doing data analysis</li>
-<li>many people who use software are researchers and these people have different use cases</li>
-<li>bad methods code</li>
-<li>people in industry complaining that they cannot use shitty phd code in production</li>
-</ul>
-<p>the goals of academic researchers:</p>
-<ol type="1">
-<li>get published</li>
-<li>have people use your method</li>
-</ol>
+<p>It has become something of a truism that academics, and methodologists in particular, produce shitty code. This shitty code is frustrating to practicing data analysts in industry, and in the academy, and we are starting to reach a period of <a href="https://xkcd.com/927/">standards proliferation</a>. One key idea here is that is it important to clearly define expectations for research software, such that users can evaluate the quality of software, and academics can receive credit for their coding work. So far I’ve been involved in at least two such efforts: (1) the ROpenSci <a href="https://ropensci.org/stat-software-review/">statistical software reviewing guidelines</a>, and (2) the <a href="https://github.com/tidymodels/model-implementation-principles">tidymodels implementation principles</a>. At the same time I am increasingly disillusioned with these sorts of efforts, and as I spend more and more time in academia, I find them less and less relevant. Very broadly, I think we are increasingly pushing methods producers to be software producers, and increasingly expecting an imaginary class of methodologist-programmer-researcher unicorns to make methods programmatically accessible and usable for the masses. I don’t think this is in any sense a sustainable or reliable approach to distributing methods; the labor demands are simply unrealistic and inconsistent with the structure of academic incentives. I outline an alternative model for methods dissemination based on focused expectations of research code and incentivizing translational roles.</p>
+<p>what do we want to happen: methods dissemination. want to learn about a method and actually be able to use it on data. software availability and functionality is a hellscape if you venture beyond the few methods popular enough to attract sophisticated developers as designers and maintainers. software available influences the models we fit</p>
+<p>i mean this taxonomy as a corrective to several ongoing pushes within research software engineering, which are pushing for SWE best practices for the sake of SWE best practices. these expectations are too high. expecting each new method to come accompanied by a production-grade package is absurd in terms of labor expectations, and doubly absurd when you realizing that academic methodologists are not rewarded or incentivized to write software by and large. software is often an extension of research and intended to further research, not to further data analysis or concrete data analytic problems.</p>
 <p>people who want to use software are often frustrated by the code from people who write software and yell at the people writing software that they need higher standards. i think partially this is because academics don’t know how or understand what good code is, but i think this is also in large part because they are writing code that serves a different purpose</p>
-</section>
+<p>propose a path for methodology to reach people: theory paper -&gt; tutorial -&gt; software</p>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>distinct set of expectations for reproducibility of analysis code. if method is accompanied by empirical results on that method, a separate set of “empirical” standards applies</p>
 <p>the value of the software is purpose-specific</p>
 <p>audience: people who produce methods but not software</p>
-<p>Typology:</p>
+<p>academic credit and practitioner credit as two separate measures</p>
+<blockquote class="blockquote">
+<p>Support or maintenance of the software clarified Document setup, use, and expectations of code</p>
+</blockquote>
 <ol type="1">
 <li>Pseudo-code
 <ul>
@@ -212,7 +217,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <li>Proof-of-concept implementation.
 <ul>
 <li>Purpose: run on toy problems, small simulations</li>
-<li>Credit: should be a basic expectation of methods research</li>
+<li>Credit: should be a basic expectation of methods research, useful for simulations in particular</li>
 <li>possibly just a reference implementation wrapped up in a package</li>
 <li>Release: likely once</li>
 <li>Effort: hacked together in a couple afternoons</li>
@@ -241,40 +246,32 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <li>Tested, build system, documented</li>
 </ul></li>
 </ol>
-<p>i mean this taxonomy as a corrective to several ongoing pushes within research software engineering, which are pushing for SWE best practices for the sake of SWE best practices. these expectations are too high. expecting each new method to come accompanied by a production-grade package is absurd in terms of labor expectations, and doubly absurd when you realizing that academic methodologists are not rewarded or incentivized to write software by and large. software is often an extension of research and intended to further research, not to further data analysis or concrete data analytic problems.</p>
 <p>following software engineering best practices?</p>
 <p>software designed for problem solving: spacy. uses fancy algorithms but doesn’t tell you what they are, and only implements a single methodology. hyperparameter tuning and method select happen by default. you can tune these things if you want via a config system.</p>
 <p>software for research: most R packages, NLTK for example. low-level, not very useful, primary good if you want to compare methods. which is something researchers do but not really something that engineers tend to do.</p>
-<pre><code>"Proof of concept"
-1G ready: modern documentation and packaging system on pypi or CRAN. something like glmnet; moderate size real problems
-Reference implementation: not in package, not for use by others, the primary goal is to be read and re-implemented by someone else. make it easy for someone else to make something usable
-Reference implementation wrapped into package -- breaks on anything beyond a toy problem
-Production: something like spacy</code></pre>
-<p>Barely sufficient practices in scientific computing Ten simple rules for making research software more robust Good enough practices in scientific computing</p>
-<p>bronze, silver and gold // gradations between 1G level and production level</p>
-<p>the value of the software is purpose-specific</p>
-<p>audience: people who produce methods but not software</p>
-<pre><code>Support or maintenance of the software clarified
-Document setup, use, and expectations of code</code></pre>
-<p>From barely sufficient paper above</p>
-<p>Examples:</p>
-<p>software designed for problem solving: spacy. uses fancy algorithms but doesn’t tell you what they are, and only implements a single methodology. hyperparameter tuning and method select happen by default. you can tune these things if you want via a config system.</p>
-<p>software for research: most R packages, NLTK for example. low-level, not very useful, primary good if you want to compare methods. which is something researchers do but not really something that engineers tend to do.</p>
-<p>software available influences the models we fit</p>
-<p>propose a path for methodology to reach people: theory paper -&gt; tutorial -&gt; software</p>
-<p>latex proliferation in econ</p>
-<p>if you have simulations you should share code</p>
-<p>analysis code vs methods code. complaint from twitter about analysis code:</p>
-<pre><code>The more I dig into the code/data for which Psych Science papers receive open code/data badges, the more I come to think that these badges are basically openwashing. I can't remember the last time I found one with runnable code and usable data straight out of the box.</code></pre>
-<p>https://twitter.com/russpoldrack/status/1501572647972261892?t=6cLXgyu7snWigs8O0_wK8g&amp;s=09</p>
-<p>http://haines-lab.com/post/2022-01-23-automating-computational-reproducibility-with-r-using-renv-docker-and-github-actions/</p>
-<p>asking too much maintanence edition https://osf.io/preprints/socarxiv/8jwhk/</p>
+<p><span class="citation" data-cites="lee_barely_2021">Lee et al. (<a href="#ref-lee_barely_2021" role="doc-biblioref">2021</a>)</span> <span class="citation" data-cites="taschuk_ten_2017">Taschuk and Wilson (<a href="#ref-taschuk_ten_2017" role="doc-biblioref">2017</a>)</span> <span class="citation" data-cites="wilson_good_2017">Wilson et al. (<a href="#ref-wilson_good_2017" role="doc-biblioref">2017</a>)</span> <span class="citation" data-cites="peer_active_2020">Peer, Orr, and Coppock (<a href="#ref-peer_active_2020" role="doc-biblioref">2020</a>)</span></p>
+<blockquote class="twitter-tweet blockquote" data-width="550" data-lang="en" data-theme="light"><p lang="en" dir="ltr">The more I dig into the code/data for which Psych Science papers receive open code/data badges, the more I come to think that these badges are basically openwashing. I can't remember the last time I found one with runnable code and usable data straight out of the box.</p>— Russ Poldrack (@russpoldrack) <a href="https://twitter.com/russpoldrack/status/1501572647972261892?ref_src=twsrc%5Etfw">March 9, 2022</a></blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
 
 
 </section>
-</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-lee_barely_2021" class="csl-entry" role="doc-biblioentry">
+Lee, Graham, Sebastian Bacon, Ian Bush, Laura Fortunato, David Gavaghan, Thibault Lestang, Caroline Morton, et al. 2021. <span>“Barely Sufficient Practices in Scientific Computing.”</span> <em>Patterns</em> 2 (2): 100206. <a href="https://doi.org/10.1016/j.patter.2021.100206">https://doi.org/10.1016/j.patter.2021.100206</a>.
+</div>
+<div id="ref-peer_active_2020" class="csl-entry" role="doc-biblioentry">
+Peer, Limor, Lilla Orr, and Alexander Coppock. 2020. <span>“Active <span>Maintenance</span>: <span>A Proposal</span> for the <span class="nocase">Long-term Computational Reproducibility</span> of <span>Scientific Results</span>.”</span>
+</div>
+<div id="ref-taschuk_ten_2017" class="csl-entry" role="doc-biblioentry">
+Taschuk, Morgan, and Greg Wilson. 2017. <span>“Ten Simple Rules for Making Research Software More Robust.”</span> <em>PLOS Computational Biology</em> 13 (4): e1005412. <a href="https://doi.org/10.1371/journal.pcbi.1005412">https://doi.org/10.1371/journal.pcbi.1005412</a>.
+</div>
+<div id="ref-wilson_good_2017" class="csl-entry" role="doc-biblioentry">
+Wilson, Greg, Jennifer Bryan, Karen Cranston, Justin Kitzes, Lex Nederbragt, and Tracy K. Teal. 2017. <span>“Good Enough Practices in Scientific Computing.”</span> Edited by Francis Ouellette. <em>PLOS Computational Biology</em> 13 (6): e1005510. <a href="https://doi.org/10.1371/journal.pcbi.1005510">https://doi.org/10.1371/journal.pcbi.1005510</a>.
+</div>
+</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
