@@ -9,7 +9,7 @@
 <meta name="author" content="Alex Hayes">
 <meta name="dcterms.date" content="2022-05-14">
 
-<title>alex hayes - what statistical software is supposed to do</title>
+<title>alex hayes - the value of methods software is purpose specific</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,25 +17,6 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
 </style>
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -85,9 +66,9 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="alex hayes - what statistical software is supposed to do">
+<meta property="og:title" content="alex hayes - the value of methods software is purpose specific">
 <meta property="og:site-name" content="alex hayes">
-<meta name="twitter:title" content="alex hayes - what statistical software is supposed to do">
+<meta name="twitter:title" content="alex hayes - the value of methods software is purpose specific">
 <meta name="twitter:creator" content="@alexpghayes">
 <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -144,8 +125,8 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">what statistical software is supposed to do</h1>
-            <p class="subtitle lead"></p><p>i argue that expectations for research software should vary with the purpose of that software</p><p></p>
+      <h1 class="title">the value of methods software is purpose specific</h1>
+            <p class="subtitle lead"></p><p>understanding the gap between code useful to method producers and method consumers</p><p></p>
                           <div class="quarto-categories">
                 <div class="quarto-category">statistical software</div>
               </div>
@@ -178,13 +159,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/xxxx-xx-xx_what-statistical-software-is-supposed-to-do/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -195,83 +170,21 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 
-<p>It has become something of a truism that academics, and methodologists in particular, produce shitty code. This shitty code is frustrating to practicing data analysts in industry, and in the academy, and we are starting to reach a period of <a href="https://xkcd.com/927/">standards proliferation</a>. One key idea here is that is it important to clearly define expectations for research software, such that users can evaluate the quality of software, and academics can receive credit for their coding work. So far I’ve been involved in at least two such efforts: (1) the ROpenSci <a href="https://ropensci.org/stat-software-review/">statistical software reviewing guidelines</a>, and (2) the <a href="https://github.com/tidymodels/model-implementation-principles">tidymodels implementation principles</a>. At the same time I am increasingly disillusioned with these sorts of efforts, and as I spend more and more time in academia, I find them less and less relevant. Very broadly, I think we are increasingly pushing methods producers to be software producers, and increasingly expecting an imaginary class of methodologist-programmer-researcher unicorns to make methods programmatically accessible and usable for the masses. I don’t think this is in any sense a sustainable or reliable approach to distributing methods; the labor demands are simply unrealistic and inconsistent with the structure of academic incentives. I outline an alternative model for methods dissemination based on focused expectations of research code and incentivizing translational roles.</p>
-<p>what do we want to happen: methods dissemination. want to learn about a method and actually be able to use it on data. software availability and functionality is a hellscape if you venture beyond the few methods popular enough to attract sophisticated developers as designers and maintainers. software available influences the models we fit</p>
-<p>i mean this taxonomy as a corrective to several ongoing pushes within research software engineering, which are pushing for SWE best practices for the sake of SWE best practices. these expectations are too high. expecting each new method to come accompanied by a production-grade package is absurd in terms of labor expectations, and doubly absurd when you realizing that academic methodologists are not rewarded or incentivized to write software by and large. software is often an extension of research and intended to further research, not to further data analysis or concrete data analytic problems.</p>
-<p>people who want to use software are often frustrated by the code from people who write software and yell at the people writing software that they need higher standards. i think partially this is because academics don’t know how or understand what good code is, but i think this is also in large part because they are writing code that serves a different purpose</p>
-<p>propose a path for methodology to reach people: theory paper -&gt; tutorial -&gt; software</p>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>distinct set of expectations for reproducibility of analysis code. if method is accompanied by empirical results on that method, a separate set of “empirical” standards applies</p>
-<p>the value of the software is purpose-specific</p>
-<p>audience: people who produce methods but not software</p>
-<p>academic credit and practitioner credit as two separate measures</p>
-<blockquote class="blockquote">
-<p>Support or maintenance of the software clarified Document setup, use, and expectations of code</p>
-</blockquote>
+<p>Academics, and methodologists in particular, produce shitty code. This shitty code is frustrating to practicing data analysts, and an unsurprising consequence of this frustration is that we are entering a period of <a href="https://xkcd.com/927/">standards proliferation</a> for research software. The idea is roughly that if we write down what good software looks like, methodologists will start writing good software, and practitioners will ultimately have usable tools.</p>
+<p>I am a little skeptical of this idea: the standards that people are writing are very high standards and there are a lot of circumstances when it’s perfectly reasonable for methods producers to write bad code. My hope is that by highlighting different needs of methods producers and consumers, we can make software contributions more legible and perhaps have more realistic expectations. My basic thesis here is that it takes too much work for methods producers to write usable code. Instead of asking them to write useful code, especially in absence of meaningful incentives, I propose that a third group of “methods translators” take on the primary responsibility for turning research code in useful code. This dramatically lowers the labor expectations for methods producers: instead of producing polished and final software products, they only need to produce code that can form the basis of a future software product.</p>
+<p>With this in mind, I propose the following normative typology of methodological software contributions:</p>
 <ol type="1">
-<li>Pseudo-code
-<ul>
-<li>Purpose: describe the algorithm for theoretical analysis</li>
-</ul></li>
-<li>Proof-of-concept implementation.
-<ul>
-<li>Purpose: run on toy problems, small simulations</li>
-<li>Credit: should be a basic expectation of methods research, useful for simulations in particular</li>
-<li>possibly just a reference implementation wrapped up in a package</li>
-<li>Release: likely once</li>
-<li>Effort: hacked together in a couple afternoons</li>
-</ul></li>
-<li>Reference implementation.
-<ul>
-<li>Purpose:</li>
-<li>Expectations to meet: be exceptionally readable</li>
-<li>breaks on anything beyond a toy problem?</li>
-</ul></li>
-<li>Middling
-<ul>
-<li>Purpose: allow the method to be used on small and medium datasets, say up to a 1 Gb in size (glmnet-y)</li>
-<li>Not production grade, not feature complete</li>
-<li>Tentatively trustworthy</li>
-<li>Might not follow SWE best practices, internally potentially a mess</li>
-<li>Written by academic power users who can hack things out and get them done, although often inelegantly</li>
-<li>Big time investment</li>
-</ul></li>
-<li>Production-ready (spacy)
-<ul>
-<li>Purpose: reliability, scale, feature-complete problem solving</li>
-<li>Follows SWE best practices</li>
-<li>A professional was likely involved in writing this code</li>
-<li>Maintained, responsive bug-fixes, lots of service work. not a single release, stable release cycle</li>
-<li>Tested, build system, documented</li>
-</ul></li>
+<li><p><strong>Pseudo-code</strong>. Pseudo-code describes an algorithm in formal and unambiguous language, but not in a computer code. Pseudo-code is primarily useful to methods producers who want to study theoretical properties of an algorithm. The pseudo-code itself is not software, and may omit key practical details needed to implement an algorithm. Pseudo-code represents an intellectual rather than a practical contribution.</p></li>
+<li><p><strong>Reference implementation</strong>. A reference implementation is a basic translation of pseudo-code into runnable computer code. Reference implementations should run on toy problems and produce results that can be used to test more fully featured and computationally efficient implementations. The primary goal of a reference implementation, however, is to be exceptionally readable. The goal of a reference implementation is not to be useful software in and of itself; the goal is to enable someone else to base useful software off of the reference implementation. Bare bones reference implementations devoid of object orientation (to the extent possible) are best. The notation in a reference implementation should also closely match the notation in the paper or document that proposes the algorithm. Reference implementations are minor but important software implementations. Including a reference implementation should be a minimum standard for methods work.</p></li>
+<li><p><strong>Proof-of-concept</strong>. Proof-of-concept implements are canonical research code. These implementations are designed to run on research problems and include features that researchers need to get their research done. These additional features typically obscure the details of the implementation and thus make proof-of-concept contributions less useful than reference implementations as the basis for further development. It is not important that proof-of-concept implementations be fully featured or well-designed or computationally efficient. They should typically be released publicly once and should be un-maintained. This code should primarily be useful for <em>other researchers</em> who also want to use the code <em>for research</em>. Proof-of-concept implementations can take substantial amounts of work, and we should recognize this contribution. We should also recognize that this labor is unlikely to benefit anyone beyond the original authors of the scripts. Sharing proof-of-concept implementations is important for reproducibility purposes, but a terse reference implementation is likely to be a more meaningful contribution to the community at large.</p></li>
+<li><p><strong>Medium data</strong>. The goal of a middling or medium data contribution is to help practitioners solve practical but technically unchallenging problems; to do things like fit new models on less than a gigabyte of data, for example. This type of software is designed for use by methods consumers rather than methods producers. The primary difference between a proof-of-concept implementation and a middling implementation is adherence to software engineering best practices and some attention to the user experience. The software should be usable, well-documented, tested and released in an easily installable form. The authors should provide at least some basic and ongoing maintenance for the code. They should also make a genuine effort to disseminate the software by advertising it and providing basic tutorials on its use. The internal structure of the code does not have to be perfect, but it needs to be understandable enough to have moderate faith in its correctness. It’s important to note that the move from a proof-of-concept implementation to a middling implementation provides no personal benefit to the researcher, the benefit here is to the community of methods consumers.</p></li>
+<li><p><strong>Production ready</strong>. The final level of methods software is software that is ready for use in production, by which I mean that is reliable, feature complete and scales to technically challenging settings. These implementations should follow software engineering best practices and have responsive maintenance teams, as well as a semi-frequent release cycle and extensive documentation. The primary differences between a middling implementation and a production implementation are the internal design of the software, increased UX polish, and thorough testing. Production implementations should handle errors and edge cases gracefully and produce results that are reliably correct.</p></li>
 </ol>
-<p>following software engineering best practices?</p>
-<p>software designed for problem solving: spacy. uses fancy algorithms but doesn’t tell you what they are, and only implements a single methodology. hyperparameter tuning and method select happen by default. you can tune these things if you want via a config system.</p>
-<p>software for research: most R packages, NLTK for example. low-level, not very useful, primary good if you want to compare methods. which is something researchers do but not really something that engineers tend to do.</p>
-<p><span class="citation" data-cites="lee_barely_2021">Lee et al. (<a href="#ref-lee_barely_2021" role="doc-biblioref">2021</a>)</span> <span class="citation" data-cites="taschuk_ten_2017">Taschuk and Wilson (<a href="#ref-taschuk_ten_2017" role="doc-biblioref">2017</a>)</span> <span class="citation" data-cites="wilson_good_2017">Wilson et al. (<a href="#ref-wilson_good_2017" role="doc-biblioref">2017</a>)</span> <span class="citation" data-cites="peer_active_2020">Peer, Orr, and Coppock (<a href="#ref-peer_active_2020" role="doc-biblioref">2020</a>)</span></p>
-<blockquote class="twitter-tweet blockquote" data-width="550" data-lang="en" data-theme="light"><p lang="en" dir="ltr">The more I dig into the code/data for which Psych Science papers receive open code/data badges, the more I come to think that these badges are basically openwashing. I can't remember the last time I found one with runnable code and usable data straight out of the box.</p>— Russ Poldrack (@russpoldrack) <a href="https://twitter.com/russpoldrack/status/1501572647972261892?ref_src=twsrc%5Etfw">March 9, 2022</a></blockquote>
-<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>I think a lot of current software frustration stems from a desire (from methods consumers) for medium data or production implementations, while there is rarely any need for methods producers to go beyond a proof-of-concept implementation. Especially in methods land, but also more generally, the value of software is purpose specific. Methods producers and consumers have different needs and skill sets, and I think it makes a lot of sense to highlight an intermediary developer role to bridge the gap. To this effectively</p>
 
 
 
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-lee_barely_2021" class="csl-entry" role="doc-biblioentry">
-Lee, Graham, Sebastian Bacon, Ian Bush, Laura Fortunato, David Gavaghan, Thibault Lestang, Caroline Morton, et al. 2021. <span>“Barely Sufficient Practices in Scientific Computing.”</span> <em>Patterns</em> 2 (2): 100206. <a href="https://doi.org/10.1016/j.patter.2021.100206">https://doi.org/10.1016/j.patter.2021.100206</a>.
-</div>
-<div id="ref-peer_active_2020" class="csl-entry" role="doc-biblioentry">
-Peer, Limor, Lilla Orr, and Alexander Coppock. 2020. <span>“Active <span>Maintenance</span>: <span>A Proposal</span> for the <span class="nocase">Long-term Computational Reproducibility</span> of <span>Scientific Results</span>.”</span>
-</div>
-<div id="ref-taschuk_ten_2017" class="csl-entry" role="doc-biblioentry">
-Taschuk, Morgan, and Greg Wilson. 2017. <span>“Ten Simple Rules for Making Research Software More Robust.”</span> <em>PLOS Computational Biology</em> 13 (4): e1005412. <a href="https://doi.org/10.1371/journal.pcbi.1005412">https://doi.org/10.1371/journal.pcbi.1005412</a>.
-</div>
-<div id="ref-wilson_good_2017" class="csl-entry" role="doc-biblioentry">
-Wilson, Greg, Jennifer Bryan, Karen Cranston, Justin Kitzes, Lex Nederbragt, and Tracy K. Teal. 2017. <span>“Good Enough Practices in Scientific Computing.”</span> Edited by Francis Ouellette. <em>PLOS Computational Biology</em> 13 (6): e1005510. <a href="https://doi.org/10.1371/journal.pcbi.1005510">https://doi.org/10.1371/journal.pcbi.1005510</a>.
-</div>
-</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
