@@ -159,7 +159,13 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    
+    <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#a-normative-typology-of-methodological-software-contributions" id="toc-a-normative-typology-of-methodological-software-contributions" class="nav-link active" data-scroll-target="#a-normative-typology-of-methodological-software-contributions">A normative typology of methodological software contributions</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/2022-05-14_the-value-of-methods-software-is-purpose-specific/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -172,7 +178,8 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 <p>Academics, and methodologists in particular, produce shitty code. This shitty code is frustrating to practicing data analysts, and an unsurprising consequence of this frustration is that we are entering a period of <a href="https://xkcd.com/927/">standards proliferation</a> for research software. The idea is roughly that if we write down what good software looks like, methodologists will start writing good software, and practitioners will ultimately have usable tools.</p>
 <p>I am a little skeptical of this idea: the standards that people are writing are very high standards and there are a lot of circumstances when it’s perfectly reasonable for methods producers to write bad code. My hope is that by highlighting different needs of methods producers and consumers, we can make software contributions more legible and perhaps have more realistic expectations. My basic thesis here is that it takes too much work for methods producers to write usable code. Instead of asking them to write useful code, especially in absence of meaningful incentives, I propose that a third group of “methods translators” take on the primary responsibility for turning research code in useful code. This dramatically lowers the labor expectations for methods producers: instead of producing polished and final software products, they only need to produce code that can form the basis of a future software product.</p>
-<p>With this in mind, I propose the following normative typology of methodological software contributions:</p>
+<section id="a-normative-typology-of-methodological-software-contributions" class="level3">
+<h3 class="anchored" data-anchor-id="a-normative-typology-of-methodological-software-contributions">A normative typology of methodological software contributions</h3>
 <ol type="1">
 <li><p><strong>Pseudo-code</strong>. Pseudo-code describes an algorithm in formal and unambiguous language, but not in a computer code. Pseudo-code is primarily useful to methods producers who want to study theoretical properties of an algorithm. The pseudo-code itself is not software, and may omit key practical details needed to implement an algorithm. Pseudo-code represents an intellectual rather than a practical contribution.</p></li>
 <li><p><strong>Reference implementation</strong>. A reference implementation is a basic translation of pseudo-code into runnable computer code. Reference implementations should run on toy problems and produce results that can be used to test more fully featured and computationally efficient implementations. The primary goal of a reference implementation, however, is to be exceptionally readable. The goal of a reference implementation is not to be useful software in and of itself; the goal is to enable someone else to base useful software off of the reference implementation. Bare bones reference implementations devoid of object orientation (to the extent possible) are best. The notation in a reference implementation should also closely match the notation in the paper or document that proposes the algorithm. Reference implementations are minor but important software implementations. Including a reference implementation should be a minimum standard for methods work.</p></li>
@@ -183,6 +190,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <p>I think a lot of current software frustration stems from a desire (from methods consumers) for medium data or production implementations, while there is rarely any need for methods producers to go beyond a proof-of-concept implementation. Especially in methods land, but also more generally, the value of software is purpose specific. Methods producers and consumers have different needs and skill sets, and I think it makes a lot of sense to highlight an intermediary developer role to bridge the gap. To this effectively</p>
 
 
+</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

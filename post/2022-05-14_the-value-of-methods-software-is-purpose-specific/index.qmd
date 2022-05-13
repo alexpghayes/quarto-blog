@@ -12,7 +12,7 @@ Academics, and methodologists in particular, produce shitty code. This shitty co
 
 I am a little skeptical of this idea: the standards that people are writing are very high standards and there are a lot of circumstances when it's perfectly reasonable for methods producers to write bad code. My hope is that by highlighting different needs of methods producers and consumers, we can make software contributions more legible and perhaps have more realistic expectations. My basic thesis here is that it takes too much work for methods producers to write usable code. Instead of asking them to write useful code, especially in absence of meaningful incentives, I propose that a third group of "methods translators" take on the primary responsibility for turning research code in useful code. This dramatically lowers the labor expectations for methods producers: instead of producing polished and final software products, they only need to produce code that can form the basis of a future software product.
 
-With this in mind, I propose the following normative typology of methodological software contributions:
+### A normative typology of methodological software contributions
 
 1. **Pseudo-code**. Pseudo-code describes an algorithm in formal and unambiguous language, but not in a computer code. Pseudo-code is primarily useful to methods producers who want to study theoretical properties of an algorithm. The pseudo-code itself is not software, and may omit key practical details needed to implement an algorithm. Pseudo-code represents an intellectual rather than a practical contribution.
 
