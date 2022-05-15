@@ -25,3 +25,65 @@ I am a little skeptical of this idea: the standards that people are writing are 
 5. **Production ready**. The final level of methods software is software that is ready for use in production, by which I mean that is reliable, feature complete and scales to technically challenging settings. These implementations should follow software engineering best practices and have responsive maintenance teams, as well as a semi-frequent release cycle and extensive documentation. The primary differences between a middling implementation and a production implementation are the internal design of the software, increased UX polish, and thorough testing. Production implementations should handle errors and edge cases gracefully and produce results that are reliably correct.
 
 I think a lot of current software frustration stems from a desire (from methods consumers) for medium data or production implementations, while there is rarely any need for methods producers to go beyond a proof-of-concept implementation. Especially in methods land, but also more generally, the value of software is purpose specific. Methods producers and consumers have different needs and skill sets, and I think it makes a lot of sense to highlight an intermediary developer role to bridge the gap. To this effectively
+
+> A much bigger problem is the tension between the difficulty of statistics and the demand for it to be simple and readily available. 
+
+    - Christian Hennig on [Error statistics](https://errorstatistics.com/2022/01/09/the-asa-controversy-on-p-values-as-an-illustration-of-the-difficulty-of-statistics/)
+
+Thank [Ben Listyg](https://github.com/benlistyg) for providing feedback on this post. For some related thoughts, you make also enjoy Mike DeCrescenzo's [post](https://mikedecr.netlify.app/blog/usable_repos/) about replication archives.
+
+### Ben's feedback
+
+Clearly define three groups:
+Who are these three groups? I think a clear articulation of these types of people would be valuable.
+Methods Producers 
+Methods Consumers
+Methods Translators
+
+Define “useful”
+The terms “useful” and “useable” are mentioned with respect to code, but I think clearly articulating the scope of how code is used is important. I think it would be valuable to answer the question “What does it mean for code to be usable?” A methods translator creating code for a consumer has to have a target audience in mind be it another researcher generating academic output or someone in industry generating code for production use.
+
+Examples of each typology category. I think you’ve had some on-hand before when we’ve discussed this, but a go-to example of each category would be handy for conceptualizing what you mean.
+
+Random thoughts:
+
+I think a great example of the pipeline you’ve described would be the following from IRT.
+
+Methods Producers: Maydeu-Olivares and Joe (2006) derive a family of statistics for testing model-data fit in high dimensional contingency tables.
+Methods Translator: Chalmers (2012) provides a computational implementation of that statistics in {mirt}
+Methods Consumer: Lots of people have use M2 statistics from {mirt} in their published work, myself included (e.g. Hyatt et al., 2022)
+
+What standards proliferation is happening? I think some citations of references here would be valuable (but def leave the xkcd comic there tho)
+
+@lee_barely_2021
+@peer_active_2020
+@taschuk_ten_2017
+@wilson_good_2017
+
+Random thoughts:
+
+To your point about how not all code needs to be this immaculate output, there is little incentive for methodologists to go above and beyond a certain threshold of effort for disseminating code. (Post read follow up: you make this point and I think it’s an important point to make)
+
+For non-computational fields, there is little training for how to develop “good” code. As much as I would love for psychologists to know more software engineering, this isn’t something prioritized in our training.
+
+in some sense what i really want to do is push back on the implicit suggestion in his {decrenzocos}  work about *who* should make replication code more usable
+i.e. suggesting that every academic be a unicorn programmer-researcher, as i think a lot of people are implicitly suggesting. if we give up on that idea, what is left as a way to make progress?
+
+Agreed, but there's a half-way point to be met I think
+Methods producers can generate documentation that allows translators to pick up the slack
+not just generating a undocumented codebase and saying "Have fun!"
+
+right! and to me that half way point is still having standards, but the product and standards requiring sane amounts of labor
+
+Absolutely agreed
+I think too, to your point against Mike, we don't have training for good software development
+especially in social science fields
+
+replication code is also slightly different because methods and analysis code are different universes
+
+like, on one hand, for an analysis, the ideal imo is a targets/make pipeline that clearly produces output matching the paer
+and then second is just like nice data
+like 90% of the time i couldn't care less about the researchers own code since i'm just going to redo the analysis on my own to see if i trust their conclusions
+and also since most analysis code from applied peeps is either wrong or impossible to verify as correct since it's such a mess
+
+yeah there's definitely a myth that if we all release our code, that no matter what that code, somehow methods disemmination will be solve and the hellscape of trying to use any non-standard estimator will somehow disappear
