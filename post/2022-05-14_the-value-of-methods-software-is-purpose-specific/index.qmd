@@ -26,6 +26,9 @@ I am a little skeptical of this idea: the standards that people are writing are 
 
 I think a lot of current software frustration stems from a desire (from methods consumers) for medium data or production implementations, while there is rarely any need for methods producers to go beyond a proof-of-concept implementation. Especially in methods land, but also more generally, the value of software is purpose specific. Methods producers and consumers have different needs and skill sets, and I think it makes a lot of sense to highlight an intermediary developer role to bridge the gap. To this effectively
 
+i'm increasing excited about the idea of a "research-lifecycle" badge, potentially with levels such as: scratch, publication-mvp, reference-implementation, usable-for-everyday-users, usable-in-industry
+
+
 > A much bigger problem is the tension between the difficulty of statistics and the demand for it to be simple and readily available. 
 
     - Christian Hennig on [Error statistics](https://errorstatistics.com/2022/01/09/the-asa-controversy-on-p-values-as-an-illustration-of-the-difficulty-of-statistics/)
