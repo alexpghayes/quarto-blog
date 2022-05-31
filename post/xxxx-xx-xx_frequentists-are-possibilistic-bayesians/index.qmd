@@ -1,32 +1,66 @@
 ---
 title: "frequentists are possibilistic bayesians"
 subtitle: |
-  todo
-date: "2022-05-14"
+  it's all about the a priori uncertainty measure
+date: "2022-05-31"
 categories: [foundations of statistics, philosophy]
+bibliography: frequentists-are-possibilistic-bayesians.bib
 draft: true
 ---
 
-# Summary
-
-## A sketch of formal quantitative inference
-
-Let's talk about modeling, by which I mean formal modeling. At a high level, the idea of modeling is that we construct a (typically mathematical) formal system of interest.
-
--   want to understand how the world works
-
-out there is the world. we don't really understand how it works, but we would like to.
-
--   
-
-frequentists are possibilistic bayesians
-
 **TL; DR:** Frequentists are possibilistic Bayesians using a uniform possibility prior.
 
-One useful way to distinguish between frequentists and Bayesians is to consider how they represent a priori uncertainty. Here the story is pretty straightforward: both the frequentist and the Bayesian typically begin by constructing a likelihood function. This likelihood function is sometimes called an observation model; it describes the probability of observing data $X_1, ..., X_n$ for a given set of parameters $\theta$. 
+## A brief tour of frequentist and Bayesian inference
 
-##
+To do Bayesian inference, a data analyst specifies a probability distribution $\mathrm{Pr}(X, \theta)$ over data $X$ and parameters $\theta$. It's convenient to partition $\mathrm{Pr}(X, \theta) = \mathrm{Pr}(X \mid \theta) \cdot \mathrm{Pr}(\theta)$ where $\mathrm{Pr}(X \mid \theta)$ is called the likelihood and $\mathrm{Pr}(\theta)$ is called the prior. Then the analyst observes a realization $X = x$ and conditions on this data to obtain a updated probability distribution $\mathrm{Pr}(\theta|X=x)$, called the posterior distribution.
 
-in both cases you specify a set of possible observational models (often via a likelihood) indexed by some parameter theta
+In contrast, to do frequent data analysis, a data analyst specifies a likelihood $\mathrm{Pr}(X \mid \theta)$ but remains agnostic to $\theta$. Any inference the frequentist does has to work for a fixed but unknown $\theta$ -- the analyst doesn't weigh the likelihood by $\mathrm{Pr}(\theta)$ at any point. Then, given data $X=x$, or some statistic $T(X = x)$, the frequentist computes $\mathrm{Pr}(X = x \mid \theta)$ for every $\theta \in \Theta$. If $\mathrm{Pr}(X = x \mid \theta)$ is very small, then $\theta$ is not compatible with the data in the sense that it is unlikely the data generating process had $\theta$ as the fixed but unknown parameter.
 
-That is, frequentist procedures can be thought of as specifying an observation model and a possibility measure of the parameters of the observation model and then conditioning the prior possibility measure on observed data to produce a posterior possibility measure.
+The thing that is tricky for frequentists is that any given data $X=x$ is compatible with many $\theta \in \Theta$, but it is unclear how this compatibility is distributed across values of $\theta$. This is contrast with Bayesian inference, where we know the posterior distribution for $\theta$ must integrate to one, so high probabilities of some $\theta$ necessarily implies low probabilities for other $\theta^* \neq \theta$.
+
+## A little bit more about frequentism (skippable)
+
+To be a little bit more concrete about the way frequentist estimation works, suppose we want to do inference for $\mathbb E(X) = q(\theta)$ for $X_1, ..., X_n \sim F_\theta$ where $F_\theta$ is some distribution with parameters $\theta \in \Theta$ with at least four finite moments, and the $X_i$ are independent. $q$ is just some function of the $\theta$ such that $q(\theta)$ is $\mathbb E(X)$ for every possible $\theta$.  Then we consider the estimator (statistic)
+
+$$
+\bar X = T(X) = \frac 1n \sum_{i=1}^N X_i
+$$
+and apply theorems from probability to determine that $\bar X$ converges to a normal distribution centered on $\mathbb E(X)$, regardless of the value of $\theta$. We can then use this asymptotic result to get an approximate finite sample confidence interval for $\mathbb E(X)$.
+
+Now one thing that is tricky here is the interpretation of these results. A 95 percent confidence interval for $\mathbb E(X)$ does not contain $\mathbb E(X)$ with probability 0.95, because $\mathbb E(X)$ is some fixed function of $\theta$ and is either an element or not an element of any set with probability one (or zero). Unfortunately, the statistics community has decided to provide the following de-facto interpretation of confidence intervals:
+
+> If we "repeated the experiment" and obtained $n$ realizations from $F_\theta$, then on average $0.95 \cdot n$ intervals will contain the true value $\mathbb E(X)$.
+
+Being able to repeat this phrase basically word for word has become a bizarre shibboleth. This interpretation of a confidence interval also makes many people philosophically uncomfortable, because it can only hold with infinite data, and seems to demand some sort of long-run frequency interpretation of probability, while many experiments in the real world happen exactly once.
+
+There are, however, other valid interpretations of confidence sets. I have already hinted at my preferred interpretation, which is the compatibility interpretation, which is little bit sparser but more intuitively useful:
+
+> The confidence interval contains the values of the estimand that are compatibility with the observed data.
+
+This compatibility interpretation is in my mind mostly closely associated with the Neo-Fisherian and Cox schools of thought, and here "compatibility" isn't defined formally but retains more of a plain language meaning. Depending on your aesthetic and pedantic tendencies, you may find this informality frustrating and unappealing. Certain, in recent years, people have spent a decent amount of time trying to characterize confidence sets by relating them to uncertainty distributions, in hopes of attaining something roughly like the Bayesian's posterior.
+
+There are three major pushes here: the generalized fiducial camp, the confidence distribution camp, and the inferential models camp. I know basically knowing about the generalized fiducial camp. The idea behind confidence distributions, however, is straightforward: take a bunch of $\alpha$-level confidence sets $C_\alpha$ for varying $\alpha$ and stack them together into a distribution-like object [@schweder_confidence_2016]. These objects are not probability distributions, and you cannot manipulate them and retain coverage guarantees, as proven in @balch_satellite_2019 and elaborated in @martin_response_2021. In particular, not being able to marginalize confidence distributions can make working with multi-dimensional estimands painful.
+
+The last camp is the inferential models camp, primarily driven by Ryan Martin and his students, and the main result I want to explain in plain language today comes from one of his recent papers. I have not really grokked inferential models as a formalism yet, but using them Martin has proven a number of interesting equivalence results.
+
+## The key bit, stated very informally
+
+@martin_imprecise-probabilistic_2021 shows that, for every frequentist confidence interval, there is a possibility measure that generates that same confidence interval, and the procedure to generate that possibility measure is at least as efficient as the corresponding frequentist procedure to generate the frequentist confidence interval. I highly recommend taking a look at the paper, which is very readable.
+
+Without going into much detail, a possibility measure is a sub-additive measure of uncertainty that is closely related to a probability measure, but must satisfy maxitivity rather than additivity: 
+
+1. $\mathrm{Po}(\emptyset) = 0$
+2. $\mathrm{Po}(\Omega) = 1$
+3. $\mathrm{Po}(U \cup V) = \max(\mathrm{Po}(U), \mathrm{Po}(V))$ for disjoint $U$ and $V$
+
+Moreover, this possibility measure can be constructed in a Bayesian manner. In particular, it can be constructed by building a joint possibility interval $\mathrm{Po}(X, \theta) = \mathrm{Po}(X \mid \theta) \cdot \mathrm{Po}(\theta)$ where $\mathrm{Po}(X \mid \theta) = \mathrm{Pr}(X \mid \theta)$ is a standard likelihood and $\mathrm{Po}(\theta)$ is uniform plausibility contour. Conditioning on the data leads to the "posterior" possibility interval $\mathrm{Po}(\theta \mid X = x)$, which generates a confidence interval that matches the frequentist one.
+
+There are a number of details that I am glossing over here, mostly due to my own limited understanding, but these complications largely come from the fact that there are several ways to "condition" a possibility interval on data. Here's Martin with some additional details:
+
+> [G]enerally there would be multiple "prior possibility measures" that would yield the same IM that I'm using and hence the same CI.  This is a technical term, but any prior possibility measure that's *less specific* than the possibility measure I propose would yield mine as the posterior.  The vacuous prior is the *least specific* and, therefore, would be one of the candidates.  If you insist on the prior being data-free (which is reasonable), then I'd imagine that the vacuous prior possibility measure is the unique solution to the backing-out problem.
+
+*N.B.*: A misconception about frequentists is that frequentists are simply Bayesians with a uniform prior. When this occurs it is simply numeric coincidence. @stark_constraints_2015 discusses this at length, and @seaman_hidden_2012 considers how transformations can make uniform priors look very non-uniform. If you are operating under the mistaken mental model that frequentists are simply using flat priors, Martin's result may not strike you as particular interesting. The key observation is that uniform possibility prior on $\theta$ is dramatically less informative about $\theta$ than a uniform probability prior.
+
+## A problem for Bayes zealots
+
+Among Bayesians who only like their inference served one way, there is a pretty vocal complaint that frequentists are calculating $\mathrm{Pr}(X \mid \theta)$, i.e. "the probability of the data given the hypothesis", and that this is the wrong thing to compute, because only $\mathrm{Pr}(\theta \mid X = x)$, i.e. "the probability of the hypothesis given the data", can be used to answer real research questions. Martin's result allows us to re-frame the choice between Bayesian posteriors and confidence intervals as a choice between $\mathrm{Pr}(\theta \mid X = x)$ and $\mathrm{Po}(\theta \mid X = x)$. That is, the choice is between the possibility of the hypothesis given the data (and a uniform possibility prior) and the probability of the hypothesis given the data. To adjudicate between these options you need to think about the *type* of uncertainty represented by a possibility prior versus a Bayesian prior, and which is most appropriate in your setting.
