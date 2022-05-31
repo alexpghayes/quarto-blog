@@ -8,6 +8,27 @@ bibliography: references.bib
 draft: true
 ---
 
+Clearly define three groups:
+Who are these three groups? I think a clear articulation of these types of people would be valuable.
+Methods Producers 
+Methods Consumers
+Methods Translators
+
+
+we want to do research, and to do research meaningfully in any sense we need to work collectively, and this in particular means that 
+
+
+we want to do researcher, we have certain research methods. some
+
+
+Collectively coordinating and sharing knowledge turns out to be very hard. In a
+
+Methodologically, researchers tend to be 
+
+In terms of software, we can roughly break researchers into two categories: methods producers, and methods consumers. 
+
+
+
 Academics, and methodologists in particular, produce shitty code. This shitty code is frustrating to practicing data analysts, and an unsurprising consequence of this frustration is that we are entering a period of [standards proliferation](https://xkcd.com/927/) for research software^[See, for example, the ROpenSci [stats software review] (https://stats-devguide.ropensci.org/) and [tidymodels implementation principles](https://github.com/tidymodels/model-implementation-principles) projects, both of which I briefly involved in, as well as a plethora of academic papers such as @lee_barely_2021, @peer_active_2020, @taschuk_ten_2017, and @wilson_good_2017, as well as software checklists and standards for journals such as the [Journal of Open Source Software](https://joss.theoj.org/), the [Journal of Statistical Software](https://www.jstatsoft.org/index), the [R Journal](https://journal.r-project.org/), etc, etc]. The idea is roughly that if we write down what good software looks like, methodologists will start writing good software, and practitioners will ultimately have usable tools.
 
 I am a little skeptical of this idea: the standards that people are writing are very high standards and there are a lot of circumstances when it's perfectly reasonable for methods producers to write bad code. My hope is that by highlighting different needs of methods producers and consumers, we can make software contributions more legible and perhaps have more realistic expectations. My basic thesis here is that it takes too much work for methods producers to write usable code. Instead of asking them to write useful code, especially in absence of meaningful incentives, I propose that a third group of "methods translators" take on the primary responsibility for turning research code in useful code. This dramatically lowers the labor expectations for methods producers: instead of producing polished and final software products, they only need to produce code that can form the basis of a future software product.
@@ -41,11 +62,6 @@ Thank [Ben Listyg](https://github.com/benlistyg) for providing feedback on this 
 i would feel better about if they were more consistently functional. half of time someone releases a methods package and i take a close look i lose confidence in any empirical results in the paper on the basis of the code
 
 
-Clearly define three groups:
-Who are these three groups? I think a clear articulation of these types of people would be valuable.
-Methods Producers 
-Methods Consumers
-Methods Translators
 
 Define “useful”
 The terms “useful” and “useable” are mentioned with respect to code, but I think clearly articulating the scope of how code is used is important. I think it would be valuable to answer the question “What does it mean for code to be usable?” A methods translator creating code for a consumer has to have a target audience in mind be it another researcher generating academic output or someone in industry generating code for production use.
@@ -61,6 +77,22 @@ Methods Translator: Chalmers (2012) provides a computational implementation of t
 Methods Consumer: Lots of people have use M2 statistics from {mirt} in their published work, myself included (e.g. Hyatt et al., 2022)
 
 What standards proliferation is happening? I think some citations of references here would be valuable (but def leave the xkcd comic there tho)
+
+
+
+
+methods dissemination is a hard problem and we should not pretend we're solving it with current measures, nor should we pretend that pouring more uncompensated labor into the current system will help, as much as academia loves to believe that this is the case. instead we might take some cues from industry, were dissemination is a role in and of itself (developer advocates, ")
+
+data science defining itself in some senses as "statistical methods plus all of the stuff you actually need to do to apply those methods" 
+
+[Zen and the aRt of Workflow Maintenance](https://speakerdeck.com/jennybc/zen-and-the-art-of-workflow-maintenance)
+
+[Should all statistics students be programmers? No!](https://speakerdeck.com/hadley/should-all-statistics-students-be-programmers)
+
+
+I think there needs to be some sort of communal understanding of all the steps (many currently unacknowledged) needed to get methods into applied work, and additionally this work needs to become a form of academically valued labor
+i.e. until you assign responsibility for each of those steps to someone i don't think it's fair to ask why people aren't using the most up to date methods. the answer is simply that academia doesn't incentivize work along many of the steps of the theory -> applied pipeline
+
 
 
 Random thoughts:

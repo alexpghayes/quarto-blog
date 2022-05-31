@@ -17,6 +17,25 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -164,6 +183,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#a-normative-typology-of-methodological-software-contributions" id="toc-a-normative-typology-of-methodological-software-contributions" class="nav-link active" data-scroll-target="#a-normative-typology-of-methodological-software-contributions">A normative typology of methodological software contributions</a></li>
+  <li><a href="#bens-feedback" id="toc-bens-feedback" class="nav-link" data-scroll-target="#bens-feedback">Ben’s feedback</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/2022-05-14_the-value-of-methods-software-is-purpose-specific/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
 </nav>
@@ -176,7 +196,13 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 
-<p>Academics, and methodologists in particular, produce shitty code. This shitty code is frustrating to practicing data analysts, and an unsurprising consequence of this frustration is that we are entering a period of <a href="https://xkcd.com/927/">standards proliferation</a> for research software. The idea is roughly that if we write down what good software looks like, methodologists will start writing good software, and practitioners will ultimately have usable tools.</p>
+<p>Clearly define three groups: Who are these three groups? I think a clear articulation of these types of people would be valuable. Methods Producers Methods Consumers Methods Translators</p>
+<p>we want to do research, and to do research meaningfully in any sense we need to work collectively, and this in particular means that</p>
+<p>we want to do researcher, we have certain research methods. some</p>
+<p>Collectively coordinating and sharing knowledge turns out to be very hard. In a</p>
+<p>Methodologically, researchers tend to be</p>
+<p>In terms of software, we can roughly break researchers into two categories: methods producers, and methods consumers.</p>
+<p>Academics, and methodologists in particular, produce shitty code. This shitty code is frustrating to practicing data analysts, and an unsurprising consequence of this frustration is that we are entering a period of <a href="https://xkcd.com/927/">standards proliferation</a> for research software<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The idea is roughly that if we write down what good software looks like, methodologists will start writing good software, and practitioners will ultimately have usable tools.</p>
 <p>I am a little skeptical of this idea: the standards that people are writing are very high standards and there are a lot of circumstances when it’s perfectly reasonable for methods producers to write bad code. My hope is that by highlighting different needs of methods producers and consumers, we can make software contributions more legible and perhaps have more realistic expectations. My basic thesis here is that it takes too much work for methods producers to write usable code. Instead of asking them to write useful code, especially in absence of meaningful incentives, I propose that a third group of “methods translators” take on the primary responsibility for turning research code in useful code. This dramatically lowers the labor expectations for methods producers: instead of producing polished and final software products, they only need to produce code that can form the basis of a future software product.</p>
 <section id="a-normative-typology-of-methodological-software-contributions" class="level3">
 <h3 class="anchored" data-anchor-id="a-normative-typology-of-methodological-software-contributions">A normative typology of methodological software contributions</h3>
@@ -188,11 +214,62 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <li><p><strong>Production ready</strong>. The final level of methods software is software that is ready for use in production, by which I mean that is reliable, feature complete and scales to technically challenging settings. These implementations should follow software engineering best practices and have responsive maintenance teams, as well as a semi-frequent release cycle and extensive documentation. The primary differences between a middling implementation and a production implementation are the internal design of the software, increased UX polish, and thorough testing. Production implementations should handle errors and edge cases gracefully and produce results that are reliably correct.</p></li>
 </ol>
 <p>I think a lot of current software frustration stems from a desire (from methods consumers) for medium data or production implementations, while there is rarely any need for methods producers to go beyond a proof-of-concept implementation. Especially in methods land, but also more generally, the value of software is purpose specific. Methods producers and consumers have different needs and skill sets, and I think it makes a lot of sense to highlight an intermediary developer role to bridge the gap. To this effectively</p>
+<p>i’m increasing excited about the idea of a “research-lifecycle” badge, potentially with levels such as: scratch, publication-mvp, reference-implementation, usable-for-everyday-users, usable-in-industry</p>
+<blockquote class="blockquote">
+<p>A much bigger problem is the tension between the difficulty of statistics and the demand for it to be simple and readily available.</p>
+</blockquote>
+<pre><code>- Christian Hennig on [Error statistics](https://errorstatistics.com/2022/01/09/the-asa-controversy-on-p-values-as-an-illustration-of-the-difficulty-of-statistics/)</code></pre>
+<p>Thank <a href="https://github.com/benlistyg">Ben Listyg</a> for providing feedback on this post. For some related thoughts, you make also enjoy Mike DeCrescenzo’s <a href="https://mikedecr.netlify.app/blog/usable_repos/">post</a> about replication archives.</p>
+</section>
+<section id="bens-feedback" class="level3">
+<h3 class="anchored" data-anchor-id="bens-feedback">Ben’s feedback</h3>
+<p>i would feel better about if they were more consistently functional. half of time someone releases a methods package and i take a close look i lose confidence in any empirical results in the paper on the basis of the code</p>
+<p>Define “useful” The terms “useful” and “useable” are mentioned with respect to code, but I think clearly articulating the scope of how code is used is important. I think it would be valuable to answer the question “What does it mean for code to be usable?” A methods translator creating code for a consumer has to have a target audience in mind be it another researcher generating academic output or someone in industry generating code for production use.</p>
+<p>Examples of each typology category. I think you’ve had some on-hand before when we’ve discussed this, but a go-to example of each category would be handy for conceptualizing what you mean.</p>
+<p>Random thoughts:</p>
+<p>I think a great example of the pipeline you’ve described would be the following from IRT.</p>
+<p>Methods Producers: Maydeu-Olivares and Joe (2006) derive a family of statistics for testing model-data fit in high dimensional contingency tables. Methods Translator: Chalmers (2012) provides a computational implementation of that statistics in {mirt} Methods Consumer: Lots of people have use M2 statistics from {mirt} in their published work, myself included (e.g.&nbsp;Hyatt et al., 2022)</p>
+<p>What standards proliferation is happening? I think some citations of references here would be valuable (but def leave the xkcd comic there tho)</p>
+<p>methods dissemination is a hard problem and we should not pretend we’re solving it with current measures, nor should we pretend that pouring more uncompensated labor into the current system will help, as much as academia loves to believe that this is the case. instead we might take some cues from industry, were dissemination is a role in and of itself (developer advocates, “)</p>
+<p>data science defining itself in some senses as “statistical methods plus all of the stuff you actually need to do to apply those methods”</p>
+<p><a href="https://speakerdeck.com/jennybc/zen-and-the-art-of-workflow-maintenance">Zen and the aRt of Workflow Maintenance</a></p>
+<p><a href="https://speakerdeck.com/hadley/should-all-statistics-students-be-programmers">Should all statistics students be programmers? No!</a></p>
+<p>I think there needs to be some sort of communal understanding of all the steps (many currently unacknowledged) needed to get methods into applied work, and additionally this work needs to become a form of academically valued labor i.e.&nbsp;until you assign responsibility for each of those steps to someone i don’t think it’s fair to ask why people aren’t using the most up to date methods. the answer is simply that academia doesn’t incentivize work along many of the steps of the theory -&gt; applied pipeline</p>
+<p>Random thoughts:</p>
+<p>To your point about how not all code needs to be this immaculate output, there is little incentive for methodologists to go above and beyond a certain threshold of effort for disseminating code. (Post read follow up: you make this point and I think it’s an important point to make)</p>
+<p>For non-computational fields, there is little training for how to develop “good” code. As much as I would love for psychologists to know more software engineering, this isn’t something prioritized in our training.</p>
+<p>in some sense what i really want to do is push back on the implicit suggestion in his {decrenzocos} work about <em>who</em> should make replication code more usable i.e.&nbsp;suggesting that every academic be a unicorn programmer-researcher, as i think a lot of people are implicitly suggesting. if we give up on that idea, what is left as a way to make progress?</p>
+<p>Agreed, but there’s a half-way point to be met I think Methods producers can generate documentation that allows translators to pick up the slack not just generating a undocumented codebase and saying “Have fun!”</p>
+<p>right! and to me that half way point is still having standards, but the product and standards requiring sane amounts of labor</p>
+<p>Absolutely agreed I think too, to your point against Mike, we don’t have training for good software development especially in social science fields</p>
+<p>replication code is also slightly different because methods and analysis code are different universes</p>
+<p>like, on one hand, for an analysis, the ideal imo is a targets/make pipeline that clearly produces output matching the paer and then second is just like nice data like 90% of the time i couldn’t care less about the researchers own code since i’m just going to redo the analysis on my own to see if i trust their conclusions and also since most analysis code from applied peeps is either wrong or impossible to verify as correct since it’s such a mess</p>
+<p>yeah there’s definitely a myth that if we all release our code, that no matter what that code, somehow methods disemmination will be solve and the hellscape of trying to use any non-standard estimator will somehow disappear</p>
+
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-lee_barely_2021" class="csl-entry" role="doc-biblioentry">
+Lee, Graham, Sebastian Bacon, Ian Bush, Laura Fortunato, David Gavaghan, Thibault Lestang, Caroline Morton, et al. 2021. <span>“Barely Sufficient Practices in Scientific Computing.”</span> <em>Patterns</em> 2 (2): 100206. <a href="https://doi.org/10.1016/j.patter.2021.100206">https://doi.org/10.1016/j.patter.2021.100206</a>.
+</div>
+<div id="ref-peer_active_2020" class="csl-entry" role="doc-biblioentry">
+Peer, Limor, Lilla Orr, and Alexander Coppock. 2020. <span>“Active <span>Maintenance</span>: <span>A Proposal</span> for the <span class="nocase">Long-term Computational Reproducibility</span> of <span>Scientific Results</span>.”</span>
+</div>
+<div id="ref-taschuk_ten_2017" class="csl-entry" role="doc-biblioentry">
+Taschuk, Morgan, and Greg Wilson. 2017. <span>“Ten Simple Rules for Making Research Software More Robust.”</span> <em>PLOS Computational Biology</em> 13 (4): e1005412. <a href="https://doi.org/10.1371/journal.pcbi.1005412">https://doi.org/10.1371/journal.pcbi.1005412</a>.
+</div>
+<div id="ref-wilson_good_2017" class="csl-entry" role="doc-biblioentry">
+Wilson, Greg, Jennifer Bryan, Karen Cranston, Justin Kitzes, Lex Nederbragt, and Tracy K. Teal. 2017. <span>“Good Enough Practices in Scientific Computing.”</span> Edited by Francis Ouellette. <em>PLOS Computational Biology</em> 13 (6): e1005510. <a href="https://doi.org/10.1371/journal.pcbi.1005510">https://doi.org/10.1371/journal.pcbi.1005510</a>.
+</div>
+</div></section><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1" role="doc-endnote"><p>See, for example, the ROpenSci [stats software review] (https://stats-devguide.ropensci.org/) and <a href="https://github.com/tidymodels/model-implementation-principles">tidymodels implementation principles</a> projects, both of which I briefly involved in, as well as a plethora of academic papers such as <span class="citation" data-cites="lee_barely_2021">Lee et al. (<a href="#ref-lee_barely_2021" role="doc-biblioref">2021</a>)</span>, <span class="citation" data-cites="peer_active_2020">Peer, Orr, and Coppock (<a href="#ref-peer_active_2020" role="doc-biblioref">2020</a>)</span>, <span class="citation" data-cites="taschuk_ten_2017">Taschuk and Wilson (<a href="#ref-taschuk_ten_2017" role="doc-biblioref">2017</a>)</span>, and <span class="citation" data-cites="wilson_good_2017">Wilson et al. (<a href="#ref-wilson_good_2017" role="doc-biblioref">2017</a>)</span>, as well as software checklists and standards for journals such as the <a href="https://joss.theoj.org/">Journal of Open Source Software</a>, the <a href="https://www.jstatsoft.org/index">Journal of Statistical Software</a>, the <a href="https://journal.r-project.org/">R Journal</a>, etc, etc<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
