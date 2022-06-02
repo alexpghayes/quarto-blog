@@ -64,3 +64,6 @@ There are a number of details that I am glossing over here, mostly due to my own
 ## A problem for Bayes zealots
 
 Among Bayesians who only like their inference served one way, there is a pretty vocal complaint that frequentists are calculating $\mathrm{Pr}(X \mid \theta)$, i.e. "the probability of the data given the hypothesis", and that this is the wrong thing to compute, because only $\mathrm{Pr}(\theta \mid X = x)$, i.e. "the probability of the hypothesis given the data", can be used to answer real research questions. Martin's result allows us to re-frame the choice between Bayesian posteriors and confidence intervals as a choice between $\mathrm{Pr}(\theta \mid X = x)$ and $\mathrm{Po}(\theta \mid X = x)$. That is, the choice is between the possibility of the hypothesis given the data (and a uniform possibility prior) and the probability of the hypothesis given the data. To adjudicate between these options you need to think about the *type* of uncertainty represented by a possibility prior versus a Bayesian prior, and which is most appropriate in your setting.
+
+
+note from Corey: this argument does nothing to dissuade axiomatic bayesians
