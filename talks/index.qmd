@@ -4,17 +4,22 @@ title: "talks"
 
 ## upcoming talks
 
-**`distributions3`: From basic probability to probabilistic regression**  
-Thursday, 23 June 2022, 1:00 - 2:15pm CDT, [UseR 2022](https://user2022.r-project.org/program/talks/#session-34-regression-models)  
-[Achim Zeileis](https://www.zeileis.org/), [Moritz Lang](https://moritzlang.org/) and Alex Hayes
+**Estimating indirect effects induced by homophily via spectral network regression**
+2022-07-07, [Tianxi Li](https://sites.google.com/view/tianxili-homepage/home) and [Can Le](https://statistics.ucdavis.edu/people/can-le) Joint Lab Meeting 
 
-The [`distributions3`](https://github.com/alexpghayes/distributions3) package provides a beginner-friendly and lightweight interface to probability distributions. It allows to create distribution objects in the S3 paradigm that are essentially data frames of parameters, for which standard methods are available: e.g., evaluation of the probability density, cumulative distribution, and quantile functions, as well as random samples. It has been designed such that it can be employed in introductory statistics and probability courses. By not only providing objects for a single distribution but also for vectors of distributions, users can transition seamlessly to a representation of probabilistic forecasts from regression models such as GLM (generalized linear models), GAMLSS (generalized additive models for location, scale, and shape), etc. We show how the package can be used both in teaching and in applied statistical modeling, for interpreting fitted models, visualizing their goodness of fit (e.g., via the `topmodels` package), and assessing their performance (e.g., via the `scoringRules` package).
+The last several years have seen a renewed and concerted effort to incorporate network data into standard tools for regression analysis, and to make network-linked data legible to practicing scientists. Thus far, this literature has primarily developed tools to infer associative relationships between nodal covariates and network structure. In contrast, we augment a statistical model for network regression with counterfactual assumptions and show how causal effects on a network can be partitioned into a direct effect that is uninfluenced by the network, and an indirect effect that is induced by homophily. [slides](https://github.com/alexpghayes/2022-07-07-causal-network-regression-slides)
 
 ## past talks
 
+**`distributions3`: From basic probability to probabilistic regression**  
+2022-06-23, [UseR 2022](https://user2022.r-project.org/program/talks/#session-34-regression-models)  
+[Achim Zeileis](https://www.zeileis.org/), [Moritz Lang](https://moritzlang.org/) and Alex Hayes
+
+The [`distributions3`](https://github.com/alexpghayes/distributions3) package provides a beginner-friendly and lightweight interface to probability distributions. It allows to create distribution objects in the S3 paradigm that are essentially data frames of parameters, for which standard methods are available: e.g., evaluation of the probability density, cumulative distribution, and quantile functions, as well as random samples. It has been designed such that it can be employed in introductory statistics and probability courses. By not only providing objects for a single distribution but also for vectors of distributions, users can transition seamlessly to a representation of probabilistic forecasts from regression models such as GLM (generalized linear models), GAMLSS (generalized additive models for location, scale, and shape), etc. We show how the package can be used both in teaching and in applied statistical modeling, for interpreting fitted models, visualizing their goodness of fit (e.g., via the `topmodels` package), and assessing their performance (e.g., via the `scoringRules` package). [video](https://www.youtube.com/watch?v=rs7ha1F5S0k), [slides](https://www.zeileis.org/papers/useR-2022.pdf)
+
 **The Low Hanging Fruit of the Twitter Following Graph**  
-Alex Hayes and [Karl Rohe](https://pages.stat.wisc.edu/~karlrohe/index.html)
-2021-08-11, Joint Statistical Meetings
+2021-08-11, Joint Statistical Meetings  
+Alex Hayes and [Karl Rohe](https://pages.stat.wisc.edu/~karlrohe/index.html)  
 
 In recent applied work on the Twitter media ecosystem, we have found that Twitter metadata (such as follows, likes, quotes, retweets, mentions, etc) is often more informative than the actual content of tweets themselves. The metadata, in some sense, is the right data to use for many inference tasks. In particular, we find that embedding the Twitter following graph is highly informative. However, collecting the following graph is rather challenging due to API rate limits, and storing graphs can also be challenging. We present some computational infrastructure to make access and storage of this high signal data more straightforward, and suggest that research progress would be well served by an increased focus on instrumentation. [slides](https://github.com/alexpghayes/JSM2021)
 
@@ -66,12 +71,4 @@ Broom is a package that converts statistical objects into tibbles. This consiste
 2018-02-22, Rice DataSci club  
 [slides](https://github.com/alexpghayes/rice-data-sci-first-r-package-workshop)
 
-**COMP 540 Prediction Project Advice**  
-2018-03-09, Rice University  
-[slides](https://github.com/alexpghayes/comp540-kaggle-project-advice)
-
-**Super Learner**  
-2018-01-23, Allen Lab Group Journal Club  
-[slides](https://github.com/alexpghayes/allen-journal-club-superlearner-slides)
-
-Last updated on 2022-06-14.
+Last updated on 2022-06-27.

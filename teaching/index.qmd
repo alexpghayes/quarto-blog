@@ -35,10 +35,10 @@ Outside of academic settings, I used to devote a fair amount of time to teaching
 
 ## teaching material
 
-If you are teaching an introductory statistics class in the classic "barrage of hypothesis tests" tradition, you may find my [cheatsheet on common hypothesis tests](https://github.com/alexpghayes/classic-stats-formulas) useful. I also wrote [`distributions3`](https://alexpghayes.github.io/distributions3/dev/) to be an approachable set of tools for manipulating probability distributions for intro stat students. The package [vignettes](https://alexpghayes.github.io/distributions3/dev/articles/) are designed to walk students intro stat courses though many classic hypothesis tests as well.
+If you are teaching an introductory statistics class in the "barrage of hypothesis tests" tradition, you may find my [cheatsheet on common hypothesis tests](https://github.com/alexpghayes/classic-stats-formulas) useful. I also wrote [`distributions3`](https://alexpghayes.github.io/distributions3/dev/) to be an approachable set of tools for manipulating probability distributions for intro stat students. The package [vignettes](https://alexpghayes.github.io/distributions3/dev/articles/) are designed to walk students intro stat courses though many classic hypothesis tests as well.
 
 ## mentoring
 
 - [Nathan Kolbow](https://wid.wisc.edu/people/nathan-kolbow/) worked with me as a undergraduate RA to develop the [`neocache`](https://github.com/alexpghayes/neocache) data collection infrastructure. He is now a PhD student in Biostatistics at UW-Madison.
 
-Last updated 2022-04-28.
+Last updated 2022-06-28.
