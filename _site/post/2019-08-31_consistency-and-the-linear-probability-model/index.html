@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-0.9.257">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -170,7 +170,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 31, 2019</p>
+        <p class="date">2019-08-31</p>
       </div>
     </div>
       
@@ -208,9 +208,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
 <p>A while back Twitter once again lost its collective mind and decided to rehash the logistic regression versus linear probability model debate for the umpteenth time. The genesis for this new round of chaos was <span class="citation" data-cites="gomila_logistic_2019">Gomila (<a href="#ref-gomila_logistic_2019" role="doc-biblioref">2019</a>)</span>, a pre-print by Robin Gomila, a grad student in pyschology at Princeton<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. You can get a taste of the discussion in the replies to the announcement:</p>
-<blockquote class="twitter-tweet blockquote" data-cards="hidden" align="center" data-width="550" data-lang="en" data-theme="light"><p lang="en" dir="ltr">When the outcome is binary: logistic or linear?<br>Preprint is ready, feedback much welcome!!<a href="https://t.co/2BmaytDrY5">https://t.co/2BmaytDrY5</a> <a href="https://t.co/ETEzSQN7Qy">pic.twitter.com/ETEzSQN7Qy</a></p>— Robin Gomila (@RobinGomila) <a href="https://twitter.com/RobinGomila/status/1149419090693513216?ref_src=twsrc%5Etfw">July 11, 2019</a></blockquote>
-<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+<p>{{&lt; tweet id=1149419090693513216 align=center hide_media=true &gt;}}</p>
 <p>So I decided to learn some more about the linear probability model (LPM), which has been on my todo list since Michael Weylandt suggested it as an example for a paper I’m working on. In this post I’ll introduce the LPM, and then spend a bunch of time discussing when OLS is a consistent estimator.</p>
 <p><strong>Update</strong>: I turned this blog post into <a href="https://github.com/alexpghayes/linear-probability-model">somewhat flippant, meme-heavy slides</a>.</p>
 </section>
@@ -445,7 +443,7 @@ Wooldridge, Jeffrey M. 2001. <em>Econometric <span>Analysis</span> of <span>Cros
 <li id="fn6" role="doc-endnote"><p>Gomila also makes an argument against using <span class="math inline">\(\hat \beta_\text{logistic MLE}\)</span> based on some papers that show it handles interactions poorly. This sort of misses the point in my opinion. GLMs are already ridiculous models because nothing is actually linear. Maybe linear main effects won’t kill you. Modeling interactions with linear terms, however, amounts to fitting global hyperplanes, which is just bonkers. Interactions are almost always local, not global. I am skeptical of the “interactions don’t work well in logistic regression” claim, because of course they don’t, linear interactions never work and there’s no reason to expect they should. Everybody should be fitting GAMs, thank you and good night.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<script type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
   const anchorJS = new window.AnchorJS();
@@ -466,10 +464,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.blur();
     // flash "checked"
     button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
     setTimeout(function() {
-      button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection

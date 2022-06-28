@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-0.9.257">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -169,7 +169,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 6, 2020</p>
+        <p class="date">2020-01-06</p>
       </div>
     </div>
       
@@ -377,8 +377,7 @@ Y_i^* = f(X_i) + \varepsilon_i^*.
     \frac 2n \cdot \sum_{i=1}^n \mathrm{Cov} \left( \widehat Y_i, Y_i \right)
   }_\text{optimism}
 \end{align}
-\]</span></p>
-<p>This relationship holds for most important loss functions. It means tells us that test error, or generalization error, is almost always higher than in-sample error evaluated on the training set. We call the amount by which the training error underestimates the test error the optimism; the more optimism, the greater the discrepancy between in-sample and out-of-sample error.</p>
+\]</span> This relationship holds for most important loss functions. It means tells us that test error, or generalization error, is almost always higher than in-sample error evaluated on the training set. We call the amount by which the training error underestimates the test error the optimism; the more optimism, the greater the discrepancy between in-sample and out-of-sample error.</p>
 <p>We’ll discuss the implications the train-test error relationship more in a moment, but first let’s prove it. Feel free to skip the proof, although it relies only on basic properties of the expectation and variance.</p>
 <p><strong>Proof</strong>. We’ll follow the proof in <a href="http://www.stat.cmu.edu/~larry/=stat401/lecture-21.pdf">these course notes</a> by Larry Wasserman. Consider the <span class="math inline">\(i^{th}\)</span> observation. Then</p>
 <p><span class="math display">\[
@@ -538,7 +537,7 @@ for (i in 1:3) {
 <li id="fn7" role="doc-endnote"><p>I highly recommend reading anything by Jing Lei.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<script type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
   const anchorJS = new window.AnchorJS();
@@ -559,10 +558,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.blur();
     // flash "checked"
     button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
     setTimeout(function() {
-      button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection

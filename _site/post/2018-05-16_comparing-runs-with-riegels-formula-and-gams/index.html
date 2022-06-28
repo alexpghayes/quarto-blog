@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-0.9.257">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -171,7 +171,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 16, 2018</p>
+        <p class="date">2018-05-16</p>
       </div>
     </div>
       
@@ -246,8 +246,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <section id="changing-fitness-over-time-with-gams" class="level2">
 <h2 class="anchored" data-anchor-id="changing-fitness-over-time-with-gams">Changing fitness over time with GAMs</h2>
 <p>Now I use a Generalized Additive Model to understand how my fitness changes over time, following <span class="citation" data-cites="simpson">Simpson (<a href="#ref-simpson" role="doc-biblioref">2018</a>)</span>. Using <code>mgcv</code> I fit a model of the form:</p>
-<p><span class="math display">\[\mathrm{riegel\_5k\_time}_i = f(t_i) + \varepsilon_i \qquad \varepsilon_i \sim \mathrm{Normal}(0, \sigma^2)\]</span></p>
-<p>where <span class="math inline">\(t_i\)</span> is the number of days since my first run and <span class="math inline">\(f\)</span> is a smooth function. I also fit a model of the same form but with additional continuous autoregressive (1) structure in case there is residual autocorrelation in the time series after fitting the model.</p>
+<p><span class="math display">\[\mathrm{riegel\_5k\_time}_i = f(t_i) + \varepsilon_i \qquad \varepsilon_i \sim \mathrm{Normal}(0, \sigma^2)\]</span> where <span class="math inline">\(t_i\)</span> is the number of days since my first run and <span class="math inline">\(f\)</span> is a smooth function. I also fit a model of the same form but with additional continuous autoregressive (1) structure in case there is residual autocorrelation in the time series after fitting the model.</p>
 <p>Both models fit the data well, but the CAR(1) structure turns out to be unnecessary. We briefly inspect the original model:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -321,7 +320,7 @@ Vickers, Andrew J, and Emily A Vertosick. 2016. <span>“An Empirical Study of R
 <li id="fn4" role="doc-endnote"><p>Houston is totally flat so I ignore the effect of hills on my runs. If you live in a hilly place you probably want to use a grade adjusted speed. Here’s a <a href="https://medium.com/strava-engineering/improving-grade-adjusted-pace-b9a2a332a5dc">post</a> by the Strava team on calculating grade adjusted pace, although it’s not enough to recreate their calculation. References to literature on an established way to do this appreciated.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<script type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
   const anchorJS = new window.AnchorJS();
@@ -342,10 +341,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.blur();
     // flash "checked"
     button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
     setTimeout(function() {
-      button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-0.9.257">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -217,7 +217,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 28, 2021</p>
+        <p class="date">2021-03-28</p>
       </div>
     </div>
       
@@ -264,7 +264,6 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display column-body-outset" data-execution_count="1">
-
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -527,7 +526,6 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>model_grid <span class="op">=</span> pd.DataFrame(param_grid)</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display column-body-outset" data-execution_count="4">
-
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -593,7 +591,6 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display column-body-outset" data-execution_count="5">
-
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -672,7 +669,6 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display column-body-outset" data-execution_count="6">
-
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -800,7 +796,6 @@ dtype: object</code></pre>
 <span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>fancy_model_grid <span class="op">=</span> pd.DataFrame(fancy_param_grid)</span>
 <span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>fancy_model_grid.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -911,7 +906,7 @@ dtype: object</code></pre>
 <li id="fn1" role="doc-endnote"><p><strong>Aside about <code>tidymodels</code></strong>: Early work in the <code>tidymodels</code> ecosystem focused on low level infrastructure that facilitated many-models workflows. I still use this infrastructure a lot, especially combined with <a href="https://docs.ropensci.org/targets/"><code>targets</code></a>, which is a <code>make</code> variant for R that plays nicely with modeling workflows, and <code>tidymodels</code> inspired much of the approach I took in the post above. However, current work in the <code>tidymodels</code> ecosystem focuses on high level infrastructure for tuning hyperparameters in predictive modeling scenarios. This mixture of general purpose low level infrastructure and more prediction specific high level infrastructure leads to some interesting discussions like <a href="https://community.rstudio.com/t/mixed-effect-models-and-anova-in-the-tidyverse/48029">this one</a>, where someone asks how to use <code>tidymodels</code> to analyze designed experiments, which <code>tidymodels</code> <a href="https://community.rstudio.com/t/mixed-effect-models-and-anova-in-the-tidyverse/48029/7?u=alexpghayes">doesn’t really provide any tools for</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<script type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
   const anchorJS = new window.AnchorJS();
@@ -932,10 +927,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.blur();
     // flash "checked"
     button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
     setTimeout(function() {
-      button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection

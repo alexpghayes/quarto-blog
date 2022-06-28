@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-0.9.257">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -180,7 +180,30 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 
+
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+     </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
 <div class="list quarto-listing-default">
 <div class="quarto-post image-right" data-index="0" data-categories="python,workflow,tidymodels" data-listing-date-sort="1616907600000" data-listing-file-modified-sort="1651262623223" data-listing-reading-time-sort="12.835">
 <div class="body">
@@ -192,7 +215,7 @@ many models workflows in python ii
 <p>a tidymodels workflow in python using list columns in pandas dataframes, now with hyperparameter sweep and parallelism</p>
 </div>
 <div class="listing-description">
-In this followup to my earlier post on modeling workflows in Python, I demonstrate how to integrate sample splitting, parallel processing, exception handling and caching into many-models workflows. I also discuss some differences between exploration/inference-centric workflows and tuning-centric workflows.
+<p>In this followup to <span>my earlier post</span> on modeling workflows in Python, I demonstrate how to integrate sample splitting, parallel processing, exception handling and caching into many-models workflows. I also discuss some differences between exploration/inference-centric workflows and tuning-centric workflows.</p>
 </div>
 </a>
 </div>
@@ -217,7 +240,7 @@ many models workflows in python i
 <p>a tidymodels workflow in python using list columns in pandas dataframes</p>
 </div>
 <div class="listing-description">
-This summer I worked on my first substantial research project in Python. I’ve used Python for a number of small projects before, but this was the first time that it was important for me to have an efficient workflow for working with many models at once. In R, I spend almost all of my time using a ‘many models’ workflow that leverages list-columns in <code>tibble</code>s and a hefty amount of <code>tidyverse</code> manipulation. It’s taken me a while to find a similar workflow in Python that I like, and so I’m documenting it here for myself and other parties who might benefit.
+<p>This summer I worked on my first substantial research project in Python. I’ve used Python for a number of small projects before, but this was the first time that it was important for me to have an efficient workflow for working with many models at once. In R, I spend almost all of my time using a ‘many models’ workflow that leverages list-columns in <code>tibble</code>s and a hefty amount of <code>tidyverse</code> manipulation. It’s taken me a while to find a similar workflow in Python that I like, and so I’m documenting it here for myself and other parties who might benefit.</p>
 </div>
 </a>
 </div>
@@ -241,10 +264,10 @@ using the data twice
 <div class="listing-subtitle">
 <p>my best attempt at explaining why frequentism is about sampling procedures</p>
 </div>
-<div class="listing-description">
-Berna Devezer, Danielle Navarro, Joachim Vandekerckhove, and Erkan Ozge Buzbas recently posted a pre-print, <span class="citation" data-cites="devezer_case_2020">Devezer et al. (2020)</span>, responding to various claims within the open science community<sup>1</sup>. In particular, they explore the following claims:
+</a><div class="listing-description"><a href="./post/2020-05-04_using-the-data-twice/index.html">
+</a><p><a href="./post/2020-05-04_using-the-data-twice/index.html">Berna Devezer, Danielle Navarro, Joachim Vandekerckhove, and Erkan Ozge Buzbas recently posted a <span>pre-print</span>, <span class="citation" data-cites="devezer_case_2020">@devezer_case_2020</span>, responding to various claims within the open science community</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. In particular, they explore the following claims:</p>
 </div>
-</a>
+
 </div>
 <div class="metadata">
 <a href="./post/2020-05-04_using-the-data-twice/index.html">
@@ -267,7 +290,7 @@ synthetic control: elon’s tweet tanked tesla’s stock
 <p>a terse analysis of tesla stock prices and how one of elon’s tweets moves them</p>
 </div>
 <div class="listing-description">
-At 2020-05-01 15:11:26 UTC Elon Musk tweeted
+<p>At 2020-05-01 15:11:26 UTC Elon Musk tweeted</p>
 </div>
 </a>
 </div>
@@ -292,7 +315,7 @@ to transform or not to transform
 <p>a likelihood ratio test to check if transforming your data leads to better model fit</p>
 </div>
 <div class="listing-description">
-You may have heard that it is impossible to compare models when the outcome has been transformed in one model but not the other. This is not the case. Models fit to transformed data implicitly model the original data as well as the transformed data, and it is relatively straightforward to calculate the corresponding likelihoods. In this post, I’ll show you how to calculate these induced likelihoods. This will allow you to compare models fit to transformed data with models fit to the original, untransformed data.
+<p>You may have heard that it is impossible to compare models when the outcome has been transformed in one model but not the other. This is not the case. Models fit to transformed data implicitly model the original data as well as the transformed data, and it is relatively straightforward to calculate the corresponding likelihoods. In this post, I’ll show you how to calculate these induced likelihoods. This will allow you to compare models fit to transformed data with models fit to the original, untransformed data.</p>
 </div>
 </a>
 </div>
@@ -317,7 +340,7 @@ overfitting: a guided tour
 <p>fleshing out intuition about structure in random processes beyond the standard bias-variance decomposition</p>
 </div>
 <div class="listing-description">
-This post introduces overfitting, describes how overfitting influences both prediction and inference problems, provides supervised and unsupervised examples of overfitting, and presents a fundamental relationship between train and test error. The goal is to provide some additional intuition beyond material covered in introductory machine learning resources.
+<p>This post introduces overfitting, describes how overfitting influences both prediction and inference problems, provides supervised and unsupervised examples of overfitting, and presents a fundamental relationship between train and test error. The goal is to provide some additional intuition beyond material covered in introductory machine learning resources.</p>
 </div>
 </a>
 </div>
@@ -342,7 +365,7 @@ consistency and the linear probability model
 <p>an explainer about ordinary least squares regression and when it is an acceptable estimator</p>
 </div>
 <div class="listing-description">
-A while back Twitter once again lost its collective mind and decided to rehash the logistic regression versus linear probability model debate for the umpteenth time. The genesis for this new round of chaos was <span class="citation" data-cites="gomila_logistic_2019">Gomila (2019)</span>, a pre-print by Robin Gomila, a grad student in pyschology at Princeton<sup>1</sup>. You can get a taste of the discussion in the replies to the announcement:
+<p>A while back Twitter once again lost its collective mind and decided to rehash the logistic regression versus linear probability model debate for the umpteenth time. The genesis for this new round of chaos was <span class="citation" data-cites="gomila_logistic_2019">@gomila_logistic_2019</span>, a pre-print by Robin Gomila, a grad student in pyschology at Princeton[^reached_out]. You can get a taste of the discussion in the replies to the announcement:</p>
 </div>
 </a>
 </div>
@@ -367,7 +390,7 @@ an annotated bibliography on stochastic blockmodels
 <p>some pointers to papers that were helpful when i got started in spectral network analysis, a woefully incomplete list</p>
 </div>
 <div class="listing-description">
-I’ve been reading a lot of papers on network analysis recently. I thought I’d write down some takeaways and point out papers that I’ve found helpful. This collection of papers is centered around the stochastic blockmodel, and is intended to be introductory rather than comprehensive. I’ve included a few papers with other miscellaneous tidbits of interest.
+<p>I’ve been reading a lot of papers on network analysis recently. I thought I’d write down some takeaways and point out papers that I’ve found helpful. This collection of papers is centered around the stochastic blockmodel, and is intended to be introductory rather than comprehensive. I’ve included a few papers with other miscellaneous tidbits of interest.</p>
 </div>
 </a>
 </div>
@@ -392,7 +415,7 @@ testing statistical software
 <p>an exploration of what it would take to meaningfully probe the correctness of computations in modeling software</p>
 </div>
 <div class="listing-description">
-Recently I’ve been implementing and attempting to extend some computationally intense methods. These methods are from papers published in the last several years, and haven’t made their way into mainstream software libraries yet. So I’ve been spending a lot of time reading research code, and I’d like to share what I’ve learned.
+<p>Recently I’ve been implementing and attempting to extend some computationally intense methods. These methods are from papers published in the last several years, and haven’t made their way into mainstream software libraries yet. So I’ve been spending a lot of time reading research code, and I’d like to share what I’ve learned.</p>
 </div>
 </a>
 </div>
@@ -417,8 +440,7 @@ type stable estimation
 <p>my thesis about why modeling software is an enormous mess</p>
 </div>
 <div class="listing-description">
-
-This post discusses how the mathematical objects we use in formal data modeling are represented in statistical software. First I introduce these objects, then I argue that each object should be represented by a distinct type. Next I present three principles to ensure the type system is statistically meaningful. These principles suggest that existing modeling software has an overly crude type system. I believe a finer type system in statistical packages would result in more intuitive interfaces while increasing extensibility and reducing possibilities for methodological errors.
+<p>This post discusses how the mathematical objects we use in formal data modeling are represented in statistical software. First I introduce these objects, then I argue that each object should be represented by a distinct type. Next I present three principles to ensure the type system is statistically meaningful. These principles suggest that existing modeling software has an overly crude type system. I believe a finer type system in statistical packages would result in more intuitive interfaces while increasing extensibility and reducing possibilities for methodological errors.</p>
 </div>
 </a>
 </div>
@@ -443,7 +465,7 @@ implementing the super learner with tidymodels
 <p>a demonstration of low levels tidymodels infrastructure to build sophisticated tools in a hurry</p>
 </div>
 <div class="listing-description">
-In this post I demonstrate how to implement the Super Learner using <code>tidymodels</code> infrastructure. The Super Learner is an ensembling strategy that relies on cross-validation to determine how to combine predictions from many models. <code>tidymodels</code> provides low-level predictive modeling infrastructure that makes the implementation rather slick. The goal of this post is to show how you can use this infrastructure to build new methods with consistent, tidy behavior. You’ll get the most out of this post if you’ve used <code>rsample</code>, <code>recipes</code> and <code>parsnip</code> before and are comfortable working with list-columns.
+<p>In this post I demonstrate how to implement the Super Learner using <span><code>tidymodels</code></span> infrastructure. The Super Learner is an ensembling strategy that relies on cross-validation to determine how to combine predictions from many models. <code>tidymodels</code> provides low-level predictive modeling infrastructure that makes the implementation rather slick. The goal of this post is to show how you can use this infrastructure to build new methods with consistent, tidy behavior. You’ll get the most out of this post if you’ve used <span><code>rsample</code></span>, <span><code>recipes</code></span> and <span><code>parsnip</code></span> before and are comfortable working with list-columns.</p>
 </div>
 </a>
 </div>
@@ -468,7 +490,7 @@ overlapping confidence intervals: correcting bad intuition
 <p>some math to show that confidence interals are significantly different parameters can overlap</p>
 </div>
 <div class="listing-description">
-In this post I work through a recent homework exercise that illustrates why you shouldn’t compare means by checking for confidence interval overlap. I calculate the type I error rate of this procedure for a simple case. This reveals where our intuition goes wrong: namely, we can recover the confidence interval heuristic by confusing standard deviations and variances.
+<p>In this post I work through a recent homework exercise that illustrates why you shouldn’t compare means by checking for confidence interval overlap. I calculate the type I error rate of this procedure for a simple case. This reveals where our intuition goes wrong: namely, we can recover the confidence interval heuristic by confusing standard deviations and variances.</p>
 </div>
 </a>
 </div>
@@ -493,7 +515,7 @@ some things i’ve learned about stan
 <p>what i wish my mother had told me about sampling from posteriors</p>
 </div>
 <div class="listing-description">
-Yesterday, for the first time ever, I coded up a model in Stan and it actually did what I wanted. My current knowledge of Stan is, at best, nascent, but I’ll show you the process I went through to write my first Stan program, pointing out what I wish I’d known along the way.
+<p>Yesterday, for the first time ever, I coded up a model in Stan and it actually did what I wanted. My current knowledge of Stan is, at best, nascent, but I’ll show you the process I went through to write my first Stan program, pointing out what I wish I’d known along the way.</p>
 </div>
 </a>
 </div>
@@ -518,7 +540,7 @@ understanding multinomial regression with partial dependence plots
 <p>some intuition for multinomial regression’s initially intimidating functional form</p>
 </div>
 <div class="listing-description">
-This post assumes you are familiar with logistic regression and that you just fit your first or second multinomial logistic regression model. While there is an interpretation for the coefficients in a multinomial regression, that interpretation is relative to a base class, which may not be the most useful. Partial dependence plots are an alternative way to understand multinomial regression, and in fact can be used to understand any predictive model. This post explains what partial dependence plots are and how to create them using R.
+<p>This post assumes you are familiar with logistic regression and that you just fit your first or second multinomial logistic regression model. While there is an interpretation for the coefficients in a multinomial regression, that interpretation is relative to a base class, which may not be the most useful. Partial dependence plots are an alternative way to understand multinomial regression, and in fact can be used to understand any predictive model. This post explains what partial dependence plots are and how to create them using R.</p>
 </div>
 </a>
 </div>
@@ -543,7 +565,7 @@ a summer with rstudio
 <p>reflections on a great internship</p>
 </div>
 <div class="listing-description">
-Today is the last day of my summer internship with RStudio. This is the first year that RStudio has had an official internship program, and I couldn’t be happier to have been a part of it.
+<p>Today is the last day of my summer internship with <span>RStudio</span>. This is the first year that RStudio has had an official <span>internship program</span>, and I couldn’t be happier to have been a part of it.</p>
 </div>
 </a>
 </div>
@@ -568,7 +590,7 @@ speeding up GPX ingest: profiling, Rcpp and furrr
 <p>a demonstration of how to profile r code on a toy problem</p>
 </div>
 <div class="listing-description">
-This post is a casual case study in speeding up R code. I work through several iterations of a function to read and process GPS running data from Strava stored in the GPX format. Along the way I describe how to visualize code bottlenecks with <code>profvis</code> and briefly touch on fast compiled code with <code>Rcpp</code> and parallelization with <code>furrr</code>.
+<p>This post is a casual case study in speeding up R code. I work through several iterations of a function to read and process GPS running data from Strava stored in the GPX format. Along the way I describe how to visualize code bottlenecks with <code>profvis</code> and briefly touch on fast compiled code with <code>Rcpp</code> and parallelization with <code>furrr</code>.</p>
 </div>
 </a>
 </div>
@@ -593,7 +615,7 @@ comparing runs with riegel’s formula and gams
 <p>a quick analysis of my running fitness using splines</p>
 </div>
 <div class="listing-description">
-Runners often vary the distance and intensity of their workouts. In this post I demonstrate how to compare runs of different lengths using Riegel’s formula. The formula accurately describes the trade-off between run distance and average speed for aerobic runs up to about a half-marathon in length. Using my Strava data, I demonstrate how to use Riegel’s formula to measure the difficulty of runs on a standardized scale and briefly investigate how my fitness has changed over time with GAMs.
+<p>Runners often vary the distance and intensity of their workouts. In this post I demonstrate how to compare runs of different lengths using Riegel’s formula. The formula accurately describes the trade-off between run distance and average speed for aerobic runs up to about a half-marathon in length. Using my Strava data, I demonstrate how to use Riegel’s formula to measure the difficulty of runs on a standardized scale and briefly investigate how my fitness has changed over time with GAMs.</p>
 </div>
 </a>
 </div>
@@ -618,7 +640,7 @@ predictive performance via bootstrap variants
 <p>resampling based approaches to estimating the risk of a predictive model</p>
 </div>
 <div class="listing-description">
-When we build a predictive model, we are interested in how the model will perform on data it hasn’t seen before. If we have lots of data, we can split it into training and test sets to assess model performance. If we don’t have lots of data, it’s better to fit a model using all of the available data and to assess its predictive performance using resampling techniques. The bootstrap is one such resampling technique. This post discusses several variants of the bootstrap that are appropriate for estimating predictive performance.
+<p>When we build a predictive model, we are interested in how the model will perform on data it hasn’t seen before. If we have lots of data, we can split it into training and test sets to assess model performance. If we don’t have lots of data, it’s better to fit a model using all of the available data and to assess its predictive performance using resampling techniques. The bootstrap is one such resampling technique. This post discusses several variants of the bootstrap that are appropriate for estimating predictive performance.</p>
 </div>
 </a>
 </div>
@@ -643,7 +665,7 @@ numerical gradient checks
 <p>how to use a computer to check your derivative calculations</p>
 </div>
 <div class="listing-description">
-Suppose you have some loss function <span class="math inline">\(\mathcal{L}(\beta) : \mathbb{R}^n \to \mathbb{R}\)</span> you want to minimize with respect to some model parameters <span class="math inline">\(\beta\)</span>. You understand how gradient descent works and you have a correct implementation of <span class="math inline">\(\mathcal{L}\)</span> but aren’t sure if you took the gradient correctly or implemented it correctly in code.
+<p>Suppose you have some loss function <span class="math inline">\(\mathcal{L}(\beta) : \mathbb{R}^n \to \mathbb{R}\)</span> you want to minimize with respect to some model parameters <span class="math inline">\(\beta\)</span>. You understand how gradient descent works and you have a correct implementation of <span class="math inline">\(\mathcal{L}\)</span> but aren’t sure if you took the gradient correctly or implemented it correctly in code.</p>
 </div>
 </a>
 </div>
@@ -668,7 +690,7 @@ gentle tidy eval with examples
 <p>copy-pasteable example code for programming with the tidyverse.</p>
 </div>
 <div class="listing-description">
-I’ve been using the tidy eval framework introduced with <code>dplyr 0.7</code> for about two months now, and it’s time for an update to my original post on tidy eval. My goal is not to explain tidy eval to you, but rather to show you some simple examples that you can easily generalize from.
+<p>I’ve been using the tidy eval framework introduced with <code>dplyr 0.7</code> for about two months now, and it’s time for an update to my original post on tidy eval. My goal is not to explain tidy eval to you, but rather to show you some simple examples that you can easily generalize from.</p>
 </div>
 </a>
 </div>
@@ -687,8 +709,13 @@ Aug 7, 2017
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div><div id="quarto-appendix" class="default"><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1" role="doc-endnote"><p>See also the classics <span class="citation" data-cites="baumgaertner_model-centric_2018">@baumgaertner_model-centric_2018</span> and <span class="citation" data-cites="navarro_between_2018">@navarro_between_2018</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
   const anchorJS = new window.AnchorJS();
@@ -709,10 +736,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.blur();
     // flash "checked"
     button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
     setTimeout(function() {
-      button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection

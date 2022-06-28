@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-0.9.257">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -170,7 +170,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 31, 2022</p>
+        <p class="date">2022-05-31</p>
       </div>
     </div>
       
@@ -212,8 +212,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <p>To be a little bit more concrete about the way frequentist estimation works, suppose we want to do inference for <span class="math inline">\(\mathbb E(X) = q(\theta)\)</span> for <span class="math inline">\(X_1, ..., X_n \sim F_\theta\)</span> where <span class="math inline">\(F_\theta\)</span> is some distribution with parameters <span class="math inline">\(\theta \in \Theta\)</span> with at least four finite moments, and the <span class="math inline">\(X_i\)</span> are independent. <span class="math inline">\(q\)</span> is just some function of the <span class="math inline">\(\theta\)</span> such that <span class="math inline">\(q(\theta)\)</span> is <span class="math inline">\(\mathbb E(X)\)</span> for every possible <span class="math inline">\(\theta\)</span>. Then we consider the estimator (statistic)</p>
 <p><span class="math display">\[
 \bar X = T(X) = \frac 1n \sum_{i=1}^N X_i
-\]</span></p>
-<p>and apply theorems from probability to determine that <span class="math inline">\(\bar X\)</span> converges to a normal distribution centered on <span class="math inline">\(\mathbb E(X)\)</span>, regardless of the value of <span class="math inline">\(\theta\)</span>. We can then use this asymptotic result to get an approximate finite sample confidence interval for <span class="math inline">\(\mathbb E(X)\)</span>.</p>
+\]</span> and apply theorems from probability to determine that <span class="math inline">\(\bar X\)</span> converges to a normal distribution centered on <span class="math inline">\(\mathbb E(X)\)</span>, regardless of the value of <span class="math inline">\(\theta\)</span>. We can then use this asymptotic result to get an approximate finite sample confidence interval for <span class="math inline">\(\mathbb E(X)\)</span>.</p>
 <p>Now one thing that is tricky here is the interpretation of these results. A 95 percent confidence interval for <span class="math inline">\(\mathbb E(X)\)</span> does not contain <span class="math inline">\(\mathbb E(X)\)</span> with probability 0.95, because <span class="math inline">\(\mathbb E(X)\)</span> is some fixed function of <span class="math inline">\(\theta\)</span> and is either an element or not an element of any set with probability one (or zero). Unfortunately, the statistics community has decided to provide the following de-facto interpretation of confidence intervals:</p>
 <blockquote class="blockquote">
 <p>If we “repeated the experiment” and obtained <span class="math inline">\(n\)</span> realizations from <span class="math inline">\(F_\theta\)</span>, then on average <span class="math inline">\(0.95 \cdot n\)</span> intervals will contain the true value <span class="math inline">\(\mathbb E(X)\)</span>.</p>
@@ -272,7 +271,7 @@ Seaman, John W., John W. Seaman, and James D. Stamey. 2012. <span>“Hidden <spa
 Stark, Philip B. 2015. <span>“Constraints Versus <span>Priors</span>.”</span> <em>SIAM/ASA Journal on Uncertainty Quantification</em> 3 (1): 586–98. <a href="https://doi.org/10.1137/130920721">https://doi.org/10.1137/130920721</a>.
 </div>
 </div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<script type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
   const anchorJS = new window.AnchorJS();
@@ -293,10 +292,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.blur();
     // flash "checked"
     button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
     setTimeout(function() {
-      button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection

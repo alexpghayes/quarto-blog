@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-0.9.257">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -213,7 +213,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 23, 2018</p>
+        <p class="date">2018-10-23</p>
       </div>
     </div>
       
@@ -274,8 +274,7 @@ $ Species      &lt;fct&gt; setosa, setosa, setosa, setosa, setosa, setosa, setos
 <p>Recall that the probability of an event <span class="math inline">\(y = 1\)</span> given data <span class="math inline">\(x \in \mathbb R^p\)</span> in a logistic regression model is:</p>
 <p><span class="math display">\[
 P(y = 1|x) = {1 \over 1 + \exp(-\beta^T x)}
-\]</span></p>
-<p>where <span class="math inline">\(\beta \in \mathbb R^p\)</span> is a coefficient vector. Multinomial logistic regression generalizes this relation by assuming that we have <span class="math inline">\(y \in \{1, 2, ..., K\}\)</span>. Then we have coefficient vectors <span class="math inline">\(\beta_1, ..., \beta_{k-1}\)</span> such that</p>
+\]</span> where <span class="math inline">\(\beta \in \mathbb R^p\)</span> is a coefficient vector. Multinomial logistic regression generalizes this relation by assuming that we have <span class="math inline">\(y \in \{1, 2, ..., K\}\)</span>. Then we have coefficient vectors <span class="math inline">\(\beta_1, ..., \beta_{k-1}\)</span> such that</p>
 <p><span class="math display">\[
 P(y = k|x) = {\exp(\beta_k^T x) \over 1 + \sum_{k=1}^{K - 1} \exp(\beta_k^T x)}
 \]</span></p>
@@ -482,7 +481,7 @@ AIC: 31.89973 </code></pre>
 <li id="fn2" role="doc-endnote"><p>At one point I began wondering how to get a small but representative subset of <span class="math inline">\(x_c\)</span>, which lead me down the rabbit hole of sampling from convex sets (for this problem I was imagining using the convex hulls of <span class="math inline">\(x_c\)</span>). There’s an interesting observation that you can use the Dirichlet distribution for this in an <a href="https://stat.ethz.ch/pipermail/r-help/2007-March/128299.html">old R-help thread</a>. Then I stumbled across <a href="http://sci-hub.tw/https://www.tandfonline.com/doi/abs/10.1080/15326349808807500">hit and run samplers</a>, which are intuitively satisfying, and finally the <a href="https://github.com/andyyao95/walkr"><code>walkr</code></a> package and the more sophisticated methods it implements. I imagine sampling this is just a hard problem in high dimensions, but if anybody can show me how to convert the convex hull of a dataset calculated using <code>chull()</code> into a format suitable for <code>walkr</code>, please email me!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<script type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
   const anchorJS = new window.AnchorJS();
@@ -503,10 +502,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.blur();
     // flash "checked"
     button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
     setTimeout(function() {
-      button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection
