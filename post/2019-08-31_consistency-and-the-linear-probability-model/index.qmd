@@ -9,11 +9,7 @@ categories: [m estimation, math stat]
 
 ## Summary
 
-A while back Twitter once again lost its collective mind and decided to rehash the logistic regression versus linear probability model debate for the umpteenth time. The genesis for this new round of chaos was @gomila_logistic_2019, a pre-print by Robin Gomila, a grad student in pyschology at Princeton[^reached_out]. You can get a taste of the discussion in the replies to the announcement:
-
-[^reached_out]: Before writing this blog post, Robin kindly answered a number of my questions about his paper over Twitter DM. I also reached out to get his comments on a draft of this post before publishing it.
-
-{{< tweet id=1149419090693513216 align=center hide_media=true >}}
+A while back Twitter once again lost its collective mind and decided to rehash the logistic regression versus linear probability model debate for the umpteenth time. The genesis for this new round of chaos was @gomila_logistic_2019, a pre-print by Robin Gomila, a grad student in psychology at Princeton.
 
 So I decided to learn some more about the linear probability model (LPM), which has been on my todo list since Michael Weylandt suggested it as an example for a paper I'm working on. In this post I'll introduce the LPM, and then spend a bunch of time discussing when OLS is a consistent estimator.
 
@@ -168,7 +164,15 @@ So a sufficient condition for the consistency of OLS is that
   \mathbb{E}_F(Y | X_i) = X_i^T \beta_0.
 \end{align*}
 
-That is, if the expectation is linear in some model parameter $\beta_0$, OLS is consistent for that parameter. This sufficient condition is also a necessary condition if we make the very reasonable assumption that $X_i \neq 0$ for all $i$.
+That is, if the expectation is linear in some model parameter $\beta_0$, OLS is consistent for that parameter. If you are an economist you've probably seen this written as
+
+\begin{align*}
+  \mathbb{E}_F(\varepsilon_i | X_i) = 0,
+\end{align*}
+
+where we take $\varepsilon_i = Y_i - \mathbb{E}(Y_i | X_i)$.
+
+The sufficient condition is also a necessary condition, and if it is violated $\hat \beta_\text{OLS}$ will generally be asymptotically biased.
 
 Returning from our digression into M-estimation, we note the condition that $\mathbb{E}_F(Y | X_i) = X_i^T \beta_0$ is shockingly weaker than the assumption we used to derive $\hat \beta_\text{OLS}$, where we used the fact that $Y$ followed a Gaussian distribution. For consistency, we only need an assumption on the first moment of the distribution of $Y$, rather than the full parametric form of the model, which specifies *every* moment $\mathbb{E}(Y^2), \mathbb{E}(Y^3), \mathbb{E}(Y^4), ...$ of $Y$.
 
@@ -305,6 +309,6 @@ This post exists because I wasn't sure when $\hat \beta_\text{OLS}$ was a consis
 
 3. If you really care about getting efficient, consistent estimates under weak assumptions, you should be doing TMLE or Double ML or burning your CPU to a crisp with BART[^nonlinearity].
 
-[^nonlinearity]: Gomila also makes an argument against using $\hat \beta_\text{logistic MLE}$ based on some papers that show it handles interactions poorly. This sort of misses the point in my opinion. GLMs are already ridiculous models because nothing is actually linear. Maybe linear main effects won't kill you. Modeling interactions with linear terms, however, amounts to fitting global hyperplanes, which is just bonkers. Interactions are almost always local, not global. I am skeptical of the "interactions don't work well in logistic regression" claim, because of course they don't, linear interactions never work and there's no reason to expect they should. Everybody should be fitting GAMs, thank you and good night.
+[^nonlinearity]: Gomila also makes an argument against using $\hat \beta_\text{logistic MLE}$ based on some papers that show it handles interactions poorly. This sort of misses the forest for the trees in my opinion. GLMs are generically dubious models because few empirical conditional expectations are actually linear. And maybe linear main effects won't kill you, but modeling interactions with linear terms amounts to fitting global hyperplanes for interactions. This is undesirable because interactions are almost always local, not global. If you want to model interactions carefully, you need something flexible like a GAM or kernels or whatnot.
 
 Anyway, this concludes the "I taught myself about the linear probability model and hope to never mention it again" period of my life. I look forward to my mentions being a trash fire. 

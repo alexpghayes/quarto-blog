@@ -31,9 +31,7 @@ starwars %>%
   summarize(avg_mass = mean(!!mass))    # use single symbol with !!
 ```
 
-The usage `mass <- rlang::sym("mass")` is Hadley approved:
-
-{{< tweet id=885993307968593920 hide_thread=true align=center >}}
+The usage `mass <- rlang::sym("mass")` is [Hadley approved](https://twitter.com/hadleywickham/status/885993307968593920):
 
 I believe it is also the current tidyverse code style standard. We use `rlang::sym` and `rlang::syms` identically inside functions.
 
