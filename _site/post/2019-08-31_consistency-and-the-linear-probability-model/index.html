@@ -207,8 +207,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>A while back Twitter once again lost its collective mind and decided to rehash the logistic regression versus linear probability model debate for the umpteenth time. The genesis for this new round of chaos was <span class="citation" data-cites="gomila_logistic_2019">Gomila (<a href="#ref-gomila_logistic_2019" role="doc-biblioref">2019</a>)</span>, a pre-print by Robin Gomila, a grad student in pyschology at Princeton<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. You can get a taste of the discussion in the replies to the announcement:</p>
-<p>{{&lt; tweet id=1149419090693513216 align=center hide_media=true &gt;}}</p>
+<p>A while back Twitter once again lost its collective mind and decided to rehash the logistic regression versus linear probability model debate for the umpteenth time. The genesis for this new round of chaos was <span class="citation" data-cites="gomila_logistic_2019">Gomila (<a href="#ref-gomila_logistic_2019" role="doc-biblioref">2019</a>)</span>, a pre-print by Robin Gomila, a grad student in psychology at Princeton.</p>
 <p>So I decided to learn some more about the linear probability model (LPM), which has been on my todo list since Michael Weylandt suggested it as an example for a paper I’m working on. In this post I’ll introduce the LPM, and then spend a bunch of time discussing when OLS is a consistent estimator.</p>
 <p><strong>Update</strong>: I turned this blog post into <a href="https://github.com/alexpghayes/linear-probability-model">somewhat flippant, meme-heavy slides</a>.</p>
 </section>
@@ -276,7 +275,7 @@ Y_i | X_i &amp;\sim \mathrm{Normal}(X_i \beta, \sigma^2)
 <section id="what-if-logistic-regression-is-the-true-model" class="level2">
 <h2 class="anchored" data-anchor-id="what-if-logistic-regression-is-the-true-model">What if logistic regression is the true model?</h2>
 <p>Another reasonable question is: what happens to <span class="math inline">\(\hat \beta_\text{OLS}\)</span> under a binomial GLM? The story here is pretty much the same: <span class="math inline">\(\hat \beta_\text{OLS}\)</span> is not consistent for <span class="math inline">\(\beta\)</span>, but it <a href="https://www.brodrigues.co/blog/2019-08-14-lpm/">often does a decent job</a> of estimating <span class="math inline">\(\mathbb{E}(Y|X)\)</span> anyway <span class="citation" data-cites="battey_linear_2019 cox_regression_1958">(<a href="#ref-battey_linear_2019" role="doc-biblioref">Battey, Cox, and Jackson 2019</a>; <a href="#ref-cox_regression_1958" role="doc-biblioref">Cox 1958</a>)</span>.</p>
-<p>The intuition behind this comes from M-estimation<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, which we digress into momentarily. The idea is to observe that <span class="math inline">\(\hat \beta_\text{OLS}\)</span> is an M-estimator. To see this, recall that OLS is based on minimizing</p>
+<p>The intuition behind this comes from M-estimation<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, which we digress into momentarily. The idea is to observe that <span class="math inline">\(\hat \beta_\text{OLS}\)</span> is an M-estimator. To see this, recall that OLS is based on minimizing</p>
 <p><span class="math display">\[\begin{align*}
   \mathcal{L}(X, Y, \beta) = \frac 12 \Vert Y - X \beta \Vert_2^2
 \end{align*}\]</span></p>
@@ -300,22 +299,27 @@ Y_i | X_i &amp;\sim \mathrm{Normal}(X_i \beta, \sigma^2)
 <p><span class="math display">\[\begin{align*}
   \mathbb{E}_F(Y | X_i) = X_i^T \beta_0.
 \end{align*}\]</span></p>
-<p>That is, if the expectation is linear in some model parameter <span class="math inline">\(\beta_0\)</span>, OLS is consistent for that parameter. This sufficient condition is also a necessary condition if we make the very reasonable assumption that <span class="math inline">\(X_i \neq 0\)</span> for all <span class="math inline">\(i\)</span>.</p>
+<p>That is, if the expectation is linear in some model parameter <span class="math inline">\(\beta_0\)</span>, OLS is consistent for that parameter. If you are an economist you’ve probably seen this written as</p>
+<p><span class="math display">\[\begin{align*}
+  \mathbb{E}_F(\varepsilon_i | X_i) = 0,
+\end{align*}\]</span></p>
+<p>where we take <span class="math inline">\(\varepsilon_i = Y_i - \mathbb{E}(Y_i | X_i)\)</span>.</p>
+<p>The sufficient condition is also a necessary condition, and if it is violated <span class="math inline">\(\hat \beta_\text{OLS}\)</span> will generally be asymptotically biased.</p>
 <p>Returning from our digression into M-estimation, we note the condition that <span class="math inline">\(\mathbb{E}_F(Y | X_i) = X_i^T \beta_0\)</span> is shockingly weaker than the assumption we used to derive <span class="math inline">\(\hat \beta_\text{OLS}\)</span>, where we used the fact that <span class="math inline">\(Y\)</span> followed a Gaussian distribution. For consistency, we only need an assumption on the first moment of the distribution of <span class="math inline">\(Y\)</span>, rather than the full parametric form of the model, which specifies <em>every</em> moment <span class="math inline">\(\mathbb{E}(Y^2), \mathbb{E}(Y^3), \mathbb{E}(Y^4), ...\)</span> of <span class="math inline">\(Y\)</span>.</p>
-<p>Anyway, the expectation of a binomial GLM is <span class="math inline">\(\mathrm{logit}^{-1} (X_i \beta)\)</span>, and the expectation of the LPM is <span class="math inline">\(\min(1, \max(0, X_i \beta))\)</span>. For certain <span class="math inline">\(X_i\)</span> and <span class="math inline">\(\beta\)</span>, these expectations are very close to <span class="math inline">\(X_i \beta\)</span>. In these cases, estimates for <span class="math inline">\(\mathbb{E}(Y|X)\)</span> based on <span class="math inline">\(\hat \beta_\text{OLS}\)</span> will do well<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>Anyway, the expectation of a binomial GLM is <span class="math inline">\(\mathrm{logit}^{-1} (X_i \beta)\)</span>, and the expectation of the LPM is <span class="math inline">\(\min(1, \max(0, X_i \beta))\)</span>. For certain <span class="math inline">\(X_i\)</span> and <span class="math inline">\(\beta\)</span>, these expectations are very close to <span class="math inline">\(X_i \beta\)</span>. In these cases, estimates for <span class="math inline">\(\mathbb{E}(Y|X)\)</span> based on <span class="math inline">\(\hat \beta_\text{OLS}\)</span> will do well<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <p>Looking at the expectations of the models, we can see they aren’t wildly different:</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Note that, under the LPM, <span class="math inline">\(\hat \beta_\text{OLS}\)</span> can give us good estimates for <span class="math inline">\(\beta\)</span>, but under logistic regression, we only get good estimates of <span class="math inline">\(\mathbb{E}(Y|X)\)</span><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<p>Note that, under the LPM, <span class="math inline">\(\hat \beta_\text{OLS}\)</span> can give us good estimates for <span class="math inline">\(\beta\)</span>, but under logistic regression, we only get good estimates of <span class="math inline">\(\mathbb{E}(Y|X)\)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 <p>So maybe don’t toss the LPM estimator out with the bath water. Sure, the thing is generally inconsistent and aesthetically offensive, but whatever, it works on occasion, and sometimes there will be other practical considerations that make this tradeoff reasonable.</p>
 </section>
 <section id="where-the-estimator-comes-from-doesnt-matter" class="level2">
 <h2 class="anchored" data-anchor-id="where-the-estimator-comes-from-doesnt-matter">Where the estimator comes from doesn’t matter</h2>
 <p>Bayes Twitter in particular had a number of fairly vocal LPM opponents, on the basis that <span class="math inline">\(\hat \beta_\text{OLS}\)</span> was derived under a model that can’t produce the observed data.</p>
-<p>This might seem like a dealbreaker, but it doesn’t bother me. Where the estimator comes from doesn’t actually matter. If it has nice properties given the assumptions you are willing to make, you should use it! Estimators derived under unrealistic models<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> often turn out to be good!</p>
+<p>This might seem like a dealbreaker, but it doesn’t bother me. Where the estimator comes from doesn’t actually matter. If it has nice properties given the assumptions you are willing to make, you should use it! Estimators derived under unrealistic models<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> often turn out to be good!</p>
 <p>In a bit more detail, here’s how I think of model checking:</p>
 <ol type="1">
 <li>There’s an estimand I want to know</li>
@@ -339,7 +343,7 @@ Y_i | X_i &amp;\sim \mathrm{Normal}(X_i \beta, \sigma^2)
 <ol type="1">
 <li><p>Properties of estimators are always with respect to models, and it’s hard to discuss which estimator is best if you don’t clarify modeling assumptions.</p></li>
 <li><p>If there are multiple reasonable estimators, fit them all. If they result in substantively different conclusions: congratulations! Your data is trash and you can move on to a new project!</p></li>
-<li><p>If you really care about getting efficient, consistent estimates under weak assumptions, you should be doing TMLE or Double ML or burning your CPU to a crisp with BART<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p></li>
+<li><p>If you really care about getting efficient, consistent estimates under weak assumptions, you should be doing TMLE or Double ML or burning your CPU to a crisp with BART<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p></li>
 </ol>
 <p>Anyway, this concludes the “I taught myself about the linear probability model and hope to never mention it again” period of my life. I look forward to my mentions being a trash fire.</p>
 
@@ -376,8 +380,7 @@ Wooldridge, Jeffrey M. 2001. <em>Econometric <span>Analysis</span> of <span>Cros
 </div></section><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1" role="doc-endnote"><p>Before writing this blog post, Robin kindly answered a number of my questions about his paper over Twitter DM. I also reached out to get his comments on a draft of this post before publishing it.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>An M-estimator <span class="math inline">\(\hat \theta\)</span> is a solution to</p>
+<li id="fn1" role="doc-endnote"><p>An M-estimator <span class="math inline">\(\hat \theta\)</span> is a solution to</p>
 <p><span class="math display">\[\begin{align*}
   \sum_{i=1}^n \psi(Y_i, \hat \theta) = 0
 \end{align*}\]</span></p>
@@ -398,8 +401,8 @@ Wooldridge, Jeffrey M. 2001. <em>Econometric <span>Analysis</span> of <span>Cros
   A(\hat \theta)^{-1} \cdot B(\hat \theta) \cdot \{ A(\hat \theta)^{-1} \}^T
 \rightarrow A(\theta_0)^{-1} \cdot B(\theta_0) \cdot \{ A(\theta_0)^{-1} \}^T
 \end{align*}\]</span></p>
-<p>so life is pretty great and we can get asymptotic estimates of uncertainty for <span class="math inline">\(\hat \theta\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>In a lot of experimental settings that compare categorical treatments, you fit a fully saturated model that allocates a full parameter to the mean of each combination of treatments. <span class="math inline">\(\hat \beta_\text{OLS}\)</span> is consistent in this setting under both logistic regression and the LPM.</p>
+<p>so life is pretty great and we can get asymptotic estimates of uncertainty for <span class="math inline">\(\hat \theta\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>In a lot of experimental settings that compare categorical treatments, you fit a fully saturated model that allocates a full parameter to the mean of each combination of treatments. <span class="math inline">\(\hat \beta_\text{OLS}\)</span> is consistent in this setting under both logistic regression and the LPM.</p>
 <p>Let’s prove this for logistic regression first. Suppose we have groups <span class="math inline">\(1, ..., k\)</span> and the data comes from a logistic regression model. We represent the groups in the model via one hot coding, omitting an intercept for identifability. That is, we assume</p>
 <p><span class="math display">\[\begin{align}
   P(Y = 1 | X) = \frac{1}{1 + \exp(-(\alpha_1 X_1 + ... + \alpha_k X_k))}
@@ -434,13 +437,13 @@ Wooldridge, Jeffrey M. 2001. <em>Econometric <span>Analysis</span> of <span>Cros
   &amp;= \beta_1 X_1 + ... + \beta_k X_k \\
   &amp;= X^T \beta
 \end{align}\]</span></p>
-<p>Thus <span class="math inline">\(\hat \beta_\text{OLS} \to \beta\)</span>. So the OLS estimates are again consistent for the group means <span class="math inline">\(\beta_j = \min(1, \max(0, \gamma_j))\)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>Michael Weylandt suggested the following example as an illustration of this. Suppose we are going to compare just two groups, so <span class="math inline">\(X_i \in \{0, 1\}\)</span>, and the true model is <span class="math inline">\(P(Y = 1|X) = \mathrm{logit}^{-1} (1 - 2 X_i)\)</span>. Consider the infinite data limit so we don’t have to worry about estimation error.</p>
+<p>Thus <span class="math inline">\(\hat \beta_\text{OLS} \to \beta\)</span>. So the OLS estimates are again consistent for the group means <span class="math inline">\(\beta_j = \min(1, \max(0, \gamma_j))\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Michael Weylandt suggested the following example as an illustration of this. Suppose we are going to compare just two groups, so <span class="math inline">\(X_i \in \{0, 1\}\)</span>, and the true model is <span class="math inline">\(P(Y = 1|X) = \mathrm{logit}^{-1} (1 - 2 X_i)\)</span>. Consider the infinite data limit so we don’t have to worry about estimation error.</p>
 <p>We know that <span class="math inline">\(P(Y_i = 1 | X_i = 0) = 0.731\)</span> and <span class="math inline">\(P(Y_i = 1 | X_i = 1) = 0.269\)</span>. <span class="math inline">\(\hat \beta_\text{logistic MLE} = \beta = (1, -2)\)</span> by the consistency of the MLE. The OLS fit will yield <span class="math inline">\(P(Y_i = 1 | X_i) = 0.731 - 0.462 X_i\)</span>. The predictions for <span class="math inline">\(\mathbb{E}(Y|X) = P(Y=1|X)\)</span> agree, but <span class="math inline">\(\hat \beta_\text{OLS} = (0.731, -0.4621)\)</span> while <span class="math inline">\(\beta = (1, -2)\)</span>.</p>
-<p>This is a concrete application of the result in the previous footnote: <span class="math inline">\(\hat \beta_\text{OLS}\)</span> being consistent for group means only results in <span class="math inline">\(\hat \beta_\text{OLS}\)</span> being consistent for the model parameters <span class="math inline">\(\beta\)</span> if the model parameters are themselves the group means.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>I.I.D. assumptions are often violated in real life, for example!</p>
-<p>My advisor made an interesting point about critiquing assumptions the other day. He said that it isn’t enough to say “I don’t think that assumption holds” when evaluating a model or an estimator. Instead, to show than the assumption is unacceptable, he claims you need to demonstrate that making a particular assumption results in some form of undesirable inference.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>Gomila also makes an argument against using <span class="math inline">\(\hat \beta_\text{logistic MLE}\)</span> based on some papers that show it handles interactions poorly. This sort of misses the point in my opinion. GLMs are already ridiculous models because nothing is actually linear. Maybe linear main effects won’t kill you. Modeling interactions with linear terms, however, amounts to fitting global hyperplanes, which is just bonkers. Interactions are almost always local, not global. I am skeptical of the “interactions don’t work well in logistic regression” claim, because of course they don’t, linear interactions never work and there’s no reason to expect they should. Everybody should be fitting GAMs, thank you and good night.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<p>This is a concrete application of the result in the previous footnote: <span class="math inline">\(\hat \beta_\text{OLS}\)</span> being consistent for group means only results in <span class="math inline">\(\hat \beta_\text{OLS}\)</span> being consistent for the model parameters <span class="math inline">\(\beta\)</span> if the model parameters are themselves the group means.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>I.I.D. assumptions are often violated in real life, for example!</p>
+<p>My advisor made an interesting point about critiquing assumptions the other day. He said that it isn’t enough to say “I don’t think that assumption holds” when evaluating a model or an estimator. Instead, to show than the assumption is unacceptable, he claims you need to demonstrate that making a particular assumption results in some form of undesirable inference.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>Gomila also makes an argument against using <span class="math inline">\(\hat \beta_\text{logistic MLE}\)</span> based on some papers that show it handles interactions poorly. This sort of misses the forest for the trees in my opinion. GLMs are generically dubious models because few empirical conditional expectations are actually linear. And maybe linear main effects won’t kill you, but modeling interactions with linear terms amounts to fitting global hyperplanes for interactions. This is undesirable because interactions are almost always local, not global. If you want to model interactions carefully, you need something flexible like a GAM or kernels or whatnot.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
 <script type="application/javascript">
