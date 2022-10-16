@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Hayes">
-<meta name="dcterms.date" content="2017-10-18">
+<meta name="dcterms.date" content="2022-07-15">
 
-<title>alex hayes - numerical gradient checks</title>
+<title>alex hayes - checking convergence with simulations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -136,11 +136,11 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="alex hayes - numerical gradient checks">
-<meta property="og:description" content="how to use a computer to check your derivative calculations">
+<meta property="og:title" content="alex hayes - checking convergence with simulations">
+<meta property="og:description" content="log-log plots are good">
 <meta property="og:site-name" content="alex hayes">
-<meta name="twitter:title" content="alex hayes - numerical gradient checks">
-<meta name="twitter:description" content="how to use a computer to check your derivative calculations">
+<meta name="twitter:title" content="alex hayes - checking convergence with simulations">
+<meta name="twitter:description" content="log-log plots are good">
 <meta name="twitter:creator" content="@alexpghayes">
 <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -205,10 +205,10 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">numerical gradient checks</h1>
-            <p class="subtitle lead"></p><p>how to use a computer to check your derivative calculations</p><p></p>
+      <h1 class="title">checking convergence with simulations</h1>
+            <p class="subtitle lead"></p><p>log-log plots are good</p><p></p>
                                 <div class="quarto-categories">
-                <div class="quarto-category">calculus</div>
+                <div class="quarto-category">statistical software</div>
               </div>
                   </div>
   </div>
@@ -226,7 +226,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 18, 2017</p>
+        <p class="date">July 15, 2022</p>
       </div>
     </div>
     
@@ -237,15 +237,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation">Motivation</a></li>
-  <li><a href="#solution" id="toc-solution" class="nav-link" data-scroll-target="#solution">Solution</a></li>
-  <li><a href="#example-checking-the-gradient-of-linear-regression" id="toc-example-checking-the-gradient-of-linear-regression" class="nav-link" data-scroll-target="#example-checking-the-gradient-of-linear-regression">Example: Checking the gradient of linear regression</a></li>
-  </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/2017-10-18_gradient-checks/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -256,108 +248,99 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 
-<section id="motivation" class="level2">
-<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
-<p>Suppose you have some loss function <span class="math inline">\(\mathcal{L}(\beta) : \mathbb{R}^n \to \mathbb{R}\)</span> you want to minimize with respect to some model parameters <span class="math inline">\(\beta\)</span>. You understand how gradient descent works and you have a correct implementation of <span class="math inline">\(\mathcal{L}\)</span> but aren’t sure if you took the gradient correctly or implemented it correctly in code.</p>
-</section>
-<section id="solution" class="level2">
-<h2 class="anchored" data-anchor-id="solution">Solution</h2>
-<p>We can compare our implemention of the gradient of <span class="math inline">\(\mathcal{L}\)</span> to a finite difference approximation of the gradient. Recall that the gradient of <span class="math inline">\(\mathcal{L}\)</span>, <span class="math inline">\(\nabla_\mathcal{L}\)</span>, in a direction <span class="math inline">\(d \in \mathbb{R}^n\)</span> at a point <span class="math inline">\(x \in \mathbb{R}^n\)</span> is defined as</p>
-<p><span class="math display">\[d^T \nabla_\mathcal{L}(x) = \lim_{\epsilon \to 0} \frac{\mathcal{L}(x + \epsilon \cdot d) - \mathcal{L}(x - \epsilon \cdot d)}{2 \epsilon}\]</span></p>
-<p>If we take <span class="math inline">\(\epsilon\)</span> to be fixed and small, we can use this formula to approximate the gradient in any direction. By approximating the gradient in each unit direction, we construct an approximation of the gradient of <span class="math inline">\(\mathcal{L}\)</span> at a particular point <span class="math inline">\(x\)</span>.</p>
-</section>
-<section id="example-checking-the-gradient-of-linear-regression" class="level2">
-<h2 class="anchored" data-anchor-id="example-checking-the-gradient-of-linear-regression">Example: Checking the gradient of linear regression</h2>
-<p>Suppose that we have <span class="math inline">\(n = 20\)</span> data points in <span class="math inline">\(\mathbb{R}^2\)</span> with responses <span class="math inline">\(y \in \mathbb{R}\)</span>. Linear regression assumes the responses <span class="math inline">\(y\)</span> are related linearly to the data matrix <span class="math inline">\(X\)</span> via the equation</p>
-<p><span class="math display">\[y = X \beta + \epsilon\]</span></p>
-<p>We want to find an estimate <span class="math inline">\(\hat \beta\)</span> that minimizes the sum of squared error of the predicted values <span class="math inline">\(\hat y = X \hat \beta\)</span></p>
-<p><span class="math display">\[\mathcal{L}(\beta) = \frac{1}{2n} \sum_i (y_i - \hat y_i)^2 = \frac{1}{2n} \sum_i (y_i - x_i \beta)^2 = \frac{1}{2n} (y - X \beta)^T (y - X \beta)\]</span></p>
-<p>In the final step above we recognize that the sum of squared residuals can be written as a dot product. Next we’d like to the gradient of this dot product. There’s a beautiful explanation of how to take the gradient of a quadratic form <a href="http://michael.orlitzky.com/articles/the_derivative_of_a_quadratic_form.xhtml">here</a>. The gradient (in matrix notation) is</p>
-<p><span class="math display">\[\nabla_\mathcal{L}(\beta) = -\frac{1}{n} (y - X \beta)^T X\]</span></p>
-<p>We can now implement an analytical version of <span class="math inline">\(\nabla_\mathcal{L}(\beta)\)</span> and compare it to a finite difference approximation. First we simulate and visualize some data:</p>
+<p>Suppose you have some estimator <span class="math inline">\(\hat \theta\)</span> of <span class="math inline">\(\theta\)</span> and you prove that</p>
+<p><span class="math display">\[
+\left \Vert \hat \theta - \theta \right \Vert = o_p \left( \frac{1}{\sqrt n} \right)
+\]</span></p>
+<p>under some model, or some similar bound. In my experience it’s essentially mandatory to explicitly compute <span class="math inline">\(\left \Vert \hat \theta - \theta \right \Vert\)</span> and check if the estimator actually works, because a surprising amount of the time either things don’t and I get to go through the painful process of ✨ learning ✨.</p>
+<p>Also, even when things are working, it can be surprisingly difficult to tell that this is actually the case. Ideally I’d average <span class="math inline">\(\left \Vert \hat \theta - \theta \right \Vert\)</span> over a bunch of simulations and have a nice estimate of <span class="math inline">\(\mathbb E \left \Vert \hat \theta - \theta \right \Vert\)</span> that I can plot against <span class="math inline">\(n\)</span>, as below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> <span class="dv">2</span>), <span class="at">ncol =</span> <span class="dv">2</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="cn">NULL</span>, <span class="fu">aes</span>(<span class="at">x =</span> X[, <span class="dv">1</span>], <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"One dimension of the simulated data"</span>, <span class="at">x =</span> <span class="fu">expression</span>(X[<span class="dv">1</span>])) <span class="sc">+</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>(<span class="dv">14</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="at">length.out =</span> <span class="dv">15</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">4</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>nice_error <span class="ot">&lt;-</span> n<span class="sc">^</span>(<span class="sc">-</span>alpha)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(n, nice_error) <span class="sc">+</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Number of data points"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Error"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Next we implement our loss and gradient functions. We assume the <code>loss</code> function is implemented correctly but want to check the <code>analytical_grad</code> implementation.</p>
+<p>It turns out that I have horrible intuition about the function <span class="math inline">\(f(x) = 1 / \sqrt{x}\)</span> though, so I can never tell if a plot like this is showing asymptotic convergence or if there’s some possibility of asymptotic bias. This is especially the case when <span class="math inline">\(\hat \theta\)</span> is computationally expensive to compute, so I can’t push <span class="math inline">\(n\)</span> as high as I’d like, such that my smallest error is far from zero.</p>
+<p>One thing that helps a lot here is to plot <span class="math inline">\(\log \left(\left \Vert \hat \theta - \theta \right \Vert \right)\)</span> as a function of <span class="math inline">\(\log n\)</span>, and check if the resulting line has constant negative slope. The idea here is that if <span class="math inline">\(\left \Vert \hat \theta - \theta \right \Vert \le C n^{-\alpha}\)</span> with high probability, or whatever bound you prove, then <span class="math inline">\(\log \left(\left \Vert \hat \theta - \theta \right \Vert \right) \le -C \alpha \log n\)</span>. So we can just check if things are linear after transformation, and this is easier to do visually.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>loss <span class="ot">&lt;-</span> <span class="cf">function</span>(beta) {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  resid <span class="ot">&lt;-</span> y <span class="sc">-</span> X <span class="sc">%*%</span> beta</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(resid<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> n)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>analytical_grad <span class="ot">&lt;-</span> <span class="cf">function</span>(beta) {</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  grad <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">t</span>(y <span class="sc">-</span> X <span class="sc">%*%</span> beta) <span class="sc">%*%</span> X <span class="sc">/</span> n</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.vector</span>(grad)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(n, nice_error) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"log(Number of data points)"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"log(Error)"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
-<p>To perform this check, we need get approximate the gradient in a direction <span class="math inline">\(d\)</span>:</p>
+</div>
+<p>This is particularly helpful when working with noisy estimates of some quantity like <span class="math inline">\(\mathbb E \left \Vert \hat \theta - \theta \right \Vert\)</span>. In this setting the untransformed plot can be tricky to read. Here’s an example of noisy estimates that are converging, but you will never convince yourself or a referee that this is the case:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param f function that takes a single vector argument x</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param x point at which to evaluate derivative of f (vector)</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param d direction in which to take derivative of f (vector)</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param eps epsilon to use in the gradient approximation</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>numerical_directional_grad <span class="ot">&lt;-</span> <span class="cf">function</span>(f, x, d, <span class="at">eps =</span> <span class="fl">1e-8</span>) {</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  (<span class="fu">f</span>(x <span class="sc">+</span> eps <span class="sc">*</span> d) <span class="sc">-</span> <span class="fu">f</span>(x <span class="sc">-</span> eps <span class="sc">*</span> d)) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> eps)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">26</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>error <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="fu">length</span>(n), <span class="at">mean =</span> n<span class="sc">^</span>(<span class="sc">-</span>alpha), <span class="at">sd =</span> n<span class="sc">^</span>(<span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> alpha)))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>error[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(n, error) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Number of data points"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Error"</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
-<p>And then to approximate the entire gradient, we need to combine directional derivatives in each of the unit directions:</p>
+</div>
+<p>when do you need a better estimate of the error, and when do you need to push <span class="math inline">\(n\)</span> higher. if you can’t push <span class="math inline">\(n\)</span> higher and you think everything else is right,</p>
+<p>laziness in having few reps per <span class="math inline">\(n\)</span> but actually increasing the reps per <span class="math inline">\(n\)</span> is better than pushing <span class="math inline">\(n\)</span> higher. also: increasing the SNR ratio of the simulations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>zeros_like <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(x))</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>numerical_grad <span class="ot">&lt;-</span> <span class="cf">function</span>(f, x, <span class="at">eps =</span> <span class="fl">1e-8</span>) {</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  grad <span class="ot">&lt;-</span> <span class="fu">zeros_like</span>(x)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (dim <span class="cf">in</span> <span class="fu">seq_along</span>(x)) {</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    unit <span class="ot">&lt;-</span> <span class="fu">zeros_like</span>(x)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    unit[dim] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    grad[dim] <span class="ot">&lt;-</span> <span class="fu">numerical_directional_grad</span>(f, x, unit, eps)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  grad</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>relative_error <span class="ot">&lt;-</span> <span class="cf">function</span>(want, got) {</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  (want <span class="sc">-</span> got) <span class="sc">/</span> want  <span class="co"># assumes want is not zero</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>noisy_log_log <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(n, error) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"log(Number of data points)"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"log(Error)"</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>noisy_log_log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
-<p>Now we can check the relative error between our analytical implementation of the gradient and the numerical approximation.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)  <span class="co"># point in parameter space to check gradient at</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>num_grad <span class="ot">&lt;-</span> <span class="fu">numerical_grad</span>(loss, b)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>ana_grad <span class="ot">&lt;-</span> <span class="fu">analytical_grad</span>(b)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>num_grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.112107 3.286946</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ana_grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.112107 3.286946</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">relative_error</span>(num_grad, ana_grad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] -2.810374e-08  1.553777e-08</code></pre>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The relative error is small, and we can feel confident that our implementation of the gradient is correct.</p>
-<p>This post is based off of Tim Vieira’s <a href="http://timvieira.github.io/blog/post/2017/04/21/how-to-test-gradient-implementations/">fantastic post</a> on how to use numerical gradient checks in practice, but with <code>R</code> code. See also the <a href="https://cran.r-project.org/package=numDeriv">numDeriv</a> package.</p>
+<p>log-log plot here suggests that things are working, just need to turn up the sims per <span class="math inline">\(n\)</span>, instead of increasing <span class="math inline">\(n\)</span> or the SNR, which would be my normal responses, which at some point i just run out of ram and this no longer works</p>
+<p>Converging at some rate, but might need to check the slope to know if it’s converging at <em>your</em> rate.</p>
 
 
-</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

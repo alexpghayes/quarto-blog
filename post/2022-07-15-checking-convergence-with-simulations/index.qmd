@@ -91,9 +91,7 @@ noisy_log_log <- ggplot() +
     y = "log(Error)"
   )
 
-
-
-noisy_log_log + noisy_identity
+noisy_log_log
 ```
 
 log-log plot here suggests that things are working, just need to turn up the sims per $n$, instead of increasing $n$ or the SNR, which would be my normal responses, which at some point i just run out of ram and this no longer works

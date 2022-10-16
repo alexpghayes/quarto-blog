@@ -116,7 +116,7 @@ especially in social science fields
 
 replication code is also slightly different because methods and analysis code are different universes
 
-like, on one hand, for an analysis, the ideal imo is a targets/make pipeline that clearly produces output matching the paer
+like, on one hand, for an analysis, the ideal imo is a targets/make pipeline that clearly produces output matching the papoer
 and then second is just like nice data
 like 90% of the time i couldn't care less about the researchers own code since i'm just going to redo the analysis on my own to see if i trust their conclusions
 and also since most analysis code from applied peeps is either wrong or impossible to verify as correct since it's such a mess

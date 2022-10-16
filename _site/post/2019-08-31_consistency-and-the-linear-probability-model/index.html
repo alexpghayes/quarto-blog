@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-0.9.257">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -13,10 +13,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
@@ -38,22 +43,23 @@ div.csl-indent {
 }
 </style>
 
+
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link id="quarto-text-highlighting-styles" href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -87,8 +93,10 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="alex hayes - consistency and the linear probability model">
+<meta property="og:description" content="an explainer about ordinary least squares regression and when it is an acceptable estimator">
 <meta property="og:site-name" content="alex hayes">
 <meta name="twitter:title" content="alex hayes - consistency and the linear probability model">
+<meta name="twitter:description" content="an explainer about ordinary least squares regression and when it is an acceptable estimator">
 <meta name="twitter:creator" content="@alexpghayes">
 <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -99,41 +107,49 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../../index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">alex hayes</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">about</a>
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">about</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../posts.html">posts</a>
+    <a class="nav-link" href="../../posts.html">
+ <span class="menu-text">posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../papers/index.html">papers</a>
+    <a class="nav-link" href="../../papers/index.html">
+ <span class="menu-text">papers</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../code/index.html">code</a>
+    <a class="nav-link" href="../../code/index.html">
+ <span class="menu-text">code</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../teaching/index.html">teaching</a>
+    <a class="nav-link" href="../../teaching/index.html">
+ <span class="menu-text">teaching</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../talks/index.html">talks</a>
+    <a class="nav-link" href="../../talks/index.html">
+ <span class="menu-text">talks</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/alexpghayes"><i class="bi bi-github" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://twitter.com/alexpghayes"><i class="bi bi-twitter" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -147,7 +163,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
     <div class="quarto-title column-body">
       <h1 class="title">consistency and the linear probability model</h1>
             <p class="subtitle lead"></p><p>an explainer about ordinary least squares regression and when it is an acceptable estimator</p><p></p>
-                          <div class="quarto-categories">
+                                <div class="quarto-categories">
                 <div class="quarto-category">m estimation</div>
                 <div class="quarto-category">math stat</div>
               </div>
@@ -155,9 +171,6 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   </div>
     
   
-
-
-
   <div class="quarto-title-meta">
 
       <div>
@@ -170,9 +183,10 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">2019-08-31</p>
+        <p class="date">August 31, 2019</p>
       </div>
     </div>
+    
       
     </div>
     
@@ -180,7 +194,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc">
+    <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
@@ -377,10 +391,10 @@ White, Halbert. 1980. <span>“A <span>Heteroskedasticity</span>-<span>Consisten
 <div id="ref-wooldridge_econometric_2001" class="csl-entry" role="doc-biblioentry">
 Wooldridge, Jeffrey M. 2001. <em>Econometric <span>Analysis</span> of <span>Cross</span> <span>Section</span> and <span>Panel</span> <span>Data</span></em>. <a href="https://mitpress.mit.edu/books/econometric-analysis-cross-section-and-panel-data-second-edition">https://mitpress.mit.edu/books/econometric-analysis-cross-section-and-panel-data-second-edition</a>.
 </div>
-</div></section><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1" role="doc-endnote"><p>An M-estimator <span class="math inline">\(\hat \theta\)</span> is a solution to</p>
+<li id="fn1"><p>An M-estimator <span class="math inline">\(\hat \theta\)</span> is a solution to</p>
 <p><span class="math display">\[\begin{align*}
   \sum_{i=1}^n \psi(Y_i, \hat \theta) = 0
 \end{align*}\]</span></p>
@@ -402,7 +416,7 @@ Wooldridge, Jeffrey M. 2001. <em>Econometric <span>Analysis</span> of <span>Cros
 \rightarrow A(\theta_0)^{-1} \cdot B(\theta_0) \cdot \{ A(\theta_0)^{-1} \}^T
 \end{align*}\]</span></p>
 <p>so life is pretty great and we can get asymptotic estimates of uncertainty for <span class="math inline">\(\hat \theta\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>In a lot of experimental settings that compare categorical treatments, you fit a fully saturated model that allocates a full parameter to the mean of each combination of treatments. <span class="math inline">\(\hat \beta_\text{OLS}\)</span> is consistent in this setting under both logistic regression and the LPM.</p>
+<li id="fn2"><p>In a lot of experimental settings that compare categorical treatments, you fit a fully saturated model that allocates a full parameter to the mean of each combination of treatments. <span class="math inline">\(\hat \beta_\text{OLS}\)</span> is consistent in this setting under both logistic regression and the LPM.</p>
 <p>Let’s prove this for logistic regression first. Suppose we have groups <span class="math inline">\(1, ..., k\)</span> and the data comes from a logistic regression model. We represent the groups in the model via one hot coding, omitting an intercept for identifability. That is, we assume</p>
 <p><span class="math display">\[\begin{align}
   P(Y = 1 | X) = \frac{1}{1 + \exp(-(\alpha_1 X_1 + ... + \alpha_k X_k))}
@@ -438,16 +452,34 @@ Wooldridge, Jeffrey M. 2001. <em>Econometric <span>Analysis</span> of <span>Cros
   &amp;= X^T \beta
 \end{align}\]</span></p>
 <p>Thus <span class="math inline">\(\hat \beta_\text{OLS} \to \beta\)</span>. So the OLS estimates are again consistent for the group means <span class="math inline">\(\beta_j = \min(1, \max(0, \gamma_j))\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Michael Weylandt suggested the following example as an illustration of this. Suppose we are going to compare just two groups, so <span class="math inline">\(X_i \in \{0, 1\}\)</span>, and the true model is <span class="math inline">\(P(Y = 1|X) = \mathrm{logit}^{-1} (1 - 2 X_i)\)</span>. Consider the infinite data limit so we don’t have to worry about estimation error.</p>
+<li id="fn3"><p>Michael Weylandt suggested the following example as an illustration of this. Suppose we are going to compare just two groups, so <span class="math inline">\(X_i \in \{0, 1\}\)</span>, and the true model is <span class="math inline">\(P(Y = 1|X) = \mathrm{logit}^{-1} (1 - 2 X_i)\)</span>. Consider the infinite data limit so we don’t have to worry about estimation error.</p>
 <p>We know that <span class="math inline">\(P(Y_i = 1 | X_i = 0) = 0.731\)</span> and <span class="math inline">\(P(Y_i = 1 | X_i = 1) = 0.269\)</span>. <span class="math inline">\(\hat \beta_\text{logistic MLE} = \beta = (1, -2)\)</span> by the consistency of the MLE. The OLS fit will yield <span class="math inline">\(P(Y_i = 1 | X_i) = 0.731 - 0.462 X_i\)</span>. The predictions for <span class="math inline">\(\mathbb{E}(Y|X) = P(Y=1|X)\)</span> agree, but <span class="math inline">\(\hat \beta_\text{OLS} = (0.731, -0.4621)\)</span> while <span class="math inline">\(\beta = (1, -2)\)</span>.</p>
 <p>This is a concrete application of the result in the previous footnote: <span class="math inline">\(\hat \beta_\text{OLS}\)</span> being consistent for group means only results in <span class="math inline">\(\hat \beta_\text{OLS}\)</span> being consistent for the model parameters <span class="math inline">\(\beta\)</span> if the model parameters are themselves the group means.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>I.I.D. assumptions are often violated in real life, for example!</p>
+<li id="fn4"><p>I.I.D. assumptions are often violated in real life, for example!</p>
 <p>My advisor made an interesting point about critiquing assumptions the other day. He said that it isn’t enough to say “I don’t think that assumption holds” when evaluating a model or an estimator. Instead, to show than the assumption is unacceptable, he claims you need to demonstrate that making a particular assumption results in some form of undesirable inference.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Gomila also makes an argument against using <span class="math inline">\(\hat \beta_\text{logistic MLE}\)</span> based on some papers that show it handles interactions poorly. This sort of misses the forest for the trees in my opinion. GLMs are generically dubious models because few empirical conditional expectations are actually linear. And maybe linear main effects won’t kill you, but modeling interactions with linear terms amounts to fitting global hyperplanes for interactions. This is undesirable because interactions are almost always local, not global. If you want to model interactions carefully, you need something flexible like a GAM or kernels or whatnot.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Gomila also makes an argument against using <span class="math inline">\(\hat \beta_\text{logistic MLE}\)</span> based on some papers that show it handles interactions poorly. This sort of misses the forest for the trees in my opinion. GLMs are generically dubious models because few empirical conditional expectations are actually linear. And maybe linear main effects won’t kill you, but modeling interactions with linear terms amounts to fitting global hyperplanes for interactions. This is undesirable because interactions are almost always local, not global. If you want to model interactions carefully, you need something flexible like a GAM or kernels or whatnot.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
-<script type="application/javascript">
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -467,7 +499,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.blur();
     // flash "checked"
     button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection
@@ -494,31 +546,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>

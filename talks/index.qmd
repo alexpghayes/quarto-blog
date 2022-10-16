@@ -4,14 +4,19 @@ title: "talks"
 
 ## upcoming talks
 
-None currently scheduled. Last updated on 2022-07-14.
+None currently scheduled. Last updated on 2022-10-16.
 
 ## past talks
+
+**Estimating network-mediated causal effects via spectral embeddings**  
+2022-10-14 @ 4:15 pm in MSC 1210, Statistics Graduate Student Association Seminar
+
+The last several years have seen a renewed and concerted effort to incorporate network data into standard tools for regression analysis, and to make network-linked data legible to practicing scientists. Thus far, this literature has primarily developed tools to infer associative relationships between nodal covariates and network structure. In contrast, we augment a statistical model for network regression with counterfactual assumptions and show how causal effects on a network can be partitioned into a direct effect that is uninfluenced by the network, and an indirect effect that is induced by homophily. [slides](https://github.com/alexpghayes/2022-10-14-causal-network-regression-slides) (for a general audience)
 
 **Estimating indirect effects induced by homophily via spectral network regression**
 2022-07-07, [Tianxi Li](https://sites.google.com/view/tianxili-homepage/home) and [Can Le](https://statistics.ucdavis.edu/people/can-le) Joint Lab Meeting 
 
-The last several years have seen a renewed and concerted effort to incorporate network data into standard tools for regression analysis, and to make network-linked data legible to practicing scientists. Thus far, this literature has primarily developed tools to infer associative relationships between nodal covariates and network structure. In contrast, we augment a statistical model for network regression with counterfactual assumptions and show how causal effects on a network can be partitioned into a direct effect that is uninfluenced by the network, and an indirect effect that is induced by homophily. [slides](https://github.com/alexpghayes/2022-07-07-causal-network-regression-slides)
+The last several years have seen a renewed and concerted effort to incorporate network data into standard tools for regression analysis, and to make network-linked data legible to practicing scientists. Thus far, this literature has primarily developed tools to infer associative relationships between nodal covariates and network structure. In contrast, we augment a statistical model for network regression with counterfactual assumptions and show how causal effects on a network can be partitioned into a direct effect that is uninfluenced by the network, and an indirect effect that is induced by homophily. [slides](https://github.com/alexpghayes/2022-07-07-causal-network-regression-slides) (for an audience familiar with network regression)
 
 **`distributions3`: From basic probability to probabilistic regression**  
 2022-06-23, [UseR 2022](https://user2022.r-project.org/program/talks/#session-34-regression-models)  

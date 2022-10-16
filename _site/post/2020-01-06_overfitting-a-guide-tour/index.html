@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-0.9.257">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -13,10 +13,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
@@ -38,22 +43,23 @@ div.csl-indent {
 }
 </style>
 
+
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link id="quarto-text-highlighting-styles" href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -87,8 +93,10 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="alex hayes - overfitting: a guided tour">
+<meta property="og:description" content="fleshing out intuition about structure in random processes beyond the standard bias-variance decomposition">
 <meta property="og:site-name" content="alex hayes">
 <meta name="twitter:title" content="alex hayes - overfitting: a guided tour">
+<meta name="twitter:description" content="fleshing out intuition about structure in random processes beyond the standard bias-variance decomposition">
 <meta name="twitter:creator" content="@alexpghayes">
 <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -99,41 +107,49 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../../index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">alex hayes</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">about</a>
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">about</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../posts.html">posts</a>
+    <a class="nav-link" href="../../posts.html">
+ <span class="menu-text">posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../papers/index.html">papers</a>
+    <a class="nav-link" href="../../papers/index.html">
+ <span class="menu-text">papers</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../code/index.html">code</a>
+    <a class="nav-link" href="../../code/index.html">
+ <span class="menu-text">code</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../teaching/index.html">teaching</a>
+    <a class="nav-link" href="../../teaching/index.html">
+ <span class="menu-text">teaching</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../talks/index.html">talks</a>
+    <a class="nav-link" href="../../talks/index.html">
+ <span class="menu-text">talks</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/alexpghayes"><i class="bi bi-github" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://twitter.com/alexpghayes"><i class="bi bi-twitter" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -147,16 +163,13 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
     <div class="quarto-title column-body">
       <h1 class="title">overfitting: a guided tour</h1>
             <p class="subtitle lead"></p><p>fleshing out intuition about structure in random processes beyond the standard bias-variance decomposition</p><p></p>
-                          <div class="quarto-categories">
+                                <div class="quarto-categories">
                 <div class="quarto-category">math stat</div>
               </div>
                   </div>
   </div>
     
   
-
-
-
   <div class="quarto-title-meta">
 
       <div>
@@ -169,9 +182,10 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">2020-01-06</p>
+        <p class="date">January 6, 2020</p>
       </div>
     </div>
+    
       
     </div>
     
@@ -179,7 +193,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc">
+    <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
@@ -513,10 +527,10 @@ Vehtari, Aki, Andrew Gelman, and Jonah Gabry. 2017. <span>“Practical <span>Bay
 <div id="ref-wager_cross-validation_2019" class="csl-entry" role="doc-biblioentry">
 Wager, Stefan. 2019. <span>“Cross-<span>Validation</span>, <span>Risk</span> <span>Estimation</span>, and <span>Model</span> <span>Selection</span>.”</span> <em>arXiv:1909.11696 [Stat]</em>, September. <a href="http://arxiv.org/abs/1909.11696">http://arxiv.org/abs/1909.11696</a>.
 </div>
-</div></section><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1" role="doc-endnote"><p>The random sequences are B, B, A. First my mom and I made up the three sequences that looked random to us. Then I generated the truly random sequences with the following <code>R</code> code:</p>
+<li id="fn1"><p>The random sequences are B, B, A. First my mom and I made up the three sequences that looked random to us. Then I generated the truly random sequences with the following <code>R</code> code:</p>
 <pre><code>set.seed(27)
 
 get_sequence_sample &lt;- function() {
@@ -529,16 +543,34 @@ for (i in 1:3) {
   get_sequence_sample()
 }</code></pre>
 <p>Thanks to Dave Anderson for performing this demonstration in his probability class.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>See <span class="citation" data-cites="piantadosi_one_2018">Piantadosi (<a href="#ref-piantadosi_one_2018" role="doc-biblioref">2018</a>)</span> for an example of model with a single parameter that can nonetheless perfectly interpolates any finite number of observations.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Random variation in the test set will case irreducible error that we cannot make disappear. More often than we would like to admit, the irreducible error is large.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>There is also the bizarre scenario when an estimator produces predictions that are anticorrelated with the errors <span class="math inline">\(\varepsilon_i\)</span>, so that <span class="math inline">\(\mathrm{Cov} \left[ \widehat Y_i, Y_i \right]\)</span> is negative and test set performance is <em>better</em> than training set performance. If you observe this phenomena on an applied problem, I recommend buying a lottery ticket.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Alternatively, if we know the form of <span class="math inline">\(\hat f\)</span> and <span class="math inline">\(f\)</span> we could estimate the optimism directly and subtract it off. This is one way to motivate AIC, for example. As a general rule, estimating the optimism and subtracting it off requires much stronger assumptions than cross-validation that are unlikely to hold in practice.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>The risk estimates across the <span class="math inline">\(k\)</span> folds are both biased and dependent. If you fit a model on 80 percent of the full training data, you don’t get an unbiased estimate of the performance when the model is fit on the full data. The bias is simply because more data results in a better estimates. Second, the held-out risk estimates are not independent because the <span class="math inline">\(\hat f_j\)</span> and <span class="math inline">\(\hat f_k\)</span> are largely trained on the same data. But averaging them works out okay <span class="citation" data-cites="bengio_no_2004">(<a href="#ref-bengio_no_2004" role="doc-biblioref">Bengio and Grandvalet 2004</a>)</span> for risk estimation, and accounting for blocking across the folds with something like a random intercept model works well for model selection <span class="citation" data-cites="wager_cross-validation_2019">(<a href="#ref-wager_cross-validation_2019" role="doc-biblioref">Wager 2019</a>)</span>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7" role="doc-endnote"><p>I highly recommend reading anything by Jing Lei.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>See <span class="citation" data-cites="piantadosi_one_2018">Piantadosi (<a href="#ref-piantadosi_one_2018" role="doc-biblioref">2018</a>)</span> for an example of model with a single parameter that can nonetheless perfectly interpolates any finite number of observations.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Random variation in the test set will case irreducible error that we cannot make disappear. More often than we would like to admit, the irreducible error is large.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>There is also the bizarre scenario when an estimator produces predictions that are anticorrelated with the errors <span class="math inline">\(\varepsilon_i\)</span>, so that <span class="math inline">\(\mathrm{Cov} \left[ \widehat Y_i, Y_i \right]\)</span> is negative and test set performance is <em>better</em> than training set performance. If you observe this phenomena on an applied problem, I recommend buying a lottery ticket.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Alternatively, if we know the form of <span class="math inline">\(\hat f\)</span> and <span class="math inline">\(f\)</span> we could estimate the optimism directly and subtract it off. This is one way to motivate AIC, for example. As a general rule, estimating the optimism and subtracting it off requires much stronger assumptions than cross-validation that are unlikely to hold in practice.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>The risk estimates across the <span class="math inline">\(k\)</span> folds are both biased and dependent. If you fit a model on 80 percent of the full training data, you don’t get an unbiased estimate of the performance when the model is fit on the full data. The bias is simply because more data results in a better estimates. Second, the held-out risk estimates are not independent because the <span class="math inline">\(\hat f_j\)</span> and <span class="math inline">\(\hat f_k\)</span> are largely trained on the same data. But averaging them works out okay <span class="citation" data-cites="bengio_no_2004">(<a href="#ref-bengio_no_2004" role="doc-biblioref">Bengio and Grandvalet 2004</a>)</span> for risk estimation, and accounting for blocking across the folds with something like a random intercept model works well for model selection <span class="citation" data-cites="wager_cross-validation_2019">(<a href="#ref-wager_cross-validation_2019" role="doc-biblioref">Wager 2019</a>)</span>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>I highly recommend reading anything by Jing Lei.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
-<script type="application/javascript">
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -558,7 +590,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.blur();
     // flash "checked"
     button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection
@@ -585,31 +637,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>

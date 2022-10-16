@@ -9,9 +9,11 @@ Fall 2022, [STAT 340 Intro to Data Modeling II](https://pages.stat.wisc.edu/~kdl
 
 My in-person office hours are 10 am to 12 pm on Wednesdays, in Medical Sciences Center (MSC) 1475. The room is a little tricky to find. You can [schedule an appointment with me](https://calendly.com/alexpghayes/officehours) if you would like to meet at a different time, or over Zoom.
 
-## past courses
+## teaching material
 
-Based on my teaching in the 2018-2019 academic year I received a Statistics Department Outstanding TA award.
+If you are teaching an introductory statistics class in the "barrage of hypothesis tests" tradition, you may find my [cheatsheet on common hypothesis tests](https://github.com/alexpghayes/classic-stats-formulas) useful. I also wrote [`distributions3`](https://alexpghayes.github.io/distributions3/dev/) to be an approachable set of tools for manipulating probability distributions for intro stat students. The package [vignettes](https://alexpghayes.github.io/distributions3/dev/articles/) are designed to walk students intro stat courses though many classic hypothesis tests as well.
+
+## past courses
 
 **Graduate Teaching Assistant**  
 Spring 2019, STAT 324 Intro to Statistics for Engineers, UW-Madison  
@@ -32,16 +34,23 @@ Spring 2018, COMP 540 Statistical Machine Learning, Rice University
 **Undergraduate Teaching Assistant**  
 Fall 2017, COMP 330 Data Science: Tools & Models, Rice University
 
-I enjoy teaching a fair amount but have not taught since my first year of graduate school due to funding that has allowed me to focus on research.
-
-Outside of academic settings, I used to devote a fair amount of time to teaching R workshops for the Rice DataSci club, and to helping people make their first open source contributions, primarily to the [`broom`](https://broom.tidymodels.org/) package.
-
-## teaching material
-
-If you are teaching an introductory statistics class in the "barrage of hypothesis tests" tradition, you may find my [cheatsheet on common hypothesis tests](https://github.com/alexpghayes/classic-stats-formulas) useful. I also wrote [`distributions3`](https://alexpghayes.github.io/distributions3/dev/) to be an approachable set of tools for manipulating probability distributions for intro stat students. The package [vignettes](https://alexpghayes.github.io/distributions3/dev/articles/) are designed to walk students intro stat courses though many classic hypothesis tests as well.
+Based on my teaching in the 2018-2019 academic year I received a Statistics Department Outstanding TA award. Outside of academic settings, I used to devote a fair amount of time to teaching R workshops for the Rice DataSci club, and to helping people make their first open source contributions, primarily to the [`broom`](https://broom.tidymodels.org/) package.
 
 ## mentoring
 
 - [Nathan Kolbow](https://wid.wisc.edu/people/nathan-kolbow/) worked with me as a undergraduate RA to develop the [`neocache`](https://github.com/alexpghayes/neocache) data collection infrastructure. He is now a PhD student in Biostatistics at UW-Madison.
 
-Last updated 2022-07-26.
+## guest lectures
+
+**Confidence intervals**  
+October 25 & 27, 2022, STAT 340 Data Modeling II, UW-Madison
+
+**Sampling with Twitter following graph with `aPPR`**  
+October 8, 2020, STAT 992 Modern Multivariate Statistics, UW-Madison   
+[slides](https://github.com/alexpghayes/appr-presentation)
+
+**Hypothesis testing**  
+October 18, 2018, STAT 324 Intro to Statistics for Engineers, UW-Madison  
+[notes](https://alexpghayes.github.io/distributions3/articles/intro-to-hypothesis-testing.html)
+
+Last updated 2022-10-16.
