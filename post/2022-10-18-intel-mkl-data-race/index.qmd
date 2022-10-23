@@ -1,0 +1,91 @@
+---
+title: "intel mkl drunk driving"
+subtitle: |
+  sweet jesus, no more data race please
+date: "2022-10-18"
+categories: [notes to self, fuck]
+draft: true
+---
+
+## Motivation
+
+```{r}
+set.seed(27)
+
+X <- matrix(rnorm(500), 50, 10)
+
+s <- svd(X)
+
+once <- function() {
+  Xhat <- s$u %*% diag(s$d) %*% t(s$v)  # has to a big enough matrix multiply
+  norm(Xhat)
+}
+
+once()
+once()
+once()
+```
+
+```{r}
+utils::sessionInfo()
+```
+
+
+```{r}
+Sys.setenv(MKL_NUM_THREADS = "1")
+Sys.setenv(MKL_INTERFACE_LAYER = "GNU,LP64")
+Sys.setenv(MKL_THREADING_LAYER = "GNU")
+Sys.getenv("MKL_THREADING_LAYER")
+Sys.getenv("MKL_INTERFACE_LAYER")
+Sys.getenv("MKL_NUM_THREADS")
+
+once()
+once()
+once()
+```
+
+
+
+
+```{r}
+# one computers with multiple cores, Intel MKL can induce data races
+# during sufficiently large matrix multiples depending on the threading
+# model
+can_induce_data_race <- function() {
+  X <- matrix(1:500 / 500, 50, 10)
+  Y <- matrix(1:1000 / 1000, 10, 100)
+  
+  norm(X %*% Y)
+}
+
+Sys.getenv("MKL_THREADING_LAYER")
+
+can_induce_data_race()
+can_induce_data_race()
+can_induce_data_race()
+
+callr::r(can_induce_data_race)
+callr::r(can_induce_data_race, env = c(MKL_THREADING_LAYER = "GNU"))
+
+Sys.setenv(MKL_THREADING_LAYER = "GNU")
+Sys.getenv("MKL_THREADING_LAYER")
+
+callr::r(can_induce_data_race)
+callr::r(can_induce_data_race, env = c(MKL_THREADING_LAYER = "GNU"))
+
+```
+
+
+
+https://raw.githack.com/uo-ec607/lectures/master/14-gce-i/14-gce-i.html#Install_the_Intel_Math_Kernel_Library_(MKL)_or_OpenBLASLAPACK
+
+
+https://phillipalday.com/blog/2013/05/31/Speed-up-R-(on-Linux)/
+
+https://www.enchufa2.es/archives/switch-blas-lapack-without-leaving-your-r-session.html
+
+https://github.com/eddelbuettel/mkl4deb
+
+https://cran.r-project.org/web/packages/RhpcBLASctl/index.html
+
+https://twitter.com/dan_p_simpson/status/1571705560634105857/
