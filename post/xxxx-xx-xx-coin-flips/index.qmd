@@ -26,7 +26,9 @@ sequences <- c(
 )
 ```
 
-To make the problem a little more concrete, here is a visualization of the coin flip sequences. Which one looks genuinely random to you? Try to solve this problem on your own before reading on!
+In this post, I'll walk through the problem and point out places where it's easy to have misleading intuition. I encourage readers to try to solve the problem on their own before reading the post.
+
+Alright, onward. To make the problem a little more concrete, let's start by visualizing the coin flip sequences.
 
 ```{r}
 #| label: fig-observed
