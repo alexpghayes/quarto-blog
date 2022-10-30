@@ -33,6 +33,12 @@ slugs <- gsub("^.*_", "", posts)
 # lines to insert to a netlify _redirect file
 post_redirects <- glue::glue("/{slugs} /post/{slugs}")
 
+post_redirects <- c(
+  post_redirects,
+  "/2022-10-18-intel-mkl-data-race/ /post/2022-10-30-intel-mkl-data-race/",
+  "/post/2022-10-18-intel-mkl-data-race/ /post/2022-10-30-intel-mkl-data-race/"
+)
+
 hugo_redirects <- readLines(here::here("post", "hugo_redirects"))
 
 hugo_redirected_to <- hugo_redirects |> 

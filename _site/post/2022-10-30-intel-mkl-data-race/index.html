@@ -246,7 +246,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   <li><a href="#the-problem" id="toc-the-problem" class="nav-link" data-scroll-target="#the-problem">The problem</a></li>
   <li><a href="#the-solution" id="toc-the-solution" class="nav-link" data-scroll-target="#the-solution">The solution</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/2022-10-18-intel-mkl-data-race/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/2022-10-30-intel-mkl-data-race/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -286,15 +286,15 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">can_induce_data_race</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2997.423</code></pre>
+<pre><code>[1] 2815.741</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">can_induce_data_race</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2997.423</code></pre>
+<pre><code>[1] 2819.728</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">can_induce_data_race</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2986.476</code></pre>
+<pre><code>[1] 2822.595</code></pre>
 </div>
 </div>
 <p>See discussion <a href="https://github.com/eddelbuettel/mkl4deb/issues/2">here</a>, <a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=921193#12">here</a> and <a href="https://github.com/eddelbuettel/mkl4deb/issues/9">here</a> if you’re curious about underlying causes.</p>
@@ -315,7 +315,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>callr<span class="sc">::</span><span class="fu">r</span>(can_induce_data_race, <span class="at">env =</span> <span class="fu">c</span>(<span class="at">MKL_THREADING_LAYER =</span> <span class="st">"INTEL"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2862.72</code></pre>
+<pre><code>[1] 2997.423</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>callr<span class="sc">::</span><span class="fu">r</span>(can_induce_data_race, <span class="at">env =</span> <span class="fu">c</span>(<span class="at">MKL_THREADING_LAYER =</span> <span class="st">"GNU"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
