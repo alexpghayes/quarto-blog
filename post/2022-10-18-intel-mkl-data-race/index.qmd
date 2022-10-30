@@ -1,91 +1,76 @@
 ---
-title: "intel mkl drunk driving"
+title: "avoiding data races with intel mkl"
 subtitle: |
-  sweet jesus, no more data race please
+  set the `MKL_THREADING_LAYER` environment variable to `GNU`.
 date: "2022-10-18"
-categories: [notes to self, fuck]
-draft: true
+categories: [notes to self, data race, intel mkl]
 ---
 
-## Motivation
+If you are using Intel MKL for your BLAS/LAPACK implementation on Linux, you can set the environment variable `MKL_THREADING_LAYER` to `GNU` to avoid data races during matrix multiplication^[None of the information in this blog post is new, nor do I claim to have a good understanding. I am simply collecting some information to help my future self when this issue next rears its head.].
 
-```{r}
-set.seed(27)
+## Background
 
-X <- matrix(rnorm(500), 50, 10)
+If you do numerically intensive computing, you might want to make it faster. One way to do this is to switch out the backend implementation of linear algebra routines on your computer. At a low level, most linear algebra on your computers happens by making calls via BLAS/LAPACK APIs, and there are several libraries that offer differing implementations of the underlying methods. Some of these libraries are faster than others; many are faster than the default implementation.
 
-s <- svd(X)
+I use Intel MKL. On Ubuntu, you can install Intel MKL via the shell with:
 
-once <- function() {
-  Xhat <- s$u %*% diag(s$d) %*% t(s$v)  # has to a big enough matrix multiply
-  norm(Xhat)
-}
-
-once()
-once()
-once()
+``` sh
+sudo apt install intel-mkl
 ```
 
+You can check your current BLAS/LAPACK implementation in `R` using `utils::sessionInfo()`:
+
 ```{r}
-utils::sessionInfo()
+si <- utils::sessionInfo()
+si$LAPACK
 ```
 
+## The problem
+
+On computers with multiple cores, Intel MKL can induce data races during (sufficiently large) matrix multiplies, depending on the threading model. Using the default threading model, I can reliably induce these data races like this:
 
 ```{r}
-Sys.setenv(MKL_NUM_THREADS = "1")
-Sys.setenv(MKL_INTERFACE_LAYER = "GNU,LP64")
-Sys.setenv(MKL_THREADING_LAYER = "GNU")
-Sys.getenv("MKL_THREADING_LAYER")
-Sys.getenv("MKL_INTERFACE_LAYER")
-Sys.getenv("MKL_NUM_THREADS")
-
-once()
-once()
-once()
-```
-
-
-
-
-```{r}
-# one computers with multiple cores, Intel MKL can induce data races
-# during sufficiently large matrix multiples depending on the threading
-# model
+# this function should return 249.7852
 can_induce_data_race <- function() {
   X <- matrix(1:500 / 500, 50, 10)
   Y <- matrix(1:1000 / 1000, 10, 100)
-  
+
   norm(X %*% Y)
 }
 
-Sys.getenv("MKL_THREADING_LAYER")
-
 can_induce_data_race()
 can_induce_data_race()
 can_induce_data_race()
-
-callr::r(can_induce_data_race)
-callr::r(can_induce_data_race, env = c(MKL_THREADING_LAYER = "GNU"))
-
-Sys.setenv(MKL_THREADING_LAYER = "GNU")
-Sys.getenv("MKL_THREADING_LAYER")
-
-callr::r(can_induce_data_race)
-callr::r(can_induce_data_race, env = c(MKL_THREADING_LAYER = "GNU"))
-
 ```
 
+See discussion [here](https://github.com/eddelbuettel/mkl4deb/issues/2), [here](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=921193#12) and [here](https://github.com/eddelbuettel/mkl4deb/issues/9) if you're curious about underlying causes.
 
+## The solution
 
-https://raw.githack.com/uo-ec607/lectures/master/14-gce-i/14-gce-i.html#Install_the_Intel_Math_Kernel_Library_(MKL)_or_OpenBLASLAPACK
+To avoid this problem, set the environmental variable `MKL_THREADING_LAYER=GNU`. You can check the current value of the `MKL_THREADING_LAYER` environmental variable via
 
+```{r}
+Sys.getenv("MKL_THREADING_LAYER")
+```
 
-https://phillipalday.com/blog/2013/05/31/Speed-up-R-(on-Linux)/
+When `MKL_THREADING_LAYER` is not set, it defaults to `INTEL`. To set `MKL_THREADING_LAYER=GNU` universally, you can update `/etc/environment`.
 
-https://www.enchufa2.es/archives/switch-blas-lapack-without-leaving-your-r-session.html
+``` sh
+echo "MKL_THREADING_LAYER=GNU" >> /etc/environment
+```
 
-https://github.com/eddelbuettel/mkl4deb
+Alternatively, tell MKL to operate without parallelism by setting `MKL_NUM_THREADS=1`. Note that you will need to restart `R` for these changes to take effect. More generally, [environmental variables are typically read once, at program startup](https://stackoverflow.com/a/74212620/5563099), so you cannot use `Sys.setenv()` to set `MKL_THREADING_LAYER` at runtime. Similarly, you cannot change the number of threads MKL uses are runtime via environmental variables (see [documentation](https://www.intel.com/content/www/us/en/develop/documentation/onemkl-linux-developer-guide/top/managing-performance-and-memory/improving-performance-with-threading/changing-the-number-of-openmp-threads-at-run-time.html)).
 
-https://cran.r-project.org/web/packages/RhpcBLASctl/index.html
+If you want to test the effect of different environmental variables without leaving `R`, you can use `callr::r()`, as below:
 
-https://twitter.com/dan_p_simpson/status/1571705560634105857/
+```{r}
+callr::r(can_induce_data_race, env = c(MKL_THREADING_LAYER = "INTEL"))
+callr::r(can_induce_data_race, env = c(MKL_THREADING_LAYER = "GNU"))
+```
+
+If you would like to change set environmental variables locally (for example, if you want `targets` to manage parallelism across tasks, while running each individual task sequentially), use an `.Renviron` at the top level of your R project. You can do this via:
+
+``` r
+usethis::edit_r_environ(scope = "project")
+```
+
