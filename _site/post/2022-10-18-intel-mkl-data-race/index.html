@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Hayes">
-<meta name="dcterms.date" content="2022-10-18">
+<meta name="dcterms.date" content="2022-10-30">
 
 <title>alex hayes - avoiding data races with intel mkl</title>
 <style>
@@ -227,7 +227,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 18, 2022</p>
+        <p class="date">October 30, 2022</p>
       </div>
     </div>
     
@@ -290,11 +290,11 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">can_induce_data_race</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2464.338</code></pre>
+<pre><code>[1] 2997.423</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">can_induce_data_race</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2688</code></pre>
+<pre><code>[1] 2986.476</code></pre>
 </div>
 </div>
 <p>See discussion <a href="https://github.com/eddelbuettel/mkl4deb/issues/2">here</a>, <a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=921193#12">here</a> and <a href="https://github.com/eddelbuettel/mkl4deb/issues/9">here</a> if you’re curious about underlying causes.</p>
@@ -315,7 +315,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>callr<span class="sc">::</span><span class="fu">r</span>(can_induce_data_race, <span class="at">env =</span> <span class="fu">c</span>(<span class="at">MKL_THREADING_LAYER =</span> <span class="st">"INTEL"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2979.272</code></pre>
+<pre><code>[1] 2862.72</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>callr<span class="sc">::</span><span class="fu">r</span>(can_induce_data_race, <span class="at">env =</span> <span class="fu">c</span>(<span class="at">MKL_THREADING_LAYER =</span> <span class="st">"GNU"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
