@@ -122,7 +122,7 @@ long_fair |>
   facet_grid(rows = vars(name)) +
   labs(
     title = "Sequences of coin flips",
-    subtitle = "Every sequence was generated generated from fair and dependent coin flips",
+    subtitle = "Every sequence was generated generated from fair and independent coin flips",
     caption = "Each sequence consists of 200 results, either 'heads' or 'tails'"
   ) +
   theme(
