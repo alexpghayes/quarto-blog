@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Hayes">
+<meta name="dcterms.date" content="2022-11-02">
 
-<title>alex hayes - a worked hypothesis testing problem</title>
+<title>alex hayes - hypothesis testing by example</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -135,10 +136,10 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="alex hayes - a worked hypothesis testing problem">
+<meta property="og:title" content="alex hayes - hypothesis testing by example">
 <meta property="og:description" content="some pointers on things that can go right and wrong">
 <meta property="og:site-name" content="alex hayes">
-<meta name="twitter:title" content="alex hayes - a worked hypothesis testing problem">
+<meta name="twitter:title" content="alex hayes - hypothesis testing by example">
 <meta name="twitter:description" content="some pointers on things that can go right and wrong">
 <meta name="twitter:creator" content="@alexpghayes">
 <meta name="twitter:card" content="summary_large_image">
@@ -204,7 +205,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">a worked hypothesis testing problem</h1>
+      <h1 class="title">hypothesis testing by example</h1>
             <p class="subtitle lead"></p><p>some pointers on things that can go right and wrong</p><p></p>
                                 <div class="quarto-categories">
                 <div class="quarto-category">hypothesis testing</div>
@@ -227,7 +228,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Invalid Date</p>
+        <p class="date">November 2, 2022</p>
       </div>
     </div>
     
@@ -242,12 +243,19 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#eye-balling-it" id="toc-eye-balling-it" class="nav-link active" data-scroll-target="#eye-balling-it">Eye-balling it</a></li>
+  <li><a href="#a-hypothesis-testing-problem" id="toc-a-hypothesis-testing-problem" class="nav-link active" data-scroll-target="#a-hypothesis-testing-problem">A hypothesis testing problem</a></li>
+  <li><a href="#eye-balling-it" id="toc-eye-balling-it" class="nav-link" data-scroll-target="#eye-balling-it">Eye-balling it</a></li>
   <li><a href="#counting-heads" id="toc-counting-heads" class="nav-link" data-scroll-target="#counting-heads">Counting heads</a></li>
   <li><a href="#longest-streak-of-heads-in-a-row" id="toc-longest-streak-of-heads-in-a-row" class="nav-link" data-scroll-target="#longest-streak-of-heads-in-a-row">Longest streak of heads in a row</a></li>
   <li><a href="#some-suspicious-patterns" id="toc-some-suspicious-patterns" class="nav-link" data-scroll-target="#some-suspicious-patterns">Some suspicious patterns</a></li>
+  <li><a href="#welcome-to-testing-hell" id="toc-welcome-to-testing-hell" class="nav-link" data-scroll-target="#welcome-to-testing-hell">Welcome to testing hell!</a></li>
+  <li><a href="#coda" id="toc-coda" class="nav-link" data-scroll-target="#coda">Coda</a>
+  <ul class="collapse">
+  <li><a href="#follow-up-challenge-multiple-testing" id="toc-follow-up-challenge-multiple-testing" class="nav-link" data-scroll-target="#follow-up-challenge-multiple-testing">Follow up challenge: multiple testing</a></li>
+  <li><a href="#followup-challenge-unknown-probability-of-heads" id="toc-followup-challenge-unknown-probability-of-heads" class="nav-link" data-scroll-target="#followup-challenge-unknown-probability-of-heads">Followup challenge: unknown probability of heads</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/xxxx-xx-xx-coin-flips/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/2022-11-02-hypothesis-testing-by-example/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -258,8 +266,9 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 
-<p>In an data science course that I am currently TA-ing, we just gave out the following problem.</p>
-<p>Suppose you have the following six sequences of coin flips. Exactly one sequence is generated by repeatedly flipping a fair coin. Which sequence is it?</p>
+<section id="a-hypothesis-testing-problem" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="a-hypothesis-testing-problem">A hypothesis testing problem</h2>
+<p>In an data science course that I am currently TA-ing, we just gave out the following problem. Suppose you have the following six sequences of coin flips. Exactly one sequence is generated by repeatedly flipping a fair coin. Which sequence is it?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sequences <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> <span class="st">"HTHTHTHTHTHTHTHTHTHTHTHTHTHTHTHTHHTHTHTHTHTHTHTTHTHTHTHTHTHTHHTHTHTHTHTHTHTHTHTHTHTHTHTHTHHTTHTHTHTHTHTHTHTHTHTHTHTHTHHTHTHTHTHTHTHTHTHTHTHTHTTHTHTHTHTHTHTHTHTHTHTHTHTHHTHTHTHTHTHTHTHTHTHTHTHHTHTHTHTH"</span>,</span>
@@ -270,7 +279,8 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">F =</span> <span class="st">"TTHTTTHTTTTTTTHTHTHTHTTHTTHTHHTHHTTTHHTHTTTHTHHTHHHTHTTHHTHHTTHTHTTTTHTHTTTHHTTTTTTTTHTHHTTHTTTTTTHTHTHTHTTTHTTHHTTHTTTHHTTTHTTHTTTTHTTTTHHTTTHTHTHHHTTTTTTHTHHTTTTTTTTTTTTHHHTTTHHHTTTHTTTHTHTTHTTTTTHT"</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>To make the problem a little more concrete, here is a visualization of the coin flip sequences. Which one looks genuinely random to you? Try to solve this problem on your own before reading on!</p>
+<p>In this post, I’ll walk through the problem and point out places where it’s easy to have misleading intuition. I encourage readers to try to solve the problem on their own before reading the post.</p>
+<p>Alright, onward. To make the problem a little more concrete, let’s start by visualizing the coin flip sequences.</p>
 <div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
@@ -320,6 +330,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
+</section>
 <section id="eye-balling-it" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="eye-balling-it">Eye-balling it</h2>
 <p>Staring at the sequences, I notice a couple things at first:</p>
@@ -329,7 +340,8 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <li>All of the other cycles switch back and forth between heads and tails fairly often, with some long streaks of all heads or all tails as well</li>
 </ul>
 <p>Immediately I think I can rule out <code>A</code> and <code>E</code>, because each flip appears to depend on the previous flips, and this shouldn’t happen when I repeatedly flip a fair coin. Hopefully, I can develop a test later on that will capture this intuition more quantitatively, but for now, I just rule out <code>A</code> and <code>E</code>.</p>
-<p>There are some other patterns that look suspicious to me, but I’ve previously learned that my intuition about which sequences are random and which aren’t isn’t very good. Part of the challenge here is that I am mainly looking at non-random sequences in <a href="#fig-observed">Figure&nbsp;1</a>, and this doesn’t tell me very much about which patterns are surprising under a random model. So next I generate six sequences by repeatedly flipping a fair coin (from this point onward, when I refer to a “random sequence”, I mean sequence of heads and tails generated by repeatedly flipping a fair coin just like this).</p>
+<p>There are some other patterns that look suspicious to me, but I’ve previously learned that my intuition about which sequences are random and which aren’t isn’t very good. Part of the challenge here is that I am mainly looking at non-random sequences in <a href="#fig-observed">Figure&nbsp;1</a>, and this doesn’t tell me very much about which patterns are surprising under a random model.</p>
+<p>So next I generate six sequences by repeatedly flipping a fair coin (from this point onward, when I refer to a “random sequence” or “a sequence from the null model”, I mean sequence of heads and tails generated by repeatedly flipping a fair coin).</p>
 <div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
@@ -438,7 +450,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> <span class="fu">quantile</span>(null_distribution, <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>By looking at the grey histogram (which is repeated in each panel), I can observed that, in ninety percent of the sequences from a repeatedly flipped fair coin, the number of heads in the sequence is between the fifth percentile <span class="math inline">\(q_{0.05} =\)</span> 89 and the ninety-fifth percentile <span class="math inline">\(q_{0.95} =\)</span> 111. This means that it is <em>unlikely</em> that I will see less than 89 heads or more than 111 heads in a random sequence.</p>
+<p>Now I observe that, in ninety percent of the sequences from a repeatedly flipped fair coin, the number of heads in the sequence is between the fifth percentile <span class="math inline">\(q_{0.05} =\)</span> 89 and the ninety-fifth percentile <span class="math inline">\(q_{0.95} =\)</span> 111. This means that it is <em>unlikely</em> that I will see less than 89 heads or more than 111 heads in a random sequence.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -898,7 +910,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 </div>
 <p>Since sequence F has only 70 heads, it seems unlikely that sequence F comes from the null model of independent, fair coin flips.</p>
-<p>The approach that I have demonstrated above is to compute a <em>rejection region</em> for a test statistic that contains my test statistic <span class="math inline">\(90\%\)</span> of the time under the null model. This is not the only way to approach the problem. I could also ask, for each sequence, how often do I see a larger number of heads in random sequences. This is known as computing a <em>p-value</em>.</p>
+<p>The approach that I have demonstrated above is to compute a <em>rejection region</em> for a test statistic that contains my test statistic <span class="math inline">\(90\%\)</span> of the time under the null model. This is not the only way to approach the problem. I could also ask, for each sequence, how often do I see a more extreme (i.e.&nbsp;larger or smaller) number of heads in random sequences. This is known as computing a <em>p-value</em>.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -1347,7 +1359,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 </div>
 <p>When the p-value is small, it means that the number of observed heads in a sequence is either much higher or much lower than typically seen in random sequences. In particular, a p-value of <span class="math inline">\(p\)</span> (which should always be between zero and one) means that random sequences had as many heads as the mystery sequence only <span class="math inline">\(p \cdot 100\%\)</span> of the time.</p>
-<p>More intuitively: small p-values indicate that data is not compatible with a given model. In this case, the very small p-value for sequence <span class="math inline">\(F\)</span> indicates that sequence <span class="math inline">\(F\)</span> is not compatible the random sequence model for coin flips. Sequences <span class="math inline">\(A, B, C, D\)</span> and to a less extent <span class="math inline">\(E\)</span> are all compatible with the random sequence model.</p>
+<p>Intuitively, small p-values indicate that data is not compatible with a given model. In this case, the very small p-value for sequence <span class="math inline">\(F\)</span> indicates that sequence <span class="math inline">\(F\)</span> is not compatible the random sequence model for coin flips. Sequences <span class="math inline">\(A, B, C, D\)</span> and to a lesser extent <span class="math inline">\(E\)</span> are all compatible with the random sequence model.</p>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1359,30 +1371,42 @@ Misleading intuition
 </div>
 <div class="callout-body-container callout-body">
 <p>If we stare at the p-values a little longer, we might be tempted to conclude that sequence <span class="math inline">\(C\)</span> is the most likely to be sampled from the random model, since it has the highest p-value. The intuition goes roughly like this: a low p-value tells us that it is improbable that the data <span class="math inline">\(X_1, ..., X_n\)</span> came from the null model. Therefore a high p-value tells us that is probable the data <span class="math inline">\(X_1, ..., X_n\)</span> came from the null model.</p>
-<p>This is a very common misconception, and if we are a little bit more careful in interpreting the p-value, we can see where it comes from, and also why this reasoning doesn’t quite work. More precisely, low p-value tells us that it is improbable that the observed test statistic <span class="math inline">\(T(X_1, ..., X_n)\)</span> would be observed by chance under the null model. The probability of seeing the test statistic is <em>not</em> the probability of seeing the data.</p>
-<p>Different test statistics can be used to examine the compatibility of the data with different aspects of the null model! One test statistic might have a small p-value, and a different test statistic might have a large p-value, both for the same null model.</p>
-<p>Because hypothesis tests function through a test statistic, we cannot use them to compare the relative probability of hypotheses. To make this slightly more concrete, let’s compute the probability of observing sequences <span class="math inline">\(A, B, C, D, E\)</span> and <span class="math inline">\(F\)</span> under the null model. This turns out to be <span class="math inline">\((1/2)^{200}\)</span> for every single sequence. Under the null model, every single sequence is equally likely!</p>
-<p>Takeaways:</p>
+<p>This is a very common misconception, and if we are a little bit more careful in interpreting the p-value, we can see where it comes from, and also why this reasoning doesn’t quite work. A low p-value tells us that it is improbable that the <em>observed test statistic</em> <span class="math inline">\(T(X_1, ..., X_n)\)</span> would be observed by chance under the null model. The probability of seeing the test statistic is <em>not</em> the probability of seeing the data.</p>
+<p>The test statistic is one of many possible reductions of the data. Different test statistics can be used to examine the compatibility of the data with different aspects of the null model! One test statistic might have a small p-value, and a different test statistic might have a large p-value, <em>for the same data</em>. Because of this, statisticians often emphasize that we can never “accept” a null hypothesis; instead, we can only “reject” or “fail to reject” the null hypothesis. This is clunky English shorthand to remind us that p-values tell us about the probability of the test statistic, not the data proper.</p>
+<p>Because hypothesis tests function through a test statistic, we cannot use them to compare the relative probability of hypotheses. To make this slightly more concrete, let’s compute the probability of observing sequences <span class="math inline">\(A, B, C, D, E\)</span> and <span class="math inline">\(F\)</span> under the null model. This turns out to be <span class="math inline">\((1/2)^{200}\)</span> for every single sequence! Under the null model, every single sequence is equally likely!</p>
+<p>To summarize:</p>
 <ol type="1">
 <li>P-values tell us about the probability of the test statistic, not the data.</li>
 <li>This means we need to pick good test statistics, which is generally a challenging problem.</li>
 <li>The data can be compatible with multiple models at the same time!</li>
 </ol>
-<p>rain example?</p>
-<p>reject vs accept vs fail to reject. sometime framed as: cannot “accept” the null hypothesis, can only reject it</p>
-<p>Similarly, if we compute the expected number of heads under the null model, we cannot conclude that sequence <span class="math inline">\(C\)</span> is the most likely. Having a sample mean close to a population mean does not tell us about probability of the data under the null.</p>
+</div>
+</div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Another version of the same misleading intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Similarly, if we compute the expected number of heads under the null model, we cannot conclude that sequence <span class="math inline">\(C\)</span> is the most likely. Knowing that a test statistic <span class="math inline">\(T\)</span> (the number of heads in a sequence) is close to its expectation (the average number of heads in null model) does not tell us about the probability of the full data under the null. It only tells us about head counts, and head counts do not fully characterize the data!</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>head_count_stats <span class="sc">|&gt;</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>p_value, <span class="sc">-</span>observed_quantile, <span class="sc">-</span>likelihood) <span class="sc">|&gt;</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Sequence"</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">statistic =</span> <span class="st">"Heads in sequence"</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">expected =</span> <span class="st">"E[num heads|null model]"</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_likelihood =</span> <span class="st">"log P(data|null model)"</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Even though sequence C has exactly the expected number of heads under the null model, every single sequence is equally likely under the null model."</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Sequence"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">statistic =</span> <span class="st">"Heads in sequence"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">expected =</span> <span class="st">"E[num heads|null model]"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_likelihood =</span> <span class="st">"log P(data|null model)"</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 
@@ -1793,6 +1817,7 @@ Misleading intuition
 }
 </style>
 <table class="gt_table">
+  <caption>Even though sequence C has exactly the expected number of heads under the null model, every single sequence is equally likely under the null model.</caption>
   
   <thead class="gt_col_headings">
     <tr>
@@ -1839,7 +1864,7 @@ Misleading intuition
 </section>
 <section id="longest-streak-of-heads-in-a-row" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="longest-streak-of-heads-in-a-row">Longest streak of heads in a row</h2>
-<p>tried one test, time to develop another one. let’s try streaks. how do i come up with this as a test statistic? by looking at the data? actually, no, more know that streak lengths are a defining feature of binary random sequences a priori. using a priori knowledge to develop tests is typically a good thing.</p>
+<p>Okay, so we tried one test and it helped us eliminate some options. But we would like to eliminate more. So let’s come up with a new feature to investigate (i.e.&nbsp;test statistic). Let’s look at the longest streak of heads in a sequence. Again, we simulate from the null model to find the null distribution of the test statistic, and plot the results below:</p>
 <div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
@@ -1899,84 +1924,95 @@ Misleading intuition
 <p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
-<p>Now we’re down to sequences <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> as viable. <span class="math inline">\(C\)</span> has exactly 100 heads, <span class="math inline">\(D\)</span> does not. Is this suspicious? I leave it for you to find out.</p>
+<p>Here it looks like the longest streak of heads in sequences <span class="math inline">\(A, B\)</span> and <span class="math inline">\(F\)</span> is too short, and the long sequence of heads in sequence <span class="math inline">\(E\)</span> is possibly too long. Let’s eliminate <span class="math inline">\(A, B, E\)</span> and <span class="math inline">\(F\)</span> for now and try figure out if <span class="math inline">\(C\)</span> or <span class="math inline">\(D\)</span> comes from the random sequence.</p>
 </section>
 <section id="some-suspicious-patterns" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="some-suspicious-patterns">Some suspicious patterns</h2>
-<blockquote class="blockquote">
-<p>I found out that the probability of “HHHHHHTTTTTT” occurring 1 or more times in 200 flips is smaller than 0.05, so I decided to eliminate flips4. So we now have flips2 and flips3 left.</p>
-</blockquote>
+<p>So now I go back to sequences <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> and stare at both of them for a while. I like thinking about streaks, because streaks encode dependence, testing for dependence across coin flips seems like a promising idea. Instead of considering the longest streak in the data, let’s consider the total number of streaks in each sequence. Coding this up and running the test yields the following results:</p>
 <div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># HTHHHHHHTTTTTTHHHTTHTHHHHTTTH</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># HHHHHHTTTTTT</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>num_subseq <span class="ot">&lt;-</span> <span class="cf">function</span>(results, subseq) {</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  collapsed <span class="ot">&lt;-</span> <span class="fu">paste0</span>(results, <span class="at">collapse =</span> <span class="st">""</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_count</span>(collapsed, subseq)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>pattern1_count <span class="ot">&lt;-</span> <span class="cf">function</span>(results) {</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">num_subseq</span>(results, <span class="at">subseq =</span> <span class="st">"HTHHHHHHTTTTTTHHHTTHTHHHHTTTH"</span>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_test</span>(pattern1_count) <span class="sc">+</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Frequency of sequence HTHHHHHHTTTTTTHHHTTHTHHHHTTTH"</span>,</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"compare to frequency under null model (grey)"</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>, <span class="at">expand =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>num_islands <span class="ot">&lt;-</span> <span class="cf">function</span>(results) {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  rle_encoded <span class="ot">&lt;-</span> <span class="fu">rle</span>(results)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">table</span>(rle_encoded<span class="sc">$</span>lengths))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_test</span>(num_islands) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Total number of streaks"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"compare to frequency under null model (grey)"</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display column-body-outset">
 <p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
-<p>So we reject sequence <span class="math inline">\(D\)</span>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>num_islands <span class="ot">&lt;-</span> <span class="cf">function</span>(results) {</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  rle_encoded <span class="ot">&lt;-</span> <span class="fu">rle</span>(results)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">table</span>(rle_encoded<span class="sc">$</span>lengths))</span>
+<p>Based on this test we can reject sequence <span class="math inline">\(C\)</span> since it seems to have too few streaks. This leaves us with a single remaining sequence, <span class="math inline">\(D\)</span>, which might be the random sequence.</p>
+<p>But wait! Staring at the sequence <span class="math inline">\(D\)</span>, I realize that it contains the subsequence <code>HTHHHHHHTTTTTTHHHTTHTHHHHTTTH</code>, and this seems suspicious to me. So I decide to do one last test, where the test statistic is the number of occurrences of the subsequence <code>HTHHHHHHTTTTTTHHHTTHTHHHHTTTH</code>.</p>
+<div class="cell page-columns page-full">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>num_subseq <span class="ot">&lt;-</span> <span class="cf">function</span>(results, subseq) {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  collapsed <span class="ot">&lt;-</span> <span class="fu">paste0</span>(results, <span class="at">collapse =</span> <span class="st">""</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_count</span>(collapsed, subseq)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>matches <span class="ot">&lt;-</span> <span class="cf">function</span>(results) {</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(results <span class="sc">==</span> dplyr<span class="sc">::</span><span class="fu">lag</span>(results), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>pattern1_count <span class="ot">&lt;-</span> <span class="cf">function</span>(results) {</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">num_subseq</span>(results, <span class="at">subseq =</span> <span class="st">"HTHHHHHHTTTTTTHHHTTHTHHHHTTTH"</span>)</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_test</span>(num_islands) <span class="sc">+</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_test</span>(pattern1_count) <span class="sc">+</span></span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Number of islands"</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Frequency of sequence HTHHHHHHTTTTTTHHHTTHTHHHHTTTH"</span>,</span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"compare to frequency under null model (grey)"</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>, <span class="at">expand =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display column-body-outset">
 <p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="960"></p>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_test</span>(matches) <span class="sc">+</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Number of matches"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"compare to frequency under null model (grey)"</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid" width="960"></p>
 </div>
-</div>
-<p>but we also reject sequence <span class="math inline">\(C\)</span>! welcome to testing hell. what is going on here. all data has surprising variation.</p>
-<p>looking at it, seeing something surprising, and then testing if that variation is surprising can lead you astray. this is called p-hacking.</p>
-<p>To avoid this problem, do you think it is sufficient to choose a test statistic before looking at your data?</p>
-<p>Do you think it is a good idea to plan an entire data analysis before looking at your actual data?</p>
-<p>what makes a good test statistic? i… uh… have no idea. i.e.&nbsp;what gives a certain procedure guarantees and other procedures no guarantees</p>
-<p>We have come up with test statistics that reject every sequence. This cannot possibly be correct! Which sequence do you think is actually random? What tests do you feel most confident in? Why?</p>
-<p>Follow up questions:</p>
+<p>Now we reject sequence <span class="math inline">\(D\)</span> as well, because it has the sequence <code>HTHHHHHHTTTTTTHHHTTHTHHHHTTTH</code> once, but under our null model, we never see this subsequence! At least, not frequently enough to appear in our simulations.</p>
+</section>
+<section id="welcome-to-testing-hell" class="level2">
+<h2 class="anchored" data-anchor-id="welcome-to-testing-hell">Welcome to testing hell!</h2>
+<p>This is a good moment to stop, look at all of our results so far, and decide which sequence you think is random. So far we have rejected every sequence! This suggests that we may have made some Type I errors. Are there any tests that you find dubious? Why might be they be misleading?</p>
+<p>The fact that we have managed to reject all the sequences is a somewhat subtle issue. The gist is that our final test, the one using <code>HTHHHHHHTTTTTTHHHTTHTHHHHTTTH</code>, is not a particularly good test. This is because all random data has surprising variation. If you look at data, see something surprising, and then develop a hypothesis test to check if that surprising thing is indeed surprising, your number of false positives (Type I errors) will skyrocket. If you’re curious to understand this issue, I wrote a <a href="https://www.alexpghayes.com/post/2020-05-04_using-the-data-twice/">blog post</a> that goes into more detail.</p>
+<p>In the meantime, here are two questions worth some contemplation:</p>
+<ul>
+<li>To avoid circular tests for surprising data, do you think it is sufficient to choose a test statistic before looking at your data?</li>
+<li>Do you think it is a good idea to plan an entire data analysis before looking at your data?</li>
+</ul>
+</section>
+<section id="coda" class="level2">
+<h2 class="anchored" data-anchor-id="coda">Coda</h2>
+<section id="follow-up-challenge-multiple-testing" class="level3">
+<h3 class="anchored" data-anchor-id="follow-up-challenge-multiple-testing">Follow up challenge: multiple testing</h3>
+<p>Overall, we did <span class="math inline">\(4 \cdot 6 = 24\)</span> total hypothesis tests. Suppose we did all tests at the <span class="math inline">\(\alpha = 0.05\)</span> level, such that each test had probability <span class="math inline">\(\alpha\)</span> of type I error.</p>
+<ul>
+<li><p>Collectively, across all of our tests, what is the chance of at least one false positive result? Does it make sense to assume that tests results are independent?<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p></li>
+<li><p>Does the number of tests seem like a problem to you? Can you think of any solutions?</p></li>
+</ul>
+</section>
+<section id="followup-challenge-unknown-probability-of-heads" class="level3">
+<h3 class="anchored" data-anchor-id="followup-challenge-unknown-probability-of-heads">Followup challenge: unknown probability of heads</h3>
 <p>One of the six sequences was generated by repeatedly flipping a weighted coin, with probability <span class="math inline">\(p \in (0, 1)\)</span> of heads, where <span class="math inline">\(p\)</span> is unknown.</p>
-<ol type="1">
+<ul>
 <li><p>Do you have any suspicions about which sequence it was? Why?</p></li>
 <li><p>Can you still use a similar approach to figure out find the sequence from a weighted coin? Why or why not?</p></li>
-<li><p>Overall, we did <span class="math inline">\(X\)</span> total hypothesis tests. Each test had a certain probability of type I error, we did not choose to conduct tests independently. Collectively, across all of our tests, what is the chance of at least one false positive result? Does this seem like a problem to you? Can you think of any solutions?</p></li>
-</ol>
+</ul>
 
 
 </section>
+</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>If you want to treat tests as dependent, you may not be able to calculate the precise probability of one or more false positive, but you can bound it using Fréchet’s inequality: <span class="math inline">\(P(A \text{ or } B) \le P(A) + P(B)\)</span> for possibly dependent events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
