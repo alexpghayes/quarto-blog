@@ -1,16 +1,16 @@
 ---
 title: "about"
-image: headshot.png
+image: headshot.jpg
 about:
   template: solana
   image-width: 10em
-  image-shape: round
+  image-shape: rounded
 ---
 
 I'm a PhD candidate in the statistics department at the University of Wisconsin-Madison, where I am co-advised by [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) and [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/). I study spectral methods for network analysis, and more recently causal inference. 
 
 <!-- I anticipate being on the post-doc job market in fall 2024. -->
 
-I am responsive via [email](mailto:alexpghayes@gmail.com), possibly responsive at [@alexpghayes](https://twitter.com/alexpghayes) on Twitter, and actively exploring <a rel="me" href="https://mastodon.social/@alexpghayes">Mastodon</a>. 
+I am responsive via [email](mailto:alexpghayes@gmail.com) and occasionally on Twitter, where I am [@alexpghayes](https://twitter.com/alexpghayes).
 
-Last updated on 2022-11-06.
+Last updated on 2023-01-11.
