@@ -2,18 +2,18 @@
 title: "teaching"
 ---
 
-## current courses
+## current
 
-**Graduate Teaching Assistant**  
-Fall 2022, [STAT 340 Intro to Data Modeling II](https://pages.stat.wisc.edu/~kdlevin/teaching/Fall2022/STAT340/), DIS 324, DIS 325, DIS 326  
-
-My in-person office hours are 10 am to 12 pm on Wednesdays, in Medical Sciences Center (MSC) 1475. The room is a little tricky to find. You can [schedule an appointment with me](https://calendly.com/alexpghayes/officehours) if you would like to meet at a different time, or over Zoom.
+I am not teaching in Spring 2023.
 
 ## teaching material
 
 If you are teaching an introductory statistics class in the "barrage of hypothesis tests" tradition, you may find my [cheatsheet on common hypothesis tests](https://github.com/alexpghayes/classic-stats-formulas) useful. I also wrote [`distributions3`](https://alexpghayes.github.io/distributions3/dev/) to be an approachable set of tools for manipulating probability distributions for intro stat students. The package [vignettes](https://alexpghayes.github.io/distributions3/dev/articles/) are designed to walk students intro stat courses though many classic hypothesis tests as well.
 
 ## past courses
+
+**Graduate Teaching Assistant**  
+Fall 2022, [STAT 340 Intro to Data Modeling II](https://pages.stat.wisc.edu/~kdlevin/teaching/Fall2022/STAT340/), DIS 324, DIS 325, DIS 326
 
 **Graduate Teaching Assistant**  
 Spring 2019, STAT 324 Intro to Statistics for Engineers, UW-Madison  
@@ -53,4 +53,4 @@ October 8, 2020, STAT 992 Modern Multivariate Statistics, UW-Madison
 October 18, 2018, STAT 324 Intro to Statistics for Engineers, UW-Madison  
 [notes](https://alexpghayes.github.io/distributions3/articles/intro-to-hypothesis-testing.html)
 
-Last updated 2022-10-16.
+Last updated 2023-01-18.
