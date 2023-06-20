@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-1.3.361">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -57,7 +57,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script>
@@ -99,6 +100,7 @@ gtag('js', new Date());
 gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
@@ -120,47 +122,49 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
     <span class="navbar-title">alex hayes</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">about</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./posts.html" aria-current="page">
+    <a class="nav-link active" href="./posts.html" rel="" target="" aria-current="page">
  <span class="menu-text">posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./papers/index.html">
+    <a class="nav-link" href="./papers/index.html" rel="" target="">
  <span class="menu-text">papers</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./code/index.html">
+    <a class="nav-link" href="./code/index.html" rel="" target="">
  <span class="menu-text">code</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./teaching/index.html">
+    <a class="nav-link" href="./teaching/index.html" rel="" target="">
  <span class="menu-text">teaching</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./talks/index.html">
+    <a class="nav-link" href="./talks/index.html" rel="" target="">
  <span class="menu-text">talks</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/alexpghayes"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/alexpghayes" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/alexpghayes"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/alexpghayes" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -200,7 +204,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="hypothesis testing,frequentism,p-hacking" data-listing-date-sort="1667365200000" data-listing-file-modified-sort="1667496390489" data-listing-reading-time-sort="14.56">
+<div class="quarto-post image-right" data-index="0" data-categories="hypothesis testing,frequentism,p-hacking" data-listing-date-sort="1667365200000" data-listing-file-modified-sort="1667496390489" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15">
 <div class="body">
 <a href="./post/2022-11-02-hypothesis-testing-by-example/index.html">
 <h3 class="no-anchor listing-title">
@@ -210,7 +214,7 @@ hypothesis testing by example
 <p>some pointers on things that can go right and wrong</p>
 </div>
 <div class="listing-description">
-In a data science course that I am currently TA-ing, we just gave out the following problem. Suppose you have the following six sequences of coin flips. Exactly one sequence is generated by repeatedly flipping a fair coin. Which sequence is it?
+In a data science course that I am currently TA-ing, we just gave…
 </div>
 </a>
 </div>
@@ -220,12 +224,12 @@ In a data science course that I am currently TA-ing, we just gave out the follow
 Nov 2, 2022
 </div>
 <div class="listing-reading-time">
-14 min
+15 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="notes to self,data race,intel mkl" data-listing-date-sort="1667106000000" data-listing-file-modified-sort="1667162040911" data-listing-reading-time-sort="2.11">
+<div class="quarto-post image-right" data-index="1" data-categories="notes to self,data race,intel mkl" data-listing-date-sort="1667106000000" data-listing-file-modified-sort="1667162040911" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="body">
 <a href="./post/2022-10-30-intel-mkl-data-race/index.html">
 <h3 class="no-anchor listing-title">
@@ -235,7 +239,7 @@ avoiding data races with intel mkl
 <p>set the <code>MKL_THREADING_LAYER</code> environment variable to <code>GNU</code>.</p>
 </div>
 <div class="listing-description">
-If you are using Intel MKL for your BLAS/LAPACK implementation on Linux, you can set the environment variable <code>MKL_THREADING_LAYER</code> to <code>GNU</code> to avoid data races during matrix multiplication<sup>1</sup>.
+If you are using Intel MKL for your BLAS/LAPACK implementation on Linux, you can set the environment variable <code>MKL_THREADING_LAYER</code> to <code>GNU</code> to…<sup></sup>
 </div>
 </a>
 </div>
@@ -245,12 +249,12 @@ If you are using Intel MKL for your BLAS/LAPACK implementation on Linux, you can
 Oct 30, 2022
 </div>
 <div class="listing-reading-time">
-2 min
+3 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="python,workflow,tidymodels" data-listing-date-sort="1616907600000" data-listing-file-modified-sort="1651262623223" data-listing-reading-time-sort="12.835">
+<div class="quarto-post image-right" data-index="2" data-categories="python,workflow,tidymodels" data-listing-date-sort="1616907600000" data-listing-file-modified-sort="1651262623223" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13">
 <div class="body">
 <a href="./post/2021-03-28_many-models-workflows-in-python-part-ii/index.html">
 <h3 class="no-anchor listing-title">
@@ -260,7 +264,7 @@ many models workflows in python ii
 <p>a tidymodels workflow in python using list columns in pandas dataframes, now with hyperparameter sweep and parallelism</p>
 </div>
 <div class="listing-description">
-In this followup to my earlier post on modeling workflows in Python, I demonstrate how to integrate sample splitting, parallel processing, exception handling and caching into many-models workflows. I also discuss some differences between exploration/inference-centric workflows and tuning-centric workflows.
+In this followup to my earlier post on modeling workflows in Python, I demonstrate how to integrate sample splitting, parallel processing, exception handling and…
 </div>
 </a>
 </div>
@@ -270,12 +274,12 @@ In this followup to my earlier post on modeling workflows in Python, I demonstra
 Mar 28, 2021
 </div>
 <div class="listing-reading-time">
-12 min
+13 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="python,workflow,tidymodels" data-listing-date-sort="1598331600000" data-listing-file-modified-sort="1651254203041" data-listing-reading-time-sort="13.075">
+<div class="quarto-post image-right" data-index="3" data-categories="python,workflow,tidymodels" data-listing-date-sort="1598331600000" data-listing-file-modified-sort="1651254203041" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14">
 <div class="body">
 <a href="./post/2020-08-25_many-models-workflows-in-python-part-i/index.html">
 <h3 class="no-anchor listing-title">
@@ -285,7 +289,7 @@ many models workflows in python i
 <p>a tidymodels workflow in python using list columns in pandas dataframes</p>
 </div>
 <div class="listing-description">
-This summer I worked on my first substantial research project in Python. I’ve used Python for a number of small projects before, but this was the first time that it was important for me to have an efficient workflow for working with many models at once. In R, I spend almost all of my time using a ‘many models’ workflow that leverages list-columns in <code>tibble</code>s and a hefty amount of <code>tidyverse</code> manipulation. It’s taken me a while to find a similar workflow in Python that I like, and so I’m documenting it here for myself and other parties who might benefit.
+This summer I worked on my first substantial research project in Python. I’ve used Python for a number of small projects before, but this was the first time that it was…<code></code><code></code>
 </div>
 </a>
 </div>
@@ -295,12 +299,12 @@ This summer I worked on my first substantial research project in Python. I’ve 
 Aug 25, 2020
 </div>
 <div class="listing-reading-time">
-13 min
+14 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="math stat,foundations of stat" data-listing-date-sort="1588568400000" data-listing-file-modified-sort="1657819654668" data-listing-reading-time-sort="10.205">
+<div class="quarto-post image-right" data-index="4" data-categories="math stat,foundations of stat" data-listing-date-sort="1588568400000" data-listing-file-modified-sort="1657819654668" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
 <div class="body">
 <a href="./post/2020-05-04_using-the-data-twice/index.html">
 <h3 class="no-anchor listing-title">
@@ -310,7 +314,7 @@ using the data twice
 <p>my best attempt at explaining why frequentism is about sampling procedures</p>
 </div>
 <div class="listing-description">
-Berna Devezer, Danielle Navarro, Joachim Vandekerckhove, and Erkan Ozge Buzbas recently posted a pre-print, <span class="citation" data-cites="devezer_case_2020">Devezer et al. (2020)</span>, responding to various claims within the open science community. In particular, they explore the following claims:
+Berna Devezer, Danielle Navarro, Joachim Vandekerckhove, and Erkan Ozge Buzbas recently posted a pre-print, <span class="citation" data-cites="devezer_case_2020">Devezer et al. (2020)</span>, responding to various claims within the open science community.…
 </div>
 </a>
 </div>
@@ -320,12 +324,12 @@ Berna Devezer, Danielle Navarro, Joachim Vandekerckhove, and Erkan Ozge Buzbas r
 May 4, 2020
 </div>
 <div class="listing-reading-time">
-10 min
+11 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="data analysis" data-listing-date-sort="1588309200000" data-listing-file-modified-sort="1652132580436" data-listing-reading-time-sort="2.205">
+<div class="quarto-post image-right" data-index="5" data-categories="data analysis" data-listing-date-sort="1588309200000" data-listing-file-modified-sort="1652132580436" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="body">
 <a href="./post/2020-05-01_elon-musk-send-tweet/index.html">
 <h3 class="no-anchor listing-title">
@@ -345,12 +349,12 @@ At 2020-05-01 15:11:26 UTC Elon Musk tweeted
 May 1, 2020
 </div>
 <div class="listing-reading-time">
-2 min
+3 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="math stat,methods,notes to self" data-listing-date-sort="1584853200000" data-listing-file-modified-sort="1651262688836" data-listing-reading-time-sort="15.04">
+<div class="quarto-post image-right" data-index="6" data-categories="math stat,methods,notes to self" data-listing-date-sort="1584853200000" data-listing-file-modified-sort="1651262688836" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16">
 <div class="body">
 <a href="./post/2020-03-22_to-transform-or-not-to-transform/index.html">
 <h3 class="no-anchor listing-title">
@@ -360,7 +364,7 @@ to transform or not to transform
 <p>a likelihood ratio test to check if transforming your data leads to better model fit</p>
 </div>
 <div class="listing-description">
-You may have heard that it is impossible to compare models when the outcome has been transformed in one model but not the other. This is not the case. Models fit to transformed data implicitly model the original data as well as the transformed data, and it is relatively straightforward to calculate the corresponding likelihoods. In this post, I’ll show you how to calculate these induced likelihoods. This will allow you to compare models fit to transformed data with models fit to the original, untransformed data.
+You may have heard that it is impossible to compare models when the outcome has been transformed in one model but not the other. This is not the case. Models fit to…
 </div>
 </a>
 </div>
@@ -370,12 +374,12 @@ You may have heard that it is impossible to compare models when the outcome has 
 Mar 22, 2020
 </div>
 <div class="listing-reading-time">
-15 min
+16 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="math stat" data-listing-date-sort="1578290400000" data-listing-file-modified-sort="1651209922785" data-listing-reading-time-sort="19.66">
+<div class="quarto-post image-right" data-index="7" data-categories="math stat" data-listing-date-sort="1578290400000" data-listing-file-modified-sort="1651209922785" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20">
 <div class="body">
 <a href="./post/2020-01-06_overfitting-a-guide-tour/index.html">
 <h3 class="no-anchor listing-title">
@@ -385,7 +389,7 @@ overfitting: a guided tour
 <p>fleshing out intuition about structure in random processes beyond the standard bias-variance decomposition</p>
 </div>
 <div class="listing-description">
-This post introduces overfitting, describes how overfitting influences both prediction and inference problems, provides supervised and unsupervised examples of overfitting, and presents a fundamental relationship between train and test error. The goal is to provide some additional intuition beyond material covered in introductory machine learning resources.
+This post introduces overfitting, describes how overfitting influences both prediction and inference problems, provides supervised and unsupervised examples of overfitting…
 </div>
 </a>
 </div>
@@ -395,12 +399,12 @@ This post introduces overfitting, describes how overfitting influences both pred
 Jan 6, 2020
 </div>
 <div class="listing-reading-time">
-19 min
+20 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="m estimation,math stat" data-listing-date-sort="1567227600000" data-listing-file-modified-sort="1657819574771" data-listing-reading-time-sort="17.5">
+<div class="quarto-post image-right" data-index="8" data-categories="m estimation,math stat" data-listing-date-sort="1567227600000" data-listing-file-modified-sort="1657819574771" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18">
 <div class="body">
 <a href="./post/2019-08-31_consistency-and-the-linear-probability-model/index.html">
 <h3 class="no-anchor listing-title">
@@ -410,7 +414,7 @@ consistency and the linear probability model
 <p>an explainer about ordinary least squares regression and when it is an acceptable estimator</p>
 </div>
 <div class="listing-description">
-A while back Twitter once again lost its collective mind and decided to rehash the logistic regression versus linear probability model debate for the umpteenth time. The genesis for this new round of chaos was <span class="citation" data-cites="gomila_logistic_2019">Gomila (2019)</span>, a pre-print by Robin Gomila, a grad student in psychology at Princeton.
+A while back Twitter once again…<span class="citation" data-cites="gomila_logistic_2019"></span>
 </div>
 </a>
 </div>
@@ -420,12 +424,12 @@ A while back Twitter once again lost its collective mind and decided to rehash t
 Aug 31, 2019
 </div>
 <div class="listing-reading-time">
-17 min
+18 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="notes to self,networks,research" data-listing-date-sort="1564117200000" data-listing-file-modified-sort="1651263081172" data-listing-reading-time-sort="12.405">
+<div class="quarto-post image-right" data-index="9" data-categories="notes to self,networks,research" data-listing-date-sort="1564117200000" data-listing-file-modified-sort="1651263081172" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13">
 <div class="body">
 <a href="./post/2019-07-26_an-annotated-bibliography-on-stochastic-blockmodels/index.html">
 <h3 class="no-anchor listing-title">
@@ -435,7 +439,7 @@ an annotated bibliography on stochastic blockmodels
 <p>some pointers to papers that were helpful when i got started in spectral network analysis, a woefully incomplete list</p>
 </div>
 <div class="listing-description">
-I’ve been reading a lot of papers on network analysis recently. I thought I’d write down some takeaways and point out papers that I’ve found helpful. This collection of papers is centered around the stochastic blockmodel, and is intended to be introductory rather than comprehensive. I’ve included a few papers with other miscellaneous tidbits of interest.
+I’ve been reading a lot of papers on network analysis recently. I thought I’d write down some takeaways and point out papers that I’ve found helpful. This collection of…
 </div>
 </a>
 </div>
@@ -445,12 +449,12 @@ I’ve been reading a lot of papers on network analysis recently. I thought I’
 Jul 26, 2019
 </div>
 <div class="listing-reading-time">
-12 min
+13 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="statistical software" data-listing-date-sort="1559883600000" data-listing-file-modified-sort="1652129890739" data-listing-reading-time-sort="16.865">
+<div class="quarto-post image-right" data-index="10" data-categories="statistical software" data-listing-date-sort="1559883600000" data-listing-file-modified-sort="1687281754722" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17">
 <div class="body">
 <a href="./post/2019-06-07_testing-statistical-software/index.html">
 <h3 class="no-anchor listing-title">
@@ -460,7 +464,7 @@ testing statistical software
 <p>an exploration of what it would take to meaningfully probe the correctness of computations in modeling software</p>
 </div>
 <div class="listing-description">
-Recently I’ve been implementing and attempting to extend some computationally intense methods. These methods are from papers published in the last several years, and haven’t made their way into mainstream software libraries yet. So I’ve been spending a lot of time reading research code, and I’d like to share what I’ve learned.
+Recently I’ve been implementing and attempting to extend some computationally intense methods. These methods are from papers published in the last…
 </div>
 </a>
 </div>
@@ -470,12 +474,12 @@ Recently I’ve been implementing and attempting to extend some computationally 
 Jun 7, 2019
 </div>
 <div class="listing-reading-time">
-16 min
+17 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="statistical software" data-listing-date-sort="1558414800000" data-listing-file-modified-sort="1651206918004" data-listing-reading-time-sort="21.18">
+<div class="quarto-post image-right" data-index="11" data-categories="statistical software" data-listing-date-sort="1558414800000" data-listing-file-modified-sort="1651206918004" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="22">
 <div class="body">
 <a href="./post/2019-05-21_type-stable-estimation/index.html">
 <h3 class="no-anchor listing-title">
@@ -486,7 +490,7 @@ type stable estimation
 </div>
 <div class="listing-description">
 
-This post discusses how the mathematical objects we use in formal data modeling are represented in statistical software. First I introduce these objects, then I argue that each object should be represented by a distinct type. Next I present three principles to ensure the type system is statistically meaningful. These principles suggest that existing modeling software has an overly crude type system. I believe a finer type system in statistical packages would result in more intuitive interfaces while increasing extensibility and reducing possibilities for methodological errors.
+This post discusses how the mathematical objects we use in formal data modeling are represented in statistical software. First I introduce these objects, then I argue that…
 </div>
 </a>
 </div>
@@ -496,12 +500,12 @@ This post discusses how the mathematical objects we use in formal data modeling 
 May 21, 2019
 </div>
 <div class="listing-reading-time">
-21 min
+22 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="tidymodels,stacking,methods,rstats" data-listing-date-sort="1555131600000" data-listing-file-modified-sort="1652131871139" data-listing-reading-time-sort="13.39">
+<div class="quarto-post image-right" data-index="12" data-categories="tidymodels,stacking,methods,rstats" data-listing-date-sort="1555131600000" data-listing-file-modified-sort="1652131871139" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14">
 <div class="body">
 <a href="./post/2019-04-13_implementing-the-superlearner-with-tidymodels/index.html">
 <h3 class="no-anchor listing-title">
@@ -511,7 +515,7 @@ implementing the super learner with tidymodels
 <p>a demonstration of low levels tidymodels infrastructure to build sophisticated tools in a hurry</p>
 </div>
 <div class="listing-description">
-In this post I demonstrate how to implement the Super Learner using <code>tidymodels</code> infrastructure. The Super Learner is an ensembling strategy that relies on cross-validation to determine how to combine predictions from many models. <code>tidymodels</code> provides low-level predictive modeling infrastructure that makes the implementation rather slick. The goal of this post is to show how you can use this infrastructure to build new methods with consistent, tidy behavior. You’ll get the most out of this post if you’ve used <code>rsample</code>, <code>recipes</code> and <code>parsnip</code> before and are comfortable working with list-columns.
+In this post I demonstrate how to implement the Super Learner using <code>tidymodels</code> infrastructure. The Super Learner is an ensembling…<code></code><code></code><code></code><code></code>
 </div>
 </a>
 </div>
@@ -521,12 +525,12 @@ In this post I demonstrate how to implement the Super Learner using <code>tidymo
 Apr 13, 2019
 </div>
 <div class="listing-reading-time">
-13 min
+14 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="math stat,methods" data-listing-date-sort="1548914400000" data-listing-file-modified-sort="1651208361064" data-listing-reading-time-sort="8.34">
+<div class="quarto-post image-right" data-index="13" data-categories="math stat,methods" data-listing-date-sort="1548914400000" data-listing-file-modified-sort="1651208361064" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
 <div class="body">
 <a href="./post/2019-01-31_overlapping-confidence-intervals-correcting-bad-intuition/index.html">
 <h3 class="no-anchor listing-title">
@@ -536,7 +540,7 @@ overlapping confidence intervals: correcting bad intuition
 <p>some math to show that confidence interals are significantly different parameters can overlap</p>
 </div>
 <div class="listing-description">
-In this post I work through a recent homework exercise that illustrates why you shouldn’t compare means by checking for confidence interval overlap. I calculate the type I error rate of this procedure for a simple case. This reveals where our intuition goes wrong: namely, we can recover the confidence interval heuristic by confusing standard deviations and variances.
+In this post I work through a recent homework exercise that illustrates why you shouldn’t compare means by checking for confidence interval overlap. I calculate the type I…
 </div>
 </a>
 </div>
@@ -546,12 +550,12 @@ In this post I work through a recent homework exercise that illustrates why you 
 Jan 31, 2019
 </div>
 <div class="listing-reading-time">
-8 min
+9 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="notes to self,stan" data-listing-date-sort="1545631200000" data-listing-file-modified-sort="1652131318699" data-listing-reading-time-sort="23.44">
+<div class="quarto-post image-right" data-index="14" data-categories="notes to self,stan" data-listing-date-sort="1545631200000" data-listing-file-modified-sort="1652131318699" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24">
 <div class="body">
 <a href="./post/2018-12-24_some-things-ive-learned-about-stan/index.html">
 <h3 class="no-anchor listing-title">
@@ -561,7 +565,7 @@ some things i’ve learned about stan
 <p>what i wish my mother had told me about sampling from posteriors</p>
 </div>
 <div class="listing-description">
-Yesterday, for the first time ever, I coded up a model in Stan and it actually did what I wanted. My current knowledge of Stan is, at best, nascent, but I’ll show you the process I went through to write my first Stan program, pointing out what I wish I’d known along the way.
+Yesterday, for the first time ever, I coded up a model in Stan and it actually did what I wanted.…
 </div>
 </a>
 </div>
@@ -571,12 +575,12 @@ Yesterday, for the first time ever, I coded up a model in Stan and it actually d
 Dec 24, 2018
 </div>
 <div class="listing-reading-time">
-23 min
+24 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-categories="methods" data-listing-date-sort="1540270800000" data-listing-file-modified-sort="1651209020699" data-listing-reading-time-sort="6.62">
+<div class="quarto-post image-right" data-index="15" data-categories="methods" data-listing-date-sort="1540270800000" data-listing-file-modified-sort="1651209020699" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
 <div class="body">
 <a href="./post/2018-10-23_understanding-multinomial-regression-with-partial-dependence-plots/index.html">
 <h3 class="no-anchor listing-title">
@@ -586,7 +590,7 @@ understanding multinomial regression with partial dependence plots
 <p>some intuition for multinomial regression’s initially intimidating functional form</p>
 </div>
 <div class="listing-description">
-This post assumes you are familiar with logistic regression and that you just fit your first or second multinomial logistic regression model. While there is an interpretation for the coefficients in a multinomial regression, that interpretation is relative to a base class, which may not be the most useful. Partial dependence plots are an alternative way to understand multinomial regression, and in fact can be used to understand any predictive model. This post explains what partial dependence plots are and how to create them using R.
+This post assumes you are familiar with logistic regression and that you just fit your first or second multinomial logistic regression model. While there is an…
 </div>
 </a>
 </div>
@@ -596,12 +600,12 @@ This post assumes you are familiar with logistic regression and that you just fi
 Oct 23, 2018
 </div>
 <div class="listing-reading-time">
-6 min
+7 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="16" data-categories="incredible places to work" data-listing-date-sort="1533877200000" data-listing-file-modified-sort="1651262351997" data-listing-reading-time-sort="9.41">
+<div class="quarto-post image-right" data-index="16" data-categories="incredible places to work" data-listing-date-sort="1533877200000" data-listing-file-modified-sort="1651262351997" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10">
 <div class="body">
 <a href="./post/2018-08-10_a-summer-with-rstudio/index.html">
 <h3 class="no-anchor listing-title">
@@ -611,7 +615,7 @@ a summer with rstudio
 <p>reflections on a great internship</p>
 </div>
 <div class="listing-description">
-Today is the last day of my summer internship with RStudio. This is the first year that RStudio has had an official internship program, and I couldn’t be happier to have been a part of it.
+Today is the last day of my summer internship with RStudio. This is the first year that RStudio has had an official internship program, and I…
 </div>
 </a>
 </div>
@@ -621,12 +625,12 @@ Today is the last day of my summer internship with RStudio. This is the first ye
 Aug 10, 2018
 </div>
 <div class="listing-reading-time">
-9 min
+10 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="17" data-categories="code performance,rstats" data-listing-date-sort="1529038800000" data-listing-file-modified-sort="1651253807500" data-listing-reading-time-sort="18.17">
+<div class="quarto-post image-right" data-index="17" data-categories="code performance,rstats" data-listing-date-sort="1529038800000" data-listing-file-modified-sort="1651253807500" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19">
 <div class="body">
 <a href="./post/2018-06-15_speeding-up-gpx-ingest-profiling-rcpp-and-furrr/index.html">
 <h3 class="no-anchor listing-title">
@@ -636,7 +640,7 @@ speeding up GPX ingest: profiling, Rcpp and furrr
 <p>a demonstration of how to profile r code on a toy problem</p>
 </div>
 <div class="listing-description">
-This post is a casual case study in speeding up R code. I work through several iterations of a function to read and process GPS running data from Strava stored in the GPX format. Along the way I describe how to visualize code bottlenecks with <code>profvis</code> and briefly touch on fast compiled code with <code>Rcpp</code> and parallelization with <code>furrr</code>.
+This post is a casual case study in speeding up R code. I work…<code></code><code></code><code></code>
 </div>
 </a>
 </div>
@@ -646,12 +650,12 @@ This post is a casual case study in speeding up R code. I work through several i
 Jun 15, 2018
 </div>
 <div class="listing-reading-time">
-18 min
+19 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="18" data-categories="gams,strava,data analysis" data-listing-date-sort="1526446800000" data-listing-file-modified-sort="1651263436525" data-listing-reading-time-sort="10.39">
+<div class="quarto-post image-right" data-index="18" data-categories="gams,strava,data analysis" data-listing-date-sort="1526446800000" data-listing-file-modified-sort="1651263436525" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
 <div class="body">
 <a href="./post/2018-05-16_comparing-runs-with-riegels-formula-and-gams/index.html">
 <h3 class="no-anchor listing-title">
@@ -661,7 +665,7 @@ comparing runs with riegel’s formula and gams
 <p>a quick analysis of my running fitness using splines</p>
 </div>
 <div class="listing-description">
-Runners often vary the distance and intensity of their workouts. In this post I demonstrate how to compare runs of different lengths using Riegel’s formula. The formula accurately describes the trade-off between run distance and average speed for aerobic runs up to about a half-marathon in length. Using my Strava data, I demonstrate how to use Riegel’s formula to measure the difficulty of runs on a standardized scale and briefly investigate how my fitness has changed over time with GAMs.
+Runners often vary the distance and intensity of their workouts. In this post I demonstrate how to compare runs of different lengths using Riegel’s formula. The formula…
 </div>
 </a>
 </div>
@@ -671,12 +675,12 @@ Runners often vary the distance and intensity of their workouts. In this post I 
 May 16, 2018
 </div>
 <div class="listing-reading-time">
-10 min
+11 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="19" data-categories="resampling,risk estimation,tidymodels,methods" data-listing-date-sort="1525323600000" data-listing-file-modified-sort="1651263535773" data-listing-reading-time-sort="12.755">
+<div class="quarto-post image-right" data-index="19" data-categories="resampling,risk estimation,tidymodels,methods" data-listing-date-sort="1525323600000" data-listing-file-modified-sort="1651263535773" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13">
 <div class="body">
 <a href="./post/2018-05-03_performance-assessments-via-bootstrap-variants/index.html">
 <h3 class="no-anchor listing-title">
@@ -686,7 +690,7 @@ predictive performance via bootstrap variants
 <p>resampling based approaches to estimating the risk of a predictive model</p>
 </div>
 <div class="listing-description">
-When we build a predictive model, we are interested in how the model will perform on data it hasn’t seen before. If we have lots of data, we can split it into training and test sets to assess model performance. If we don’t have lots of data, it’s better to fit a model using all of the available data and to assess its predictive performance using resampling techniques. The bootstrap is one such resampling technique. This post discusses several variants of the bootstrap that are appropriate for estimating predictive performance.
+When we build a predictive model, we are interested in how the model will perform on data it hasn’t seen before. If we have lots of data, we can split it into training and…
 </div>
 </a>
 </div>
@@ -696,12 +700,12 @@ When we build a predictive model, we are interested in how the model will perfor
 May 3, 2018
 </div>
 <div class="listing-reading-time">
-12 min
+13 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="20" data-categories="calculus" data-listing-date-sort="1508302800000" data-listing-file-modified-sort="1651208734763" data-listing-reading-time-sort="3.34">
+<div class="quarto-post image-right" data-index="20" data-categories="calculus" data-listing-date-sort="1508302800000" data-listing-file-modified-sort="1651208734763" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
 <div class="body">
 <a href="./post/2017-10-18_gradient-checks/index.html">
 <h3 class="no-anchor listing-title">
@@ -711,7 +715,7 @@ numerical gradient checks
 <p>how to use a computer to check your derivative calculations</p>
 </div>
 <div class="listing-description">
-Suppose you have some loss function <span class="math inline">\(\mathcal{L}(\beta) : \mathbb{R}^n \to \mathbb{R}\)</span> you want to minimize with respect to some model parameters <span class="math inline">\(\beta\)</span>. You understand how gradient descent works and you have a correct implementation of <span class="math inline">\(\mathcal{L}\)</span> but aren’t sure if you took the gradient correctly or implemented it correctly in code.
+Suppose you have some loss function <span class="math inline">\(\mathcal{L}(\beta) : \mathbb{R}^n \to \mathbb{R}\)</span> you want to minimize with respect to some model parameters <span class="math inline">\(\beta\)</span>. You understand how gradient descent works and you have a…<span class="math inline"></span>
 </div>
 </a>
 </div>
@@ -721,12 +725,12 @@ Suppose you have some loss function <span class="math inline">\(\mathcal{L}(\bet
 Oct 18, 2017
 </div>
 <div class="listing-reading-time">
-3 min
+4 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="21" data-categories="rstats,tidyverse,notes to self" data-listing-date-sort="1502082000000" data-listing-file-modified-sort="1657818789551" data-listing-reading-time-sort="3.1">
+<div class="quarto-post image-right" data-index="21" data-categories="rstats,tidyverse,notes to self" data-listing-date-sort="1502082000000" data-listing-file-modified-sort="1657818789551" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
 <div class="body">
 <a href="./post/2017-08-07_gentle-tidy-eval/index.html">
 <h3 class="no-anchor listing-title">
@@ -736,7 +740,7 @@ gentle tidy eval with examples
 <p>copy-pasteable example code for programming with the tidyverse.</p>
 </div>
 <div class="listing-description">
-I’ve been using the tidy eval framework introduced with <code>dplyr 0.7</code> for about two months now, and it’s time for an update to my original post on tidy eval. My goal is not to explain tidy eval to you, but rather to show you some simple examples that you can easily generalize from.
+I’ve been using the tidy eval framework introduced with <code>dplyr 0.7</code> for about two months now, and it’s time for an update to my original post on tidy eval. My goal is…
 </div>
 </a>
 </div>
@@ -746,7 +750,7 @@ I’ve been using the tidy eval framework introduced with <code>dplyr 0.7</code>
 Aug 7, 2017
 </div>
 <div class="listing-reading-time">
-3 min
+4 min
 </div>
 </a>
 </div>
@@ -783,9 +787,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -850,6 +868,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -892,6 +996,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/posts.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">
