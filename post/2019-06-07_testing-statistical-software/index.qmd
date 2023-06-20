@@ -69,7 +69,7 @@ Consider *Algorithm 1* of @allen_sparse_2013-1:
 
 ![](sfpca_algorithm_1.png){fig-alt="Psuedo-code for the SFPCA algorithm."}
 
-There used a MATLAB reference implementation available online[^It has seen been replaced with a more full fledged R package [`MoMa`](https://github.com/DataSlingers/MoMA).], which looked like:
+There used a MATLAB reference implementation available online^[It has seen been replaced with a more full fledged R package [`MoMa`](https://github.com/DataSlingers/MoMA).], which looked like:
 
 [sfpca_reference_implementation]: http://www.stat.rice.edu/~gallen/software/sfpca/
 
