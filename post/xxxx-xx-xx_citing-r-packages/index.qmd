@@ -1,0 +1,61 @@
+---
+title: "gentle tidy eval with examples"
+subtitle: |
+  copy-pasteable example code for programming with the tidyverse.
+date: "2017-08-07"
+categories: [rstats, tidyverse, notes to self]
+draft: true
+---
+
+```{r}
+pkgs <- c(
+  "fastadi", "fastRG", "furrr", "GGally", "glue", "here",
+  "igraph", "invertiforms", "jsonlite", "kableExtra", "knitr", "logger",
+  "LRMF3", "Matrix", "Rcpp", "RcppHungarian", "RSpectra", "scales", "stringr",
+  "tidygraph", "tidytext", "tidyverse", "unglue", "vsp", "targets", "tarchetypes",
+  "clue"
+)
+
+path <- here::here("software.bib")
+
+out <- knitr::write_bib(pkgs, file = path)
+
+library(purrr)
+
+library(RVerbalExpressions)
+
+pattern <- rx() |> 
+  rx_avoid_prefix("@.*{") |> 
+  rx_begin_capture() |> 
+  rx_anything() |> 
+  rx_end_capture() |> 
+  rx_avoid_suffix(",")
+
+pattern
+
+out |> 
+  map(pluck, 1) |> 
+  map_chr(stringr::str_extract, pattern) |> 
+  cat(sep = "\n")
+map(out, pluck)
+str(out)
+```
+
+```{r}
+cat(readLines(path))
+```
+
+
+```{r}
+unlink(path)
+
+
+```
+
+
+
+```
+\bibliography{citation-impute,software}
+\nocite{R-furrr, R-GGally, R-glue, R-here, R-kableExtra, R-logger, R-Matrix, R-RcppHungarian, R-RSpectra, R-scales, R-tidygraph, R-unglue, igraph2006, jsonlite2014, knitr2015, knitr2014, Rcpp2011, Rcpp2013, tidytext2016, tidyverse2019}
+```
+
