@@ -2,7 +2,7 @@
 
 1. Install conda
 
-2. Name to this folder as the working directory
+2. Move to this folder as the working directory
 
 3. Create the conda env
 
@@ -13,6 +13,7 @@ conda create --name sklearn0.24 --file requirements.txt
 4. Construct a Jupyter kernel from the conda env
 
 ```sh
+conda install ipykernel
 python -m ipykernel install --user --name sklearn0.24
 ```
 

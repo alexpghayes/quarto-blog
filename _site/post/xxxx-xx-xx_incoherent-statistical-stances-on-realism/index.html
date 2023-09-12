@@ -178,7 +178,16 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#the-motte" id="toc-the-motte" class="nav-link" data-scroll-target="#the-motte">The motte</a></li>
+  <li><a href="#the-bailey" id="toc-the-bailey" class="nav-link" data-scroll-target="#the-bailey">The bailey</a></li>
+  <li><a href="#uncertainty-laundering" id="toc-uncertainty-laundering" class="nav-link" data-scroll-target="#uncertainty-laundering">Uncertainty laundering</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/xxxx-xx-xx_incoherent-statistical-stances-on-realism/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
 </nav>
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
@@ -190,6 +199,29 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<p>Over the past several years, I have become convinced that there is something incoherent in the heart of the applied statistics as we practice it today. The incoherence, as I see it, emerges when we talk about the relationship between probability models and the real world. When we like a probability model, we reify the model and treat the formal probability as isomorphic to the real world. When we dislike a probability model, we pretend that probability doesn’t exist in the real world at all.</p>
+<p>I don’t mean to make light of the challenge of assess a model’s adequacy, because I think it very difficult, but I want to draw attention to the fact that the language and arguments we use when discussing model adequacy are very black and white.</p>
+<p>My preference “I do not find that compelling” as opposed STEM “obviously you’re wrong about the isomorphism”</p>
+</section>
+<section id="the-motte" class="level3">
+<h3 class="anchored" data-anchor-id="the-motte">The motte</h3>
+<p>Another “realist” critique:</p>
+<p>https://www.biorxiv.org/content/10.1101/446237v1</p>
+<p>From the abstract:</p>
+<pre><code>Motivation Nowadays brain connectivity analysis has attracted tremendous attention and has been at the foreground of neuroscience research. Brain functional connectivity reveals the synchronization of brain systems through correlations in neurophysiological measures of brain activity. Growing evidence now suggests that the brain connectivity network experiences alternations with the presence of numerous neurological disorders, thus differential brain network analysis may provides new insights into disease pathologies. For the matrix-valued data in brain connectivity analysis, existing graphical model estimation methods assume a vector normal distribution that in essence requires the columns of the matrix data to be independent. It is obviously not true, they have limited applications. Among the few solutions on graphical model estimation under a matrix normal distribution, none of them tackle the estimation of differential graphs across different populations. This motivates us to consider the differential network for matrix-variate data to detect the brain connectivity alternation.
+
+Results The primary interest is to detect spatial locations where the connectivity, in terms of the spatial partial correlation, differ across the two groups. To detect the brain connectivity alternation, we innovatively propose a Matrix-Variate Differential Network (MVDN) model. MVDN assumes that the matrix-variate data follows a matrix-normal distribution. We exploit the D-trace loss function and a Lasso-type penalty to directly estimate the spatial differential partial correlation matrix where the temporal information is fully excavated. We propose an ADMM algorithm for the Lasso penalized D-trace loss optimization problem. We investigate theoretical properties of the estimator. We show that under mild and regular conditions, the proposed method can identify all differential edges accurately with probability tending to 1 in high-dimensional setting where dimensions of matrix-valued data p, q and sample size n are all allowed to go to infinity. Simulation studies demonstrate that MVDN provides more accurate differential network estimation than that achieved by other state-of-the-art methods. We apply MVDN to Electroencephalography (EEG) dataset, which consists of 77 alcoholic individuals and 45 controls. The hub genes and differential interaction patterns identified are consistent with existing experimental studies.</code></pre>
+</section>
+<section id="the-bailey" class="level3">
+<h3 class="anchored" data-anchor-id="the-bailey">The bailey</h3>
+</section>
+<section id="uncertainty-laundering" class="level3">
+<h3 class="anchored" data-anchor-id="uncertainty-laundering">Uncertainty laundering</h3>
+<p>Hot Take: Popular election-prediction models (538, the economist) understate the thickness of the tails because they fail to take into account that American democracy is in a constant state of regime-change, both (a) in the tactics, strategies, and technologies each party uses to motivate voters; and (b) in the tactics, strategies and technologies each party uses either to suppress portions of the vote or to harvest portions of the vote. As a consequence of (a), they understate interstate covariance. As a consequence of (b), they understate the tendency of states where one party has had long-term control of the electoral system to manipulate voting in that party’s favor.</p>
+<p>aleatoric estimates of epistemic uncertainty are pointless. if you believe things are truly irregular in their dependencies then you straight just can’t use probabilities to model them at all. i don’t think the solution is is more extreme probability distributions. i mean maybe you can get close by allowing more extreme, regular behavior (i.e.&nbsp;iid stuff), but like the issue is that things are fundamentally not iid and regularity assumptions for math aren’t a good operationalization of the problem</p>
+<p>where an arguer conflates two positions that share similarities, one modest and easy to defend (the “motte”) and one much more controversial and harder to defend (the “bailey”).[1]</p>
 <p>Confused by: Yu’s Veridical Data Science, Philip’s “The Model Behind the Curtain”; i read them as implying an exact need for isomorphism. what constitutes representational adequacy? they don’t say, so i can only infer. “truthful” representation?</p>
 <p>stark’s climate change argument: so much uncertainty about what influences climate/temperature that it is impossible to even consider a model?? unclear what makes this model inadequate</p>
 <pre><code>Suppose there are multiple possible causes / structural mechanisms that lead to an outcome and you don't know which one happens, or if both do; if you start doing this inclusion of all possible mechanisms (1) just making them all work at the same time will be immensely difficult, and (2) massive identification issues
@@ -199,14 +231,6 @@ Hennig on IID as an assumption
 Karl on the need to show that a modeling assumption leads to bad inference
 
 Abigail Jacobs paper on construct validity -- do we tools beyond those from the construct validity literature when representing things that are not constructs?</code></pre>
-<p>Another “realist” critique:</p>
-<p>https://www.biorxiv.org/content/10.1101/446237v1</p>
-<p>From the abstract:</p>
-<pre><code>Motivation Nowadays brain connectivity analysis has attracted tremendous attention and has been at the foreground of neuroscience research. Brain functional connectivity reveals the synchronization of brain systems through correlations in neurophysiological measures of brain activity. Growing evidence now suggests that the brain connectivity network experiences alternations with the presence of numerous neurological disorders, thus differential brain network analysis may provides new insights into disease pathologies. For the matrix-valued data in brain connectivity analysis, existing graphical model estimation methods assume a vector normal distribution that in essence requires the columns of the matrix data to be independent. It is obviously not true, they have limited applications. Among the few solutions on graphical model estimation under a matrix normal distribution, none of them tackle the estimation of differential graphs across different populations. This motivates us to consider the differential network for matrix-variate data to detect the brain connectivity alternation.
-
-Results The primary interest is to detect spatial locations where the connectivity, in terms of the spatial partial correlation, differ across the two groups. To detect the brain connectivity alternation, we innovatively propose a Matrix-Variate Differential Network (MVDN) model. MVDN assumes that the matrix-variate data follows a matrix-normal distribution. We exploit the D-trace loss function and a Lasso-type penalty to directly estimate the spatial differential partial correlation matrix where the temporal information is fully excavated. We propose an ADMM algorithm for the Lasso penalized D-trace loss optimization problem. We investigate theoretical properties of the estimator. We show that under mild and regular conditions, the proposed method can identify all differential edges accurately with probability tending to 1 in high-dimensional setting where dimensions of matrix-valued data p, q and sample size n are all allowed to go to infinity. Simulation studies demonstrate that MVDN provides more accurate differential network estimation than that achieved by other state-of-the-art methods. We apply MVDN to Electroencephalography (EEG) dataset, which consists of 77 alcoholic individuals and 45 controls. The hub genes and differential interaction patterns identified are consistent with existing experimental studies.</code></pre>
-<p>Hot Take: Popular election-prediction models (538, the economist) understate the thickness of the tails because they fail to take into account that American democracy is in a constant state of regime-change, both (a) in the tactics, strategies, and technologies each party uses to motivate voters; and (b) in the tactics, strategies and technologies each party uses either to suppress portions of the vote or to harvest portions of the vote. As a consequence of (a), they understate interstate covariance. As a consequence of (b), they understate the tendency of states where one party has had long-term control of the electoral system to manipulate voting in that party’s favor.</p>
-<p>aleatoric estimates of epistemic uncertainty are pointless. if you believe things are truly irregular in their dependencies then you straight just can’t use probabilities to model them at all. i don’t think the solution is is more extreme probability distributions. i mean maybe you can get close by allowing more extreme, regular behavior (i.e.&nbsp;iid stuff), but like the issue is that things are fundamentally not iid and regularity assumptions for math aren’t a good operationalization of the problem</p>
 <p>Predictivity</p>
 <p>Estimators have properties under models. Need to check if a given model is realistic. Low predictive power =&gt; not realistic. High predictive power doesn’t necessarily imply a model is good. To Explain or To Predict explain. If you want to valid the interpretation of your estimator, you need to validate the particular properties of the model used to derive that estimator. Even then you might be okay under certain violations, although this will be hard to prove and you may need to demonstrate with simulation.</p>
 <p>Especially in a causal setting, the predictive model != the true model. Depending on who I am talking to at the time, this is either highly controversial, or blatantly obvious.</p>
@@ -223,6 +247,7 @@ Results The primary interest is to detect spatial locations where the connectivi
 <p>counter-example.</p>
 
 
+</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -466,7 +491,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/xxxx-xx-xx_incoherent-statistical-stances-on-realism/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">
