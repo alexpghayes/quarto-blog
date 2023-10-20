@@ -1,0 +1,239 @@
+---
+title: "synthetic control: elon's tweet tanked tesla's stock"
+subtitle: |
+  a terse analysis of tesla stock prices and how one of elon's tweets moves them
+date: "2020-05-01"
+execute:
+  echo: false
+categories: [data analysis]
+---
+
+### Summary
+
+how to use `vsp`. at the end, visualization and results takeaway for non-technical folks
+
+###
+
+```{r}
+#| message: FALSE
+#| warning: FALSE
+library(tidyverse)
+library(here)
+
+path <- here("post", "xxxx-xx-xx_a-cocktail-data-analysis", "boston_cocktails.csv")
+
+# boston_cocktails <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-26/boston_cocktails.csv")
+# 
+# boston_cocktails |>
+#   write_csv(path)
+
+boston_cocktails <- read_csv(path)
+
+boston_cocktails %>%
+  count(ingredient, sort = TRUE)
+
+
+```
+
+```{r}
+# old mr boston ingredients really fucking shit up, my guess is that this a collection of cocktails designed to show off their products
+# furthers my impression the cocktails themselves are likely to be ass
+# as always, touch data/grass
+# data cleaning challenge: some cocktails call for specific gins, some for a style of gin, some for "gin"
+# data cleaning note: discarding infrequent ingredients is a morally incorrect thing to do with cocktails
+# data cleaning note: cluster based on what? flavor? spec? presence/absence vs ratio vs volume
+
+cocktails_parsed <- boston_cocktails %>%
+  mutate(
+    ingredient = str_to_lower(ingredient),
+    ingredient = str_replace_all(ingredient, "-", " "),
+    ingredient = str_remove(ingredient, " liqueur$"),
+    ingredient = str_remove(ingredient, "old mr. boston "),
+    ingredient = str_remove(ingredient, "mr. boston "),
+    ingredient = str_remove(ingredient, " flavored"),
+    ingredient = str_remove(ingredient, " (if desired)$"),
+    ingredient = case_when(
+      str_detect(ingredient, "bitters") ~ "bitters",
+      str_detect(ingredient, "lemon") ~ "lemon juice",
+      str_detect(ingredient, "lime") ~ "lime juice",
+      str_detect(ingredient, "grapefruit") ~ "grapefruit juice",
+      str_detect(ingredient, "orange") ~ "orange juice",
+      TRUE ~ ingredient
+    ),
+    measure = case_when(
+      str_detect(ingredient, "bitters") ~ str_replace(measure, "oz$", "dash"),
+      TRUE ~ measure
+    ),
+    measure = str_replace(measure, " ?1/2", ".5"),
+    measure = str_replace(measure, " ?3/4", ".75"),
+    measure = str_replace(measure, " ?1/4", ".25"),
+    measure_number = parse_number(measure),
+    measure_number = if_else(str_detect(measure, "dash$"),
+      measure_number / 50,
+      measure_number
+    )
+  ) %>%
+  # filter here probably fucks things up!
+  add_count(ingredient) %>%
+  # filter(n > 15) %>%
+  # select(-n) %>%
+  distinct(row_id, ingredient, .keep_all = TRUE) %>%
+  na.omit()
+
+cocktails_parsed |> 
+  distinct(ingredient) |> 
+  arrange(ingredient)
+
+cocktails_parsed
+```
+
+```{r}
+cocktails_df <- cocktails_parsed %>%
+  select(-ingredient_number, -row_id, -measure) %>%
+  pivot_wider(names_from = ingredient, values_from = measure_number, values_fill = 0) %>%
+  janitor::clean_names() %>%
+  na.omit()
+
+cocktails_df
+```
+
+> The biggest difference in PC1 is powdered sugar vs. simple syrup; recipes are not likely to have both, which makes sense! Let’s zoom in on the first four components, and understand which cocktail ingredients contribute in the positive and negative directions.
+
+```{r}
+library(tidygraph)
+library(tidytext)
+library(vsp)
+library(furrr) # hack for vsp bug: FIX
+
+cocktails_parsed
+
+A <- cast_sparse(cocktails_parsed, row = name, column = ingredient, value = measure_number)
+A <- sign(A)
+
+fa <- vsp(A, rank = 20, degree_normalize = FALSE, center = TRUE)
+fa
+
+s <- localization_statistics(A, 20)
+plot_cumulative_curves(s) +
+  geom_vline(xintercept = s$avg_row_sum) +
+  geom_vline(xintercept = s$avg_col_sum)
+
+
+# TODO: clarify the idea of "component eigen-swapping" and point out that jitters in the localization plot probably indicate eigen-swapping
+```
+
+```{r}
+plot_ipr_pairs(fa)
+plot_mixing_matrix(fa)
+plot_varimax_y_pairs(fa, 1:10)
+plot_varimax_z_pairs(fa, 1:10)
+```
+
+```{r}
+screeplot(fa)
+```
+
+```{r}
+get_y_hubs(fa, hubs_per_factor = 3)
+```
+
+```{r}
+# Z is sparse: drinks typically only load on a few ingredients at a time
+image(fa$Z)
+```
+
+```{r}
+z_names <- fa |> 
+  get_z_hubs(1) |> 
+  pull(id)
+
+y_names <- fa |> 
+  get_y_hubs(1) |> 
+  pull(id)
+
+fa_named <- fa |> 
+  set_y_factor_names(y_names) |> 
+  set_z_factor_names(z_names)
+
+plot_mixing_matrix(fa_named) +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = .5)
+  )
+```
+
+```{r}
+fa |> 
+  get_y_hubs(3) |> 
+  mutate(id = reorder_within(id, loading, factor)) %>%
+  ggplot(aes(loading, id, fill = loading > 0)) +
+  geom_col() +
+  facet_wrap(~factor, scales = "free_y") +
+  scale_y_reordered() +
+  labs(
+    x = "Absolute value of contribution",
+    y = NULL, fill = "Positive?"
+  )
+```
+
+> So PC1 is about powdered sugar + egg + gin drinks vs. simple syrup + lime + tequila drinks. This is the component that explains the most variation in drinks. PC2 is mostly about vermouth, both sweet and dry.
+
+```{r}
+fa |> 
+  get_z_hubs(5) |> 
+  mutate(id = reorder_within(id, loading, factor)) %>%
+  ggplot(aes(loading, id, fill = loading > 0)) +
+  geom_col() +
+  facet_wrap(~factor, scales = "free_y") +
+  scale_y_reordered() +
+  labs(
+    x = "Absolute value of contribution",
+    y = NULL, fill = "Positive?"
+  ) +
+  theme_classic(9) +
+  theme(
+    legend.position = "none"
+  )
+```
+how many ingredients in each cocktail on average? 
+
+```{r}
+
+## odd discovery: applejack punch doesn't have applejack in it?
+
+fa |> 
+  get_z_hubs(5) |> 
+  left_join(cocktails_parsed, by = join_by(id == name)) |> 
+  select(factor, id, ingredient, measure)
+```
+
+
+```{r}
+
+ig <- igraph::graph_from_incidence_matrix(A, weighted = TRUE)
+
+```
+
+### Normalization / scaling
+
+```{r}
+library(Matrix)
+
+L <- sign(A) # rowScale(A, 1 / rowSums(A))
+faL <- vsp(L, rank = 20, degree_normalize = FALSE)
+
+plot_ipr_pairs(faL)
+plot_mixing_matrix(faL)
+
+faL |> 
+  get_y_hubs(3) |> 
+  View()
+
+
+faL |> 
+  get_z_hubs(3) |> 
+  View()
+```
+
+
+
+https://juliasilge.com/blog/cocktail-recipes-umap/

@@ -1,0 +1,52 @@
+---
+title: "how to get help with code i've written"
+subtitle: |
+  help me help you
+date: "2023-10-24"
+categories: [statistical software]
+draft: true
+---
+
+## Summary
+
+**The situation:** you are trying to use some code that I wrote. Either it isn't working, or you can't understand how to use it because I never finished the documentation.
+
+## Context that should inform your next steps
+
+I do not get paid to write code, nor do I derive particular enjoyment from resolving bugs in code, and also I am chronically behind on my obligations. **It is critical to demonstrate that you have done absolutely everything in your power to solve your problem on your own already**.
+
+
+## Things that might be happening
+
+- There's a bug in my code
+- The documentation for my code isn't clear enough for you to understand how to use it
+- There's a bug in your code
+
+## You will get the fastest help if you...
+
+**Create a [Github account](https://github.com/) and open an issue in the relevant repository**. All of my important public facing code lives in repositories on Github, or in Github gists, or my blog, which is hosted on Github. The unambiguously correct way to ask for help with any of this code is to (1) find the relevant Github repository, and (2) open an issue. 
+
+::: {.callout-warning}
+## Cultural note: do not email, text or call people with questions about code
+
+Software maintainers typically have very limited bandwidth to help folks using their code, and sometimes have none at all. It's critical that you use the systems they have in place to report bugs and ask for help to keep things as streamlined as possible. This means finding the relevant software repository online and opening an issue in the issue tracker or discussion board 99% of the time.
+:::
+
+**Submit a reproducible example demonstrating what's going wrong**. If you don't know what this means, you should stop and watch Jenny Bryan's [talk](https://www.youtube.com/watch?v=5gqksthQ0cM) about reproducible examples.
+
+::: {.callout-warning}
+## Cultural note: reproducible examples are a shibboleth
+
+Realistically, you should not expect to be taken seriously if you do not include a reproducible example of your problem. If you do not include a reproducible example, software maintainers will assume that you have not tried to solve your problem on your own, and are thus likely to ignore your request.
+:::
+
+**Show your work**. Google your errors. Explain what you think the error means. Give your best guess at why it's happening. The goal of this exercise is two-fold: in the process, you are likely to solve your own issue. Also, it shows me that you tried, which makes me far more likely to offer you help.
+
+If you need to get my code working on an urgent basis, please explain this when you submit your issue. Be calm. Be polite. It's common to get panicky about code that you don't understand.
+
+and suggest a reasonable timeline to address your issue.
+
+## If you get the help you need
+
+say thanks, close the issue, let me know how my code helped you. this is all motivating to me.
+
