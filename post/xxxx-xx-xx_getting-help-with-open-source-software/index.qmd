@@ -1,0 +1,80 @@
+---
+title: "getting help with open source software"
+subtitle: |
+  a.k.a. how to get help with software i've written, from my perspective
+date: "2023-10-24"
+categories: [statistical software]
+draft: true
+---
+
+### The situation
+
+You are trying to use some code that I wrote. Something isn't working, and/or you can't understand how to use it because I never finished the documentation. It seems like the code will solve some problem you have, so you'd like it to work.
+
+### Context that should inform your next steps
+
+I want people to use my code. I want it to be helpful to people. But it's important to understand the relationship that I have to my open source code. I do not get paid to write code, nor are there many particular compelling professional incentives for me to write code. And so what this means is that my open source work largely happens during my free time, or at the cost of research productivity and professional advancement. This is the case for almost all academics, and for the vast majority of professional software developers as well, not just me. This means that, when I do open source work, and in particular when I help folks with debugging, it's coming at some cost to my personal or professional life, and a result, I would like to be as ruthlessly efficient as possible.
+
+This desire for ruthless efficiency can often come across as harsh (and to be fair, a lot of open source devs are just straight up mean when folks as them for help). My goal is to be both kind and efficient; I want to be efficient not because I don't like you, but because I would rather be out riding my biking or making dinner with my partner or trying a new boulder problem.
+
+The consequence of this, for you, someone who would like my help, is that you are most likely to get timely and useful help if you help me be as efficient as possible. In practice, to do this, you should:
+
+- do everything in your power to solve your problem on your own before asking for help, and
+- once you are certain that you do need my help, please use the systems that I have in place to response efficiently to your request.
+
+### You will get the fastest help if you...
+
+**Create a [Github account](https://github.com/) and open an issue in the relevant repository**. All of my important public facing code lives in repositories on Github, or in Github gists, or my blog, which is hosted on Github. The unambiguously correct way to ask for help with any of this code is to (1) find the relevant Github repository, and (2) open an issue. If you do not know how to create a Github account, or how to open a Github issue, this is a good moment to take some initiative and teach yourself. Finding the relevant repository might be a little bit harder, but typically, you can browse my repositories on my Github profile, or CRAN packages often list a URL where you can file bug reports. For example, here's the CRAN package for the [`vsp`](https://cran.r-project.org/package=vsp) package that I maintain.
+
+![](vsp-cran.png)
+
+::: {.callout-note}
+## Cultural note: do not email, text or call software developers with questions about code
+
+It's critical that you use Github issues or JIRA tickets or whatever systems are in place to report bugs and ask for help. This keeps things as streamlined as possible. 99% percent of the time, in the #rstats universe, this means finding the relevant software repository online and opening an issue in the issue tracker or discussion board.
+
+In general, if you email, text or call with questions about code, it is very likely that you will receive no response, a kurt response, or that you may even be blocked.
+
+For me specifically, if you are having trouble figuring out where to file a bug report, I'm open to short emails asking "Hey I have a question about `xyz_package`, I search for a Github repo but couldn't find one, where should I ask it?" Everything else belongs in a Github issue. This is true for everyone, friends, family and co-workers included!
+:::
+
+**Submit a reproducible example**. If you don't know what this means, you should stop and watch Jenny Bryan's [talk](https://www.youtube.com/watch?v=5gqksthQ0cM) about reproducible examples.
+
+::: {.callout-note}
+## Cultural note: reproducible examples are a shibboleth
+
+Realistically, you should not expect to be taken seriously if you do not include a reproducible example of your problem. If you do not include a reproducible example, software maintainers will assume that you have not tried to solve your problem on your own, and are thus likely to ignore your request.
+
+I routinely ignore requests for help from strangers that are unaccompanied by reproducible examples. I sometimes respond to requests for help that do not have include a reproducible example out of professional obligation, but it's a pain and depending on the how patient I'm feeling in the moment, I sometimes feel resentful about this.
+
+Oftentimes, friends or acquaintances will ask me for help with code, and email me either files or screenshots of code. I almost always ask for reproducible example (you can either share this in a Github issue for the relevant repository, or you can create a Github gist for these). Oftentimes, acquaintances do not realize the important of reproducible examples when ask them to make one. If I ask you to make a reproducible example, and you do not, it is extremely likely that I will cold turkey stop responding to your request for help.
+
+The ideal reproducible example is a short code snippet that I copy and paste from Github into RStudio, and I can immediately run it to recreate your error. 
+
+Two quick notes on reproducible examples and data:
+- It's best if I don't want to download any data to run you example. Every click I have to make to get your code running increases the likelihood that I do not try, or I give up and go for a bike ride instead. In my experience, I've had the best luck creating reproducible examples that depend on data by (1) uploading the data to Google Drive, (2) making the sharing settings on file public, and (3) setting up my script so it automatically downloads the data from Google Drive. Ideally, the data should be small. If your data is proprietary and you can't share it publicly, try to recreate your issue with fake or simulated data that closely mirrors the data you cannot share.
+:::
+
+**Demonstrate that you have already done everything in your power to solve your own problem**. If you wrote some code, and that code relies on some code that I wrote, and things aren't working, there are basically three things that could be happening:
+
+1. there's a bug in your code, or
+1. the documentation for my code isn't clear enough for you to understand how to use it, or
+1. there's a bug in my code.
+
+I tend to get lots of questions for folks who don't code a whole ton, and as a result, most of the time the issue is that there's a bug in your code, or my documentation is just terrible.
+
+Google your errors. Explain what you think the error means. Give your best guess at why it's happening. The goal of this exercise is two-fold: in the process, you are likely to solve your own issue. Also, it shows me that you tried, which makes me far more likely to offer you help.
+
+If you need to get my code working on an urgent basis, please explain this when you submit your issue. Be calm. Be polite. It's common to get panicky about code that you don't understand.
+
+and suggest a reasonable timeline to address your issue.
+
+- ask me to replace TODOS in my documentation
+- ask me to add another example to the documentation using data that looks like yours
+
+- the best request is a reprex that i copy and paste into rstudio, and run, and get an error immediately. if i have to download a file or figure out where the error is in your code, i might decide it's more fun to go for a bike ride instead
+
+### If you get the help you need
+
+say thanks, close the issue, let me know how my code helped you. this is all motivating to me.
+
