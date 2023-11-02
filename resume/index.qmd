@@ -1,0 +1,92 @@
+---
+title: "resume"
+---
+
+Statistical methodologist | open source R developer | data scientist
+
+I excel at digging around in data, developing new methods to solve scientific and business problems, translating real-world problems in statistical problems, producing production-grade code that plays with others, understanding when inference is causal, with a track record of successful remote work
+
+Communication
+- 
+Statistics
+- Methods development
+- Causal inference
+- Clustering
+- Network embeddings
+- Matrix completion
+- Causal machine learning
+- Data visualization
+- Regression
+- Interference & mediation
+- Factor analysis
+Software engineering
+- R package development
+- tidyverse
+- Python
+- SQL
+- C++
+- Reproducible data analysis
+
+
+#### Education  
+
+- Ph.D. Statistics, University of Wisconsin-Madison (Spring 2024)
+- B.A. Statistics, Rice University (2018)
+
+##### Research Assistant, [Rohe], [Levin] and [Zhao] Labs, UW-Madison (Fall 2018 - Present)
+
+[rohe]: http://pages.stat.wisc.edu/~karlrohe/
+[levin]: https://pages.stat.wisc.edu/~kdlevin/
+[zhao]: https://zhaolab.biostat.wisc.edu/
+
+- Developed novel statistical methods to estimate causal mediation and contagion on network data
+- Developed spectral embedding for citation networks leveraging efficient sparse matrix methods
+- Developed theory and simulations to understand regularization and overfitting in networks
+- Performed targeted network sampling and graph partitioning to analyze disinformation on Twitter
+- Determined necessary conditions for causal identification in experiments relying on data fusion
+- Derived efficient influence functions and estimators for causal estimands in data fusion settings
+
+##### Teaching Assistant, UW-Madison (Fall 2018 - Fall 2022)
+
+- Lead discussion sections and lectured in large introductory statistics and programming courses
+- Received award for outstanding teaching within the department based on course evaluations
+
+##### Research Intern, [Core Data Science][cds], Facebook (May 2021 - August 2021)
+
+[cds]: https://research.fb.com/teams/core-data-science/
+
+- Developed hyperbolic graph embeddings to suggest related entities in large knowledge graphs. PyTorch, SQL
+- Wrote technical report providing guidance on use of hyperbolic methods for graph data
+- Prototyped automated content tagging system based on hashtag co-occurrences. Python, SQL, 
+
+
+[appr_repo]: https://github.com/RoheLab/aPPR
+[fastrg_repo]: https://rohelab.github.io/fastRG/
+
+##### Research Intern, [Core Data Science][cds], Facebook (May 2020 - October 2020)
+
+[cds]: https://research.fb.com/teams/core-data-science/
+
+- Developed novel measure of non-stationarity to assess stability of classifier calibration over time
+- Contributed production implementation of non-stationarity metric and calibration method
+- Used results to help client teams understand and trust measures of content prevalence
+- Internship extended to write conference manuscript based on my work
+
+##### Intern, [RStudio][rstudio] (June 2018 - October 2018)
+
+[rstudio]: https://www.rstudio.com/
+
+- Maintained and became author of the open-source R package [`broom`](https://github.com/tidyverse/broom) (750K+ downloads/month)
+- Clarified API contracts and enforced consistency with new test suite
+- Oversaw 40+ pull requests and 80+ bug fixes from dozens of contributors
+- Developed extensive guidelines and support materials for contributors
+- Internship extended into additional consulting work
+
+**N.B.:** For the last several years, I written code purely for the purposes of furthering my academic research. The goal of this code is not be broadly usable. I only commit to maintaining and explaining my research code to the extent that it is assists others in their own academic research. I have also written code designed for broad consumption -- see [#rstats](#rstats) below for some details about my open source work.
+
+My research code, as well as miscellaneous personal projects in various stages of completion, lives on my [Github](https://github.com/alexpghayes). I primarily use `R`, and most of my work as a developer is on methods packages. I am also a proficient Python user, and have passing exposure to SQL, Julia, and C++.
+
+### Projects
+
+
+Last updated 2023-10-20.
