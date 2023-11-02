@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Hayes">
-<meta name="dcterms.date" content="2022-10-30">
+<meta name="dcterms.date" content="2024-01-01">
 
-<title>alex hayes - avoiding data races with intel mkl</title>
+<title>alex hayes - synthetic control: elon’s tweet tanked tesla’s stock</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -107,13 +73,13 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="alex hayes - avoiding data races with intel mkl">
-<meta property="og:description" content="set the MKL_THREADING_LAYER environment variable to GNU">
-<meta property="og:image" content="https://www.alexpghayes.com/post/2022-10-30-intel-mkl-data-race/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta property="og:title" content="alex hayes - synthetic control: elon’s tweet tanked tesla’s stock">
+<meta property="og:description" content="a terse analysis of tesla stock prices and how one of elon’s tweets moves them">
+<meta property="og:image" content="https://www.alexpghayes.com/post/xxxx-xx-xx_a-cocktail-data-analysis/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
 <meta property="og:site-name" content="alex hayes">
-<meta name="twitter:title" content="alex hayes - avoiding data races with intel mkl">
-<meta name="twitter:description" content="set the MKL_THREADING_LAYER environment variable to GNU">
-<meta name="twitter:image" content="https://www.alexpghayes.com/post/2022-10-30-intel-mkl-data-race/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta name="twitter:title" content="alex hayes - synthetic control: elon’s tweet tanked tesla’s stock">
+<meta name="twitter:description" content="a terse analysis of tesla stock prices and how one of elon’s tweets moves them">
+<meta name="twitter:image" content="https://www.alexpghayes.com/post/xxxx-xx-xx_a-cocktail-data-analysis/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
 <meta name="twitter:creator" content="@alexpghayes">
 <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -185,12 +151,10 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">avoiding data races with intel mkl</h1>
-            <p class="subtitle lead"></p><p>set the <code>MKL_THREADING_LAYER</code> environment variable to <code>GNU</code></p><p></p>
+      <h1 class="title">synthetic control: elon’s tweet tanked tesla’s stock</h1>
+            <p class="subtitle lead"></p><p>a terse analysis of tesla stock prices and how one of elon’s tweets moves them</p><p></p>
                                 <div class="quarto-categories">
-                <div class="quarto-category">notes to self</div>
-                <div class="quarto-category">data race</div>
-                <div class="quarto-category">intel mkl</div>
+                <div class="quarto-category">data analysis</div>
               </div>
                   </div>
   </div>
@@ -208,7 +172,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 30, 2022</p>
+        <p class="date">January 1, 2024</p>
       </div>
     </div>
     
@@ -223,11 +187,11 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
-  <li><a href="#the-problem" id="toc-the-problem" class="nav-link" data-scroll-target="#the-problem">The problem</a></li>
-  <li><a href="#the-solution" id="toc-the-solution" class="nav-link" data-scroll-target="#the-solution">The solution</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#normalization-scaling" id="toc-normalization-scaling" class="nav-link" data-scroll-target="#normalization-scaling">Normalization / scaling</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/2022-10-30-intel-mkl-data-race/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/xxxx-xx-xx_a-cocktail-data-analysis/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
 </nav>
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
@@ -239,84 +203,275 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 
-<p>If you are using Intel MKL for your BLAS/LAPACK implementation on Linux, you can set the environment variable <code>MKL_THREADING_LAYER</code> to <code>GNU</code> to avoid data races during matrix multiplication<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<section id="background" class="level2">
-<h2 class="anchored" data-anchor-id="background">Background</h2>
-<p>If you do numerically intensive computing, you might want to make it faster. One way to do this is to switch out the backend implementation of linear algebra routines on your computer. At a low level, most linear algebra on your computers happens by making calls via BLAS/LAPACK APIs, and there are several libraries that offer differing implementations of the underlying methods. Some of these libraries are faster than others; many are faster than the default implementation.</p>
-<p>I use Intel MKL. On Ubuntu, you can install Intel MKL via the shell with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install intel-mkl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You can check your current BLAS/LAPACK implementation in <code>R</code> using <code>utils::sessionInfo()</code>:</p>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<p>how to use <code>vsp</code>. at the end, visualization and results takeaway for non-technical folks</p>
+</section>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section"></h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>si <span class="ot">&lt;-</span> utils<span class="sc">::</span><span class="fu">sessionInfo</span>()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>si<span class="sc">$</span>LAPACK</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "/usr/lib/x86_64-linux-gnu/libmkl_rt.so"</code></pre>
+<pre><code># A tibble: 569 × 2
+   ingredient            n
+   &lt;chr&gt;             &lt;int&gt;
+ 1 Gin                 176
+ 2 Fresh lemon juice   138
+ 3 Simple Syrup        115
+ 4 Vodka               114
+ 5 Light Rum           113
+ 6 Dry Vermouth        107
+ 7 Fresh Lime Juice    107
+ 8 Triple Sec          107
+ 9 Powdered Sugar       90
+10 Grenadine            85
+# ℹ 559 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There was 1 warning in `mutate()`.
+ℹ In argument: `measure_number = parse_number(measure)`.
+Caused by warning:
+! 20 parsing failures.
+row col expected    actual
+637  -- a number For glass
+671  -- a number For glass
+794  -- a number For glass
+878  -- a number For glass
+928  -- a number For glass
+... ... ........ .........
+See problems(...) for more details.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 413 × 1
+   ingredient                             
+   &lt;chr&gt;                                  
+ 1 100 proof vodka                        
+ 2 151 proof rum                          
+ 3 17 year old j. wray and nephew ltd. rum
+ 4 7 up                                   
+ 5 absinthe                               
+ 6 absinthe or pastis                     
+ 7 absinthe substitute                    
+ 8 acai berry vodka                       
+ 9 african rum                            
+10 agave nectar                           
+# ℹ 403 more rows</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3,579 × 8
+   name      category row_id ingredient_number ingredient measure measure_number
+   &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt;             &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;            &lt;dbl&gt;
+ 1 Gauguin   Cocktai…      1                 1 light rum  2 oz              2   
+ 2 Gauguin   Cocktai…      1                 2 passion f… 1 oz              1   
+ 3 Gauguin   Cocktai…      1                 3 lemon jui… 1 oz              1   
+ 4 Gauguin   Cocktai…      1                 4 lime juice 1 oz              1   
+ 5 Fort Lau… Cocktai…      2                 1 light rum  1.5 oz            1.5 
+ 6 Fort Lau… Cocktai…      2                 2 sweet ver… .5 oz             0.5 
+ 7 Fort Lau… Cocktai…      2                 3 orange ju… .25 oz            0.25
+ 8 Fort Lau… Cocktai…      2                 4 lime juice .25 oz            0.25
+ 9 Apple Pie Cordial…      3                 1 apple sch… 3 oz              3   
+10 Apple Pie Cordial…      3                 2 cinnamon … 1 oz              1   
+# ℹ 3,569 more rows
+# ℹ 1 more variable: n &lt;int&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3,489 × 416
+   name      category     n light_rum passion_fruit_syrup lemon_juice lime_juice
+   &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt;     &lt;dbl&gt;               &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;
+ 1 Gauguin   Cocktai…   113       2                     0           0       0   
+ 2 Gauguin   Cocktai…     4       0                     1           0       0   
+ 3 Gauguin   Cocktai…   311       0                     0           1       0   
+ 4 Gauguin   Cocktai…   180       0                     0           0       1   
+ 5 Fort Lau… Cocktai…   113       1.5                   0           0       0   
+ 6 Fort Lau… Cocktai…    84       0                     0           0       0   
+ 7 Fort Lau… Cocktai…   124       0                     0           0       0   
+ 8 Fort Lau… Cocktai…   180       0                     0           0       0.25
+ 9 Apple Pie Cordial…     1       0                     0           0       0   
+10 Apple Pie Cordial…     2       0                     0           0       0   
+# ℹ 3,479 more rows
+# ℹ 409 more variables: sweet_vermouth &lt;dbl&gt;, orange_juice &lt;dbl&gt;,
+#   apple_schnapps &lt;dbl&gt;, cinnamon_schnapps &lt;dbl&gt;, powdered_sugar &lt;dbl&gt;,
+#   dark_rum &lt;dbl&gt;, cranberry_juice &lt;dbl&gt;, pineapple_juice &lt;dbl&gt;,
+#   sour_mix &lt;dbl&gt;, bourbon_whiskey &lt;dbl&gt;, simple_syrup &lt;dbl&gt;,
+#   soda_water &lt;dbl&gt;, cherry_brandy &lt;dbl&gt;, light_cream &lt;dbl&gt;, triple_sec &lt;dbl&gt;,
+#   maraschino &lt;dbl&gt;, creme_de_banana &lt;dbl&gt;, amaretto &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>The biggest difference in PC1 is powdered sugar vs.&nbsp;simple syrup; recipes are not likely to have both, which makes sense! Let’s zoom in on the first four components, and understand which cocktail ingredients contribute in the positive and negative directions.</p>
+</blockquote>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'tidygraph'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    filter</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: future</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3,579 × 8
+   name      category row_id ingredient_number ingredient measure measure_number
+   &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt;             &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;            &lt;dbl&gt;
+ 1 Gauguin   Cocktai…      1                 1 light rum  2 oz              2   
+ 2 Gauguin   Cocktai…      1                 2 passion f… 1 oz              1   
+ 3 Gauguin   Cocktai…      1                 3 lemon jui… 1 oz              1   
+ 4 Gauguin   Cocktai…      1                 4 lime juice 1 oz              1   
+ 5 Fort Lau… Cocktai…      2                 1 light rum  1.5 oz            1.5 
+ 6 Fort Lau… Cocktai…      2                 2 sweet ver… .5 oz             0.5 
+ 7 Fort Lau… Cocktai…      2                 3 orange ju… .25 oz            0.25
+ 8 Fort Lau… Cocktai…      2                 4 lime juice .25 oz            0.25
+ 9 Apple Pie Cordial…      3                 1 apple sch… 3 oz              3   
+10 Apple Pie Cordial…      3                 2 cinnamon … 1 oz              1   
+# ℹ 3,569 more rows
+# ℹ 1 more variable: n &lt;int&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Vintage Sparse PCA Factor Analysis
+
+Rows (n):   989
+Cols (d):   413
+Factors (rank): 20
+Lambda[rank]:   6.159
+Components
+
+Z: 989 x 20 [matrix] 
+B: 20 x 20 [matrix] 
+Y: 413 x 20 [matrix] 
+u: 989 x 20 [matrix] 
+d: 20      [numeric] 
+v: 413 x 20 [matrix] </code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'GGally':
+  method from   
+  +.gg   ggplot2</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-5-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 60 × 3
+# Groups:   factor [20]
+   id                   factor loading
+   &lt;chr&gt;                &lt;chr&gt;    &lt;dbl&gt;
+ 1 lemon juice          y01     20.1  
+ 2 apricot brandy       y01      1.25 
+ 3 anisette             y01     -0.928
+ 4 dry vermouth         y02     20.1  
+ 5 dark rum             y02     -0.973
+ 6 green chartreuse     y02     -0.898
+ 7 bitters              y03     20.0  
+ 8 dark rum             y03      1.62 
+ 9 white creme de cacao y03     -0.845
+10 vodka                y04     19.6  
+# ℹ 50 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>So PC1 is about powdered sugar + egg + gin drinks vs.&nbsp;simple syrup + lime + tequila drinks. This is the component that explains the most variation in drinks. PC2 is mostly about vermouth, both sweet and dry.</p>
+</blockquote>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>how many ingredients in each cocktail on average?</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in left_join(get_z_hubs(fa, 5), cocktails_parsed, by = join_by(id == : Detected an unexpected many-to-many relationship between `x` and `y`.
+ℹ Row 1 of `x` matches multiple rows in `y`.
+ℹ Row 3155 of `y` matches multiple rows in `x`.
+ℹ If a many-to-many relationship is expected, set `relationship =
+  "many-to-many"` to silence this warning.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 434 × 4
+# Groups:   factor [20]
+   factor id                            ingredient     measure
+   &lt;chr&gt;  &lt;chr&gt;                         &lt;chr&gt;          &lt;chr&gt;  
+ 1 z01    Thanksgiving Special Cocktail apricot brandy .75 oz 
+ 2 z01    Thanksgiving Special Cocktail dry gin        .75 oz 
+ 3 z01    Thanksgiving Special Cocktail dry vermouth   .75 oz 
+ 4 z01    Thanksgiving Special Cocktail lemon juice    .25 oz 
+ 5 z01    Western Rose Cocktail         apricot brandy .5 oz  
+ 6 z01    Western Rose Cocktail         dry gin        1 oz   
+ 7 z01    Western Rose Cocktail         dry vermouth   .5 oz  
+ 8 z01    Western Rose Cocktail         lemon juice    .25 oz 
+ 9 z01    Prince's Smile Cocktail       apricot brandy .5 oz  
+10 z01    Prince's Smile Cocktail       apple brandy   .5 oz  
+# ℹ 424 more rows</code></pre>
 </div>
 </div>
 </section>
-<section id="the-problem" class="level2">
-<h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
-<p>On computers with multiple cores, Intel MKL can induce data races during (sufficiently large) matrix multiplies, depending on the threading model. Using the default threading model, I can reliably induce these data races like this:</p>
+<section id="normalization-scaling" class="level3">
+<h3 class="anchored" data-anchor-id="normalization-scaling">Normalization / scaling</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this function should return 249.7852</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>can_induce_data_race <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span> <span class="sc">/</span> <span class="dv">500</span>, <span class="dv">50</span>, <span class="dv">10</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  Y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span> <span class="sc">/</span> <span class="dv">1000</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">norm</span>(X <span class="sc">%*%</span> Y)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">can_induce_data_race</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 249.7852</code></pre>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'Matrix'</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">can_induce_data_race</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 249.7852</code></pre>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:tidyr':
+
+    expand, pack, unpack</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">can_induce_data_race</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 249.7852</code></pre>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>See discussion <a href="https://github.com/eddelbuettel/mkl4deb/issues/2">here</a>, <a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=921193#12">here</a> and <a href="https://github.com/eddelbuettel/mkl4deb/issues/9">here</a> if you’re curious about underlying causes.</p>
-</section>
-<section id="the-solution" class="level2">
-<h2 class="anchored" data-anchor-id="the-solution">The solution</h2>
-<p>To avoid this problem, set the environmental variable <code>MKL_THREADING_LAYER=GNU</code>. You can check the current value of the <code>MKL_THREADING_LAYER</code> environmental variable via</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.getenv</span>(<span class="st">"MKL_THREADING_LAYER"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "GNU"</code></pre>
-</div>
-</div>
-<p>When <code>MKL_THREADING_LAYER</code> is not set, it defaults to <code>INTEL</code>. To set <code>MKL_THREADING_LAYER=GNU</code> universally, you can update <code>/etc/environment</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"MKL_THREADING_LAYER=GNU"</span> <span class="op">&gt;&gt;</span> /etc/environment</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Alternatively, tell MKL to operate without parallelism by setting <code>MKL_NUM_THREADS=1</code>. Note that you will need to restart <code>R</code> for these changes to take effect. More generally, <a href="https://stackoverflow.com/a/74212620/5563099">environmental variables are typically read once, at program startup</a>, so you cannot use <code>Sys.setenv()</code> to set <code>MKL_THREADING_LAYER</code> at runtime. Similarly, you cannot change the number of threads MKL uses are runtime via environmental variables (see <a href="https://www.intel.com/content/www/us/en/develop/documentation/onemkl-linux-developer-guide/top/managing-performance-and-memory/improving-performance-with-threading/changing-the-number-of-openmp-threads-at-run-time.html">documentation</a>).</p>
-<p>If you want to test the effect of different environmental variables without leaving <code>R</code>, you can use <code>callr::r()</code>, as below:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>callr<span class="sc">::</span><span class="fu">r</span>(can_induce_data_race, <span class="at">env =</span> <span class="fu">c</span>(<span class="at">MKL_THREADING_LAYER =</span> <span class="st">"INTEL"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2823.996</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>callr<span class="sc">::</span><span class="fu">r</span>(can_induce_data_race, <span class="at">env =</span> <span class="fu">c</span>(<span class="at">MKL_THREADING_LAYER =</span> <span class="st">"GNU"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 249.7852</code></pre>
-</div>
-</div>
-<p>If you would like to change set environmental variables locally (for example, if you want <code>targets</code> to manage parallelism across tasks, while running each individual task sequentially), use an <code>.Renviron</code> at the top level of your R project. You can do this via:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>(<span class="at">scope =</span> <span class="st">"project"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>https://juliasilge.com/blog/cocktail-recipes-umap/</p>
 
 
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>None of the information in this blog post is new, nor do I claim to have a good understanding. I am simply collecting some information to help my future self when this issue next rears its head.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></div></section></div></main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

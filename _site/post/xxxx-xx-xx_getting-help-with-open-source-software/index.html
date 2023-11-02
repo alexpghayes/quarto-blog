@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Hayes">
-<meta name="dcterms.date" content="2022-10-30">
+<meta name="dcterms.date" content="2023-10-24">
 
-<title>alex hayes - avoiding data races with intel mkl</title>
+<title>alex hayes - getting help with open source software</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -107,13 +73,13 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="alex hayes - avoiding data races with intel mkl">
-<meta property="og:description" content="set the MKL_THREADING_LAYER environment variable to GNU">
-<meta property="og:image" content="https://www.alexpghayes.com/post/2022-10-30-intel-mkl-data-race/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta property="og:title" content="alex hayes - getting help with open source software">
+<meta property="og:description" content="a.k.a. how to get help with software i’ve written, from my perspective">
+<meta property="og:image" content="https://www.alexpghayes.com/post/xxxx-xx-xx_getting-help-with-open-source-software/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
 <meta property="og:site-name" content="alex hayes">
-<meta name="twitter:title" content="alex hayes - avoiding data races with intel mkl">
-<meta name="twitter:description" content="set the MKL_THREADING_LAYER environment variable to GNU">
-<meta name="twitter:image" content="https://www.alexpghayes.com/post/2022-10-30-intel-mkl-data-race/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta name="twitter:title" content="alex hayes - getting help with open source software">
+<meta name="twitter:description" content="a.k.a. how to get help with software i’ve written, from my perspective">
+<meta name="twitter:image" content="https://www.alexpghayes.com/post/xxxx-xx-xx_getting-help-with-open-source-software/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
 <meta name="twitter:creator" content="@alexpghayes">
 <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -185,12 +151,10 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">avoiding data races with intel mkl</h1>
-            <p class="subtitle lead"></p><p>set the <code>MKL_THREADING_LAYER</code> environment variable to <code>GNU</code></p><p></p>
+      <h1 class="title">getting help with open source software</h1>
+            <p class="subtitle lead"></p><p>a.k.a. how to get help with software i’ve written, from my perspective</p><p></p>
                                 <div class="quarto-categories">
-                <div class="quarto-category">notes to self</div>
-                <div class="quarto-category">data race</div>
-                <div class="quarto-category">intel mkl</div>
+                <div class="quarto-category">statistical software</div>
               </div>
                   </div>
   </div>
@@ -208,7 +172,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 30, 2022</p>
+        <p class="date">October 24, 2023</p>
       </div>
     </div>
     
@@ -223,11 +187,12 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
-  <li><a href="#the-problem" id="toc-the-problem" class="nav-link" data-scroll-target="#the-problem">The problem</a></li>
-  <li><a href="#the-solution" id="toc-the-solution" class="nav-link" data-scroll-target="#the-solution">The solution</a></li>
+  <li><a href="#the-situation" id="toc-the-situation" class="nav-link active" data-scroll-target="#the-situation">The situation</a></li>
+  <li><a href="#context-that-should-inform-your-next-steps" id="toc-context-that-should-inform-your-next-steps" class="nav-link" data-scroll-target="#context-that-should-inform-your-next-steps">Context that should inform your next steps</a></li>
+  <li><a href="#you-will-get-the-fastest-help-if-you" id="toc-you-will-get-the-fastest-help-if-you" class="nav-link" data-scroll-target="#you-will-get-the-fastest-help-if-you">You will get the fastest help if you…</a></li>
+  <li><a href="#if-you-get-the-help-you-need" id="toc-if-you-get-the-help-you-need" class="nav-link" data-scroll-target="#if-you-get-the-help-you-need">If you get the help you need</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/2022-10-30-intel-mkl-data-race/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/xxxx-xx-xx_getting-help-with-open-source-software/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
 </nav>
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
@@ -239,84 +204,81 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 
-<p>If you are using Intel MKL for your BLAS/LAPACK implementation on Linux, you can set the environment variable <code>MKL_THREADING_LAYER</code> to <code>GNU</code> to avoid data races during matrix multiplication<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<section id="background" class="level2">
-<h2 class="anchored" data-anchor-id="background">Background</h2>
-<p>If you do numerically intensive computing, you might want to make it faster. One way to do this is to switch out the backend implementation of linear algebra routines on your computer. At a low level, most linear algebra on your computers happens by making calls via BLAS/LAPACK APIs, and there are several libraries that offer differing implementations of the underlying methods. Some of these libraries are faster than others; many are faster than the default implementation.</p>
-<p>I use Intel MKL. On Ubuntu, you can install Intel MKL via the shell with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install intel-mkl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You can check your current BLAS/LAPACK implementation in <code>R</code> using <code>utils::sessionInfo()</code>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>si <span class="ot">&lt;-</span> utils<span class="sc">::</span><span class="fu">sessionInfo</span>()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>si<span class="sc">$</span>LAPACK</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "/usr/lib/x86_64-linux-gnu/libmkl_rt.so"</code></pre>
-</div>
-</div>
+<section id="the-situation" class="level3">
+<h3 class="anchored" data-anchor-id="the-situation">The situation</h3>
+<p>You are trying to use some code that I wrote. Something isn’t working, and/or you can’t understand how to use it because I never finished the documentation. It seems like the code will solve some problem you have, so you’d like it to work.</p>
 </section>
-<section id="the-problem" class="level2">
-<h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
-<p>On computers with multiple cores, Intel MKL can induce data races during (sufficiently large) matrix multiplies, depending on the threading model. Using the default threading model, I can reliably induce these data races like this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this function should return 249.7852</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>can_induce_data_race <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span> <span class="sc">/</span> <span class="dv">500</span>, <span class="dv">50</span>, <span class="dv">10</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  Y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span> <span class="sc">/</span> <span class="dv">1000</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">norm</span>(X <span class="sc">%*%</span> Y)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">can_induce_data_race</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 249.7852</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">can_induce_data_race</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 249.7852</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">can_induce_data_race</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 249.7852</code></pre>
-</div>
-</div>
-<p>See discussion <a href="https://github.com/eddelbuettel/mkl4deb/issues/2">here</a>, <a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=921193#12">here</a> and <a href="https://github.com/eddelbuettel/mkl4deb/issues/9">here</a> if you’re curious about underlying causes.</p>
+<section id="context-that-should-inform-your-next-steps" class="level3">
+<h3 class="anchored" data-anchor-id="context-that-should-inform-your-next-steps">Context that should inform your next steps</h3>
+<p>I want people to use my code. I want it to be helpful to people. But it’s important to understand the relationship that I have to my open source code. I do not get paid to write code, nor are there many particular compelling professional incentives for me to write code. And so what this means is that my open source work largely happens during my free time, or at the cost of research productivity and professional advancement. This is the case for almost all academics, and for the vast majority of professional software developers as well, not just me. This means that, when I do open source work, and in particular when I help folks with debugging, it’s coming at some cost to my personal or professional life, and a result, I would like to be as ruthlessly efficient as possible.</p>
+<p>This desire for ruthless efficiency can often come across as harsh (and to be fair, a lot of open source devs are just straight up mean when folks as them for help). My goal is to be both kind and efficient; I want to be efficient not because I don’t like you, but because I would rather be out riding my biking or making dinner with my partner or trying a new boulder problem.</p>
+<p>The consequence of this, for you, someone who would like my help, is that you are most likely to get timely and useful help if you help me be as efficient as possible. In practice, to do this, you should:</p>
+<ul>
+<li>do everything in your power to solve your problem on your own before asking for help, and</li>
+<li>once you are certain that you do need my help, please use the systems that I have in place to response efficiently to your request.</li>
+</ul>
 </section>
-<section id="the-solution" class="level2">
-<h2 class="anchored" data-anchor-id="the-solution">The solution</h2>
-<p>To avoid this problem, set the environmental variable <code>MKL_THREADING_LAYER=GNU</code>. You can check the current value of the <code>MKL_THREADING_LAYER</code> environmental variable via</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.getenv</span>(<span class="st">"MKL_THREADING_LAYER"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "GNU"</code></pre>
+<section id="you-will-get-the-fastest-help-if-you" class="level3">
+<h3 class="anchored" data-anchor-id="you-will-get-the-fastest-help-if-you">You will get the fastest help if you…</h3>
+<p><strong>Create a <a href="https://github.com/">Github account</a> and open an issue in the relevant repository</strong>. All of my important public facing code lives in repositories on Github, or in Github gists, or my blog, which is hosted on Github. The unambiguously correct way to ask for help with any of this code is to (1) find the relevant Github repository, and (2) open an issue. If you do not know how to create a Github account, or how to open a Github issue, this is a good moment to take some initiative and teach yourself. Finding the relevant repository might be a little bit harder, but typically, you can browse my repositories on my Github profile, or CRAN packages often list a URL where you can file bug reports. For example, here’s the CRAN package for the <a href="https://cran.r-project.org/package=vsp"><code>vsp</code></a> package that I maintain.</p>
+<p><img src="vsp-cran.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Cultural note: do not email, text or call software developers with questions about code
 </div>
 </div>
-<p>When <code>MKL_THREADING_LAYER</code> is not set, it defaults to <code>INTEL</code>. To set <code>MKL_THREADING_LAYER=GNU</code> universally, you can update <code>/etc/environment</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"MKL_THREADING_LAYER=GNU"</span> <span class="op">&gt;&gt;</span> /etc/environment</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Alternatively, tell MKL to operate without parallelism by setting <code>MKL_NUM_THREADS=1</code>. Note that you will need to restart <code>R</code> for these changes to take effect. More generally, <a href="https://stackoverflow.com/a/74212620/5563099">environmental variables are typically read once, at program startup</a>, so you cannot use <code>Sys.setenv()</code> to set <code>MKL_THREADING_LAYER</code> at runtime. Similarly, you cannot change the number of threads MKL uses are runtime via environmental variables (see <a href="https://www.intel.com/content/www/us/en/develop/documentation/onemkl-linux-developer-guide/top/managing-performance-and-memory/improving-performance-with-threading/changing-the-number-of-openmp-threads-at-run-time.html">documentation</a>).</p>
-<p>If you want to test the effect of different environmental variables without leaving <code>R</code>, you can use <code>callr::r()</code>, as below:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>callr<span class="sc">::</span><span class="fu">r</span>(can_induce_data_race, <span class="at">env =</span> <span class="fu">c</span>(<span class="at">MKL_THREADING_LAYER =</span> <span class="st">"INTEL"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2823.996</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>callr<span class="sc">::</span><span class="fu">r</span>(can_induce_data_race, <span class="at">env =</span> <span class="fu">c</span>(<span class="at">MKL_THREADING_LAYER =</span> <span class="st">"GNU"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 249.7852</code></pre>
+<div class="callout-body-container callout-body">
+<p>It’s critical that you use Github issues or JIRA tickets or whatever systems are in place to report bugs and ask for help. This keeps things as streamlined as possible. 99% percent of the time, in the #rstats universe, this means finding the relevant software repository online and opening an issue in the issue tracker or discussion board.</p>
+<p>In general, if you email, text or call with questions about code, it is very likely that you will receive no response, a kurt response, or that you may even be blocked.</p>
+<p>For me specifically, if you are having trouble figuring out where to file a bug report, I’m open to short emails asking “Hey I have a question about <code>xyz_package</code>, I search for a Github repo but couldn’t find one, where should I ask it?” Everything else belongs in a Github issue. This is true for everyone, friends, family and co-workers included!</p>
 </div>
 </div>
-<p>If you would like to change set environmental variables locally (for example, if you want <code>targets</code> to manage parallelism across tasks, while running each individual task sequentially), use an <code>.Renviron</code> at the top level of your R project. You can do this via:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>(<span class="at">scope =</span> <span class="st">"project"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>None of the information in this blog post is new, nor do I claim to have a good understanding. I am simply collecting some information to help my future self when this issue next rears its head.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<p><strong>Submit a reproducible example</strong>. If you don’t know what this means, you should stop and watch Jenny Bryan’s <a href="https://www.youtube.com/watch?v=5gqksthQ0cM">talk</a> about reproducible examples.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Cultural note: reproducible examples are a shibboleth
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Realistically, you should not expect to be taken seriously if you do not include a reproducible example of your problem. If you do not include a reproducible example, software maintainers will assume that you have not tried to solve your problem on your own, and are thus likely to ignore your request.</p>
+<p>I routinely ignore requests for help from strangers that are unaccompanied by reproducible examples. I sometimes respond to requests for help that do not have include a reproducible example out of professional obligation, but it’s a pain and depending on the how patient I’m feeling in the moment, I sometimes feel resentful about this.</p>
+<p>Oftentimes, friends or acquaintances will ask me for help with code, and email me either files or screenshots of code. I almost always ask for reproducible example (you can either share this in a Github issue for the relevant repository, or you can create a Github gist for these). Oftentimes, acquaintances do not realize the important of reproducible examples when ask them to make one. If I ask you to make a reproducible example, and you do not, it is extremely likely that I will cold turkey stop responding to your request for help.</p>
+<p>The ideal reproducible example is a short code snippet that I copy and paste from Github into RStudio, and I can immediately run it to recreate your error.</p>
+<p>Two quick notes on reproducible examples and data: - It’s best if I don’t want to download any data to run you example. Every click I have to make to get your code running increases the likelihood that I do not try, or I give up and go for a bike ride instead. In my experience, I’ve had the best luck creating reproducible examples that depend on data by (1) uploading the data to Google Drive, (2) making the sharing settings on file public, and (3) setting up my script so it automatically downloads the data from Google Drive. Ideally, the data should be small. If your data is proprietary and you can’t share it publicly, try to recreate your issue with fake or simulated data that closely mirrors the data you cannot share.</p>
+</div>
+</div>
+<p><strong>Demonstrate that you have already done everything in your power to solve your own problem</strong>. If you wrote some code, and that code relies on some code that I wrote, and things aren’t working, there are basically three things that could be happening:</p>
+<ol type="1">
+<li>there’s a bug in your code, or</li>
+<li>the documentation for my code isn’t clear enough for you to understand how to use it, or</li>
+<li>there’s a bug in my code.</li>
 </ol>
-</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></div></section></div></main> <!-- /main -->
+<p>I tend to get lots of questions for folks who don’t code a whole ton, and as a result, most of the time the issue is that there’s a bug in your code, or my documentation is just terrible.</p>
+<p>Google your errors. Explain what you think the error means. Give your best guess at why it’s happening. The goal of this exercise is two-fold: in the process, you are likely to solve your own issue. Also, it shows me that you tried, which makes me far more likely to offer you help.</p>
+<p>If you need to get my code working on an urgent basis, please explain this when you submit your issue. Be calm. Be polite. It’s common to get panicky about code that you don’t understand.</p>
+<p>and suggest a reasonable timeline to address your issue.</p>
+<ul>
+<li><p>ask me to replace TODOS in my documentation</p></li>
+<li><p>ask me to add another example to the documentation using data that looks like yours</p></li>
+<li><p>the best request is a reprex that i copy and paste into rstudio, and run, and get an error immediately. if i have to download a file or figure out where the error is in your code, i might decide it’s more fun to go for a bike ride instead</p></li>
+</ul>
+</section>
+<section id="if-you-get-the-help-you-need" class="level3">
+<h3 class="anchored" data-anchor-id="if-you-get-the-help-you-need">If you get the help you need</h3>
+<p>say thanks, close the issue, let me know how my code helped you. this is all motivating to me.</p>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
