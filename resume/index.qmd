@@ -1,16 +1,155 @@
 ---
-title: "resume"
+title: "Alex Hayes"
+subtitle: "Statistical methodologist | open source R developer | data scientist"
+format: 
+  html:
+    page-layout: full
 ---
 
-Statistical methodologist | open source R developer | data scientist
+<!-- https://quarto.org/docs/output-formats/page-layout.html -->
 
+
+:::: {.columns}
+
+::: {.column width="70%"}
 I excel at digging around in data, developing new methods to solve scientific and business problems, translating real-world problems in statistical problems, producing production-grade code that plays with others, understanding when inference is causal, with a track record of successful remote work
 
-Communication
-- 
+computational statistician | methodologist
+:::
+
+::: {.column width="2%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="28%"}
+<alexpghayes@gmail.com>  
+(775) 338-8842  
+Madison, WI
+<!-- [www.alexpghayes.com](https://www.alexpghayes.com)   -->
+<!-- {{< fa brands github >}} [github.com/alexpghayes](https://github.com/alexpghayes)   -->
+<!-- {{< fa brands linkedin >}} [linkedin.com/in/alexpghayes/](https://linkedin.com/in/alexpghayes/)   -->
+:::
+
+::::
+
+:::: {.columns}
+
+::: {.column width="67%"}
+
+## Experience
+
+<!-- Action Verb + What You Did + How You Did It + Results/Purpose/Impact -->
+
+<!-- Advise Aid Correct Counsel Demonstrate Display Encourage Enhance Enlist Ensure Grade Guide Help Influence Instruct Introduce Lecture Mentor Program Provide Rate Steer Suggest Support Teach Test Train Tutor -->
+
+<!-- Acquire Analyze Classify Collate Collect Compile Conduct Deliver Detect Determine Discover Dissect Evaluate Explore Examine Formulate Gather Identify Inspect Investigate Locate Name Obtain Observe Pinpoint Prepare Prioritize Receive Research Specify Survey Test Trace Track Verify -->
+
+:::: {.columns}
+::: {.column width="80%" style="align: left;"}
+##### **Research Assistant**
+##### UW-Madison, Statistics Department   
+:::
+::: {.column width="20%" style="text-align: right;"}
+August 2018 - Present  
+Madison, WI
+:::
+::::
+
+[rohe]: http://pages.stat.wisc.edu/~karlrohe/
+[levin]: https://pages.stat.wisc.edu/~kdlevin/
+[zhao]: https://zhaolab.biostat.wisc.edu/
+
+<!-- - Authored manuscripts -->
+<!-- - Presented work at conferences for broad audiences -->
+<!-- - Simulation studies -->
+<!-- - Identification theory -->
+<!-- - Analyzed data -->
+- Developed novel statistical methods to estimate causal mediation and contagion on network data
+- Developed spectral embedding for citation networks leveraging efficient sparse matrix methods
+- Developed theory and simulations to understand regularization and overfitting in networks
+- Performed targeted network sampling and graph partitioning to analyze disinformation on Twitter
+- Determined necessary conditions for causal identification in experiments relying on data fusion
+- Derived efficient influence functions and estimators for causal estimands in data fusion settings
+
+:::: {.columns}
+::: {.column width="70%" style="align: left;"}
+##### **Research Intern**
+##### Facebook, Core Data Science
+:::
+::: {.column width="30%" style="text-align: right;"}
+May 2021 - August 2021  
+Remote
+:::
+::::
+
+- Experimented with hyperbolic graph embeddings as a method to suggest related entities in large knowledge graphs using Python, PyTorch and SQL
+- Synthesized academic results on hyperbolic embeddings and experiments on internal datasets to guide future use of hyperbolic methods by research teams
+- Prototyped pipeline to automatically suggest content tags, using neural networks to embed co-occurrence datasets
+
+:::: {.columns}
+::: {.column width="70%" style="align: left;"}
+##### **Research Intern**
+##### Facebook, Core Data Science
+:::
+::: {.column width="30%" style="text-align: right;"}
+May 2020 - October 2020  
+Remote
+:::
+::::
+
+- Designed a novel metric to understand the current reliability of classifiers trained on a rolling basis
+- Implemented calibration techniques for machine learning models to compute reliability metric using Python and SQL
+- Communicated across departments to help other teams understand and trust estimated prevalence of objectionable content
+- Illustrated uses of reliability metric and explained computational details by authoring conference manuscript
+
+:::: {.columns}
+::: {.column width="70%" style="align: left;"}
+##### **Intern**
+##### RStudio, tidymodels team
+:::
+::: {.column width="30%" style="text-align: right;"}
+June 2018 - October 2018  
+Remote
+:::
+::::
+
+- Improved API consistency and reduced maintenance burden of `broom ` package (750K+ downloads/month) by re-factoring thousands of lines of `R` code and developing a new test suite
+- Authored contribution guidelines and coordinated 40+ pull requests from open source contributors, resolving 80+ open Github issues and bugs
+- Managed major new release (`broom 0.5.0`) by giving presentations and authoring blog posts to pro-actively communicate with stakeholders
+
+### Projects
+
+- `broom`
+- Taught machine learning workshop at `rstudio::conf(2019)`
+- `distributions3`
+- ROpenSci / JOSS scientific software review
+- Standards developement for statistical software
+:::
+
+::: {.column width="5%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="28%"}
+
+## Education  
+
+**Ph.D. Statistics**  
+University of Wisconsin-Madison, 2024
+
+**B.A. Statistics** with *Distinction in Research and Creative Work*  
+Rice University, 2018
+
+## Skills
+
+Human
+
+- Explaining technical concepts and challenges to non-technical audiences
+
 Statistics
+
 - Methods development
-- Causal inference
+- Causal inference  
 - Clustering
 - Network embeddings
 - Matrix completion
@@ -19,74 +158,19 @@ Statistics
 - Regression
 - Interference & mediation
 - Factor analysis
+
 Software engineering
+
 - R package development
 - tidyverse
 - Python
 - SQL
 - C++
 - Reproducible data analysis
+- Linux
+- Git / VCS
+:::
 
+::::
 
-#### Education  
-
-- Ph.D. Statistics, University of Wisconsin-Madison (Spring 2024)
-- B.A. Statistics, Rice University (2018)
-
-##### Research Assistant, [Rohe], [Levin] and [Zhao] Labs, UW-Madison (Fall 2018 - Present)
-
-[rohe]: http://pages.stat.wisc.edu/~karlrohe/
-[levin]: https://pages.stat.wisc.edu/~kdlevin/
-[zhao]: https://zhaolab.biostat.wisc.edu/
-
-- Developed novel statistical methods to estimate causal mediation and contagion on network data
-- Developed spectral embedding for citation networks leveraging efficient sparse matrix methods
-- Developed theory and simulations to understand regularization and overfitting in networks
-- Performed targeted network sampling and graph partitioning to analyze disinformation on Twitter
-- Determined necessary conditions for causal identification in experiments relying on data fusion
-- Derived efficient influence functions and estimators for causal estimands in data fusion settings
-
-##### Teaching Assistant, UW-Madison (Fall 2018 - Fall 2022)
-
-- Lead discussion sections and lectured in large introductory statistics and programming courses
-- Received award for outstanding teaching within the department based on course evaluations
-
-##### Research Intern, [Core Data Science][cds], Facebook (May 2021 - August 2021)
-
-[cds]: https://research.fb.com/teams/core-data-science/
-
-- Developed hyperbolic graph embeddings to suggest related entities in large knowledge graphs. PyTorch, SQL
-- Wrote technical report providing guidance on use of hyperbolic methods for graph data
-- Prototyped automated content tagging system based on hashtag co-occurrences. Python, SQL, 
-
-
-[appr_repo]: https://github.com/RoheLab/aPPR
-[fastrg_repo]: https://rohelab.github.io/fastRG/
-
-##### Research Intern, [Core Data Science][cds], Facebook (May 2020 - October 2020)
-
-[cds]: https://research.fb.com/teams/core-data-science/
-
-- Developed novel measure of non-stationarity to assess stability of classifier calibration over time
-- Contributed production implementation of non-stationarity metric and calibration method
-- Used results to help client teams understand and trust measures of content prevalence
-- Internship extended to write conference manuscript based on my work
-
-##### Intern, [RStudio][rstudio] (June 2018 - October 2018)
-
-[rstudio]: https://www.rstudio.com/
-
-- Maintained and became author of the open-source R package [`broom`](https://github.com/tidyverse/broom) (750K+ downloads/month)
-- Clarified API contracts and enforced consistency with new test suite
-- Oversaw 40+ pull requests and 80+ bug fixes from dozens of contributors
-- Developed extensive guidelines and support materials for contributors
-- Internship extended into additional consulting work
-
-**N.B.:** For the last several years, I written code purely for the purposes of furthering my academic research. The goal of this code is not be broadly usable. I only commit to maintaining and explaining my research code to the extent that it is assists others in their own academic research. I have also written code designed for broad consumption -- see [#rstats](#rstats) below for some details about my open source work.
-
-My research code, as well as miscellaneous personal projects in various stages of completion, lives on my [Github](https://github.com/alexpghayes). I primarily use `R`, and most of my work as a developer is on methods packages. I am also a proficient Python user, and have passing exposure to SQL, Julia, and C++.
-
-### Projects
-
-
-Last updated 2023-10-20.
+Last updated 2023-11-03.
