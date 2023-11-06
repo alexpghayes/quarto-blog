@@ -2,10 +2,11 @@
 title: "synthetic control: elon's tweet tanked tesla's stock"
 subtitle: |
   a terse analysis of tesla stock prices and how one of elon's tweets moves them
-date: "2020-05-01"
+date: "2024-01-01"
 execute:
   echo: false
 categories: [data analysis]
+draft: true
 ---
 
 ### Summary
