@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>alex hayes - Alex Hayes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G6PQFW2XSK"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="alex hayes - Alex Hayes">
+<meta property="og:description" content="Statistical methodologist | open source R developer | data scientist">
+<meta property="og:site-name" content="alex hayes">
+<meta name="twitter:title" content="alex hayes - Alex Hayes">
+<meta name="twitter:description" content="Statistical methodologist | open source R developer | data scientist">
+<meta name="twitter:creator" content="@alexpghayes">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">alex hayes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../posts.html" rel="" target="">
+ <span class="menu-text">posts</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../papers/index.html" rel="" target="">
+ <span class="menu-text">papers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../code/index.html" rel="" target="">
+ <span class="menu-text">code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../teaching/index.html" rel="" target="">
+ <span class="menu-text">teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../talks/index.html" rel="" target="">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/alexpghayes" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/alexpghayes" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/alexpghayes/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Alex Hayes</h1>
+<p class="subtitle lead">Statistical methodologist | open source R developer | data scientist</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- https://quarto.org/docs/output-formats/page-layout.html -->
+<div class="columns">
+<div class="column" style="width:70%;">
+<p>I develop new statistical methods to solve complex problems, write code for production, and turn data into measured recommendations and understandable insights. I have a track record of clear communication with technical and non-technical audiences, working well with others, and succeeding in remote environments.</p>
+</div><div class="column" style="width:2%;">
+<!-- empty column to create gap -->
+</div><div class="column" style="width:28%;">
+<p><a href="mailto:alexpghayes@gmail.com" class="email">alexpghayes@gmail.com</a><br>
+<a href="https://www.alexpghayes.com">www.alexpghayes.com</a><br>
+<!--  [github.com/alexpghayes](https://github.com/alexpghayes)   --> <!--  [linkedin.com/in/alexpghayes/](https://linkedin.com/in/alexpghayes/)   --> Madison, WI</p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:67%;">
+<section id="experience" class="level2">
+<h2 class="anchored" data-anchor-id="experience">Experience</h2>
+<div class="columns">
+<div class="column" style="align: left;">
+<section id="research-assistant" class="level5">
+<h5 class="anchored" data-anchor-id="research-assistant"><strong>Research Assistant</strong></h5>
+<section id="uw-madison-statistics-department" class="level6">
+<h6 class="anchored" data-anchor-id="uw-madison-statistics-department">UW-Madison, Statistics Department</h6>
+</section>
+</section>
+</div><div class="column" style="text-align: right;">
+<p>August 2018 - Present<br>
+Madison, WI</p>
+</div>
+</div>
+<!-- Action Verb + What You Did + How You Did It + Results/Purpose/Impact -->
+<!-- Advise Aid Correct Counsel Demonstrate Display Encourage Enhance Enlist Ensure Grade Guide Help Influence Instruct Introduce Lecture Mentor Program Provide Rate Steer Suggest Support Teach Test Train Tutor -->
+<!-- Acquire Analyze Classify Collate Collect Compile Conduct Deliver Detect Determine Discover Dissect Evaluate Explore Examine Formulate Gather Identify Inspect Investigate Locate Name Obtain Observe Pinpoint Prepare Prioritize Receive Research Specify Survey Test Trace Track Verify -->
+<!-- Adjust Assemble Build Compose Customize Develop Design Devise Enlarge Format Implement Improve Innovate Install Invent Fix Function Make Manufacture Navigate Operate Propose Refinish Renovate Repair Restore Streamline Strengthen Supervise -->
+<section id="understanding-the-causal-interpretation-of-network-regression" class="level5">
+<h5 class="anchored" data-anchor-id="understanding-the-causal-interpretation-of-network-regression"><em>Understanding the causal interpretation of network regression</em></h5>
+<ul>
+<li>Invented statistical method to estimate causal effects of group membership in social networks</li>
+<li>Enabled novel social science by developed technique for network regression to assess how individual outcomes vary with nodal information and network position, using a technique that is simple to implement and scales to network with millions of nodes</li>
+<li>Characterized the interpretation of network regressions by developing structural causal models and directed acyclic graphs (DAGs) to articulate mediating and confounding effects of group membership in social networks</li>
+<li>Disseminated results by presenting to fellow researchers and at academic conferences, by implementing new methods in an R package, and by authoring an academic manuscript explaining the technical details of our method</li>
+</ul>
+</section>
+<section id="efficient-data-fusion-to-detect-harmful-interventions-without-observing-an-outcome" class="level5">
+<h5 class="anchored" data-anchor-id="efficient-data-fusion-to-detect-harmful-interventions-without-observing-an-outcome"><em>Efficient data fusion to detect harmful interventions without observing an outcome</em></h5>
+<ul>
+<li>Developed method to estimate when experiment interventions have harmful effects on unmeasured outcomes by combining experimental and observational datasets</li>
+<li>Increased precision of estimates by deriving efficient semi-parametric estimators using causal machine learning techniques, while reducing computational overhead by a factor of 5000</li>
+<li>Determined when causal inference is possible in data fusion setting by deriving identification conditions using DAGs and the theory of structural causal models</li>
+</ul>
+</section>
+<section id="network-clustering-when-edges-are-missing-via-interpretable-spectral-embeddings" class="level5">
+<h5 class="anchored" data-anchor-id="network-clustering-when-edges-are-missing-via-interpretable-spectral-embeddings"><em>Network clustering when edges are missing via interpretable spectral embeddings</em></h5>
+<ul>
+<li>Designed method to embed and cluster networks when edges in the network are missing, by combining matrix completion and factor analysis techniques</li>
+<li>Solved computational feasible challenges by implementing specialized matrix completion methods for structured forms of missing data in R and C++, allowing method to scale from thousands of nodes to millions of nodes</li>
+<li>Investigated the structure of the statistics literature and detected new, sociologically interesting sub-fields in the academic record by interpreting spectral embeddings using varimax rotation</li>
+</ul>
+</section>
+<section id="assessing-trustworthiness-on-twitter-via-personalized-pagerank" class="level5">
+<h5 class="anchored" data-anchor-id="assessing-trustworthiness-on-twitter-via-personalized-pagerank"><em>Assessing trustworthiness on Twitter via Personalized PageRank</em></h5>
+<ul>
+<li>Assessed trustworthiness and community participation of Twitter accounts by approximating Personalized PageRank of the Twitter following graph over the public API</li>
+<li>Implemented flexible and generic Personalized PageRank approximation using a combination of generic-function and encapsulation object-oriented programming, using a Neo4J database to cache retrieved data and to handle unreliable behavior of the API</li>
+</ul>
+</section>
+<section id="regularizing-networks-to-obtain-useful-network-embeddings" class="level5">
+<h5 class="anchored" data-anchor-id="regularizing-networks-to-obtain-useful-network-embeddings"><em>Regularizing networks to obtain useful network embeddings</em></h5>
+<ul>
+<li>Provided guidance on effective strategies for regularizing network data to obtain high quality spectral embeddings that can be used for real world data analysis</li>
+<li>Developed and theory and conducted extensive simulations and experiments on network data to understand and interpret impact of degree regularization methods</li>
+</ul>
+</section>
+<div class="columns">
+<div class="column" style="align: left;">
+<section id="statistical-consultant" class="level5">
+<h5 class="anchored" data-anchor-id="statistical-consultant"><strong>Statistical Consultant</strong></h5>
+<section id="self-employed" class="level6">
+<h6 class="anchored" data-anchor-id="self-employed">Self-employed</h6>
+</section>
+</section>
+</div><div class="column" style="text-align: right;">
+<p>August 2018 - Present<br>
+Remote</p>
+</div>
+</div>
+<ul>
+<li>Advised psychologists, biologists and neuroscientists on experimental design, experimental data analysis, data visualization, project management and statistical communication</li>
+<li>Created reports to clearly communicate key takeaways from experimental data, using reproducible software methods to allow for easy extension and collaboration</li>
+</ul>
+<div class="columns">
+<div class="column" style="align: left;">
+<section id="research-intern" class="level5">
+<h5 class="anchored" data-anchor-id="research-intern"><strong>Research Intern</strong></h5>
+<section id="facebook-core-data-science" class="level6">
+<h6 class="anchored" data-anchor-id="facebook-core-data-science">Facebook, Core Data Science</h6>
+</section>
+</section>
+</div><div class="column" style="text-align: right;">
+<p>May 2021 - August 2021<br>
+Remote</p>
+</div>
+</div>
+<ul>
+<li>Experimented with hyperbolic graph embeddings as a method to suggest related entities in large knowledge graphs using Python, PyTorch and SQL</li>
+<li>Synthesized academic results on hyperbolic embeddings and experiments on internal datasets to guide future use of hyperbolic methods by research teams</li>
+<li>Prototyped pipeline to automatically suggest content tags, using neural networks to embed co-occurrence datasets</li>
+</ul>
+<div class="columns">
+<div class="column" style="align: left;">
+<section id="research-intern-1" class="level5">
+<h5 class="anchored" data-anchor-id="research-intern-1"><strong>Research Intern</strong></h5>
+<section id="facebook-core-data-science-1" class="level6">
+<h6 class="anchored" data-anchor-id="facebook-core-data-science-1">Facebook, Core Data Science</h6>
+</section>
+</section>
+</div><div class="column" style="text-align: right;">
+<p>May 2020 - October 2020<br>
+Remote</p>
+</div>
+</div>
+<ul>
+<li>Designed a novel metric to understand the current reliability of classifiers trained on a rolling basis</li>
+<li>Implemented calibration techniques for machine learning models to compute reliability metric using Python and SQL</li>
+<li>Communicated across departments to help other teams understand and trust estimated prevalence of objectionable content</li>
+<li>Illustrated uses of reliability metric and explained computational details by authoring conference manuscript</li>
+</ul>
+<div class="columns">
+<div class="column" style="align: left;">
+<section id="intern" class="level5">
+<h5 class="anchored" data-anchor-id="intern"><strong>Intern</strong></h5>
+<section id="rstudio-tidymodels-team" class="level6">
+<h6 class="anchored" data-anchor-id="rstudio-tidymodels-team">RStudio, tidymodels team</h6>
+</section>
+</section>
+</div><div class="column" style="text-align: right;">
+<p>June 2018 - October 2018<br>
+Remote</p>
+</div>
+</div>
+<ul>
+<li>Improved API consistency and reduced maintenance burden of <code>broom</code> package (750K+ downloads/month) by re-factoring thousands of lines of <code>R</code> code and developing a new test suite</li>
+<li>Authored contribution guidelines and coordinated 40+ pull requests from open source contributors, resolving 80+ open Github issues and bugs</li>
+<li>Managed major new release (<code>broom 0.5.0</code>) by giving presentations and authoring blog posts to pro-actively communicate with stakeholders</li>
+</ul>
+</section>
+</div><div class="column" style="width:5%;">
+<!-- empty column to create gap -->
+</div><div class="column" style="width:28%;">
+<section id="education" class="level2">
+<h2 class="anchored" data-anchor-id="education">Education</h2>
+<p><strong>Ph.D.&nbsp;Statistics</strong><br>
+University of Wisconsin-Madison, 2024</p>
+<p><strong>B.A. Statistics</strong> with <em>Distinction in Research and Creative Work</em><br>
+Rice University, 2018</p>
+</section>
+<section id="skills" class="level2">
+<h2 class="anchored" data-anchor-id="skills">Skills</h2>
+<p>Human</p>
+<ul>
+<li>Explaining technical concepts and challenges to non-technical audiences</li>
+</ul>
+<p>Specialized skills</p>
+<ul>
+<li>Network analysis</li>
+<li>Causal machine learning</li>
+<li>Interference &amp; mediation</li>
+<li>Factor analysis</li>
+<li>Multivariate analysis &amp; dimension reduct</li>
+<li>Network embeddings</li>
+<li>Matrix completion</li>
+<li>Missing data in networks</li>
+</ul>
+<p>Statistics</p>
+<ul>
+<li>Data analysis</li>
+<li>Data management</li>
+<li>Data visualization</li>
+<li>Causal inference</li>
+<li>Regression</li>
+<li>Clustering</li>
+<li>Methods development</li>
+</ul>
+<p>Software engineering</p>
+<ul>
+<li>R package development</li>
+<li>tidyverse</li>
+<li>Python</li>
+<li>SQL</li>
+<li>Reproducible data analysis</li>
+<li>Linux</li>
+<li>Git / VCS</li>
+<li>C++</li>
+</ul>
+</section>
+<section id="statistical-software-and-projects" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-software-and-projects">Statistical software and projects</h2>
+<ul>
+<li><code>broom</code></li>
+<li><code>distributions3</code></li>
+<li><code>aPPR</code></li>
+<li><code>vsp</code></li>
+<li><code>fastadi</code></li>
+<li>Scientific software reviewer for ROpenSci and the Journal of Open Source Software</li>
+<li>Collaborated with ROpenSci to established standards for statistical software</li>
+<li>Co-taught machine learning workshop based on <code>tidymodels</code> at <code>rstudio::conf(2019)</code></li>
+</ul>
+</section>
+</div>
+</div>
+<p>Last updated 2023-11-09.</p>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alexpghayes/quarto-blog/edit/main/resume/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alexpghayes/quarto-blog">website source</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

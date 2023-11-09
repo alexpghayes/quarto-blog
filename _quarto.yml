@@ -28,7 +28,7 @@ website:
   google-analytics: "G-G6PQFW2XSK"
   page-footer: 
     right:
-      - text: blog source
+      - text: website source
         href: https://github.com/alexpghayes/quarto-blog
 
 format:
