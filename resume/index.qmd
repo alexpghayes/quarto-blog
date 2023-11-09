@@ -8,13 +8,10 @@ format:
 
 <!-- https://quarto.org/docs/output-formats/page-layout.html -->
 
-
 :::: {.columns}
 
 ::: {.column width="70%"}
-I excel at digging around in data, developing new methods to solve scientific and business problems, translating real-world problems in statistical problems, producing production-grade code that plays with others, understanding when inference is causal, with a track record of successful remote work
-
-computational statistician | methodologist
+I develop new statistical methods to solve complex problems, write code for production, and turn data into measured recommendations and understandable insights. I have a track record of clear communication with technical and non-technical audiences, working well with others, and succeeding in remote environments.
 :::
 
 ::: {.column width="2%"}
@@ -22,12 +19,12 @@ computational statistician | methodologist
 :::
 
 ::: {.column width="28%"}
+775-338-8842  
 <alexpghayes@gmail.com>  
-(775) 338-8842  
-Madison, WI
-<!-- [www.alexpghayes.com](https://www.alexpghayes.com)   -->
+[www.alexpghayes.com](https://www.alexpghayes.com)   
 <!-- {{< fa brands github >}} [github.com/alexpghayes](https://github.com/alexpghayes)   -->
 <!-- {{< fa brands linkedin >}} [linkedin.com/in/alexpghayes/](https://linkedin.com/in/alexpghayes/)   -->
+Madison, WI
 :::
 
 ::::
@@ -38,16 +35,10 @@ Madison, WI
 
 ## Experience
 
-<!-- Action Verb + What You Did + How You Did It + Results/Purpose/Impact -->
-
-<!-- Advise Aid Correct Counsel Demonstrate Display Encourage Enhance Enlist Ensure Grade Guide Help Influence Instruct Introduce Lecture Mentor Program Provide Rate Steer Suggest Support Teach Test Train Tutor -->
-
-<!-- Acquire Analyze Classify Collate Collect Compile Conduct Deliver Detect Determine Discover Dissect Evaluate Explore Examine Formulate Gather Identify Inspect Investigate Locate Name Obtain Observe Pinpoint Prepare Prioritize Receive Research Specify Survey Test Trace Track Verify -->
-
 :::: {.columns}
 ::: {.column width="80%" style="align: left;"}
 ##### **Research Assistant**
-##### UW-Madison, Statistics Department   
+###### UW-Madison, Statistics Department   
 :::
 ::: {.column width="20%" style="text-align: right;"}
 August 2018 - Present  
@@ -55,26 +46,61 @@ Madison, WI
 :::
 ::::
 
-[rohe]: http://pages.stat.wisc.edu/~karlrohe/
-[levin]: https://pages.stat.wisc.edu/~kdlevin/
-[zhao]: https://zhaolab.biostat.wisc.edu/
+<!-- Action Verb + What You Did + How You Did It + Results/Purpose/Impact -->
 
-<!-- - Authored manuscripts -->
-<!-- - Presented work at conferences for broad audiences -->
-<!-- - Simulation studies -->
-<!-- - Identification theory -->
-<!-- - Analyzed data -->
-- Developed novel statistical methods to estimate causal mediation and contagion on network data
-- Developed spectral embedding for citation networks leveraging efficient sparse matrix methods
-- Developed theory and simulations to understand regularization and overfitting in networks
-- Performed targeted network sampling and graph partitioning to analyze disinformation on Twitter
-- Determined necessary conditions for causal identification in experiments relying on data fusion
-- Derived efficient influence functions and estimators for causal estimands in data fusion settings
+<!-- Advise Aid Correct Counsel Demonstrate Display Encourage Enhance Enlist Ensure Grade Guide Help Influence Instruct Introduce Lecture Mentor Program Provide Rate Steer Suggest Support Teach Test Train Tutor -->
+
+<!-- Acquire Analyze Classify Collate Collect Compile Conduct Deliver Detect Determine Discover Dissect Evaluate Explore Examine Formulate Gather Identify Inspect Investigate Locate Name Obtain Observe Pinpoint Prepare Prioritize Receive Research Specify Survey Test Trace Track Verify -->
+
+<!-- Adjust Assemble Build Compose Customize Develop Design Devise Enlarge Format Implement Improve Innovate Install Invent Fix Function Make Manufacture Navigate Operate Propose Refinish Renovate Repair Restore Streamline Strengthen Supervise -->
+
+##### *Understanding the causal interpretation of network regression*
+
+- Invented statistical method to estimate causal effects of group membership in social networks
+- Enabled novel social science by developed technique for network regression to assess how individual outcomes vary with nodal information and network position, using a technique that is simple to implement and scales to network with millions of nodes
+- Characterized the interpretation of network regressions by developing structural causal models and directed acyclic graphs (DAGs) to articulate mediating and confounding effects of group membership in social networks
+- Disseminated results by presenting to fellow researchers and at academic conferences, by implementing new methods in an R package, and by authoring an academic manuscript explaining the technical details of our method
+
+##### *Efficient data fusion to detect harmful interventions without observing an outcome*
+
+- Developed method to estimate when experiment interventions have harmful effects on unmeasured outcomes by combining experimental and observational datasets
+- Increased precision of estimates by deriving efficient semi-parametric estimators using causal machine learning techniques, while reducing computational overhead by a factor of 5000
+- Determined when causal inference is possible in data fusion setting by deriving identification conditions using DAGs and the theory of structural causal models
+
+##### *Network clustering when edges are missing via interpretable spectral embeddings*
+
+- Designed method to embed and cluster networks when edges in the network are missing, by combining matrix completion and factor analysis techniques
+- Solved computational feasible challenges by implementing specialized matrix completion methods for structured forms of missing data in R and C++, allowing method to scale from thousands of nodes to millions of nodes
+- Investigated the structure of the statistics literature and detected new, sociologically interesting sub-fields in the academic record by interpreting spectral embeddings using varimax rotation
+
+##### *Assessing trustworthiness on Twitter via Personalized PageRank*
+
+- Assessed trustworthiness and community participation of Twitter accounts by approximating Personalized PageRank of the Twitter following graph over the public API
+- Implemented flexible and generic Personalized PageRank approximation using a combination of generic-function and encapsulation object-oriented programming, using a Neo4J database to cache retrieved data and to handle unreliable behavior of the API
+
+##### *Regularizing networks to obtain useful network embeddings*
+
+- Provided guidance on effective strategies for regularizing network data to obtain high quality spectral embeddings that can be used for real world data analysis
+- Developed and theory and conducted extensive simulations and experiments on network data to understand and interpret impact of degree regularization methods
+
+:::: {.columns}
+::: {.column width="70%" style="align: left;"}
+##### **Statistical Consultant**
+###### Self-employed
+:::
+::: {.column width="30%" style="text-align: right;"}
+August 2018 - Present  
+Remote
+:::
+::::
+
+- Advised psychologists, biologists and neuroscientists on experimental design, experimental data analysis, data visualization, project management and statistical communication
+- Created reports to clearly communicate key takeaways from experimental data, using reproducible software methods to allow for easy extension and collaboration
 
 :::: {.columns}
 ::: {.column width="70%" style="align: left;"}
 ##### **Research Intern**
-##### Facebook, Core Data Science
+###### Facebook, Core Data Science
 :::
 ::: {.column width="30%" style="text-align: right;"}
 May 2021 - August 2021  
@@ -89,7 +115,7 @@ Remote
 :::: {.columns}
 ::: {.column width="70%" style="align: left;"}
 ##### **Research Intern**
-##### Facebook, Core Data Science
+###### Facebook, Core Data Science
 :::
 ::: {.column width="30%" style="text-align: right;"}
 May 2020 - October 2020  
@@ -105,7 +131,7 @@ Remote
 :::: {.columns}
 ::: {.column width="70%" style="align: left;"}
 ##### **Intern**
-##### RStudio, tidymodels team
+###### RStudio, tidymodels team
 :::
 ::: {.column width="30%" style="text-align: right;"}
 June 2018 - October 2018  
@@ -116,14 +142,6 @@ Remote
 - Improved API consistency and reduced maintenance burden of `broom ` package (750K+ downloads/month) by re-factoring thousands of lines of `R` code and developing a new test suite
 - Authored contribution guidelines and coordinated 40+ pull requests from open source contributors, resolving 80+ open Github issues and bugs
 - Managed major new release (`broom 0.5.0`) by giving presentations and authoring blog posts to pro-actively communicate with stakeholders
-
-### Projects
-
-- `broom`
-- Taught machine learning workshop at `rstudio::conf(2019)`
-- `distributions3`
-- ROpenSci / JOSS scientific software review
-- Standards developement for statistical software
 :::
 
 ::: {.column width="5%"}
@@ -146,18 +164,27 @@ Human
 
 - Explaining technical concepts and challenges to non-technical audiences
 
-Statistics
+Specialized skills
 
-- Methods development
-- Causal inference  
-- Clustering
-- Network embeddings
-- Matrix completion
+- Network analysis
 - Causal machine learning
-- Data visualization
-- Regression
 - Interference & mediation
 - Factor analysis
+- Multivariate analysis & dimension reduct
+- Network embeddings
+- Matrix completion
+- Missing data in networks
+
+
+Statistics
+
+- Data analysis
+- Data management
+- Data visualization
+- Causal inference
+- Regression
+- Clustering
+- Methods development
 
 Software engineering
 
@@ -165,12 +192,24 @@ Software engineering
 - tidyverse
 - Python
 - SQL
-- C++
 - Reproducible data analysis
 - Linux
 - Git / VCS
+- C++
+
+## Statistical software and projects
+
+- `broom`
+- `distributions3`
+- `aPPR`
+- `vsp`
+- `fastadi`
+- Scientific software reviewer for ROpenSci and the Journal of Open Source Software
+- Collaborated with ROpenSci to established standards for statistical software
+- Co-taught machine learning workshop based on `tidymodels` at `rstudio::conf(2019)`
+
 :::
 
 ::::
 
-Last updated 2023-11-03.
+Last updated 2023-11-09.
