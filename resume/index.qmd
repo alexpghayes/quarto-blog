@@ -1,6 +1,6 @@
 ---
 title: "Alex Hayes"
-subtitle: "Statistical methodologist | open source R developer | data scientist"
+subtitle: "Statistician | open source R developer | data scientist"
 format: 
   html:
     page-layout: full
@@ -11,7 +11,7 @@ format:
 :::: {.columns}
 
 ::: {.column width="70%"}
-I develop new statistical methods to solve complex problems, write code for production, and turn data into measured recommendations and understandable insights. I have a track record of clear communication with technical and non-technical audiences, working well with others, and succeeding in remote environments.
+I develop new statistical methods to solve complex problems, write code for production, and turn data into understandable insights. My specialties are causal inference and network data. I have a track record of clearly communicating with technical and non-technical audiences, working well with others, and succeeding in remote environments.
 :::
 
 ::: {.column width="2%"}
@@ -19,8 +19,10 @@ I develop new statistical methods to solve complex problems, write code for prod
 :::
 
 ::: {.column width="28%"}
+<!-- ADDRESS -->
+<!-- PHONE -->
 <alexpghayes@gmail.com>  
-[www.alexpghayes.com](https://www.alexpghayes.com)   
+[www.alexpghayes.com](https://www.alexpghayes.com)      
 <!-- {{< fa brands github >}} [github.com/alexpghayes](https://github.com/alexpghayes)   -->
 <!-- {{< fa brands linkedin >}} [linkedin.com/in/alexpghayes/](https://linkedin.com/in/alexpghayes/)   -->
 Madison, WI
@@ -35,11 +37,11 @@ Madison, WI
 ## Experience
 
 :::: {.columns}
-::: {.column width="80%" style="align: left;"}
+::: {.column width="90%" style="align: left;"}
 ##### **Research Assistant**
 ###### UW-Madison, Statistics Department   
 :::
-::: {.column width="20%" style="text-align: right;"}
+::: {.column width="10%" style="text-align: right;"}
 August 2018 - Present  
 Madison, WI
 :::
@@ -56,31 +58,31 @@ Madison, WI
 ##### *Understanding the causal interpretation of network regression*
 
 - Invented statistical method to estimate causal effects of group membership in social networks
-- Enabled novel social science by developed technique for network regression to assess how individual outcomes vary with nodal information and network position, using a technique that is simple to implement and scales to network with millions of nodes
-- Characterized the interpretation of network regressions by developing structural causal models and directed acyclic graphs (DAGs) to articulate mediating and confounding effects of group membership in social networks
-- Disseminated results by presenting to fellow researchers and at academic conferences, by implementing new methods in an R package, and by authoring an academic manuscript explaining the technical details of our method
+- Enabled novel social science research by developing technique for network regression. Technique allows assessment of how individual outcomes vary with nodal information and network position and is simple to implement and scales to network with millions of nodes
+- Characterized the interpretation of network regressions by developing structural causal models and directed acyclic graphs (DAGs). Characterized mediating and confounding effects of group membership in social networks
+- Disseminated results by presenting to fellow researchers and at academic conferences. Implemented new methods in an R package. Authored an academic manuscript explaining the technical details of our method
 
 ##### *Efficient data fusion to detect harmful interventions without observing an outcome*
 
-- Developed method to estimate when experiment interventions have harmful effects on unmeasured outcomes by combining experimental and observational datasets
-- Increased precision of estimates by deriving efficient semi-parametric estimators using causal machine learning techniques, while reducing computational overhead by a factor of 5000
-- Determined when causal inference is possible in data fusion setting by deriving identification conditions using DAGs and the theory of structural causal models
+- Developed method to estimate when product changes have harmful side-effects on unmeasured outcomes by combining experimental and observational datasets
+- Increased precision of estimates by deriving efficient semi-parametric estimators using causal machine learning techniques. Reduced computational overhead by a factor of 5000.
+- Determined when causal inference combining multiple datasets is possible by deriving identification conditions using transportability DAGs
 
-##### *Network clustering when edges are missing via interpretable spectral embeddings*
+##### *Network clustering when edges are missing via interpretable embeddings*
 
 - Designed method to embed and cluster networks when edges in the network are missing, by combining matrix completion and factor analysis techniques
-- Solved computational feasible challenges by implementing specialized matrix completion methods for structured forms of missing data in R and C++, allowing method to scale from thousands of nodes to millions of nodes
-- Investigated the structure of the statistics literature and detected new, sociologically interesting sub-fields in the academic record by interpreting spectral embeddings using varimax rotation
+- Solved computational challenges by implementing specialized matrix completion methods for structured forms of missing data in R and C++. Scaled implementation from networks with thousands of nodes to networks with millions of nodes
+- Investigated the structure of the academic statistics literature. Detected new, sociologically interesting sub-fields by interpreting spectral embeddings using varimax rotation
 
 ##### *Assessing trustworthiness on Twitter via Personalized PageRank*
 
-- Assessed trustworthiness and community participation of Twitter accounts by approximating Personalized PageRank of the Twitter following graph over the public API
-- Implemented flexible and generic Personalized PageRank approximation using a combination of generic-function and encapsulation object-oriented programming, using a Neo4J database to cache retrieved data and to handle unreliable behavior of the API
+- Assessed trustiworthiness and community membership of Twitter accounts by approximating Personalized PageRank using public information about who follows who
+- Implemented a flexible and generic Personalized PageRank approximation using a combination of generic-function and encapsulation object-oriented programming. Managed unreliable Twitter API behavior by caching retrieved data in a Neo4J database running on Docker
 
 ##### *Regularizing networks to obtain useful network embeddings*
 
-- Provided guidance on effective strategies for regularizing network data to obtain high quality spectral embeddings that can be used for real world data analysis
-- Developed and theory and conducted extensive simulations and experiments on network data to understand and interpret impact of degree regularization methods
+- Devised effective strategies for regularizing network data to obtain high quality spectral embeddings that can be used for real world data analysis
+- Developed and theory and conducted extensive simulations and experiments on network data to understand and interpret impact of regularization methods
 
 :::: {.columns}
 ::: {.column width="70%" style="align: left;"}
@@ -94,7 +96,7 @@ Remote
 ::::
 
 - Advised psychologists, biologists and neuroscientists on experimental design, experimental data analysis, data visualization, project management and statistical communication
-- Created reports to clearly communicate key takeaways from experimental data, using reproducible software methods to allow for easy extension and collaboration
+- Created reports to clearly communicate key takeaways from experimental data, using reproducible analysis practices to allow for easy extension and collaboration
 
 :::: {.columns}
 ::: {.column width="70%" style="align: left;"}
@@ -107,8 +109,8 @@ Remote
 :::
 ::::
 
-- Experimented with hyperbolic graph embeddings as a method to suggest related entities in large knowledge graphs using Python, PyTorch and SQL
-- Synthesized academic results on hyperbolic embeddings and experiments on internal datasets to guide future use of hyperbolic methods by research teams
+- Experimented with hyperbolic graph embeddings as a method to suggest related entities in large knowledge graphs. Used Python, PyTorch and SQL
+- Synthesized academic results on hyperbolic embeddings and experiments on internal datasets. Advise research teams on future use of hyperbolic methods
 - Prototyped pipeline to automatically suggest content tags, using neural networks to embed co-occurrence datasets
 
 :::: {.columns}
@@ -122,10 +124,10 @@ Remote
 :::
 ::::
 
-- Designed a novel metric to understand the current reliability of classifiers trained on a rolling basis
-- Implemented calibration techniques for machine learning models to compute reliability metric using Python and SQL
+- Designed a novel metric to understand the reliability of classifiers trained on a rolling basis
+- Used Python, scikit-learn and SQL to implement calibration techniques for machine learning models to compute reliability
 - Communicated across departments to help other teams understand and trust estimated prevalence of objectionable content
-- Illustrated uses of reliability metric and explained computational details by authoring conference manuscript
+- Illustrated uses of the reliability metric and explained computational details by authoring a conference manuscript
 
 :::: {.columns}
 ::: {.column width="70%" style="align: left;"}
@@ -138,7 +140,7 @@ Remote
 :::
 ::::
 
-- Improved API consistency and reduced maintenance burden of `broom ` package (750K+ downloads/month) by re-factoring thousands of lines of `R` code and developing a new test suite
+- Improved API consistency and reduced maintenance burden of `broom ` package (750K+ downloads/month, part of the `tidyverse`) by re-factoring thousands of lines of `R` code and developing a new test suite
 - Authored contribution guidelines and coordinated 40+ pull requests from open source contributors, resolving 80+ open Github issues and bugs
 - Managed major new release (`broom 0.5.0`) by giving presentations and authoring blog posts to pro-actively communicate with stakeholders
 :::
@@ -152,7 +154,10 @@ Remote
 ## Education  
 
 **Ph.D. Statistics**  
-University of Wisconsin-Madison, 2024
+University of Wisconsin-Madison (anticipated May 2024)
+
+**M.S. Statistics**  
+University of Wisconsin-Madison, 2020
 
 **B.A. Statistics** with *Distinction in Research and Creative Work*  
 Rice University, 2018
@@ -162,6 +167,8 @@ Rice University, 2018
 Human
 
 - Explaining technical concepts and challenges to non-technical audiences
+<!-- - Mentoring -->
+<!-- - Teaching  -->
 
 Specialized skills
 
@@ -169,46 +176,50 @@ Specialized skills
 - Causal machine learning
 - Interference & mediation
 - Factor analysis
-- Multivariate analysis & dimension reduct
+- Multivariate analysis & dimension reduction
 - Network embeddings
 - Matrix completion
 - Missing data in networks
-
+- Dependent data
 
 Statistics
 
-- Data analysis
-- Data management
+- Quantitative data analysis
+- Data collection and management
 - Data visualization
 - Causal inference
+- A/B testing
+- Experiments
 - Regression
-- Clustering
+- Clustering 
+<!-- - Market segmentation -->
 - Methods development
+- Hypothesis testing
 
 Software engineering
 
 - R package development
-- tidyverse
 - Python
 - SQL
 - Reproducible data analysis
 - Linux
-- Git / VCS
-- C++
+- Git and version control
+- Some C++, Docker, AWS
 
 ## Statistical software and projects
 
-- `broom`
-- `distributions3`
-- `aPPR`
-- `vsp`
-- `fastadi`
+- `broom` (CRAN/tidyverse)
+- `distributions3` (CRAN)
+- `aPPR` (Github)
+- `vsp` (CRAN)
+- `fastadi` (CRAN)
 - Scientific software reviewer for ROpenSci and the Journal of Open Source Software
 - Collaborated with ROpenSci to established standards for statistical software
 - Co-taught machine learning workshop based on `tidymodels` at `rstudio::conf(2019)`
+- Mentored new open source contributors
 
 :::
 
 ::::
 
-Last updated 2023-11-09.
+Last updated 2023-11-12.
