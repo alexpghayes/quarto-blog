@@ -1,6 +1,6 @@
 ---
 title: "Alex Hayes"
-subtitle: "Statistician | open source R developer | data scientist"
+subtitle: "Statistician | research software engineer | data scientist"
 format: 
   html:
     page-layout: full
@@ -11,7 +11,7 @@ format:
 :::: {.columns}
 
 ::: {.column width="70%"}
-I develop new statistical methods to solve complex problems, write code for production, and turn data into understandable insights. My specialties are causal inference and network data. I have a track record of clearly communicating with technical and non-technical audiences, working well with others, and succeeding in remote environments.
+I develop new statistical methods to solve complex problems, build tools for data scientists, and turn data into understandable insights. I specialize in causal inference, network data, and implementing solutions in industrial-quality, clean code. My open source software is routinely used by a large audience. I have a track record of clearly communicating with technical and non-technical audiences, working well with others, and succeeding in remote environments.
 :::
 
 ::: {.column width="2%"}
@@ -55,12 +55,17 @@ Madison, WI
 
 <!-- Adjust Assemble Build Compose Customize Develop Design Devise Enlarge Format Implement Improve Innovate Install Invent Fix Function Make Manufacture Navigate Operate Propose Refinish Renovate Repair Restore Streamline Strengthen Supervise -->
 
+##### *Research software development*
+
+- Implemented research methods in user-friendly software. Released nine open source R packages to CRAN (notably: `fastRG`, `vsp`, `gdim`, `fastadi`, `distributions3`, `sparseLRMatrix`). Maintained packages on an ongoing basis.
+- Collaborated with ROpenSci to design software development standards for statistical software. Reviewed scientific software for ROpenSci, the R Journal, and the Journal of Open Source Software. Mentored new open source contributors.
+
 ##### *Understanding the causal interpretation of network regression*
 
-- Invented statistical method to estimate causal effects of group membership in social networks
+- Developed statistical method to estimate causal effects of group membership in social networks
 - Enabled novel social science research by developing technique for network regression. Technique allows assessment of how individual outcomes vary with nodal information and network position and is simple to implement and scales to network with millions of nodes
 - Characterized the interpretation of network regressions by developing structural causal models and directed acyclic graphs (DAGs). Characterized mediating and confounding effects of group membership in social networks
-- Disseminated results by presenting to fellow researchers and at academic conferences. Implemented new methods in an R package. Authored an academic manuscript explaining the technical details of our method
+- Disseminated results by presenting to fellow researchers and at academic conferences. Authored an academic manuscript explaining the technical details of our method
 
 ##### *Efficient data fusion to detect harmful interventions without observing an outcome*
 
@@ -191,6 +196,8 @@ Statistics
 - A/B testing
 - Experiments
 - Regression
+- Generalized linear models (GLMs)
+- Mixed effects models
 - Clustering 
 <!-- - Market segmentation -->
 - Methods development
@@ -204,22 +211,8 @@ Software engineering
 - Reproducible data analysis
 - Linux
 - Git and version control
-- Some C++, Docker, AWS
-
-## Statistical software and projects
-
-- `broom` (CRAN/tidyverse)
-- `distributions3` (CRAN)
-- `aPPR` (Github)
-- `vsp` (CRAN)
-- `fastadi` (CRAN)
-- Scientific software reviewer for ROpenSci and the Journal of Open Source Software
-- Collaborated with ROpenSci to established standards for statistical software
-- Co-taught machine learning workshop based on `tidymodels` at `rstudio::conf(2019)`
-- Mentored new open source contributors
+- Some C++, Stan, Docker, AWS
 
 :::
 
 ::::
-
-Last updated 2023-11-12.
