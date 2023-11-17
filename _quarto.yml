@@ -19,6 +19,8 @@ website:
       - code/index.qmd
       - teaching/index.qmd
       - talks/index.qmd
+      - text: resume
+        file: resume/index.qmd
       - icon: github
         href: https://github.com/alexpghayes
       - icon: twitter
