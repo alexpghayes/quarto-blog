@@ -1,218 +1,82 @@
 ---
-title: "Alex Hayes"
-subtitle: "Statistician | research software engineer | data scientist"
-format: 
-  html:
-    page-layout: full
+title: "resume"
+subtitle: "statistician | research software engineer | data scientist"
 ---
 
-<!-- https://quarto.org/docs/output-formats/page-layout.html -->
+This resume is [available as a pdf](resume.pdf).
 
-:::: {.columns}
+Statistician with 6 years of experience analyzing network data, performing causal inference and building tools for data scientists. Track record of strategic thinking, clear communication and successful remote work.
 
-::: {.column width="70%"}
-I develop new statistical methods to solve complex problems, build tools for data scientists, and turn data into understandable insights. I specialize in causal inference, network data, and implementing solutions in industrial-quality, clean code. My open source software is routinely used by a large audience. I have a track record of clearly communicating with technical and non-technical audiences, working well with others, and succeeding in remote environments.
-:::
-
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-
-::: {.column width="28%"}
-<!-- ADDRESS -->
-<!-- PHONE -->
-<alexpghayes@gmail.com>  
-[www.alexpghayes.com](https://www.alexpghayes.com)      
-<!-- {{< fa brands github >}} [github.com/alexpghayes](https://github.com/alexpghayes)   -->
-<!-- {{< fa brands linkedin >}} [linkedin.com/in/alexpghayes/](https://linkedin.com/in/alexpghayes/)   -->
-Madison, WI
-:::
-
-::::
-
-:::: {.columns}
-
-::: {.column width="67%"}
-
-## Experience
+## Work Experience
 
 :::: {.columns}
 ::: {.column width="90%" style="align: left;"}
-##### **Research Assistant**
-###### UW-Madison, Statistics Department   
+##### **University of Wisconsin, Madison**
+###### PhD Student, Department of Statistics
 :::
 ::: {.column width="10%" style="text-align: right;"}
-August 2018 - Present  
-Madison, WI
+**August 2018 - Present**   
 :::
 ::::
 
-<!-- Action Verb + What You Did + How You Did It + Results/Purpose/Impact -->
-
-<!-- Advise Aid Correct Counsel Demonstrate Display Encourage Enhance Enlist Ensure Grade Guide Help Influence Instruct Introduce Lecture Mentor Program Provide Rate Steer Suggest Support Teach Test Train Tutor -->
-
-<!-- Acquire Analyze Classify Collate Collect Compile Conduct Deliver Detect Determine Discover Dissect Evaluate Explore Examine Formulate Gather Identify Inspect Investigate Locate Name Obtain Observe Pinpoint Prepare Prioritize Receive Research Specify Survey Test Trace Track Verify -->
-
-<!-- Adjust Assemble Build Compose Customize Develop Design Devise Enlarge Format Implement Improve Innovate Install Invent Fix Function Make Manufacture Navigate Operate Propose Refinish Renovate Repair Restore Streamline Strengthen Supervise -->
-
-##### *Research software development*
-
-- Implemented research methods in user-friendly software. Released nine open source R packages to CRAN (notably: `fastRG`, `vsp`, `gdim`, `fastadi`, `distributions3`, `sparseLRMatrix`). Maintained packages on an ongoing basis.
-- Collaborated with ROpenSci to design software development standards for statistical software. Reviewed scientific software for ROpenSci, the R Journal, and the Journal of Open Source Software. Mentored new open source contributors.
-
-##### *Understanding the causal interpretation of network regression*
-
-- Developed statistical method to estimate causal effects of group membership in social networks
-- Enabled novel social science research by developing technique for network regression. Technique allows assessment of how individual outcomes vary with nodal information and network position and is simple to implement and scales to network with millions of nodes
-- Characterized the interpretation of network regressions by developing structural causal models and directed acyclic graphs (DAGs). Characterized mediating and confounding effects of group membership in social networks
-- Disseminated results by presenting to fellow researchers and at academic conferences. Authored an academic manuscript explaining the technical details of our method
-
-##### *Efficient data fusion to detect harmful interventions without observing an outcome*
-
-- Developed method to estimate when product changes have harmful side-effects on unmeasured outcomes by combining experimental and observational datasets
-- Increased precision of estimates by deriving efficient semi-parametric estimators using causal machine learning techniques. Reduced computational overhead by a factor of 5000.
-- Determined when causal inference combining multiple datasets is possible by deriving identification conditions using transportability DAGs
-
-##### *Network clustering when edges are missing via interpretable embeddings*
-
-- Designed method to embed and cluster networks when edges in the network are missing, by combining matrix completion and factor analysis techniques
-- Solved computational challenges by implementing specialized matrix completion methods for structured forms of missing data in R and C++. Scaled implementation from networks with thousands of nodes to networks with millions of nodes
-- Investigated the structure of the academic statistics literature. Detected new, sociologically interesting sub-fields by interpreting spectral embeddings using varimax rotation
-
-##### *Assessing trustworthiness on Twitter via Personalized PageRank*
-
-- Assessed trustiworthiness and community membership of Twitter accounts by approximating Personalized PageRank using public information about who follows who
-- Implemented a flexible and generic Personalized PageRank approximation using a combination of generic-function and encapsulation object-oriented programming. Managed unreliable Twitter API behavior by caching retrieved data in a Neo4J database running on Docker
-
-##### *Regularizing networks to obtain useful network embeddings*
-
-- Devised effective strategies for regularizing network data to obtain high quality spectral embeddings that can be used for real world data analysis
-- Developed and theory and conducted extensive simulations and experiments on network data to understand and interpret impact of regularization methods
+- Developed statistical methods based on principal components analysis to cluster networks with missing data, to perform regression on networks, and to construct, interpret, and regularize network embeddings.
+- Developed causal inference methods to estimate mediation and spillover effects in social networks, and to determine when product changes have harmful side-effects on behaviors that are difficult to measure. Used causal machine learning to improve precision of estimates while reducing computational requirements by a factor of 5000.
+- Implemented research methods in user-friendly software. Released nine open source R packages to CRAN (notable: [fastRG](https://rohelab.github.io/fastRG/), [vsp](https://rohelab.github.io/vsp/), [distributions3](https://alexpghayes.github.io/distributions3/), [gdim](https://rohelab.github.io/gdim/), [aPPR](https://rohelab.github.io/aPPR/), [fastadi](https://github.com/RoheLab/fastadi)).
+- Resolved computational bottlenecks in matrix completion algorithms by designing and implementing sparse matrix methods in R and C++. Scaled methods by three orders of magnitude to handle networks with millions of nodes.
+- Designed an approach to find localized clusters of Twitter users via Personalized PageRank. Managed unreliable Twitter API behavior by caching data in a Neo4J database running in Docker.
+- Collaborated with ROpenSci to design software development standards for statistical software. Reviewed scientific software for ROpenSci, the R Journal, and the Journal of Open Source Software.
 
 :::: {.columns}
 ::: {.column width="70%" style="align: left;"}
-##### **Statistical Consultant**
-###### Self-employed
+##### **Facebook**
+###### Research Intern, Core Data Science
 :::
 ::: {.column width="30%" style="text-align: right;"}
-August 2018 - Present  
-Remote
+**Summer 2020 & Summer 2021**  
 :::
 ::::
 
-- Advised psychologists, biologists and neuroscientists on experimental design, experimental data analysis, data visualization, project management and statistical communication
-- Created reports to clearly communicate key takeaways from experimental data, using reproducible analysis practices to allow for easy extension and collaboration
+- Prototyped a pipeline to automatically suggest relationships between hashtags, for a team using manual labeling. Prototype embedded a hashtag co-occurrence network and was implemented with Python, PyTorch and SQL.
+- Conducted experiments on hyperbolic embeddings for knowledge graphs and determined non-viability of hyperbolic methods. Advised against additional R&D investment, potentially saving $200k+ in compute costs.
+- Designed a metric, based on calibration of machine learning models, to help product teams understand reliability of prevalence estimates. Metric reported daily on multiple dashboards. Implemented with sklearn, Numpy, pandas. 
 
 :::: {.columns}
 ::: {.column width="70%" style="align: left;"}
-##### **Research Intern**
-###### Facebook, Core Data Science
+##### **RStudio**
+###### Intern, tidymodels team
 :::
 ::: {.column width="30%" style="text-align: right;"}
-May 2021 - August 2021  
-Remote
+**Summer 2018**
 :::
 ::::
 
-- Experimented with hyperbolic graph embeddings as a method to suggest related entities in large knowledge graphs. Used Python, PyTorch and SQL
-- Synthesized academic results on hyperbolic embeddings and experiments on internal datasets. Advise research teams on future use of hyperbolic methods
-- Prototyped pipeline to automatically suggest content tags, using neural networks to embed co-occurrence datasets
-
-:::: {.columns}
-::: {.column width="70%" style="align: left;"}
-##### **Research Intern**
-###### Facebook, Core Data Science
-:::
-::: {.column width="30%" style="text-align: right;"}
-May 2020 - October 2020  
-Remote
-:::
-::::
-
-- Designed a novel metric to understand the reliability of classifiers trained on a rolling basis
-- Used Python, scikit-learn and SQL to implement calibration techniques for machine learning models to compute reliability
-- Communicated across departments to help other teams understand and trust estimated prevalence of objectionable content
-- Illustrated uses of the reliability metric and explained computational details by authoring a conference manuscript
-
-:::: {.columns}
-::: {.column width="70%" style="align: left;"}
-##### **Intern**
-###### RStudio, tidymodels team
-:::
-::: {.column width="30%" style="text-align: right;"}
-June 2018 - October 2018  
-Remote
-:::
-::::
-
-- Improved API consistency and reduced maintenance burden of `broom ` package (750K+ downloads/month, part of the `tidyverse`) by re-factoring thousands of lines of `R` code and developing a new test suite
-- Authored contribution guidelines and coordinated 40+ pull requests from open source contributors, resolving 80+ open Github issues and bugs
-- Managed major new release (`broom 0.5.0`) by giving presentations and authoring blog posts to pro-actively communicate with stakeholders
-:::
-
-::: {.column width="5%"}
-<!-- empty column to create gap -->
-:::
-
-::: {.column width="28%"}
+- Re-factored thousands of lines of R code and developed a new test suite for the [broom](https://broom.tidymodels.org/) package (600k+ downloads/month, part of the tidyverse), improving behavioral consistency and reducing maintenance burden.
+- Shipped a major new release of the package ([broom 0.5.0](https://www.tidyverse.org/blog/2018/07/broom-0-5-0/)). Resolved 80+ open issues and coordinated 40+ pull requests from open source contributors.
 
 ## Education  
 
-**Ph.D. Statistics**  
-University of Wisconsin-Madison (anticipated May 2024)
+:::: {.columns}
+::: {.column width="90%" style="align: left;"}
+##### **University of Wisconsin-Madison**
+###### Ph.D. Statistics   
+:::
+::: {.column width="10%" style="text-align: right;"}
+**Expected spring 2024**
+:::
+::::
 
-**M.S. Statistics**  
-University of Wisconsin-Madison, 2020
-
-**B.A. Statistics** with *Distinction in Research and Creative Work*  
-Rice University, 2018
+:::: {.columns}
+::: {.column width="90%" style="align: left;"}
+##### **Rice University**
+###### B.A. Statistics
+:::
+::: {.column width="10%" style="text-align: right;"}
+**2018**  
+:::
+::::
 
 ## Skills
 
-Human
-
-- Explaining technical concepts and challenges to non-technical audiences
-<!-- - Mentoring -->
-<!-- - Teaching  -->
-
-Specialized skills
-
-- Network analysis
-- Causal machine learning
-- Interference & mediation
-- Factor analysis
-- Multivariate analysis & dimension reduction
-- Network embeddings
-- Matrix completion
-- Missing data in networks
-- Dependent data
-
-Statistics
-
-- Quantitative data analysis
-- Data collection and management
-- Data visualization
-- Causal inference
-- A/B testing
-- Experiments
-- Regression
-- Generalized linear models (GLMs)
-- Mixed effects models
-- Clustering 
-<!-- - Market segmentation -->
-- Methods development
-- Hypothesis testing
-
-Software engineering
-
-- R package development
-- Python
-- SQL
-- Reproducible data analysis
-- Linux
-- Git and version control
-- Some C++, Stan, Docker, AWS
-
-:::
-
-::::
+- Specialized:    Network analysis, embeddings, clustering, causal machine learning, interference, mediation
+- Statistics:   Data analysis, visualization, modeling, regression, generalized linear models, hypothesis testing
+- Software:   Proficient in R, Python, tidyverse, bash/unix, git; familiar with SQL, C++, Docker, AWS, Julia, Stan
