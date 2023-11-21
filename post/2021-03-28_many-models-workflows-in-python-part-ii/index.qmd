@@ -79,7 +79,6 @@ def fit_gmm(
     gmm.fit(train[features])
     return gmm
 
-# sanity check
 fit_gmm(
     penguins,
     features=clustering_features,
@@ -89,7 +88,6 @@ fit_gmm(
 ```
 
 Now let's build some infrastructure so that we can use sample splitting to evaluate how well our models perform out of sample. My approach below is heavily inspired by [rsample](https://rsample.tidymodels.org/). At the end of this post I have some longer commentary about this choice and why I haven't used `sklearn` built-in resampling infrastructure.
-
 
 ```{python}
 import numpy as np
@@ -112,10 +110,7 @@ class VFoldCV:
 resamples = VFoldCV(penguins, num_folds=5)
 
 for fold_index, (train, test) in enumerate(resamples):
-    print(f"""
-    In fold {fold_index} there are {len(train)}
-    training observations and {len(test)} test observations
-    """)
+    print(f"Fold {fold_index} has {len(train)} train and {len(test)} test observations.")
 ```
 
 Now that we have cross validation folds, we want to create a grid of parameters to explore over. Here we leverage `sklearn`'s [ParameterGrid](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ParameterGrid.html) object, which basically takes a Cartesian product that we can iterate over, as well as coerce to a data frame.
@@ -218,7 +213,6 @@ print(cross_validated_ars.dtypes)
 
 Now that we have numeric data we can plot it.
 
-
 ```{python}
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -226,7 +220,7 @@ import matplotlib.pyplot as plt
 plot = sns.lineplot(
     data=cross_validated_ars.reset_index(),
     x='n_components', y='cv_ars',
-    hue='covariance_type', ci=None
+    hue='covariance_type', errorbar=None
 )
 
 plt.show()
@@ -245,7 +239,6 @@ There are other approaches to model selection that we could take. For example, w
 3. **Caching** (via `joblib`): In interactive workflows it's easy to kill your Jupyter kernel or crash your computer or do something dumb that forces you to restart your Python session. It is really frustrating to have to refit your models everytime this happens. Caching models to disk (also known as memoization) prevents you from having to re-run all your models everytime you break Jupyter, etc, etc. If you use caching, you will have to be careful about cache invalidation, which is one of the most notoriously difficult problems in computing.
 
 Full disclosure: I did not get parallelization and caching to work together for this post ([bug report](https://github.com/joblib/joblib/issues/1169)), but it has worked for me in the past. I'm going to include some commented out caching code in the following for you to play with as you see fit. See the `joblib` [documentation](https://joblib.readthedocs.io/en/latest/auto_examples/nested_parallel_memory.html#sphx-glr-auto-examples-nested-parallel-memory-py) for more examples of how to combine parallel mapping with caching.
-
 
 ```{python}
 from joblib import Parallel, delayed  # parallelism
