@@ -1,0 +1,252 @@
+---
+title: "TODO"
+subtitle: |
+  TODO
+date: "2024-01-24"
+categories: [statistical software]
+bibliography: references.bib
+draft: true
+---
+
+
+```{r}
+library(tidyverse)
+library(here)
+
+# https://osf.io/dg547/
+raw <- read_csv(here("post", "xxxx-xx-xx_dunning-kruger", "Dunning-Kruger_INTELL_UPLOAD.csv"))
+View(raw)
+
+raw |> 
+  select(contains("IQ"))
+
+fit <- lm(SAI_winsorized_IQ ~ Raven_IQ, data = raw)
+fit
+
+summary(fit)
+broom::tidy(fit, conf.int = TRUE)
+```
+
+
+```{r}
+raw |> 
+  ggplot(aes(Raven_IQ, SAI_winsorized_IQ)) +
+  geom_point() +
+  geom_abline(slope = 1, linetype = "dashed", color = "darkgrey") +
+  theme_minimal()
+
+raw |> 
+  ggplot(aes(Raven_IQ, SAIQ_IQ_dif)) +
+  geom_point() +
+  geom_smooth() +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "darkgrey") +
+  labs(
+    y = "Self-assessed IQ - Measured IQ (i.e. overconfidence)",
+    x = "Measured IQ"
+  ) +
+  theme_minimal(16)
+
+fit <- estimatr::lm_robust(SAI_winsorized_IQ ~ Raven_IQ, data = raw)
+broom::tidy(fit, conf.int = TRUE)
+```
+
+
+```{r}
+library(gamlss)
+
+raw_no_na <- raw |> 
+  select(SAI_winsorized_IQ, Raven_IQ) |> 
+  na.omit()
+
+# https://stats.stackexchange.com/questions/508818/how-to-model-conditional-variance
+model <- gamlss(SAI_winsorized_IQ ~ Raven_IQ, 
+                sigma.formula = ~ Raven_IQ, 
+                family = NO2, 
+                data = raw_no_na)
+
+summary(model)
+```
+
+
+
+
+# three ways to operationalize dunning kruger 
+#
+# mean
+# variance
+# some measure of risk
+
+# https://twitter.com/blair_fix/status/1728755894899679580
+# https://economicsfromthetopdown.com/2022/04/08/the-dunning-kruger-effect-is-autocorrelation/
+
+
+if it really cared to assess variability as a function of IQ it's using pretty naive/borderline inappropriate methods
+
+in general, a correlation tells you only the sign of the regression line
+but for a lot of this dunning-kruger stuff the slope is what matters
+
+https://www.scientificamerican.com/article/the-dunning-kruger-effect-isnt-what-you-think-it-is/
+
+
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
+)
+
+library(tidyverse)
+library(patchwork)
+
+theme_set(theme_minimal())
+```
+
+A paper called
+
+> The Dunning-Kruger effect is (mostly) a statistical artefact: Valid approaches to testing the hypothesis with individual differences data.
+
+has been doing the Twitter rounds recently. I read the paper. It provides evidence for the Dunning-Kruger effect.
+
+## What's the what
+
+> The Dunning-Kruger hypothesis states that the degree to which people can estimate their ability accurately depends, in part, upon possessing the ability in question. 
+
+To test this hypothesis, the paper authors asked people to guess their IQ and then gave them actual IQ tests. Then they analyzed this data and came to the conclusion the Dunning-Kruger effect is not present in their data.
+
+The core of the article comes down to the following diagram. Essentially, the traditional argument in favor of the Dunning-Kruger effect is graphical, and comes in the form of the plots in panels A and B. However, these plots dichotomize objective IQ and turn out to be misleading, especially in the presence of [measurement error][dlm]. The arguments against this methodology are worthwhile but I will skip over them to consider evidence for the Dunning-Kruger effect itself.
+
+```{r echo = FALSE, fig.align = "center"}
+knitr::include_graphics("/img/dunning-kruger.png", error = FALSE)
+```
+
+What we care about is whether or not overconfidence varies as a function of skill. For this particular dataset, we operationalize
+
+\[
+  \mathrm{overconfidence}_i = \mathrm{SAIQ}_i - \mathrm{IQ}_i
+\]
+
+and ask if overconfidence varies with IQ. This turns out to be equivalent to regressing IQ on self-assessed IQ and checking if the slope of the IQ term differs from one.
+
+@gignac_dunning-kruger_2020 does not report the regression `SAIQ ~ IQ`, nor did they publish their data, but they do report the sample averages and standard deviations of `SAIQ` and `IQ`, as well as the sample size and the correlation between `SAIQ` and `IQ`. This lets us back out the results of a simple linear regression (thanks [Twitter](https://twitter.com/alexpghayes/status/1346546757858177025) for the lazy math assist).
+
+Anyway I did the calculations and we get the following regression table:
+
+```{r}
+library(tidyverse)
+
+regress <- function(x_bar, y_bar, s_x, s_y, rho, n, alpha = 0.95) {
+
+  beta_hat <- rho * s_y / s_x
+  alpha_hat <- y_bar - beta_hat * x_bar
+
+  ssr <- (1 - rho^2) * s_y^2 * (n - 1)
+  sigma_sq_hat <- ssr / (n - 2)
+
+  sxx <- s_x^2 * (n - 1)
+
+  se_beta_hat <- sqrt(sigma_sq_hat / sxx)
+  se_alpha_hat <- sqrt(sigma_sq_hat * (1 / n + x_bar^2 / sxx))
+
+  ci_quantiles <- c(alpha/2, 1 - alpha/2)
+  alpha_ci <- alpha_hat + qt(ci_quantiles, df = n - 2) * se_alpha_hat
+  beta_ci <- beta_hat + qt(ci_quantiles, df = n - 2) * se_beta_hat
+
+  table <- tibble(
+    term = c("intercept", "slope"),
+    estimate = c(alpha_hat, beta_hat),
+    std.error = c(se_alpha_hat, se_beta_hat),
+    conf.low = c(alpha_ci[1], beta_ci[1]),
+    conf.high = c(alpha_ci[2], beta_ci[2])
+  )
+
+  slr <- list(
+    table = table,
+    alpha_hat = alpha_hat,
+    beta_hat = beta_hat
+  )
+
+  class(slr) <- "slr"
+  slr
+}
+
+print.slr <- function(x, ...) {
+  print(x$table)
+}
+
+predict.slr <- function(object, x, ...) {
+  object$alpha_hat + object$beta_hat * x
+}
+
+model <- regress(
+  x_bar = 101.70,
+  y_bar = 123.76,
+  s_x = 11.63,
+  s_y = 14.19,
+  rho = 0.28,
+  n = 927
+)
+
+model
+```
+
+Note that the slope is less than one, and the confidence interval is tight around the point estimate of 0.34. This means that, on average, for every one unit increase in `IQ`, someone's self-assessed IQ goes up by 0.34. To see how this is evidence of Dunning-Kruger, we can plot the regression.
+
+```{r}
+data <- tibble(
+  iq = seq(0, 150)
+) %>%
+  mutate(
+    .fitted = predict(model, iq),
+    overconfidence = .fitted - iq
+  )
+
+plot1 <- ggplot(data) +
+  aes(iq, .fitted) +
+  geom_line(color = "steelblue") +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed") +
+  theme_minimal() +
+  expand_limits(x = 0, y = 0) +
+  labs(
+    x = "IQ",
+    y = "SAIQ",
+    title = "High IQ individuals overestimate their IQ by less than low IQ individuals",
+    caption = "Dashed line is identity, blue line is SAIQ ~ IQ simple regression "
+  )
+
+plot2 <- data %>%
+  ggplot(aes(iq, overconfidence)) +
+  geom_line(color = "darkgrey") +
+  theme_minimal() +
+  labs(
+    x = "IQ",
+    y = "Overconfidence on self-assessed IQ",
+    title = ""
+  )
+
+plot1 + plot2
+```
+
+Note that average person with an IQ of 80 self-assesses their IQ to be 116; that is, they are overconfident by 36 IQ points. The average person with an IQ of 100 self-assesses their IQ to be 123; they are only off by 23 IQ points. The average person with an IQ of 120 self-assesses their IQ to be 130; they are only off by 10 IQ points. Everyone is overconfident, but, in this dataset, people with higher IQs are less overconfident. This becomes even more clear if we look at fitted values of self-assessed SAIQ minus actual IQ, which I plot in the right panel.
+
+Should we trust this regression? I'm cautiously optimistic. Eye balling panel C from the figure in the paper above, but things look pretty much ideal. There could still be measurement error issues such that OLS is not reliable here, but it's certainly going to be way better than the weird quartile plots from before.
+
+How does @gignac_dunning-kruger_2020 come to the conclusion that there is no evidence of Dunning-Kruger effect in this data? Well, they claim the Dunning-Kruger effect should show up as a non-linearity in the regression function, and then fail to find evidence of a non-linear conditional expectation. This reasoning doesn't quite work because you can have a linear regression function that is consist with the Dunning-Kruger hypothesis, as I pointed out above.
+
+## TL; DR
+
+The previous quartile based approach to demonstrate the presence of Dunning-Kruger has problems. However, simple linear regression on the data reported in @gignac_dunning-kruger_2020 is still strongly suggestive of a Dunning-Kruger effect.
+
+If you'd like to double check my code, it is available [here](https://gist.github.com/alexpghayes/466066ab4d94fee42ffacdf3821fa8ac).
+
+[dlm]: https://dlm-econometrics.blogspot.com/2020/12/nonclassical-classics.html
+
+https://gist.github.com/alexpghayes/466066ab4d94fee42ffacdf3821fa8ac
+
+https://osf.io/dg547/
+
+will update in a moment but i was blind and it turns out the full data is available; if you model either SAIQ or IQ as observed with error you still infer slope < 1 with fairly high probability
+
+the original dk methodology is silly, but the dk takedown articles have been just as ridiculous, if not moreso, in my experience
+## References
