@@ -6,78 +6,134 @@ date: "2024-01-24"
 categories: [statistical software]
 bibliography: references.bib
 draft: true
+execute:
+  echo: false
+  message: false
+  warning: false
+fig-align: center
 ---
-
 
 ```{r}
 library(tidyverse)
 library(here)
+library(osfr)
+
+theme_set(theme_minimal())
 
 # https://osf.io/dg547/
-raw <- read_csv(here("post", "xxxx-xx-xx_dunning-kruger", "Dunning-Kruger_INTELL_UPLOAD.csv"))
-View(raw)
+# https://osf.io/5a9hb
+# 
+# download_dir <- here("post", "xxxx-xx-xx_dunning-kruger")
+# 
+# osf_retrieve_file("5a9hb") |> 
+#   osf_download(path = download_dir)
 
-raw |> 
-  select(contains("IQ"))
+data <- here("post", "xxxx-xx-xx_dunning-kruger", "Dunning-Kruger_INTELL_UPLOAD.csv") |> 
+  read_csv() |> 
+  select(SAI_winsorized_Q, Raven_IQ, SAIQ_IQ_dif) |> 
+  rename(
+    SAIQ = SAI_winsorized_IQ,
+    IQ = Raven_IQ,
+    overconfidence = SAIQ_IQ_dif
+  )
 
-fit <- lm(SAI_winsorized_IQ ~ Raven_IQ, data = raw)
-fit
+data
 
-summary(fit)
+fit <- lm(SAIQ ~ IQ, data = data)
+broom::tidy(fit, conf.int = TRUE)
+
+fit <- estimatr::lm_robust(SAIQ ~ IQ, data = data)
 broom::tidy(fit, conf.int = TRUE)
 ```
 
 
 ```{r}
-raw |> 
-  ggplot(aes(Raven_IQ, SAI_winsorized_IQ)) +
-  geom_point() +
+data |> 
+  ggplot(aes(IQ, SAIQ)) +
+  geom_point(alpha = 0.5) +
   geom_abline(slope = 1, linetype = "dashed", color = "darkgrey") +
   theme_minimal()
+```
 
-raw |> 
-  ggplot(aes(Raven_IQ, SAIQ_IQ_dif)) +
-  geom_point() +
+
+```{r}
+data |> 
+  ggplot(aes(IQ, overconfidence)) +
+  geom_point(alpha = 0.5) +
   geom_smooth() +
   geom_hline(yintercept = 0, linetype = "dashed", color = "darkgrey") +
   labs(
-    y = "Self-assessed IQ - Measured IQ (i.e. overconfidence)",
-    x = "Measured IQ"
+    y = "Overconfidence (SAIQ - IQ)",
+    x = "IQ"
   ) +
   theme_minimal(16)
-
-fit <- estimatr::lm_robust(SAI_winsorized_IQ ~ Raven_IQ, data = raw)
-broom::tidy(fit, conf.int = TRUE)
 ```
 
 
 ```{r}
 library(gamlss)
 
-raw_no_na <- raw |> 
-  select(SAI_winsorized_IQ, Raven_IQ) |> 
+data_no_na <- data |> 
+  select(SAIQ, IQ) |> 
   na.omit()
 
 # https://stats.stackexchange.com/questions/508818/how-to-model-conditional-variance
-model <- gamlss(SAI_winsorized_IQ ~ Raven_IQ, 
-                sigma.formula = ~ Raven_IQ, 
-                family = NO2, 
-                data = raw_no_na)
+model <- gamlss(
+  SAIQ ~ pb(IQ), 
+  sigma.formula = ~ pb(IQ), 
+  family = NO2(sigma.link = "identity"), 
+  data = data_no_na
+)
 
 summary(model)
+mu_pred <- predict(model, what = "mu", se.fit = TRUE) |> 
+  as_tibble() |> 
+  rename(mu_hat = fit, mu_se = se.fit) |> 
+  mutate(param = "mu")
+
+# how to compute SE for sigma given sigma_hat and sigma standard error
+# is this SE for mu or for sigma?
+sigma_pred <- predict(model, what = "sigma", se.fit = TRUE) |> 
+  as_tibble() |> 
+  rename(sigma_hat = fit, sigma_se = se.fit) |> 
+  mutate(param = "sigma") |> 
+  mutate(
+    sigma_low = sigma_hat - 2 * sigma_se,
+    sigma_high = sigma_hat + 2 * sigma_se
+  )
+
+data |> 
+  bind_cols(sigma_pred) |> 
+  mutate(SAIQ2 = residuals(model)^2) |> 
+  ggplot(aes(IQ, y = sigma_hat, ymin = sigma_low, ymax = sigma_high)) +
+  geom_point(aes(IQ, SAIQ2)) +
+  geom_ribbon(alpha = 0.5)
+
+bind_rows(mu_pred, sigma_pred, .id = "param")
+
+mu_pred
+str(mu_pred)
+
+
+
+preds <- predict(model, parameter = "mu", se.fit = TRUE)
+as_tibble(preds)
+```
+
+```{r}
+fittedPlot(model, x = data$IQ)
 ```
 
 
 
+three ways to operationalize dunning kruger 
 
-# three ways to operationalize dunning kruger 
-#
-# mean
-# variance
-# some measure of risk
+- mean
+- variance
+- some measure of risk
 
-# https://twitter.com/blair_fix/status/1728755894899679580
-# https://economicsfromthetopdown.com/2022/04/08/the-dunning-kruger-effect-is-autocorrelation/
+https://twitter.com/blair_fix/status/1728755894899679580
+https://economicsfromthetopdown.com/2022/04/08/the-dunning-kruger-effect-is-autocorrelation/
 
 
 if it really cared to assess variability as a function of IQ it's using pretty naive/borderline inappropriate methods
@@ -87,22 +143,6 @@ but for a lot of this dunning-kruger stuff the slope is what matters
 
 https://www.scientificamerican.com/article/the-dunning-kruger-effect-isnt-what-you-think-it-is/
 
-
-
-
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  echo = FALSE,
-  warning = FALSE,
-  message = FALSE
-)
-
-library(tidyverse)
-library(patchwork)
-
-theme_set(theme_minimal())
-```
-
 A paper called
 
 > The Dunning-Kruger effect is (mostly) a statistical artefact: Valid approaches to testing the hypothesis with individual differences data.
@@ -111,13 +151,13 @@ has been doing the Twitter rounds recently. I read the paper. It provides eviden
 
 ## What's the what
 
-> The Dunning-Kruger hypothesis states that the degree to which people can estimate their ability accurately depends, in part, upon possessing the ability in question. 
+> The Dunning-Kruger hypothesis states that the degree to which people can estimate their ability accurately depends, in part, upon possessing the ability in question.
 
 To test this hypothesis, the paper authors asked people to guess their IQ and then gave them actual IQ tests. Then they analyzed this data and came to the conclusion the Dunning-Kruger effect is not present in their data.
 
 The core of the article comes down to the following diagram. Essentially, the traditional argument in favor of the Dunning-Kruger effect is graphical, and comes in the form of the plots in panels A and B. However, these plots dichotomize objective IQ and turn out to be misleading, especially in the presence of [measurement error][dlm]. The arguments against this methodology are worthwhile but I will skip over them to consider evidence for the Dunning-Kruger effect itself.
 
-```{r echo = FALSE, fig.align = "center"}
+```{r}
 knitr::include_graphics("/img/dunning-kruger.png", error = FALSE)
 ```
 
@@ -134,8 +174,6 @@ and ask if overconfidence varies with IQ. This turns out to be equivalent to reg
 Anyway I did the calculations and we get the following regression table:
 
 ```{r}
-library(tidyverse)
-
 regress <- function(x_bar, y_bar, s_x, s_y, rho, n, alpha = 0.95) {
 
   beta_hat <- rho * s_y / s_x
@@ -249,4 +287,5 @@ https://osf.io/dg547/
 will update in a moment but i was blind and it turns out the full data is available; if you model either SAIQ or IQ as observed with error you still infer slope < 1 with fairly high probability
 
 the original dk methodology is silly, but the dk takedown articles have been just as ridiculous, if not moreso, in my experience
+
 ## References

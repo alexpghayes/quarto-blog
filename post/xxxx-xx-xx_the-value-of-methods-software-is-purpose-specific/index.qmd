@@ -61,7 +61,7 @@ Thank [Ben Listyg](https://github.com/benlistyg) for providing feedback on this 
 
 i would feel better about if they were more consistently functional. half of time someone releases a methods package and i take a close look i lose confidence in any empirical results in the paper on the basis of the code
 
-
+code useful: for what? to whom?
 
 Define “useful”
 The terms “useful” and “useable” are mentioned with respect to code, but I think clearly articulating the scope of how code is used is important. I think it would be valuable to answer the question “What does it mean for code to be usable?” A methods translator creating code for a consumer has to have a target audience in mind be it another researcher generating academic output or someone in industry generating code for production use.
@@ -93,7 +93,7 @@ data science defining itself in some senses as "statistical methods plus all of 
 I think there needs to be some sort of communal understanding of all the steps (many currently unacknowledged) needed to get methods into applied work, and additionally this work needs to become a form of academically valued labor
 i.e. until you assign responsibility for each of those steps to someone i don't think it's fair to ask why people aren't using the most up to date methods. the answer is simply that academia doesn't incentivize work along many of the steps of the theory -> applied pipeline
 
-
+in some sense this post is an apology for the quality of the research code that i've produced recently
 
 Random thoughts:
 
@@ -121,5 +121,8 @@ and then second is just like nice data
 like 90% of the time i couldn't care less about the researchers own code since i'm just going to redo the analysis on my own to see if i trust their conclusions
 and also since most analysis code from applied peeps is either wrong or impossible to verify as correct since it's such a mess
 
-yeah there's definitely a myth that if we all release our code, that no matter what that code, somehow methods disemmination will be solve and the hellscape of trying to use any non-standard estimator will somehow disappear
+yeah there's definitely a myth that if we all release our code, that no matter what that code, somehow methods disemmination will be solve and the hellscape of trying to use any non-standard estimator will somehow disappear (for applied data analysis, or in an industrial pipeline)
+
+
+what really makes me irritated these days: papers without reference implementations. what used to make me irritated: papers without industrial implemetations
 
