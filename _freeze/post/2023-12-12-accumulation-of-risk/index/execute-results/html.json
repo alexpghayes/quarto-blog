@@ -1,0 +1,16 @@
+{
+  "hash": "d12e610352d403bd60a54bd783944070",
+  "result": {
+    "markdown": "---\ntitle: \"the accumulation of small risks\"\nsubtitle: |\n  a simple plot that informs how i made decisions\ndate: \"2023-12-12\"\nformat:\n  html:\n    code-fold: true\n---\n\n\nI like to climb. Sometimes when talking with other climbers I get the impression that they are blasé about risk, especially for things that are a little bit dangerous, but not outright scary.\n\nWhen we take small risks repeatedly, that risk accumulates. Suppose you are setting up an anchor at the top of a climb, and you don't tether into something secure, so there's a 2% chance you fall while you work. If you take this risk 20 times, the probability that you fall off a cliff at least once is 33%. That's really high. Far too high for me.\n\nThe numbers above are made up, but the point is that I'm hoping to climb outside for a long time. Climbing is dangerous, and I have a certain risk budget that I am willing to allocate to climbing because I enjoy it. Sometimes I'll even do big risky things! But it's important to me that I don't exceed my risk tolerance, and I suspect I am most likely to that by accumulating small risks without paying attention.\n\nDiatribe aside, I find myself referring back to this figure on a regular basis, and I'm posting it here so that I can point other people to some rough numbers as well.\n\n\n::: {.cell .column-body-outset layout-align=\"center\"}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n\np_at_least_one_event <- function(p_event = 0.1, periods = 50) {\n  tibble(\n    time = 1:periods,\n    # equivalently: 1 - pbinom(0, 1:periods, p_event)\n    p_at_least_one_event = 1 - (1 - p_event)^(1:periods)  \n  )\n}\n\ntibble(\n  p_event = seq(0.01, 0.1, by = 0.01)\n) |> \n  mutate(\n    curve = map(p_event, p_at_least_one_event),\n    p_event = forcats::fct_inseq(as.factor(p_event))\n  ) |> \n  unnest(c(curve)) |> \n  ggplot(aes(time, p_at_least_one_event, color = p_event)) +\n  geom_line() +\n  scale_color_viridis_d() +\n  scale_y_continuous(\n    breaks = seq(0, 1, by = 0.1),\n    labels = scales::percent\n  ) +\n  labs(\n    title = \"Risks accumulating with repetition\",\n    x = \"Years\",\n    y = \"Probability of at least one event\",\n    color = \"Event chance\\neach year\"\n  ) +\n  theme_minimal(12)\n```\n\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-1-1.png){fig-align='center' width=100%}\n:::\n:::\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

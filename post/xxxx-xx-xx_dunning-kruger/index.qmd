@@ -4,7 +4,7 @@ subtitle: |
   TODO
 date: "2024-01-24"
 categories: [statistical software]
-bibliography: references.bib
+bibliography: dunning-kruger.bib
 draft: true
 execute:
   echo: false
@@ -28,9 +28,12 @@ theme_set(theme_minimal())
 # osf_retrieve_file("5a9hb") |> 
 #   osf_download(path = download_dir)
 
-data <- here("post", "xxxx-xx-xx_dunning-kruger", "Dunning-Kruger_INTELL_UPLOAD.csv") |> 
+
+file_path <- here("post", "xxxx-xx-xx_dunning-kruger", "Dunning-Kruger_INTELL_UPLOAD.csv")
+
+data <- file_path |> 
   read_csv() |> 
-  select(SAI_winsorized_Q, Raven_IQ, SAIQ_IQ_dif) |> 
+  select(SAI_winsorized_IQ, Raven_IQ, SAIQ_IQ_dif) |> 
   rename(
     SAIQ = SAI_winsorized_IQ,
     IQ = Raven_IQ,
@@ -45,6 +48,8 @@ broom::tidy(fit, conf.int = TRUE)
 fit <- estimatr::lm_robust(SAIQ ~ IQ, data = data)
 broom::tidy(fit, conf.int = TRUE)
 ```
+
+https://economicsfromthetopdown.com/2022/04/08/the-dunning-kruger-effect-is-autocorrelation/
 
 
 ```{r}
@@ -169,7 +174,7 @@ What we care about is whether or not overconfidence varies as a function of skil
 
 and ask if overconfidence varies with IQ. This turns out to be equivalent to regressing IQ on self-assessed IQ and checking if the slope of the IQ term differs from one.
 
-@gignac_dunning-kruger_2020 does not report the regression `SAIQ ~ IQ`, nor did they publish their data, but they do report the sample averages and standard deviations of `SAIQ` and `IQ`, as well as the sample size and the correlation between `SAIQ` and `IQ`. This lets us back out the results of a simple linear regression (thanks [Twitter](https://twitter.com/alexpghayes/status/1346546757858177025) for the lazy math assist).
+@gignac2020 does not report the regression `SAIQ ~ IQ`, nor did they publish their data, but they do report the sample averages and standard deviations of `SAIQ` and `IQ`, as well as the sample size and the correlation between `SAIQ` and `IQ`. This lets us back out the results of a simple linear regression (thanks [Twitter](https://twitter.com/alexpghayes/status/1346546757858177025) for the lazy math assist).
 
 Anyway I did the calculations and we get the following regression table:
 
@@ -232,6 +237,8 @@ model
 Note that the slope is less than one, and the confidence interval is tight around the point estimate of 0.34. This means that, on average, for every one unit increase in `IQ`, someone's self-assessed IQ goes up by 0.34. To see how this is evidence of Dunning-Kruger, we can plot the regression.
 
 ```{r}
+library(patchwork)
+
 data <- tibble(
   iq = seq(0, 150)
 ) %>%
@@ -270,11 +277,11 @@ Note that average person with an IQ of 80 self-assesses their IQ to be 116; that
 
 Should we trust this regression? I'm cautiously optimistic. Eye balling panel C from the figure in the paper above, but things look pretty much ideal. There could still be measurement error issues such that OLS is not reliable here, but it's certainly going to be way better than the weird quartile plots from before.
 
-How does @gignac_dunning-kruger_2020 come to the conclusion that there is no evidence of Dunning-Kruger effect in this data? Well, they claim the Dunning-Kruger effect should show up as a non-linearity in the regression function, and then fail to find evidence of a non-linear conditional expectation. This reasoning doesn't quite work because you can have a linear regression function that is consist with the Dunning-Kruger hypothesis, as I pointed out above.
+How does @gignac2020 come to the conclusion that there is no evidence of Dunning-Kruger effect in this data? Well, they claim the Dunning-Kruger effect should show up as a non-linearity in the regression function, and then fail to find evidence of a non-linear conditional expectation. This reasoning doesn't quite work because you can have a linear regression function that is consist with the Dunning-Kruger hypothesis, as I pointed out above.
 
 ## TL; DR
 
-The previous quartile based approach to demonstrate the presence of Dunning-Kruger has problems. However, simple linear regression on the data reported in @gignac_dunning-kruger_2020 is still strongly suggestive of a Dunning-Kruger effect.
+The previous quartile based approach to demonstrate the presence of Dunning-Kruger has problems. However, simple linear regression on the data reported in @gignac2020 is still strongly suggestive of a Dunning-Kruger effect.
 
 If you'd like to double check my code, it is available [here](https://gist.github.com/alexpghayes/466066ab4d94fee42ffacdf3821fa8ac).
 
