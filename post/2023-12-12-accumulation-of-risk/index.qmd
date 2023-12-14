@@ -1,7 +1,7 @@
 ---
 title: "the accumulation of small risks"
 subtitle: |
-  a simple plot that informs how i made decisions
+  a simple plot that informs how i make decisions
 date: "2023-12-12"
 filters:
   - webr
@@ -15,7 +15,7 @@ When we take small risks repeatedly, that risk accumulates. Suppose you are sett
 
 The numbers above are made up, but the point is that I'm hoping to climb outside for a long time. Climbing is dangerous, and I have a certain risk budget that I am willing to allocate to climbing because I enjoy it. Sometimes I'll even do big risky things! But it's important to me that I don't exceed my risk tolerance, and I suspect I am most likely to that by accumulating small risks without paying attention.
 
-Diatribe aside, I find myself referring back to this figure on a regular basis, and I'm posting it here so that I can point other people to some rough numbers as well.
+Diatribe aside, I find myself referring back to this figure on a regular basis, and I'm posting it here so that I can point other people to some rough numbers as well. 
 
 ```{r}
 #| echo: false
