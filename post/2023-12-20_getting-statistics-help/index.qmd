@@ -24,9 +24,9 @@ Please take a moment to answer the following questions in writing. It's really h
 
 - **How are you currently trying to solve your problem or analyze your data?** It's actually best to answer this question twice: once at a very abstract level, using as little statistical or scientific jargon as possible, and then once with lots of technical detail.
 
-Next I'm going to need a detailed explanation of your data: how the raw data were collected, and any data cleaning or processing steps that you took. In an ideal world, you send me both your raw data and your cleaned data, plus a description of the data cleaning process. It's important to know about data cleaning and prep because those processes can greatly influence what kinds of analysis are appropriate.
+Next I'm going to need a detailed explanation of your data. Jeff Leek has an extensive guide on [How to share data with statistician](https://github.com/jtleek/datasharing), which you should read and follow.
 
-For both the raw data and the cleaned data, please create a data dictionary that describes what each row of data represents and a description of each column. Ideally the cleaned data is in [tidy format](https://vita.had.co.nz/papers/tidy-data.pdf) (see [here](https://r4ds.hadley.nz/data-tidy.html) for instructions on how to tidy data in `R`).
+In brief: I need to know how the raw data were collected, and any data cleaning or processing steps that you took. You should send me both your raw data and your cleaned data, plus a description of the data cleaning process. It's important to know about data cleaning and prep because those processes can greatly influence what kinds of analysis are appropriate. For both the raw data and the cleaned data, please create a data dictionary that describes what each row of data represents and a description of each column. Ideally the cleaned data is in [tidy format](https://vita.had.co.nz/papers/tidy-data.pdf) (see [here](https://r4ds.hadley.nz/data-tidy.html) for instructions on how to tidy data in `R`). Jeff Leek's guide has extensive details about how to write a data dictionary.
 
 ::: {.callout-warning}
 My most frequent request for consulting clients is for a detailed data dictionary.
