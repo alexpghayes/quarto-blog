@@ -37,3 +37,4 @@ format:
   html:
     theme: ember.scss
     css: styles.css
+    linkcolor: black

@@ -10,6 +10,8 @@ $theme: "litera" !default;
 // use Atkinson Hyperlegible font if available
 $font-family-sans-serif:  "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 
+$code-color: "black";
+
 /*-- scss:rules --*/
   
   // litera is serif by default: revert to san-serif
