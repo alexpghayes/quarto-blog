@@ -1,22 +1,16 @@
 ---
 title: "about"
 image: headshot-small.png
+date-modified: "2024-04-06"
 about:
   template: solana
   image-width: 10em
   image-shape: rounded
 ---
 
-I'm a PhD candidate in Statistics at the University of Wisconsin-Madison, where I am co-advised by [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) and [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/). I study spectral methods for network analysis, causal inference, and causal inference on networks. I blog about statistics, programming, and data.
+I'm a PhD candidate in Statistics at the University of Wisconsin-Madison, where I am co-advised by [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) and [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/). I study spectral methods for network analysis, causal inference, and causal inference on networks. I blog about statistics, programming, and data. 
 
-I'm having a public defense in early April: you're welcome to attend! 
-
-*Asymptotic identifiability of peer effects in the linear-in-means model*  
-April 4, 2024 @ 12:30 pm  
-133 SMI, Medical Sciences Center, UW-Madison
-
-
-### I'm looking for a job!
+### i'm looking for a job!
 
 - I am an experienced `R` package developer and open-source project maintainer. You might know me from my work on [`broom`](https://broom.tidymodels.org/), a popular open-source `R` package in the `tidyverse`.
 

@@ -1,9 +1,10 @@
 ---
 title: "code"
+date-modified: "2024-04-06"
 bibliography: code.bib
 ---
 
-**N.B.:** For the last several years, I written code purely for the purposes of furthering my academic research. The goal of this code is not to be broadly usable. I only commit to maintaining and explaining my research code to the extent that it is assists others in their own academic research. I have also written code designed for broad consumption -- see [#rstats](#rstats) below for some details about my open source work.
+**n.b.** For the last several years, I written code purely for the purposes of furthering my academic research. The goal of this code is not to be broadly usable. I only commit to maintaining and explaining my research code to the extent that it is assists others in their own academic research. I have also written code designed for broad consumption -- see [#rstats](#rstats) below for some details about my open source work.
 
 My research code, as well as miscellaneous personal projects in various stages of completion, lives on my [Github](https://github.com/alexpghayes). I primarily use `R`, and most of my work as a developer is on methods packages. I am also a proficient Python user, and have passing exposure to SQL, Julia, and C++.
 
