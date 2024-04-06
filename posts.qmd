@@ -8,6 +8,7 @@ listing:
   fields: [date, title, subtitle, description, reading-time]
 page-layout: full
 title-block-banner: true
+date-modified: "2024-04-06"
 execute: 
   include: false
 ---
@@ -15,16 +16,16 @@ execute:
 ```{r}
 library(stringr)
 
-# set up some redirects following 
+# set up some redirects following
 # https://blog.djnavarro.net/posts/2022-04-20_porting-to-quarto/#netlify-redirects
 #
 # this relies on netlify deployment
 
 # list names of post folders
 posts <- list.dirs(
-  path = here::here("post"),
-  full.names = FALSE,
-  recursive = FALSE
+    path = here::here("post"),
+    full.names = FALSE,
+    recursive = FALSE
 )
 
 # extract the slugs
@@ -34,16 +35,16 @@ slugs <- gsub("^.*_", "", posts)
 post_redirects <- glue::glue("/{slugs} /post/{slugs}")
 
 post_redirects <- c(
-  post_redirects,
-  "/2022-10-18-intel-mkl-data-race/ /post/2022-10-30-intel-mkl-data-race/",
-  "/post/2022-10-18-intel-mkl-data-race/ /post/2022-10-30-intel-mkl-data-race/"
+    post_redirects,
+    "/2022-10-18-intel-mkl-data-race/ /post/2022-10-30-intel-mkl-data-race/",
+    "/post/2022-10-18-intel-mkl-data-race/ /post/2022-10-30-intel-mkl-data-race/"
 )
 
 hugo_redirects <- readLines(here::here("post", "hugo_redirects"))
 
-hugo_redirected_to <- hugo_redirects |> 
-  str_extract("\\s(.*)") |> 
-  str_trim()
+hugo_redirected_to <- hugo_redirects |>
+    str_extract("\\s(.*)") |>
+    str_trim()
 
 # parsing or redirect file failure if there is an NA here
 stopifnot(all(!is.na(hugo_redirected_to)))
