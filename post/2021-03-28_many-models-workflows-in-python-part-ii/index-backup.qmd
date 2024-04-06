@@ -3,7 +3,8 @@ title: "many models workflows in python ii"
 subtitle: |
   a tidymodels workflow in python using list columns in pandas dataframes, now with hyperparameter sweep and parallelism
 date: "2021-03-28"
-jupyter: sklearn0.24
+date-modified: "2024-04-06"
+jupyter: manymodels
 categories: [python, workflow, tidymodels]
 ---
 

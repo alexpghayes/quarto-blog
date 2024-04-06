@@ -3,7 +3,7 @@ title: "many models workflows in python i"
 subtitle: |
   a tidymodels workflow in python using list columns in pandas dataframes
 date: "2020-08-25"
-jupyter: python3
+jupyter: manymodels
 categories: [python, workflow, tidymodels]
 ---
 
