@@ -9,13 +9,9 @@ webr:
   packages: ['ggplot2']
 ---
 
-I like to climb and sometimes when talking with other climbers I get the impression that they are blasé about risk, especially for things that are a little bit dangerous, but not outright scary.
+When we take small risks repeatedly, that risk accumulates, and it can accumulate surprisingly quickly.
 
-When we take small risks repeatedly, that risk accumulates. Suppose you are setting up an anchor at the top of a climb, and you don't tether into something secure, so there's a 2% chance you fall while you work. If you take this risk 20 times, the probability that you fall off a cliff at least once is 33%. That's really high. Far too high for me.
-
-The numbers above are made up, but the point is that I'm hoping to climb outside for a long time. Climbing is dangerous, and I have a certain risk budget that I am willing to allocate to climbing because I enjoy it. Sometimes I'll even do big risky things! But it's important to me that I don't exceed my risk tolerance, and I suspect I am most likely to that by accumulating small risks without paying attention.
-
-Diatribe aside, I find myself referring back to this figure on a regular basis, and I'm posting it here so that I can point other people to some rough numbers as well. 
+I find myself referring back to this figure on a regular basis.
 
 ```{r}
 #| echo: false
@@ -30,34 +26,34 @@ library(tidyr)
 library(ggplot2)
 
 p_at_least_one_event <- function(p_event = 0.1, periods = 50) {
-  tibble(
-    time = 1:periods,
-    p_at_least_one_event = 1 - (1 - p_event)^(1:periods)  
-  )
+    tibble(
+        time = 1:periods,
+        p_at_least_one_event = 1 - (1 - p_event)^(1:periods)
+    )
 }
 
 tibble(
-  p_event = c(0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10)
-) |> 
-  mutate(
-    curve = purrr::map(p_event, p_at_least_one_event),
-    p_event = as.factor(p_event)
-  ) |> 
-  unnest(c(curve)) |> 
-  ggplot(aes(time, p_at_least_one_event, color = p_event)) +
-  geom_line() +
-  scale_color_viridis_d() +
-  scale_y_continuous(
-    breaks = seq(0, 1, by = 0.1),
-    labels = scales::percent
-  ) +
-  labs(
-    title = "Risks accumulating with repetition",
-    x = "Years",
-    y = "Probability of at least one event",
-    color = "Event chance\neach year"
-  ) +
-  theme_minimal(12)
+    p_event = c(0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10)
+) |>
+    mutate(
+        curve = purrr::map(p_event, p_at_least_one_event),
+        p_event = as.factor(p_event)
+    ) |>
+    unnest(c(curve)) |>
+    ggplot(aes(time, p_at_least_one_event, color = p_event)) +
+    geom_line() +
+    scale_color_viridis_d() +
+    scale_y_continuous(
+        breaks = seq(0, 1, by = 0.1),
+        labels = scales::percent
+    ) +
+    labs(
+        title = "Risks accumulating with repetition",
+        x = "Years",
+        y = "Probability of at least one event",
+        color = "Event chance\neach year"
+    ) +
+    theme_minimal(12)
 ```
 
 If you want to toy around with the numbers and make your own figure, you should be able to do that by changing the values in the `p_event` and `time` variables below and then hitting the `Run Code` button.
@@ -72,24 +68,24 @@ If you want to toy around with the numbers and make your own figure, you should 
 library(ggplot2)
 
 expand.grid(
-  p_event = c(0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10),
-  time = 1:50
-) |> 
-  transform(
-    p_at_least_one_event = 1 - pbinom(0, time, p_event),
-    p_event = as.factor(p_event)
-  ) |>
-  ggplot(aes(time, p_at_least_one_event, color = p_event)) +
-  geom_line() +
-  scale_color_viridis_d() +
-  scale_y_continuous(
-    breaks = seq(0, 1, by = 0.1)
-  ) +
-  labs(
-    title = "Risks accumulating with repetition",
-    x = "Years",
-    y = "Probability of at least one event",
-    color = "Event chance\neach year"
-  ) +
-  theme_minimal(12)
+    p_event = c(0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10),
+    time = 1:50
+) |>
+    transform(
+        p_at_least_one_event = 1 - pbinom(0, time, p_event),
+        p_event = as.factor(p_event)
+    ) |>
+    ggplot(aes(time, p_at_least_one_event, color = p_event)) +
+    geom_line() +
+    scale_color_viridis_d() +
+    scale_y_continuous(
+        breaks = seq(0, 1, by = 0.1)
+    ) +
+    labs(
+        title = "Risks accumulating with repetition",
+        x = "Years",
+        y = "Probability of at least one event",
+        color = "Event chance\neach year"
+    ) +
+    theme_minimal(12)
 ```
