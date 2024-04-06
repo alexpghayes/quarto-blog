@@ -11,6 +11,8 @@ website:
     creator: "@alexpghayes"
     card-style: summary_large_image
   navbar:
+    background: "#FFFFFF"
+    foreground: "dark"
     right:
       - text: about
         file: index.qmd
