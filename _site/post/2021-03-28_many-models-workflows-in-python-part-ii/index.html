@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.28">
+<meta name="generator" content="quarto-1.5.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -140,7 +140,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -279,10 +279,9 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display column-body-outset" data-execution_count="1">
 <div>
-<div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -425,7 +424,6 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-</div>
 <p>Our next step is to define a helper function to fit GMM estimators for us. I’m going to use <code>sklearn</code>’s <a href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html">GMM implementation</a>, which uses the EM algorithm for estimation. The estimator has two key hyperparameters that we’ll want to explore:</p>
 <ol type="1">
 <li><code>n_components</code>: the number of clusters to find</li>
@@ -526,10 +524,9 @@ Fold 4 has 267 train and 66 test observations.</code></pre>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display column-body-outset" data-execution_count="4">
 <div>
-<div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -569,7 +566,6 @@ Fold 4 has 267 train and 66 test observations.</code></pre>
 </div>
 </div>
 </div>
-</div>
 <p>Now we are going to do something a little tricky. We are going to create a new column of <code>model_grid</code> that contains the results from fitting a GMM to each split from the CV object. In particular, each element in this column will itself be a list with <code>num_folds</code> elements. That is, we will create a list-column <code>cv_fits</code> were each element of <code>model_grid.cv_fits</code> is itself a list. To work with these structures it is easiest to define a helper function that fits a GMM to each CV split for a single combination of hyperparameters.</p>
 <div id="cell-9" class="cell page-columns page-full" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_gmm_vfold(</span>
@@ -595,10 +591,9 @@ Fold 4 has 267 train and 66 test observations.</code></pre>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display column-body-outset" data-execution_count="5">
 <div>
-<div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -644,7 +639,6 @@ Fold 4 has 267 train and 66 test observations.</code></pre>
 </div>
 </div>
 </div>
-</div>
 <p><strong>Note</strong>: To get our cross validated fits, we iterated over <code>param_grid</code> and stored results in <code>model_grid</code>. It’s essential that the row indices match up between these objects. Here they match by construction, but be careful if you start to play with this structure. For example, one alternative (and frequently convenient approach) here is to create a <code>model_grid</code> object based on <code>itertools.product(param_grid, resamples)</code> rather than just <code>param_grid</code>. This avoids nesting lists in list-columns, at the cost of inefficiency in terms of storage. This route is more fiddly than it looks.</p>
 <p>Anyway, now that we have training fits, we want to compute out of sample performance estimates. In our case, we’ll use a measure of clustering quality known at the Adjusted Rand Score. Again we use nested list comprehensions to get out of sample estimates for all CV splits.</p>
 <div id="cell-11" class="cell page-columns page-full" data-execution_count="6">
@@ -677,10 +671,9 @@ Fold 4 has 267 train and 66 test observations.</code></pre>
 <span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display column-body-outset" data-execution_count="6">
 <div>
-<div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -729,7 +722,6 @@ Fold 4 has 267 train and 66 test observations.</code></pre>
 </tbody>
 </table>
 
-</div>
 </div>
 </div>
 </div>
@@ -819,10 +811,9 @@ dtype: object</code></pre>
 <span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>fancy_model_grid.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
-<div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -859,7 +850,6 @@ dtype: object</code></pre>
 </tbody>
 </table>
 
-</div>
 </div>
 </div>
 </div>

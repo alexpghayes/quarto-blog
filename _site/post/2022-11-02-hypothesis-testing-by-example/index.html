@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.28">
+<meta name="generator" content="quarto-1.5.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -166,7 +166,7 @@ window.Quarto = {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -344,7 +344,7 @@ window.Quarto = {
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
-<div id="fig-observed" class="quarto-figure quarto-figure-center quarto-float anchored page-columns page-full">
+<div id="fig-observed" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-observed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
 <img src="index_files/figure-html/fig-observed-1.png" class="img-fluid figure-img column-body-outset" width="960">
@@ -409,7 +409,7 @@ Figure&nbsp;1: Sequences A, B, C, D, E and F. Only one sequence was generated ra
 <span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
-<div id="fig-fair" class="quarto-figure quarto-figure-center quarto-float anchored page-columns page-full">
+<div id="fig-fair" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-fair-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
 <img src="index_files/figure-html/fig-fair-1.png" class="img-fluid figure-img column-body-outset" width="960">
@@ -508,7 +508,6 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
 <div id="debvpofyig" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
@@ -916,7 +915,7 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 }
 </style>
 
-<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead class="gt_col_headings">
 <tr class="header">
 <th id="Sequence" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Sequence</th>
@@ -954,7 +953,6 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 </div>
 </div>
 </div>
-</div>
 <p>Since sequence F has only 70 heads, it seems unlikely that sequence F comes from the null model of independent, fair coin flips.</p>
 <p>The approach that I have demonstrated above is to compute a <em>rejection region</em> for a test statistic that contains my test statistic <span class="math inline">\(90\%\)</span> of the time under the null model. This is not the only way to approach the problem. I could also ask, for each sequence, how often do I see a more extreme (i.e.&nbsp;larger or smaller) number of heads in random sequences. This is known as computing a <em>p-value</em>.</p>
 <div class="cell">
@@ -969,7 +967,6 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
 <div id="fdnmgbldmw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
@@ -1377,7 +1374,7 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 }
 </style>
 
-<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead class="gt_col_headings">
 <tr class="header">
 <th id="Sequence" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Sequence</th>
@@ -1412,7 +1409,6 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 </tbody>
 </table>
 
-</div>
 </div>
 </div>
 </div>
@@ -1467,7 +1463,6 @@ Another version of the same misleading intuition
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
 <div id="zwuobxtlof" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
@@ -1875,7 +1870,7 @@ Another version of the same misleading intuition
 }
 </style>
 
-<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Even though sequence C has exactly the expected number of heads under the null model, every single sequence is equally likely under the null model.</caption>
 <thead class="gt_col_headings">
 <tr class="header">
@@ -1925,7 +1920,6 @@ Another version of the same misleading intuition
 </tbody>
 </table>
 
-</div>
 </div>
 </div>
 </div>
