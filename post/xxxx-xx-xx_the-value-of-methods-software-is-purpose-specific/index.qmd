@@ -1,53 +1,137 @@
 ---
-title: "the value of methods software is purpose specific"
+title: "the many purposes of statistical software"
 subtitle: |
-  understanding the gap between code useful to method producers and method consumers
-date: "2022-05-14"
+  if we let go of the idea that academic should a unicorn programmer-researcher, what should we ask for from academic software?
+date: "2024-04-13"
 categories: [statistical software]
 bibliography: references.bib
 draft: true
 ---
 
-Clearly define three groups:
-Who are these three groups? I think a clear articulation of these types of people would be valuable.
-Methods Producers 
-Methods Consumers
-Methods Translators
+In open source work, part of the mythos is that academics and former academics write a lot of bad software. This is frustrating, and folks want to do something about it, so there are a lot of genuinely constructive attempts to improve the quality of statistical software^[See, for example, the ROpenSci [stats software review] (https://stats-devguide.ropensci.org/) and [tidymodels implementation principles](https://github.com/tidymodels/model-implementation-principles) projects, both of which I briefly involved in, as well as a plethora of academic papers such as @lee_barely_2021, @peer_active_2020, @taschuk_ten_2017, and @wilson_good_2017, as well as software checklists and standards for journals such as the [Journal of Open Source Software](https://joss.theoj.org/), the [Journal of Statistical Software](https://www.jstatsoft.org/index), the [R Journal](https://journal.r-project.org/), etc, etc].
 
+The aspirational goal of these attempts is often to get people to write production-ready code. However, not everyone needs production-ready code that works reliably in large, automated systems. 
 
-we want to do research, and to do research meaningfully in any sense we need to work collectively, and this in particular means that 
+Sometimes we write software to communication, to use as a basis to riff off or as a baseline for correctness, to demonstrate a proof-of-concept, to use intermittently and inefficiently, and so forth. These are valuable ends.
 
-
-we want to do researcher, we have certain research methods. some
-
-
-Collectively coordinating and sharing knowledge turns out to be very hard. In a
-
-Methodologically, researchers tend to be 
-
-In terms of software, we can roughly break researchers into two categories: methods producers, and methods consumers. 
+Rather than asking that every methodologist be a unicorn programmer-researcher, I think we should ask 
 
 
 
-Academics, and methodologists in particular, produce shitty code. This shitty code is frustrating to practicing data analysts, and an unsurprising consequence of this frustration is that we are entering a period of [standards proliferation](https://xkcd.com/927/) for research software^[See, for example, the ROpenSci [stats software review] (https://stats-devguide.ropensci.org/) and [tidymodels implementation principles](https://github.com/tidymodels/model-implementation-principles) projects, both of which I briefly involved in, as well as a plethora of academic papers such as @lee_barely_2021, @peer_active_2020, @taschuk_ten_2017, and @wilson_good_2017, as well as software checklists and standards for journals such as the [Journal of Open Source Software](https://joss.theoj.org/), the [Journal of Statistical Software](https://www.jstatsoft.org/index), the [R Journal](https://journal.r-project.org/), etc, etc]. The idea is roughly that if we write down what good software looks like, methodologists will start writing good software, and practitioners will ultimately have usable tools.
+suggesting that every academic be a unicorn programmer-researcher, as i think a lot of people are implicitly suggesting. if we give up on that idea, what is left as a way to make progress?
 
-I am a little skeptical of this idea: the standards that people are writing are very high standards and there are a lot of circumstances when it's perfectly reasonable for methods producers to write bad code. My hope is that by highlighting different needs of methods producers and consumers, we can make software contributions more legible and perhaps have more realistic expectations. My basic thesis here is that it takes too much work for methods producers to write usable code. Instead of asking them to write useful code, especially in absence of meaningful incentives, I propose that a third group of "methods translators" take on the primary responsibility for turning research code in useful code. This dramatically lowers the labor expectations for methods producers: instead of producing polished and final software products, they only need to produce code that can form the basis of a future software product.
 
-### A normative typology of methodological software contributions
+- Software should have a clear, narrow goal
+- Software should execute on that clear, narrow goal
+- There are many valuable goals for software outside of industrial use
+- Many of these alternative goals are pragmatic and attainable for academics and researchers
+- Asking academics to write production-ready software is silly both from a pragmatic perspective, and because many academics do not actually need their software to be production ready
+
+
+
+### A normative typology of statistical software
 
 1. **Pseudo-code**. Pseudo-code describes an algorithm in formal and unambiguous language, but not in a computer code. Pseudo-code is primarily useful to methods producers who want to study theoretical properties of an algorithm. The pseudo-code itself is not software, and may omit key practical details needed to implement an algorithm. Pseudo-code represents an intellectual rather than a practical contribution.
 
+failure modes: high level details with the implementation details
+
+examples: 
+
 2. **Reference implementation**. A reference implementation is a basic translation of pseudo-code into runnable computer code. Reference implementations should run on toy problems and produce results that can be used to test more fully featured and computationally efficient implementations. The primary goal of a reference implementation, however, is to be exceptionally readable. The goal of a reference implementation is not to be useful software in and of itself; the goal is to enable someone else to base useful software off of the reference implementation. Bare bones reference implementations devoid of object orientation (to the extent possible) are best. The notation in a reference implementation should also closely match the notation in the paper or document that proposes the algorithm. Reference implementations are minor but important software implementations. Including a reference implementation should be a minimum standard for methods work. 
+
+examples: MoMA matlab implementation
 
 3. **Proof-of-concept**. Proof-of-concept implements are canonical research code. These implementations are designed to run on research problems and include features that researchers need to get their research done. These additional features typically obscure the details of the implementation and thus make proof-of-concept contributions less useful than reference implementations as the basis for further development. It is not important that proof-of-concept implementations be fully featured or well-designed or computationally efficient. They should typically be released publicly once and should be un-maintained. This code should primarily be useful for *other researchers* who also want to use the code *for research*. Proof-of-concept implementations can take substantial amounts of work, and we should recognize this contribution. We should also recognize that this labor is unlikely to benefit anyone beyond the original authors of the scripts. Sharing proof-of-concept implementations is important for reproducibility purposes, but a terse reference implementation is likely to be a more meaningful contribution to the community at large.
 
+
+Methods producers can generate documentation that allows translators to pick up the slack
+not just generating a undocumented codebase and saying "Have fun!"
+
+right! and to me that half way point is still having standards, but the product and standards requiring sane amounts of labor
+
 4. **Medium data**. The goal of a middling or medium data contribution is to help practitioners solve practical but technically unchallenging problems; to do things like fit new models on less than a gigabyte of data, for example. This type of software is designed for use by methods consumers rather than methods producers. The primary difference between a proof-of-concept implementation and a middling implementation is adherence to software engineering best practices and some attention to the user experience. The software should be usable, well-documented, tested and released in an easily installable form. The authors should provide at least some basic and ongoing maintenance for the code. They should also make a genuine effort to disseminate the software by advertising it and providing basic tutorials on its use. The internal structure of the code does not have to be perfect, but it needs to be understandable enough to have moderate faith in its correctness. It's important to note that the move from a proof-of-concept implementation to a middling implementation provides no personal benefit to the researcher, the benefit here is to the community of methods consumers.
 
+"Correctness-trustable and usable"
+
+failure mode: can't trust correctness. in my experience this happens for two reasons: software quality (`irlba`), and author knowledge (`easystats`).
+
+i would feel better about if they were more consistently functional. half of time someone releases a methods package and i take a close look i lose confidence in any empirical results in the paper on the basis of the code
+
 5. **Production ready**. The final level of methods software is software that is ready for use in production, by which I mean that is reliable, feature complete and scales to technically challenging settings. These implementations should follow software engineering best practices and have responsive maintenance teams, as well as a semi-frequent release cycle and extensive documentation. The primary differences between a middling implementation and a production implementation are the internal design of the software, increased UX polish, and thorough testing. Production implementations should handle errors and edge cases gracefully and produce results that are reliably correct.
+
+
+
+"non-communal" -- interesting examples -- `mgcv`, `irlba`, `RSpectra`
+
+My hope is that by highlighting different needs of methods producers and consumers, we can make software contributions more legible and perhaps have more realistic expectations. My basic thesis here is that it takes too much work for methods producers to write usable code. Instead of asking them to write useful code, especially in absence of meaningful incentives, I propose that a third group of "methods translators" take on the primary responsibility for turning research code in useful code. This dramatically lowers the labor expectations for methods producers: instead of producing polished and final software products, they only need to produce code that can form the basis of a future software product.
+
+
+good defaults
 
 I think a lot of current software frustration stems from a desire (from methods consumers) for medium data or production implementations, while there is rarely any need for methods producers to go beyond a proof-of-concept implementation. Especially in methods land, but also more generally, the value of software is purpose specific. Methods producers and consumers have different needs and skill sets, and I think it makes a lot of sense to highlight an intermediary developer role to bridge the gap. To this effectively
 
 i'm increasing excited about the idea of a "research-lifecycle" badge, potentially with levels such as: scratch, publication-mvp, reference-implementation, usable-for-everyday-users, usable-in-industry
+
+yeah there's definitely a myth that if we all release our code, that no matter what that code, somehow methods disemmination will be solve and the hellscape of trying to use any non-standard estimator will somehow disappear (for applied data analysis, or in an industrial pipeline)
+
+what really makes me irritated these days: papers without reference implementations. what used to make me irritated: papers without industrial implemetations
+
+
+### Translators, methods dissemination
+
+OSS methods availability is a gift
+
+"we wrote a package"
+
+i don't run a lot of academic code, but i do read a lot of it
+
+methods dissemination is a hard problem and we should not pretend we're solving it with current measures, nor should we pretend that pouring more uncompensated labor into the current system will help, as much as academia loves to believe that this is the case. instead we might take some cues from industry, where dissemination is a role in and of itself (developer advocates, ")
+
+I think there needs to be some sort of communal understanding of all the steps (many currently unacknowledged) needed to get methods into applied work, and additionally this work needs to become a form of academically valued labor
+i.e. until you assign responsibility for each of those steps to someone i don't think it's fair to ask why people aren't using the most up to date methods. the answer is simply that academia doesn't incentivize work along many of the steps of the theory -> applied pipeline
+
+"if you build it, they won't come"
+who are you building things for?
+
+To your point about how not all code needs to be this immaculate output, there is little incentive for methodologists to go above and beyond a certain threshold of effort for disseminating code.
+
+two distinct problems:
+- having code that solves problems
+- methods dissemination
+
+on translators:
+
+I think a great example of the pipeline you’ve described would be the following from IRT.
+
+Methods Producers: Maydeu-Olivares and Joe (2006) derive a family of statistics for testing model-data fit in high dimensional contingency tables.
+Methods Translator: Chalmers (2012) provides a computational implementation of that statistics in {mirt}
+Methods Consumer: Lots of people have use M2 statistics from {mirt} in their published work, myself included (e.g. Hyatt et al., 2022)
+
+What standards proliferation is happening? I think some citations of references here would be valuable (but def leave the xkcd comic there tho)
+
+### Actual data analysis (as opposed to methods work)
+
+I'm less sympathetic to do data analysis code being a mess
+
+- IMO it really needs to be readable
+- IMO it really needs to be runnable
+- Use a build system
+- The outputs of the build system should be exactly what's in the paper
+
+To be frank: there a lot of academics whose empirically research I immediately discount after seeing either their data analytic code or their data management practices
+
+some mistakes don't matter, some matter a lot
+
+get the data right
+
+like 90% of the time i couldn't care less about the researchers own code since i'm just going to redo the analysis on my own to see if i trust their conclusions
+and also since most analysis code from applied peeps is either wrong or impossible to verify as correct since it's such a mess
+
+
+
+in some sense what i really want to do is push back on the implicit suggestion in his {decrenzocos}  work about *who* should make replication code more usable
+i.e. suggesting that every academic be a unicorn programmer-researcher, as i think a lot of people are implicitly suggesting. if we give up on that idea, what is left as a way to make progress?
+
 
 
 > A much bigger problem is the tension between the difficulty of statistics and the demand for it to be simple and readily available. 
@@ -58,71 +142,6 @@ Thank [Ben Listyg](https://github.com/benlistyg) for providing feedback on this 
 
 ### Ben's feedback
 
-
-i would feel better about if they were more consistently functional. half of time someone releases a methods package and i take a close look i lose confidence in any empirical results in the paper on the basis of the code
-
-code useful: for what? to whom?
-
-Define “useful”
-The terms “useful” and “useable” are mentioned with respect to code, but I think clearly articulating the scope of how code is used is important. I think it would be valuable to answer the question “What does it mean for code to be usable?” A methods translator creating code for a consumer has to have a target audience in mind be it another researcher generating academic output or someone in industry generating code for production use.
-
-Examples of each typology category. I think you’ve had some on-hand before when we’ve discussed this, but a go-to example of each category would be handy for conceptualizing what you mean.
-
-Random thoughts:
-
-I think a great example of the pipeline you’ve described would be the following from IRT.
-
-Methods Producers: Maydeu-Olivares and Joe (2006) derive a family of statistics for testing model-data fit in high dimensional contingency tables.
-Methods Translator: Chalmers (2012) provides a computational implementation of that statistics in {mirt}
-Methods Consumer: Lots of people have use M2 statistics from {mirt} in their published work, myself included (e.g. Hyatt et al., 2022)
-
-What standards proliferation is happening? I think some citations of references here would be valuable (but def leave the xkcd comic there tho)
-
-
-
-
-methods dissemination is a hard problem and we should not pretend we're solving it with current measures, nor should we pretend that pouring more uncompensated labor into the current system will help, as much as academia loves to believe that this is the case. instead we might take some cues from industry, were dissemination is a role in and of itself (developer advocates, ")
-
-data science defining itself in some senses as "statistical methods plus all of the stuff you actually need to do to apply those methods" 
-
 [Zen and the aRt of Workflow Maintenance](https://speakerdeck.com/jennybc/zen-and-the-art-of-workflow-maintenance)
 
 [Should all statistics students be programmers? No!](https://speakerdeck.com/hadley/should-all-statistics-students-be-programmers)
-
-
-I think there needs to be some sort of communal understanding of all the steps (many currently unacknowledged) needed to get methods into applied work, and additionally this work needs to become a form of academically valued labor
-i.e. until you assign responsibility for each of those steps to someone i don't think it's fair to ask why people aren't using the most up to date methods. the answer is simply that academia doesn't incentivize work along many of the steps of the theory -> applied pipeline
-
-in some sense this post is an apology for the quality of the research code that i've produced recently
-
-Random thoughts:
-
-To your point about how not all code needs to be this immaculate output, there is little incentive for methodologists to go above and beyond a certain threshold of effort for disseminating code. (Post read follow up: you make this point and I think it’s an important point to make)
-
-For non-computational fields, there is little training for how to develop “good” code. As much as I would love for psychologists to know more software engineering, this isn’t something prioritized in our training.
-
-in some sense what i really want to do is push back on the implicit suggestion in his {decrenzocos}  work about *who* should make replication code more usable
-i.e. suggesting that every academic be a unicorn programmer-researcher, as i think a lot of people are implicitly suggesting. if we give up on that idea, what is left as a way to make progress?
-
-Agreed, but there's a half-way point to be met I think
-Methods producers can generate documentation that allows translators to pick up the slack
-not just generating a undocumented codebase and saying "Have fun!"
-
-right! and to me that half way point is still having standards, but the product and standards requiring sane amounts of labor
-
-Absolutely agreed
-I think too, to your point against Mike, we don't have training for good software development
-especially in social science fields
-
-replication code is also slightly different because methods and analysis code are different universes
-
-like, on one hand, for an analysis, the ideal imo is a targets/make pipeline that clearly produces output matching the papoer
-and then second is just like nice data
-like 90% of the time i couldn't care less about the researchers own code since i'm just going to redo the analysis on my own to see if i trust their conclusions
-and also since most analysis code from applied peeps is either wrong or impossible to verify as correct since it's such a mess
-
-yeah there's definitely a myth that if we all release our code, that no matter what that code, somehow methods disemmination will be solve and the hellscape of trying to use any non-standard estimator will somehow disappear (for applied data analysis, or in an industrial pipeline)
-
-
-what really makes me irritated these days: papers without reference implementations. what used to make me irritated: papers without industrial implemetations
-

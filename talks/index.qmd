@@ -73,6 +73,10 @@ Alex Hayes and [Karl Rohe](https://pages.stat.wisc.edu/~karlrohe/index.html)
 
 In recent applied work on the Twitter media ecosystem, we have found that Twitter metadata (such as follows, likes, quotes, retweets, mentions, etc) is often more informative than the actual content of tweets themselves. The metadata, in some sense, is the right data to use for many inference tasks. In particular, we find that embedding the Twitter following graph is highly informative. However, collecting the following graph is rather challenging due to API rate limits, and storing graphs can also be challenging. We present some computational infrastructure to make access and storage of this high signal data more straightforward, and suggest that research progress would be well served by an increased focus on instrumentation. [slides](https://github.com/alexpghayes/JSM2021)
 
+**A new way to think about citations**  
+2020-11-17, Rohe Lab Group Meeting  
+[slides](https://github.com/alexpghayes/rohe-lab-citation-impute-slides)
+
 **Solving the model representation problem with broom**  
 2019-01-25, `rstudio::conf(2019)`  
 
@@ -90,33 +94,3 @@ Broom is a package that converts statistical objects into tibbles. This consiste
 **Solving the model representation problem with broom**  
 2018-09-19, Madison R User Group  
 [slides](https://github.com/alexpghayes/madison-r-user-group-broom-talk)
-
-## slides from various informal presentations
-
-**Identifiability of homophily and contagion in social networks**  
-2022-02-23, Madison Networks Reading Group  
-[slides](https://github.com/alexpghayes/2022-02-23-networks-reading-contagion)
-
-**Triangles & networks**  
-2021-02-17, STAT 992 Seminar on Tensors  
-[slides](https://github.com/alexpghayes/stat992-tensor-seminar-triangles-slides)
-
-**A new way to think about citations**  
-2020-11-17, Rohe Lab Group Meeting  
-[slides](https://github.com/alexpghayes/rohe-lab-citation-impute-slides)
-
-**The linear probability model**  
-2019-11-19, STAT 992 Seminar Course presentation  
-[slides](https://github.com/alexpghayes/linear-probability-model)
-
-**rstudio internship progress update**  
-2018-07-23, RStudio tidyverse team  
-[slides](https://github.com/alexpghayes/rstudio-internship-broom-progress-update)
-
-**Locally Interpretable Model-Agnostic Explanations**  
-2018-03-29, Rice DataSci club  
-[slides](https://github.com/alexpghayes/rice-data-sci-lime-talk)
-
-**Your First R Package**  
-2018-02-22, Rice DataSci club  
-[slides](https://github.com/alexpghayes/rice-data-sci-first-r-package-workshop)

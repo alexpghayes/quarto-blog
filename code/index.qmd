@@ -32,5 +32,3 @@ I review for the Journal of Open Source Software and the R Journal.
 I have been involved in a number of open source projects in the `tidyverse` and `tidymodels` orbits. I previously maintained the [`broom`](https://broom.tidymodels.org/) package, and am responsible for the [`0.5.0` release](https://www.tidyverse.org/blog/2018/07/broom-0-5-0/) and a portion of the [`0.7.0` release](https://www.tidyverse.org/blog/2020/07/broom-0-7-0/). For these contributions I was generously given authorship on the tidyverse paper. I intermittently participate in the Stan and ROpenSci communities.
 
 I also wrote the [`distributions3`](https://github.com/alexpghayes/distributions3) package, which provides an S3 interface to distribution functions, with an emphasis on good documentation and beginner friendly design. The [vignettes](https://alexpghayes.github.io/distributions3/dev/articles/) in particular are designed to walk students intro stat courses though a litany of classic hypothesis tests. I do not actively maintain `distributions3` but there is small community of invested contributors.
-
-Last updated 2023-10-20.

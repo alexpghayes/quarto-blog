@@ -5,6 +5,24 @@ date-modified: "2024-04-06"
 
 **n.b.** This information on this page is slightly out of date. 
 
+<!-- research interests -->
+<!-- industry research -->
+<!-- academic research -->
+<!-- hobbyist interests -->
+<!-- applications -- cybersecurity, trust and safety on social networks, social science experiments, fraud detection, high dimensional times series, spatial causal inference, bibliometrics, matrix completion, times series of networks, causal inference on networks, regularizing network embeddings -->
+
+<!-- Okay, here are the three chapters, attached independently. Some brief comments on them and my research on the whole below. -->
+
+<!-- Chapter 1: an applied-leaning paper on factor analysis using varimax from early in grad school. We frame factor estimation for citation networks as a missing data problem and do some computational shenanigans to make matrix completion fast for upper triangular matrices. Currently under review at JCGS. -->
+
+<!-- Chapter 2: my network mediation project with Keith, which you may have seen on arvix. We just got reviews back from JMLR and are hoping to revise and resubmit in the near future -- this is an excellent time for us to consider any feedback that you have, should you be so inclined. We haven't started revisions  (although some of the figures aren't full explained at the moment), but the next version of this paper will focus additional attention on causal and interpretation concerns when intervening on latent variables, in our case, the latent positions of an RDPG. -->
+
+<!-- Chapter 3: what I'm currently working on and plan to present in my defense. The mediation project had two big limitations, namely that we explicitly disallowed interference and contagion in our model. We figured out how to fix this, and along the way came to the realization that the very popular (in social sciences) linear-in-means model has a subtle (maybe obvious to some folks?) asymptotic identification problem. -->
+
+<!-- After getting these all out the door, Keith and I have a followup to Chapters 2/3 that focuses on actually estimating peer effects in random dot product graphs, and we figured out a trick that lets us estimate peer effects even when the network is observed with noise or missing data. The content for that manuscript is largely done (knock on wood) and I hope to write it up this summer, modulo job timeline and all that. Currently I have a lot of momentum using RDPG-style tools for causal inference on networks. I'm particularly proud of Chapters 2 and 3 and the followup work because they feel like research ideas that I came up with and executed with a high amount of independence. -->
+
+<!-- On the whole, I would say these projects (and my interests!) lie at a methods/applied intersection. Theory is less my jam. I very much enjoy thinking about how methods can be used to analyze data, analyzing data including doing all the coding needed to make that happen, and developing a clear understanding of data or methods through writing. -->
+
 I primarily study networks using tools from multivariate analysis. 
 
 My work with [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/) has focused on fast approaches to spectral estimation via sparse linear algebra. Our primary project together has been developing a method for network co-factor analysis for settings with missing edge data, which we applied to a large network of citations between statistics papers. We have also spent some time working to understand effective regularization strategies for spectral estimators, as well as developing diagnostic tools for PCA and varimax rotation. As part of an outgrowth of Karl's [murmuration project](https://murmuration.wisc.edu/) I developed extensive infrastructure to sample and analyze the Twitter following graph (see [code](../code)), and Twitter data remains near and dear to my heart.
@@ -22,9 +40,6 @@ I keep [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIA
 ## publications
 
 1. *Welcome to the Tidyverse.* Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, **Alex Hayes**, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. [Journal of Open Source Software](https://joss.theoj.org/papers/10.21105/joss.01686), 2019. [pdf](welcome-to-the-tidyverse.pdf)
-
-Last updated on 2023-08-05.
-
 
 
 <!-- **Move some of these details to a research page** -->
