@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Hayes">
-<meta name="dcterms.date" content="2024-04-06">
+<meta name="dcterms.date" content="2024-06-07">
 
 <title>alex hayes – fairness in repeated lotteries</title>
 <style>
@@ -165,11 +165,11 @@ window.Quarto = {
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="alex hayes - fairness in repeated lotteries">
 <meta property="og:description" content="how to run repeated lotteries in a fair way">
-<meta property="og:image" content="https://www.alexpghayes.com/post/2024-04-06_repeated-lotteries/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta property="og:image" content="https://www.alexpghayes.com/post/2024-06-09_repeated-lotteries/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
 <meta property="og:site_name" content="alex hayes">
 <meta name="twitter:title" content="alex hayes - fairness in repeated lotteries">
 <meta name="twitter:description" content="how to run repeated lotteries in a fair way">
-<meta name="twitter:image" content="https://www.alexpghayes.com/post/2024-04-06_repeated-lotteries/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta name="twitter:image" content="https://www.alexpghayes.com/post/2024-06-09_repeated-lotteries/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
 <meta name="twitter:creator" content="@alexpghayes">
 <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -268,7 +268,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 6, 2024</p>
+        <p class="date">June 7, 2024</p>
       </div>
     </div>
     
@@ -288,11 +288,11 @@ window.Quarto = {
   <li><a href="#components-of-a-system-to-run-fair-lotteries" id="toc-components-of-a-system-to-run-fair-lotteries" class="nav-link" data-scroll-target="#components-of-a-system-to-run-fair-lotteries">Components of a system to run fair lotteries</a></li>
   <li><a href="#a-proof-of-concept-system-to-run-fair-lotteries" id="toc-a-proof-of-concept-system-to-run-fair-lotteries" class="nav-link" data-scroll-target="#a-proof-of-concept-system-to-run-fair-lotteries">A proof-of-concept system to run fair lotteries</a></li>
   <li><a href="#example-uniform-scores-and-fixed-entrant-pool" id="toc-example-uniform-scores-and-fixed-entrant-pool" class="nav-link" data-scroll-target="#example-uniform-scores-and-fixed-entrant-pool">Example: uniform scores and fixed entrant pool</a></li>
-  <li><a href="#example-non-uniform-scores-varying-entrants-and-varying-win-slots" id="toc-example-non-uniform-scores-varying-entrants-and-varying-win-slots" class="nav-link" data-scroll-target="#example-non-uniform-scores-varying-entrants-and-varying-win-slots">Example: non-uniform scores, varying entrants and varying win slots</a></li>
+  <li><a href="#example-non-uniform-scores-varying-entrants-and-varying-lottery-size" id="toc-example-non-uniform-scores-varying-entrants-and-varying-lottery-size" class="nav-link" data-scroll-target="#example-non-uniform-scores-varying-entrants-and-varying-lottery-size">Example: non-uniform scores, varying entrants and varying lottery size</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  <li><a href="#appendix-making-sense-of-the-optimization-problem" id="toc-appendix-making-sense-of-the-optimization-problem" class="nav-link" data-scroll-target="#appendix-making-sense-of-the-optimization-problem">Appendix: making sense of the optimization problem</a></li>
+  
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.dev/alexpghayes/quarto-blog/blob/main/post/2024-04-06_repeated-lotteries/index.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.dev/alexpghayes/quarto-blog/blob/main/post/2024-06-09_repeated-lotteries/index.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -677,10 +677,12 @@ Warning
 <p>One nice feature about this system is that once you know all the lottery scores, you can transparently tell each entrant their probability of winning the lottery, before actually running the lottery.</p>
 <p>In this case, the lottery is in essence operating as a randomized turn-based system, where you have to wait for everyone to win before moving on to the next round. So why might we want to use this lottery system if it essentially boils down to taking turns with some randomness?</p>
 </section>
-<section id="example-non-uniform-scores-varying-entrants-and-varying-win-slots" class="level2">
-<h2 class="anchored" data-anchor-id="example-non-uniform-scores-varying-entrants-and-varying-win-slots">Example: non-uniform scores, varying entrants and varying win slots</h2>
+<section id="example-non-uniform-scores-varying-entrants-and-varying-lottery-size" class="level2">
+<h2 class="anchored" data-anchor-id="example-non-uniform-scores-varying-entrants-and-varying-lottery-size">Example: non-uniform scores, varying entrants and varying lottery size</h2>
 <p>Things get more complicated when the entrants to each lottery change over time, when their scores vary, and when a different number of people can win each lottery. Below, we run three more lotteries in the same pool as before, adding five new lottery entrants and changing the number of winners per lottery.</p>
 <div id="cell-16" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> jnp.ones((<span class="dv">30</span>,))</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> jnp.array([<span class="dv">1</span> <span class="op">/</span> (i <span class="op">+</span> <span class="dv">1</span>)<span class="op">**</span><span class="fl">0.5</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">30</span>)])</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>demo_pool.run_lottery(scores, lottery_size<span class="op">=</span><span class="dv">11</span>)</span>
@@ -691,6 +693,7 @@ Warning
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(ylabel<span class="op">=</span><span class="st">"Entrant"</span>, title<span class="op">=</span><span class="st">"Marginal win probabilities"</span>)</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="ss">f"Lot. </span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(demo_pool.scores.shape[<span class="dv">1</span>])])</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -705,19 +708,27 @@ Warning
 <p>There are also some extensions to this idea that make it more useful in real-world scenarios, like a waitlist, or a buddy system that ensures that pairs (or groups) of people all either win together, or not at all. Buddy systems would be especially relevant in settings like over-subscribed sports leagues, where it’s most fun to play if you end up on a team with your friends.</p>
 <p>Regardless, I would love to see some events and organizations try this out. I think this kind of idea would be most ergonomically integrated into general event hosting systems or payment systems: for instance, <a href="https://www.eventbrite.com/">Eventbrite</a> or <a href="https://stripe.com/">Square</a> could attach purchases to repeated lottery pools. I’m especially curious about this kind of system as a replacement for items that sell out very quickly. For instance, slots in the Madison Ultimate Frisbee League are often filled within a day of going on sale, creating unpleasant and stressful races to purchase the tickets in time. I would rather have a week to unhurried enter a lottery for these slots, and then at the end of the week learn if I got one. I’m not sure how the economics of this would work out for businesses, but imagining paying a small amount to enter the lottery, which is applied toward the cost of your purchase if you win. I’m also curious if this kind of system could be used to limit scalping.</p>
 </section>
-<section id="appendix-making-sense-of-the-optimization-problem" class="level2">
-<h2 class="anchored" data-anchor-id="appendix-making-sense-of-the-optimization-problem">Appendix: making sense of the optimization problem</h2>
+
+
+
+<div id="quarto-appendix" class="default"><section id="appendix-making-sense-of-the-optimization-problem" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Appendix: making sense of the optimization problem</h2><div class="quarto-appendix-contents">
+
 <p>To understand how the lottery system works, I found the following visualizations particularly helpful. The core idea is that scores and lottery size determine the number of seats each entrant deserves win in a given lottery. The first step is to track how these allocation portions of winner seats evolve over time. For the lotteries above, they evolve as follows.</p>
 <div id="cell-18" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>deserved_seats <span class="op">=</span> (demo_pool.scores <span class="op">/</span> demo_pool.scores.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>) <span class="op">*</span> demo_pool.lottery_sizes).cumsum(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.heatmap(</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    deserved_seats,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    annot<span class="op">=</span><span class="va">True</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Deserved cumulative seats by end of each lottery"</span>, ylabel<span class="op">=</span><span class="st">"Entrant"</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="ss">f"Lot. </span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(demo_pool.scores.shape[<span class="dv">1</span>])])</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>deserved_seats <span class="op">=</span> (</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    demo_pool.scores <span class="op">/</span> demo_pool.scores.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>) <span class="op">*</span> demo_pool.lottery_sizes</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>).cumsum(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.heatmap(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    deserved_seats,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    annot<span class="op">=</span><span class="va">True</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Deserved cumulative seats by end of each lottery"</span>, ylabel<span class="op">=</span><span class="st">"Entrant"</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="ss">f"Lot. </span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(demo_pool.scores.shape[<span class="dv">1</span>])])</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -728,6 +739,8 @@ Warning
 </div>
 <p>The next key idea is to track how many times each person has won already, and compare that with the seats they deserved in the past and in the current lottery. These individual deviations from fair outcomes will guide our choice of lottery probabilities for the current lottery. In the following, negative numbers indicate entrants who has received fewer winning seats than they were allocated. Positive numbers indicated entrants who have received more winner seats than they were allocated. Hopefully it’s clear that we want to start by assigning current lottery win probabilities to the folks who have received the least fair outcomes so fair.</p>
 <div id="cell-20" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.heatmap(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    demo_pool.winners.cumsum(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">-</span> demo_pool.winners <span class="op">-</span> deserved_seats,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    annot<span class="op">=</span><span class="va">True</span>,</span>
@@ -736,6 +749,7 @@ Warning
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Unfairness when everyone has zero probability of winning"</span>, ylabel<span class="op">=</span><span class="st">"Entrant"</span>)</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="ss">f"Lot. </span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(demo_pool.scores.shape[<span class="dv">1</span>])])</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -746,6 +760,8 @@ Warning
 </div>
 <p>We calculate the win probabilities that would make things most fair are as follows. I recommend comparing the figure above with the figure below fairly carefully. This pair of figures is what convinced me that I had found the right objective function.</p>
 <div id="cell-22" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.heatmap(</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    demo_pool.win_probabilities,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    annot<span class="op">=</span><span class="va">True</span></span>
@@ -753,6 +769,7 @@ Warning
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Win probabilities to minimize expect unfairness"</span>, ylabel<span class="op">=</span><span class="st">"Entrant"</span>)</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="ss">f"Lot. </span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(demo_pool.scores.shape[<span class="dv">1</span>])])</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -763,6 +780,8 @@ Warning
 </div>
 <p>If you add the previous two figures together, that tells you what you expect the unfairness levels to be, on average, after running the current lottery.</p>
 <div id="cell-24" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.heatmap(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    demo_pool.winners.cumsum(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">-</span> demo_pool.winners <span class="op">-</span> deserved_seats <span class="op">+</span> demo_pool.win_probabilities,</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    annot<span class="op">=</span><span class="va">True</span>,</span>
@@ -771,6 +790,7 @@ Warning
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"A priori belief about minimum possible fairness in expectation"</span>, ylabel<span class="op">=</span><span class="st">"Entrant"</span>)</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="ss">f"Lot. </span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(demo_pool.scores.shape[<span class="dv">1</span>])])</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -779,8 +799,10 @@ Warning
 </div>
 </div>
 </div>
-<p>In practice, however, the lottery is randomness, and so the unfairness after each lottery is also random. Here’s what it looked like in our case.</p>
+<p>In practice, however, the lottery is random, and so the unfairness after each lottery is also random. Here’s what it looked like in our case.</p>
 <div id="cell-26" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.heatmap(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    demo_pool.winners.cumsum(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">-</span> deserved_seats,</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    annot<span class="op">=</span><span class="va">True</span>,</span>
@@ -789,6 +811,7 @@ Warning
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Actual cumulative unfairness after lottery"</span>, ylabel<span class="op">=</span><span class="st">"Entrant"</span>)</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="ss">f"Lot. </span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(demo_pool.scores.shape[<span class="dv">1</span>])])</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -799,6 +822,8 @@ Warning
 </div>
 <p>And just for giggles, we can also the number of times each entrant had won the lottery at each point in time.</p>
 <div id="cell-28" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.heatmap(</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    demo_pool.winners.cumsum(axis<span class="op">=</span><span class="dv">1</span>),</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    annot<span class="op">=</span><span class="va">True</span></span>
@@ -806,6 +831,7 @@ Warning
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Cumulative wins"</span>, ylabel<span class="op">=</span><span class="st">"Entrant"</span>)</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="ss">f"Lot. </span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(demo_pool.scores.shape[<span class="dv">1</span>])])</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -817,10 +843,7 @@ Warning
 
 
 
-</section>
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+</div></section><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-karimi2017" class="csl-entry" role="listitem">
 Karimi, Mohammad, Mario Lucic, Hamed Hassani, and Andreas Krause. 2017. <span>“Stochastic <span>Submodular Maximization</span>: <span>The Case</span> of <span>Coverage Functions</span>.”</span> In <em>31st <span>Conference</span> on <span>Neural Information Processing Systems</span></em>.
 </div>
@@ -1261,7 +1284,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.dev/alexpghayes/quarto-blog/blob/main/post/2024-04-06_repeated-lotteries/index.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.dev/alexpghayes/quarto-blog/blob/main/post/2024-06-09_repeated-lotteries/index.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">
