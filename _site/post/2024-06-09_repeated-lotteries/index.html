@@ -368,15 +368,15 @@ window.Quarto = {
 \underbrace{\frac{s_i^t}{\sum_{i \in U} s_i^t}}_\text{fair portion of seats} \cdot \underbrace{K_t}_\text{number of winners},
 \]</span> seats. After the <span class="math inline">\(t^{th}\)</span> lottery runs we know the winners of the lottery <span class="math inline">\(w_i^t \in \{0, 1\}\)</span> and we can calculate after-the-fact individual deviations from fairness as <span class="math display">\[
 u_i^t = \underbrace{\frac{s_i^t}{\sum_{i \in U} s_i^t}}_\text{fair portion of seats} \cdot \underbrace{K_t}_\text{available seats} - \underbrace{w_i^t}_\text{seat received}
-\]</span> The idea is that we look at how many the portion of a winner seat that entrant <span class="math inline">\(i\)</span> was entitled to, and we can compare it with <span class="math inline">\(w_i^t\)</span>, which tells us if they actually got the seat. To actually run a lottery, we suppose that we have seen results from the first <span class="math inline">\(T-1\)</span> lotteries, we have all entrant scores for the <span class="math inline">\(T^{th}\)</span> lottery, and we want to design marginal win probabilities <span class="math inline">\(\pi_i^T = \mathbb E(w_i^t = 1)\)</span> to minimize <span class="math display">\[
+\]</span> The idea is that we look at how many seats entrant <span class="math inline">\(i\)</span> was entitled to, and we can compare it with <span class="math inline">\(w_i^t\)</span>, which tells us if they actually got the seat. To actually run a lottery, we suppose that we have seen results from the first <span class="math inline">\(T-1\)</span> lotteries, we have all entrant scores for the <span class="math inline">\(T^{th}\)</span> lottery, and we want to design marginal win probabilities <span class="math inline">\(\pi_i^T = \mathbb E(w_i^t = 1)\)</span> to minimize <span class="math display">\[
 \underbrace{\sum_{i \in U}}_\text{entrants} \,
 \left[
     \underbrace{\frac{s_i^T}{\sum_{i \in U} s_i^T} \cdot K_T - \underbrace{\pi_i^T}_\text{win probability}}_\text{expected upcoming unfairness} +
     \underbrace{\sum_{t = 1}^{T-1} u_i^t}_\text{unfairness until $T-1$}
 \right]^2,
 \]</span> subject to the constraints that <span class="math inline">\(0 \le \pi_i^T \le 1\)</span> (marginal win probabilities are between zero and one) and <span class="math inline">\(\sum_{i \in U} \pi_i^T = K_T\)</span> (there are the correct number of winners).</p>
-<p>Squaring the individual deviations from fair allocation turns out to be important. Originally, I was trying to select <span class="math inline">\(\pi_i^T\)</span> to make sure that the worst case scenario was as least harmful as possible (i.e., <span class="math inline">\(\ell_\infty\)</span> norm rather than an <span class="math inline">\(\ell_2\)</span> norm). Roughly speaking, the <span class="math inline">\(\ell_\infty\)</span> unfairness metric encourages <span class="math inline">\(\pi_i^T\)</span> to all be roughly proportional to scores <span class="math inline">\(s_i^t\)</span>, except for the entrant who is worst off, who gets a boost. And this leads to undesirable behavior, where the person who is worst off gets a boost, but so do several of the people who are moderately well off. This feels bad!</p>
-<p>Instead, we want to boost the person who is worst off first, until they are tied with the person who is second worst off, and then boost them together, and then so on and so forth. The <span class="math inline">\(\ell_2\)</span> fairness metric, combined with the restriction <span class="math inline">\(0 &lt; \pi_i^T\)</span>, does exactly this. The only time that someone who has received more than their fair share of winning seats will be allocated more win probability is when everyone worse off to them has caught up, or when everyone worse off than them has already been guaranteed a win (i.e., <span class="math inline">\(\pi_i^T = 1\)</span>).</p>
+<p>The form of the fairness objective matters a decent amount. For convenience, let <span class="math inline">\(\tilde s^T\)</span> denote the vector of normalized scores for lottery <span class="math inline">\(T\)</span>. Originally, I was trying to select <span class="math inline">\(\pi_i^T\)</span> to minimize <span class="math inline">\(\lVert \tilde s \cdot K_T - \pi^T + \sum_{t=1}^{T-1} u^t \rVert_\infty\)</span>, which minimizes unfairness to the entrant who is worst off. In practice, that unfairness metric encourages <span class="math inline">\(\pi_i^T\)</span> to all be roughly proportional to scores <span class="math inline">\(s_i^T\)</span>, except for the entrant who is worst off, who gets a boost. And this leads to undesirable behavior, where the person who is worst off gets a boost, but so do several of the people who are moderately well off. This feels bad!</p>
+<p>Instead, we want to boost the person who is worst off first, until they are tied with the person who is second worst off, and then boost them together, and then so on and so forth. The proposed fairness metric, which can be expressed as <span class="math inline">\(\lVert \tilde s \cdot K_T - \pi^T + \sum_{t=1}^{T-1} u^t \rVert_2\)</span>, combined with the restriction <span class="math inline">\(0 &lt; \pi_i^T\)</span>, does exactly this. The only time that someone who has received more than their fair share of winning seats will be allocated more win probability is when everyone worse off to them has caught up, or when everyone worse off than them has already been guaranteed a win (i.e., <span class="math inline">\(\pi_i^T = 1\)</span>). This seems like the desired behavior to me.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -703,6 +703,20 @@ Warning
 </div>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+First time lottery entrants
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Whether or not first time lottery entrants are likely to win the lottery depends on the current state of the lottery when they enter. If there are many entrants in the lottery pool who have received fewer slots than they deserve, those entrants will be prioritized above the new entrants. As the state of the lottery becomes more fair and size of the lottery (i.e., number of possible winners) increases, it becomes more and more likely that the new entrants will win a seat on their first entry.</p>
+<p>As a lottery organizer, you could tune this behavior by boosting the scores of new entrants to the pool, making them more likely to win on a first entry, for instance.</p>
+</div>
+</div>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
@@ -715,7 +729,7 @@ Warning
 <div id="quarto-appendix" class="default"><section id="appendix-making-sense-of-the-optimization-problem" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Appendix: making sense of the optimization problem</h2><div class="quarto-appendix-contents">
 
 <p>To understand how the lottery system works, I found the following visualizations particularly helpful. The core idea is that scores and lottery size determine the number of seats each entrant deserves win in a given lottery. The first step is to track how these allocation portions of winner seats evolve over time. For the lotteries above, they evolve as follows.</p>
-<div id="cell-18" class="cell" data-execution_count="9">
+<div id="cell-18" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>deserved_seats <span class="op">=</span> (</span>
@@ -730,11 +744,22 @@ Warning
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="ss">f"Lot. </span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(demo_pool.scores.shape[<span class="dv">1</span>])])</span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-10-output-1.png" width="640" height="480" class="figure-img"></p>
-</figure>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[2], line 4</span>
+<span class="ansi-green-fg ansi-bold">      1</span> <span style="font-style:italic;color:rgb(95,135,135)">#| code-fold: true</span>
+<span class="ansi-green-fg ansi-bold">      3</span> deserved_seats <span style="color:rgb(98,98,98)">=</span> (
+<span class="ansi-green-fg">----&gt; 4</span>     <span class="ansi-yellow-bg">demo_pool</span><span style="color:rgb(98,98,98)">.</span>scores <span style="color:rgb(98,98,98)">/</span> demo_pool<span style="color:rgb(98,98,98)">.</span>scores<span style="color:rgb(98,98,98)">.</span>sum(axis<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">0</span>) <span style="color:rgb(98,98,98)">*</span> demo_pool<span style="color:rgb(98,98,98)">.</span>lottery_sizes
+<span class="ansi-green-fg ansi-bold">      5</span> )<span style="color:rgb(98,98,98)">.</span>cumsum(axis<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">1</span>)
+<span class="ansi-green-fg ansi-bold">      7</span> ax <span style="color:rgb(98,98,98)">=</span> sns<span style="color:rgb(98,98,98)">.</span>heatmap(
+<span class="ansi-green-fg ansi-bold">      8</span>     deserved_seats,
+<span class="ansi-green-fg ansi-bold">      9</span>     annot<span style="color:rgb(98,98,98)">=</span><span style="font-weight:bold;color:rgb(0,135,0)">True</span>
+<span class="ansi-green-fg ansi-bold">     10</span> )
+<span class="ansi-green-fg ansi-bold">     11</span> ax<span style="color:rgb(98,98,98)">.</span>set(title<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Deserved cumulative seats by end of each lottery</span><span style="color:rgb(175,0,0)">"</span>, ylabel<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Entrant</span><span style="color:rgb(175,0,0)">"</span>)
+
+<span class="ansi-red-fg">NameError</span>: name 'demo_pool' is not defined</pre>
 </div>
 </div>
 </div>
