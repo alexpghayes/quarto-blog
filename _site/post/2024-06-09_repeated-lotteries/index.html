@@ -713,7 +713,7 @@ First time lottery entrants
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Whether or not first time lottery entrants are likely to win the lottery depends on the current state of the lottery when they enter. If there are many entrants in the lottery pool who have received fewer slots than they deserve, those entrants will be prioritized above the new entrants. As the state of the lottery becomes more fair and size of the lottery (i.e., number of possible winners) increases, it becomes more and more likely that the new entrants will win a seat on their first entry.</p>
+<p>Whether or not first time lottery entrants are likely to win the lottery depends on the current state of the lottery when they enter. If there are many entrants in the lottery pool who have received fewer slots than they deserve, those entrants will be prioritized above the new entrants with equal scores. As the state of the lottery becomes more fair, the size of the lottery (i.e., number of possible winners) increases, and the scores of new entrants increase, it becomes more and more likely that the new entrants will win a seat on their first entry.</p>
 <p>As a lottery organizer, you could tune this behavior by boosting the scores of new entrants to the pool, making them more likely to win on a first entry, for instance.</p>
 </div>
 </div>
@@ -729,7 +729,7 @@ First time lottery entrants
 <div id="quarto-appendix" class="default"><section id="appendix-making-sense-of-the-optimization-problem" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Appendix: making sense of the optimization problem</h2><div class="quarto-appendix-contents">
 
 <p>To understand how the lottery system works, I found the following visualizations particularly helpful. The core idea is that scores and lottery size determine the number of seats each entrant deserves win in a given lottery. The first step is to track how these allocation portions of winner seats evolve over time. For the lotteries above, they evolve as follows.</p>
-<div id="cell-18" class="cell" data-execution_count="2">
+<div id="cell-18" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>deserved_seats <span class="op">=</span> (</span>
@@ -744,22 +744,11 @@ First time lottery entrants
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="ss">f"Lot. </span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(demo_pool.scores.shape[<span class="dv">1</span>])])</span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[2], line 4</span>
-<span class="ansi-green-fg ansi-bold">      1</span> <span style="font-style:italic;color:rgb(95,135,135)">#| code-fold: true</span>
-<span class="ansi-green-fg ansi-bold">      3</span> deserved_seats <span style="color:rgb(98,98,98)">=</span> (
-<span class="ansi-green-fg">----&gt; 4</span>     <span class="ansi-yellow-bg">demo_pool</span><span style="color:rgb(98,98,98)">.</span>scores <span style="color:rgb(98,98,98)">/</span> demo_pool<span style="color:rgb(98,98,98)">.</span>scores<span style="color:rgb(98,98,98)">.</span>sum(axis<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">0</span>) <span style="color:rgb(98,98,98)">*</span> demo_pool<span style="color:rgb(98,98,98)">.</span>lottery_sizes
-<span class="ansi-green-fg ansi-bold">      5</span> )<span style="color:rgb(98,98,98)">.</span>cumsum(axis<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">1</span>)
-<span class="ansi-green-fg ansi-bold">      7</span> ax <span style="color:rgb(98,98,98)">=</span> sns<span style="color:rgb(98,98,98)">.</span>heatmap(
-<span class="ansi-green-fg ansi-bold">      8</span>     deserved_seats,
-<span class="ansi-green-fg ansi-bold">      9</span>     annot<span style="color:rgb(98,98,98)">=</span><span style="font-weight:bold;color:rgb(0,135,0)">True</span>
-<span class="ansi-green-fg ansi-bold">     10</span> )
-<span class="ansi-green-fg ansi-bold">     11</span> ax<span style="color:rgb(98,98,98)">.</span>set(title<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Deserved cumulative seats by end of each lottery</span><span style="color:rgb(175,0,0)">"</span>, ylabel<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Entrant</span><span style="color:rgb(175,0,0)">"</span>)
-
-<span class="ansi-red-fg">NameError</span>: name 'demo_pool' is not defined</pre>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-1.png" width="640" height="480" class="figure-img"></p>
+</figure>
 </div>
 </div>
 </div>
