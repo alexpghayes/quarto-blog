@@ -83,8 +83,6 @@ dependencies:
   - ipykernel=6.29.3=pyhd33586a_0
   - ipython=8.22.2=pyh707e725_0
   - isoduration=20.11.0=pyhd8ed1ab_0
-  - jax=0.4.23=py312h06a4308_0
-  - jaxlib=0.4.23=py312h6a678d5_0
   - jedi=0.19.1=pyhd8ed1ab_0
   - jinja2=3.1.3=py312h06a4308_0
   - json5=0.9.24=pyhd8ed1ab_0
@@ -166,6 +164,7 @@ dependencies:
   - matplotlib-base=3.8.0=py312h526ad5a_0
   - matplotlib-inline=0.1.6=pyhd8ed1ab_0
   - mistune=3.0.2=pyhd8ed1ab_0
+  - mizani=0.9.2=py312h06a4308_0
   - mkl=2023.1.0=h213fc3f_46344
   - mkl-service=2.4.0=py312h5eee18b_1
   - mkl_fft=1.3.8=py312h5eee18b_0
@@ -197,6 +196,7 @@ dependencies:
   - pandocfilters=1.5.0=pyhd8ed1ab_0
   - pango=1.52.1=ha41ecd1_0
   - parso=0.8.3=pyhd8ed1ab_0
+  - patsy=0.5.3=py312h06a4308_0
   - pcre2=10.42=hebb0a14_0
   - pexpect=4.9.0=pyhd8ed1ab_0
   - pickleshare=0.7.5=py_1003
@@ -205,6 +205,7 @@ dependencies:
   - pixman=0.43.2=h59595ed_0
   - pkgutil-resolve-name=1.3.10=pyhd8ed1ab_1
   - platformdirs=4.2.0=pyhd8ed1ab_0
+  - plotnine=0.12.1=py312h06a4308_0
   - ply=3.11=py312h06a4308_1
   - prometheus_client=0.20.0=pyhd8ed1ab_0
   - prompt-toolkit=3.0.42=pyha770c72_0
@@ -237,7 +238,8 @@ dependencies:
   - rpds-py=0.18.0=py312h4b3b743_0
   - rpy2=3.5.11=py312r43hc7c0aa3_3
   - scipy=1.12.0=py312hc5e2394_0
-  - seaborn=0.12.2=py312h06a4308_0
+  - seaborn=0.13.2=hd8ed1ab_0
+  - seaborn-base=0.13.2=pyhd8ed1ab_0
   - sed=4.8=h7b6447c_0
   - send2trash=1.8.2=pyh41d4057_0
   - setuptools=68.2.2=py312h06a4308_0
@@ -248,6 +250,7 @@ dependencies:
   - soupsieve=2.5=pyhd8ed1ab_1
   - sqlite=3.41.2=h5eee18b_0
   - stack_data=0.6.2=pyhd8ed1ab_0
+  - statsmodels=0.14.0=py312ha883a20_0
   - sysroot_linux-64=2.17=h57e8cba_10
   - tbb=2021.8.0=hdb19cb5_0
   - terminado=0.18.1=pyh0d859eb_0
@@ -295,5 +298,21 @@ dependencies:
   - zlib=1.2.13=hd590300_5
   - zstd=1.5.5=hc292b87_0
   - pip:
+      - ipdb==0.13.13
+      - jax==0.4.28
+      - jax-cuda12-pjrt==0.4.28
+      - jax-cuda12-plugin==0.4.28
+      - jaxlib==0.4.28
       - jaxopt==0.8.3
+      - nvidia-cublas-cu12==12.4.5.8
+      - nvidia-cuda-cupti-cu12==12.4.127
+      - nvidia-cuda-nvcc-cu12==12.4.131
+      - nvidia-cuda-nvrtc-cu12==12.4.127
+      - nvidia-cuda-runtime-cu12==12.4.127
+      - nvidia-cudnn-cu12==8.9.7.29
+      - nvidia-cufft-cu12==11.2.1.3
+      - nvidia-cusolver-cu12==11.6.1.9
+      - nvidia-cusparse-cu12==12.3.1.170
+      - nvidia-nccl-cu12==2.21.5
+      - nvidia-nvjitlink-cu12==12.4.127
 prefix: /home/alex/anaconda3/envs/lottery
