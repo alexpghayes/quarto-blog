@@ -773,8 +773,8 @@ First time lottery entrants
 </div>
 </div>
 </div>
-<p>We calculate the win probabilities that would make things most fair are as follows. I recommend comparing the figure above with the figure below fairly carefully. This pair of figures is what convinced me that I had found the right objective function.</p>
-<div id="cell-22" class="cell" data-execution_count="11">
+<p>We calculate that the win probabilities that would make things most fair are as follows. Note that the number of lottery winners is changing over time (the size of each lottery is shown in parentheses under the lottery index). I recommend comparing the figure above with the figure below, and seeing who is getting assigned win probability in each lottery. This is what convinced me that I had found the right objective function.</p>
+<div id="cell-22" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.heatmap(</span>
@@ -782,7 +782,7 @@ First time lottery entrants
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    annot<span class="op">=</span><span class="va">True</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Win probabilities to minimize expect unfairness"</span>, ylabel<span class="op">=</span><span class="st">"Entrant"</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="ss">f"Lot. </span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(demo_pool.scores.shape[<span class="dv">1</span>])])</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="ss">f"Lot. </span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">(</span><span class="sc">{</span>size<span class="sc">}</span><span class="ss">)"</span> <span class="cf">for</span> i, size <span class="kw">in</span> <span class="bu">enumerate</span>(demo_pool.lottery_sizes)])</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
@@ -835,7 +835,7 @@ First time lottery entrants
 </div>
 </div>
 </div>
-<p>And just for giggles, we can also the number of times each entrant had won the lottery at each point in time.</p>
+<p>We can also visualize the number of times each entrant has won the lottery at each point in time.</p>
 <div id="cell-28" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
