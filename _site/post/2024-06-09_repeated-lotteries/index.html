@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Hayes">
-<meta name="dcterms.date" content="2024-06-07">
+<meta name="dcterms.date" content="2024-06-09">
 
 <title>alex hayes – fairness in repeated lotteries</title>
 <style>
@@ -268,7 +268,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 7, 2024</p>
+        <p class="date">June 9, 2024</p>
       </div>
     </div>
     
@@ -363,7 +363,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="formalizing-fairness-in-repeated-lotteries">Formalizing fairness in repeated lotteries</h2>
 <p>A while back I started wondering about ways to run repeated lotteries in a fair way, and eventually I reached out to <a href="http://baileyflanigan.com/">Bailey Flanigan</a>, a computer scientist working on fair allocation problems in civic contexts. Less than a day after receiving my email, Bailey sent me several pages of detailed notes on the problem, and suggested a way to formalize fairness in repeated lotteries<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Using her formalization, I sketched out some demo code that runs repeated lotteries in a fair way.</p>
 <p>Suppose there is universe <span class="math inline">\(U\)</span> of possible entrants indexed by <span class="math inline">\(i = 1, 2, 3, ...\)</span>, and we run repeated lotteries indexed by <span class="math inline">\(t = 1, ..., T\)</span>. For each lottery <span class="math inline">\(t\)</span>, there are <span class="math inline">\(N_t\)</span> entrants and <span class="math inline">\(K_t\)</span> prizes, or possible winners. In each lottery, we assume each applicant has a score <span class="math inline">\(s_i^t\)</span>, which is typically just a binary indicator of whether or not they applied. But you can also run weighted lotteries by allowing <span class="math inline">\(s_i^t\)</span> to be arbitrary positive numbers, so that applicants with higher scores are more likely to selected.</p>
-<p>For instance, in the New York Marathon, we could score entrants according to their past marathon performance to ensure that a number of world-class athletes end up admitted to the event. If entrant <span class="math inline">\(i\)</span> has a score of <span class="math inline">\(s_i^t = 6\)</span> and entrant <span class="math inline">\(j\)</span> has a score of <span class="math inline">\(s_j^t = 2\)</span>, then entrant <span class="math inline">\(i\)</span> is <span class="math inline">\(s_i^t / s_j^t = 6 / 2 = 3\)</span> times more likely to win than entrant <span class="math inline">\(j\)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>For instance, in the New York Marathon, we could score entrants according to their past marathon performance to ensure that a number of world-class athletes end up admitted to the event. If entrant <span class="math inline">\(i\)</span> has a score of <span class="math inline">\(s_i^t = 6\)</span> and entrant <span class="math inline">\(j\)</span> has a score of <span class="math inline">\(s_j^t = 2\)</span>, then entrant <span class="math inline">\(i\)</span> is <span class="math inline">\(s_i^t / s_j^t = 6 / 2 = 3\)</span> times more likely to win than entrant <span class="math inline">\(j\)</span>.</p>
 <p>To encode fairness, we allocate each lottery entrant a certain portion of deserved overall winnings in each lottery. When everyone has the same score, everyone is allocated the same portion of the winnings. We then randomly select winners proportional to their allocated share of the winnings. That is, for the <span class="math inline">\(t^{th}\)</span> lottery, we think that entrant <span class="math inline">\(i\)</span> should be probabilistically allocated <span class="math display">\[
 \underbrace{\frac{s_i^t}{\sum_{i \in U} s_i^t}}_\text{fair portion of seats} \cdot \underbrace{K_t}_\text{number of winners},
 \]</span> seats. After the <span class="math inline">\(t^{th}\)</span> lottery runs we know the winners of the lottery <span class="math inline">\(w_i^t \in \{0, 1\}\)</span> and we can calculate after-the-fact individual deviations from fairness as <span class="math display">\[
@@ -376,24 +376,59 @@ u_i^t = \underbrace{\frac{s_i^t}{\sum_{i \in U} s_i^t}}_\text{fair portion of se
 \right]^2,
 \]</span> subject to the constraints that <span class="math inline">\(0 \le \pi_i^T \le 1\)</span> (marginal win probabilities are between zero and one) and <span class="math inline">\(\sum_{i \in U} \pi_i^T = K_T\)</span> (there are the correct number of winners).</p>
 <p>The form of the fairness objective matters a decent amount. For convenience, let <span class="math inline">\(\tilde s^T\)</span> denote the vector of normalized scores for lottery <span class="math inline">\(T\)</span>. Originally, I was trying to select <span class="math inline">\(\pi_i^T\)</span> to minimize <span class="math inline">\(\lVert \tilde s \cdot K_T - \pi^T + \sum_{t=1}^{T-1} u^t \rVert_\infty\)</span>, which minimizes unfairness to the entrant who is worst off. In practice, that unfairness metric encourages <span class="math inline">\(\pi_i^T\)</span> to all be roughly proportional to scores <span class="math inline">\(s_i^T\)</span>, except for the entrant who is worst off, who gets a boost. And this leads to undesirable behavior, where the person who is worst off gets a boost, but so do several of the people who are moderately well off. This feels bad!</p>
-<p>Instead, we want to boost the person who is worst off first, until they are tied with the person who is second worst off, and then boost them together, and then so on and so forth. The proposed fairness metric, which can be expressed as <span class="math inline">\(\lVert \tilde s \cdot K_T - \pi^T + \sum_{t=1}^{T-1} u^t \rVert_2\)</span>, combined with the restriction <span class="math inline">\(0 &lt; \pi_i^T\)</span>, does exactly this. The only time that someone who has received more than their fair share of winning seats will be allocated more win probability is when everyone worse off to them has caught up, or when everyone worse off than them has already been guaranteed a win (i.e., <span class="math inline">\(\pi_i^T = 1\)</span>). This seems like the desired behavior to me.</p>
+<p>Instead, we want to boost the person who is worst off first, until they are tied with the person who is second worst off, and then boost them together, and then so on and so forth. The proposed fairness metric, which can be expressed as <span class="math inline">\(\lVert \tilde s \cdot K_T - \pi^T + \sum_{t=1}^{T-1} u^t \rVert_2\)</span>, combined with the restriction <span class="math inline">\(0 &lt; \pi_i^T\)</span>, does exactly this<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. The only time that someone who has received more than their fair share of winning seats will be allocated more win probability is when everyone worse off to them has caught up, or when everyone worse off than them has already been guaranteed a win (i.e., <span class="math inline">\(\pi_i^T = 1\)</span>). This seems like the desired behavior to me.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+Small variations in scores will have minimal impact on lottery outcomes
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>In practice, you will likely want to enforce that <span class="math inline">\(\frac{s_i^T}{\sum_{i \in U} s_i^t} &lt; \frac{1}{K_t}\)</span>, because otherwise the scores imply that node <span class="math inline">\(i\)</span> should be allocated more than one winning seat. From a pragmatic perspective, all the code still runs fine, but this can have surprising impacts on cumulative unfairness over time, because entrant <span class="math inline">\(i\)</span> can win the lottery and the system will still say they haven’t earned all the winning seats they are entitled, which impacts future lotteries.</p>
+<p>In practice, you probably want scores to be on a multiplicative scale for them to impact lottery outcomes – i.e., if you want a certain entrant to be more likely to win, their score should be orders of magnitude higher than typical scores.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Large scores can lead to unexpected behavior
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You will likely also want to enforce that <span class="math inline">\(\frac{s_i^T}{\sum_{i \in U} s_i^t} &lt; \frac{1}{K_t}\)</span>, because otherwise the scores imply that node <span class="math inline">\(i\)</span> should be allocated more than one winning seat. From a pragmatic perspective, all the code still runs fine, but this can have surprising impacts on cumulative unfairness over time, because entrant <span class="math inline">\(i\)</span> can win the lottery and the system will still say they haven’t earned all the winning seats they are entitled, which impacts future lotteries.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Quotas
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>It is theoretically possible to require that lottery outcomes satisfy hard quotas on groups (for instance, when you want lottery winners to reflect an underlying population), but this becomes a much more technically challenging problem. The difficulty is that it is NP-hard to find any subset of candidates that even satisfy the quotas, meaning that simple sampling procedures cannot be guaranteed to satisfy the quotas <span class="citation" data-cites="flanigan2021a">(<a href="#ref-flanigan2021a" role="doc-biblioref">Flanigan et al. 2021</a>)</span>. Bailey notes that the approach in <span class="citation" data-cites="flanigan2021a">Flanigan et al. (<a href="#ref-flanigan2021a" role="doc-biblioref">2021</a>)</span> can likely be extended to the repeated lottery setting, but this is far above my pay grade.</p>
+</div>
 </div>
 </div>
 </section>
 <section id="components-of-a-system-to-run-fair-lotteries" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="components-of-a-system-to-run-fair-lotteries">Components of a system to run fair lotteries</h2>
-<p>To find <span class="math inline">\(\pi_i^T\)</span>, we can use projected gradient descent. I used this project as an excuse to teach myself enough <a href="https://jax.readthedocs.io/en/latest/">Jax</a> to write out the fairness objective<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, and will then hand the optimization problem off to Jax.</p>
+<p>To find <span class="math inline">\(\pi_i^T\)</span>, we can use projected gradient descent. I used this project as an excuse to teach myself enough <a href="https://jax.readthedocs.io/en/latest/">Jax</a> to write out the fairness objective, and will then hand the optimization problem off to Jax.</p>
 <div id="cell-4" class="cell column-body-outset" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax.numpy <span class="im">as</span> jnp</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -859,6 +894,9 @@ First time lottery entrants
 
 
 </div></section><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-flanigan2021a" class="csl-entry" role="listitem">
+Flanigan, Bailey, Paul Gölz, Anupam Gupta, Brett Hennig, and Ariel D. Procaccia. 2021. <span>“Supplementary Information: <span>Fair</span> Algorithms for Selecting Citizens’ Assemblies.”</span> <em>Nature</em> 596 (7873): 548–52. <a href="https://doi.org/10.1038/s41586-021-03788-6">https://doi.org/10.1038/s41586-021-03788-6</a>.
+</div>
 <div id="ref-karimi2017" class="csl-entry" role="listitem">
 Karimi, Mohammad, Mario Lucic, Hamed Hassani, and Andreas Krause. 2017. <span>“Stochastic <span>Submodular Maximization</span>: <span>The Case</span> of <span>Coverage Functions</span>.”</span> In <em>31st <span>Conference</span> on <span>Neural Information Processing Systems</span></em>.
 </div>
@@ -867,8 +905,7 @@ Karimi, Mohammad, Mario Lucic, Hamed Hassani, and Andreas Krause. 2017. <span>�
 <ol>
 <li id="fn1"><p>Unfair outcomes mostly happen when the number of entrants is a small multiple of the number of possible winners. If almost no one wins the lottery (or almost everyone does) repeated winners (or losers) are pretty rare<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>I strongly encourage you to read Bailey’s papers if this kind of thing is up your alley. I also want to say that it was incredibly fun to brainstorm back and forth with Bailey, and if you get the chance to work with her at all, I highly recommend it.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>In practice, you probably want these scores to be a multiplicative scale for them to have any impact – i.e., if you want a certain entrant to be more likely to win, their score should be orders of magnitude higher than typical scores<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>Per Bailey, you can extend this objective to include demographic quotas (for instance, when you want lottery winners to be reflective of an underlying population), but then you have to solve a somewhat involved discrete optimization problem and things quickly get above my pay grade.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Per Bailey, this is very similar to the <code>Leximin</code> objective of <span class="citation" data-cites="flanigan2021a">Flanigan et al. (<a href="#ref-flanigan2021a" role="doc-biblioref">2021</a>)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
