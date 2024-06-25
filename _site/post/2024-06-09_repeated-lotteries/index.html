@@ -484,7 +484,7 @@ Quotas
 <li>If you perform weighted random sampling with replacement, you might select the same entrant several times.</li>
 <li>If you perform weighted random sampling without replacement, for many sampling algorithms the weights are not the marginal selection probabilities, and in fact it may even be computationally infeasible to compute the marginal selection probabilities given the weights.</li>
 </ul>
-<p>It turns out the relevant tool here is “randomized rounding,” which enables us to sampling without replacement according to marginal probabilities of selection. I cannot describe this literature as particularly approachable to those outside the discrete optimization community. In any case, there’s a method called randomized pipage rounding that does what we need <span class="citation" data-cites="karimi2017">(see the Appendix of <a href="#ref-karimi2017" role="doc-biblioref">Karimi et al. 2017</a> and reference trail therein)</span>.</p>
+<p>It turns out the relevant tool here is “randomized rounding,” which enables us to sampling without replacement according to marginal probabilities of selection. I cannot describe this literature as particularly approachable to those outside the discrete optimization community. In any case, there’s a method called randomized pipage rounding that does what we need <span class="citation" data-cites="karimi2017a">(see the Algorithm 3 in the Appendix of <a href="#ref-karimi2017a" role="doc-biblioref">Karimi et al. 2017</a> and reference trail therein)</span>.</p>
 <div id="cell-8" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> randomized_pipage_rounding(x):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -897,8 +897,8 @@ First time lottery entrants
 <div id="ref-flanigan2021a" class="csl-entry" role="listitem">
 Flanigan, Bailey, Paul Gölz, Anupam Gupta, Brett Hennig, and Ariel D. Procaccia. 2021. <span>“Supplementary Information: <span>Fair</span> Algorithms for Selecting Citizens’ Assemblies.”</span> <em>Nature</em> 596 (7873): 548–52. <a href="https://doi.org/10.1038/s41586-021-03788-6">https://doi.org/10.1038/s41586-021-03788-6</a>.
 </div>
-<div id="ref-karimi2017" class="csl-entry" role="listitem">
-Karimi, Mohammad, Mario Lucic, Hamed Hassani, and Andreas Krause. 2017. <span>“Stochastic <span>Submodular Maximization</span>: <span>The Case</span> of <span>Coverage Functions</span>.”</span> In <em>31st <span>Conference</span> on <span>Neural Information Processing Systems</span></em>.
+<div id="ref-karimi2017a" class="csl-entry" role="listitem">
+Karimi, Mohammad Reza, Mario Lucic, Hamed Hassani, and Andreas Krause. 2017. <span>“Stochastic <span>Submodular Maximization</span>: <span>The Case</span> of <span>Coverage Functions</span>.”</span> arXiv. <a href="https://arxiv.org/abs/1711.01566">https://arxiv.org/abs/1711.01566</a>.
 </div>
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
