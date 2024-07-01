@@ -1,13 +1,73 @@
 ---
 title: "some comments on the social function of academic statistics"
 subtitle: |
-  todo
+  a statistician's perspective on the social dynamics of methods dissemination
 date: "2024-06-24"
 categories: [statistical software]
 draft: true
 ---
 
+**TL; DR**: I describe some priorities of academic statistics and about how these priorities influence the actual practice of data analysis in science.
+
+One fairly 
+As an outsider, one very natural view is that statistics is primarily about 
+
+One very natural idea is that 
+
+## What people hope or think academic statistics is about
+
+one of my strongest beliefs is that statistics should be about service to the broader scientific enterprise, alas it is not
+
+## What academic statistics is actually about
+
+what you do and do not get tenure for: code, data analysis
+
+## How other disciplines have responded
+
+non-probabilistic data analysis
+dumb shit
+
+- what about the people who do actually do care about the *practice* of statistics?
+the people who are actually doing statistical service
+
+
 painful to care about the practice of data analysis
+
+near-universal adage that working with statisticians is a royal pain in the ass
+
+Here's a rough model of how things actually work:
+
+- The idiomatic contribution to the statistics literature is to show how to make probability statements about some estimator under modeling assumptions that obtain in the real world
+- The primary way to get tenure or obtain a doctorate in statistics is to make a bunch of these contributions
+- Deriving the properties of estimators is primarily an exercise in mathematical statistics, and so statisticians by and large are defined by their ability to do mathematical statistics
+- In contrast, to actually analyze data in the real world, you need the computational skills to interact with data, the math-stat background to understand probability models and mathematical properties of estimators, and most importantly, the ability to determine if a formal probability model behaves similarly enough some real world phenomena to use the model as a stand-in for the real world. Notably, this requires you know a lot about the process that generated the data in the world^[In statistics, the rule of thumb is that you aren't usually capable of doing meaningful applied work in a given application domain until you've been working in and learning about that domain for at least three years.].
+- If you are a scientist, you might want help
+
+statistics culture: somewhat nitpicky, apathetic towards other, and not particularly charismatic
+
+
+- The main challenge
+
+
+## This doesn't seem like it's going to change anytime soon
+- why i think we're in a stable equilibrium
+
+
+to be a statistician is not that bad. to be a scientist interested in methodology is to suffer.
+
+To be a methodologist is to suffer. 
+
+as methodologists, you might imagine that statisticians care at the disciplinary level about the practice of data analysis in science at large.
+
+my goal is not to make normative claims about how methods should be d 
+
+As an academic discipline, statistics occupies 
+
+
+A central tension 
+
+
+
 
 To be a methodologist is to suffer. 
 
@@ -60,3 +120,6 @@ other fields to comment on:
 
 
 some deeply demoralizing facts about the function of statistics
+
+
+not letting phd students in my department analyze my data -- i would do the theory that they do if i could!

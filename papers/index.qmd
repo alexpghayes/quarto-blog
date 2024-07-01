@@ -1,9 +1,21 @@
 ---
 title: "papers"
-date-modified: "2024-04-06"
+date-modified: "2024-06-27"
 ---
 
-**n.b.** This information on this page is slightly out of date. 
+I develop statistical methods for causal inference on social networks.
+
+See also: [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIAAAAJ), [personal Github](https://github.com/alexpghayes), [lab Github](https://github.com/rohelab).
+
+<!-- My work with [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/) has focused on fast approaches to spectral estimation via sparse linear algebra. Our primary project together has been developing a method for network co-factor analysis for settings with missing edge data, which we applied to a large network of citations between statistics papers. We have also spent some time working to understand effective regularization strategies for spectral estimators, as well as developing diagnostic tools for PCA and varimax rotation. As part of an outgrowth of Karl's [murmuration project](https://murmuration.wisc.edu/) I developed extensive infrastructure to sample and analyze the Twitter following graph (see [code](../code)), and Twitter data remains near and dear to my heart. -->
+
+<!-- I am currently working with [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) on causal interpretations of network regression, and with [Jiwei Zhao](https://biostat.wiscweb.wisc.edu/staff/zhao-jiwei/) on semi-parametric inference for experimental guardrails in a data fusion setting. -->
+
+<!-- Previously at Facebook, I developed internal tooling to understand post content using neural hypergraph embeddings. At Facebook I also developed a diagnostic to assess the out-of-sample reliability of rolling classifiers based on differential calibration of the classifier over time. -->
+
+
+
+<!-- **n.b.** This information on this page is slightly out of date.  -->
 
 <!-- research interests -->
 <!-- industry research -->
@@ -11,85 +23,76 @@ date-modified: "2024-04-06"
 <!-- hobbyist interests -->
 <!-- applications -- cybersecurity, trust and safety on social networks, social science experiments, fraud detection, high dimensional times series, spatial causal inference, bibliometrics, matrix completion, times series of networks, causal inference on networks, regularizing network embeddings -->
 
-<!-- Okay, here are the three chapters, attached independently. Some brief comments on them and my research on the whole below. -->
-
-<!-- Chapter 1: an applied-leaning paper on factor analysis using varimax from early in grad school. We frame factor estimation for citation networks as a missing data problem and do some computational shenanigans to make matrix completion fast for upper triangular matrices. Currently under review at JCGS. -->
-
-<!-- Chapter 2: my network mediation project with Keith, which you may have seen on arvix. We just got reviews back from JMLR and are hoping to revise and resubmit in the near future -- this is an excellent time for us to consider any feedback that you have, should you be so inclined. We haven't started revisions  (although some of the figures aren't full explained at the moment), but the next version of this paper will focus additional attention on causal and interpretation concerns when intervening on latent variables, in our case, the latent positions of an RDPG. -->
-
-<!-- Chapter 3: what I'm currently working on and plan to present in my defense. The mediation project had two big limitations, namely that we explicitly disallowed interference and contagion in our model. We figured out how to fix this, and along the way came to the realization that the very popular (in social sciences) linear-in-means model has a subtle (maybe obvious to some folks?) asymptotic identification problem. -->
-
-<!-- After getting these all out the door, Keith and I have a followup to Chapters 2/3 that focuses on actually estimating peer effects in random dot product graphs, and we figured out a trick that lets us estimate peer effects even when the network is observed with noise or missing data. The content for that manuscript is largely done (knock on wood) and I hope to write it up this summer, modulo job timeline and all that. Currently I have a lot of momentum using RDPG-style tools for causal inference on networks. I'm particularly proud of Chapters 2 and 3 and the followup work because they feel like research ideas that I came up with and executed with a high amount of independence. -->
-
 <!-- On the whole, I would say these projects (and my interests!) lie at a methods/applied intersection. Theory is less my jam. I very much enjoy thinking about how methods can be used to analyze data, analyzing data including doing all the coding needed to make that happen, and developing a clear understanding of data or methods through writing. -->
 
-I primarily study networks using tools from multivariate analysis. 
 
-My work with [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/) has focused on fast approaches to spectral estimation via sparse linear algebra. Our primary project together has been developing a method for network co-factor analysis for settings with missing edge data, which we applied to a large network of citations between statistics papers. We have also spent some time working to understand effective regularization strategies for spectral estimators, as well as developing diagnostic tools for PCA and varimax rotation. As part of an outgrowth of Karl's [murmuration project](https://murmuration.wisc.edu/) I developed extensive infrastructure to sample and analyze the Twitter following graph (see [code](../code)), and Twitter data remains near and dear to my heart.
+<!-- things i have done: network sampling -->
 
-I am currently working with [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) on causal interpretations of network regression, and with [Jiwei Zhao](https://biostat.wiscweb.wisc.edu/staff/zhao-jiwei/) on semi-parametric inference for experimental guardrails in a data fusion setting.
+<!-- - doing things for fun vs for real world impact -->
+<!-- - i do statistics because i like to understand things, not because the math is fun, not because any real world impact -->
 
-Previously at Facebook, I developed internal tooling to understand post content using neural hypergraph embeddings. At Facebook I also developed a diagnostic to assess the out-of-sample reliability of rolling classifiers based on differential calibration of the classifier over time.
+<!-- maybe combine this my job search post: -->
+<!-- - deep technical problems that take years of work -->
+<!-- - complex *interesting* systems to learn and engage with -->
+<!-- - some sort of social good: knowledge production, tool building, methods dev, research support -->
 
-I keep [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIAAAAJ) up to date, and post any research related code to Github ([personal](https://github.com/alexpghayes), [lab](https://github.com/rohelab)).
 
-## pre-prints
+<!-- understanding nuances for careful application of methods as opposed to theory -->
 
-1. *Estimating network-mediated causal effects via spectral embeddings*. **Alex Hayes**, Mark M. Fredrickson, and Keith Levin. arXiv, April 14, 2023. <http://arxiv.org/abs/2212.12041>
+<!-- "what can we actually learn from data using this method?" and theory helps us understand related topics so we can use methods for inference by better understand the mathematical formalism -->
 
-## publications
+<!-- simple tools -->
+<!-- spectral networks -->
+<!-- causal applications (clever identification) -->
+<!-- simple tools -->
+<!-- time series of networks -->
+
+
+<!-- regularizing network methods / spectral artefacts of noise in networks -->
+
+
+<!-- hobbyist interests in methods and data: -->
+
+<!-- - semiparametric causal inference -->
+<!-- - rank estimation on networks -->
+<!-- - ranking models -->
+<!-- - spatial statistics -->
+<!-- - generalized additive models -->
+<!-- - graph matching / network alignment -->
+<!-- - graph neural networks -->
+<!-- - trajectory data -->
+<!-- - effects and statistical estimability in controlled systems (i.e. repeated hopefully causal interventions) -->
+
+<!-- application domains: -->
+<!-- - exercise physiology -->
+<!-- - polarization, cultural/social movements -->
+<!-- - sociology of science -->
+<!-- - philosophy of science -->
+<!-- - social hierarchy -->
+<!-- - ranking in competitive games (chess, video games, etc) -->
+
+<!-- exposure to: data fusion, causal transportation problems, randomized linear algebra -->
+
+<!-- less recent hobbyist interests: -->
+<!-- - design of statistical software -->
+
+<!-- not interested in: -->
+<!-- - theory without methodological implications or immediate application -->
+
+
+### working papers, pre-prints & manuscripts under review
+
+1. *Peer effects in the linear-in-means model may be inestimable even when identified*. **Alex Hayes** and Keith Levin. (working paper)
+<!-- 1. *Estimating causal peer influence in noisy networks*. **Alex Hayes** and Keith Levin. (working paper) -->
+1. *Co-factor analysis of citation networks*. **Alex Hayes** and Karl Rohe. (under review)
+1. *Estimating network-mediated causal effects via spectral embeddings*. **Alex Hayes**, Mark M. Fredrickson, and Keith Levin. arXiv, April 14, 2023. <http://arxiv.org/abs/2212.12041>. (pre-print)
+
+### publications
 
 1. *Welcome to the Tidyverse.* Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, **Alex Hayes**, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. [Journal of Open Source Software](https://joss.theoj.org/papers/10.21105/joss.01686), 2019. [pdf](welcome-to-the-tidyverse.pdf)
 
+<!-- ### dormant projects -->
 
-<!-- **Move some of these details to a research page** -->
-
-
-<!-- ##### *Understanding the causal interpretation of network regression* -->
-
-<!-- - Developed statistical method to estimate causal effects of group membership in social networks -->
-<!-- - Enabled novel social science research by developing technique for network regression. Technique allows assessment of how individual outcomes vary with nodal information and network position and is simple to implement and scales to network with millions of nodes -->
-<!-- - Characterized the interpretation of network regressions by developing structural causal models and directed acyclic graphs (DAGs). Characterized mediating and confounding effects of group membership in social networks -->
-<!-- - Disseminated results by presenting to fellow researchers and at academic conferences. Authored an academic manuscript explaining the technical details of our method -->
-
-<!-- ##### *Efficient data fusion to detect harmful interventions without observing an outcome* -->
-
-<!-- - Developed method to estimate when product changes have harmful side-effects on unmeasured outcomes by combining experimental and observational datasets -->
-<!-- - Increased precision of estimates by deriving efficient semi-parametric estimators using causal machine learning techniques. Reduced computational overhead by a factor of 5000. -->
-<!-- - Determined when causal inference combining multiple datasets is possible by deriving identification conditions using transportability DAGs -->
-
-<!-- ##### *Research software development* -->
-
-<!-- - Implemented research methods in user-friendly software. Released nine open source R packages to CRAN (notably: `fastRG`, `vsp`, `gdim`, `fastadi`, `distributions3`, `sparseLRMatrix`). Maintained packages on an ongoing basis. -->
-<!-- - Collaborated with ROpenSci to design software development standards for statistical software. Reviewed scientific software for ROpenSci, the R Journal, and the Journal of Open Source Software. Mentored new open source contributors. -->
-
-
-<!-- ##### *Network clustering when edges are missing via interpretable embeddings* -->
-
-<!-- - Designed method to embed and cluster networks when edges in the network are missing, by combining matrix completion and factor analysis techniques -->
-<!-- - Solved computational challenges by implementing specialized matrix completion methods for structured forms of missing data in R and C++. Scaled implementation from networks with thousands of nodes to networks with millions of nodes -->
-<!-- - Investigated the structure of the academic statistics literature. Detected new, sociologically interesting sub-fields by interpreting spectral embeddings using varimax rotation -->
-
-<!-- ##### *Assessing trustworthiness on Twitter via Personalized PageRank* -->
-
-<!-- - Assessed trustworthiness and community membership of Twitter accounts by approximating Personalized PageRank using public information about who follows who -->
-<!-- - Implemented a flexible and generic Personalized PageRank approximation using a combination of generic-function and encapsulation object-oriented programming. Managed unreliable Twitter API behavior by caching retrieved data in a Neo4J database running on Docker -->
-
-<!-- ##### *Regularizing networks to obtain useful network embeddings* -->
-
-<!-- - Devised effective strategies for regularizing network data to obtain high quality spectral embeddings that can be used for real world data analysis -->
-<!-- - Developed and theory and conducted extensive simulations and experiments on network data to understand and interpret impact of regularization methods -->
-
-<!-- :::: {.columns} -->
-<!-- ::: {.column width="70%" style="align: left;"} -->
-<!-- ##### **Statistical Consultant** -->
-<!-- ###### Self-employed -->
-<!-- ::: -->
-<!-- ::: {.column width="30%" style="text-align: right;"} -->
-<!-- August 2018 - Present   -->
-<!-- Remote -->
-<!-- ::: -->
-<!-- :::: -->
-
-<!-- - Advised psychologists, biologists and neuroscientists on experimental design, experimental data analysis, data visualization, project management and statistical communication -->
-<!-- - Created reports to clearly communicate key takeaways from experimental data, using reproducible analysis practices to allow for easy extension and collaboration -->
+<!-- 1. *Efficient estimation of mediated experimental regression guardrails* with Jiwei Zhao -->
+<!-- 1. *A Metric to Assess the Need for Multi-Calibration* with Yevgeniy Grechka and Aude Hofleitner -->
+<!-- 1. *Localization, interpolation & the spectral decomposition of the regularized Graph Laplacian* with Karl Rohe -->
