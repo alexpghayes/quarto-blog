@@ -1,25 +1,36 @@
 ---
 title: "about"
 image: headshot-small.png
-date-modified: "2024-06-27"
+date-modified: "2024-08-28"
 about:
   template: solana
   image-width: 10em
   image-shape: rounded
 ---
 
-I'm a PhD candidate in Statistics at the University of Wisconsin-Madison, where I am co-advised by [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) and [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/). I study spectral methods for network analysis, causal inference, and causal inference on networks.
+I'm a PhD candidate in Statistics at the University of Wisconsin-Madison, where I am co-advised by [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) and [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/). I study spectral methods for network analysis, causal inference, and causal inference on networks. You might know me from my work on [`broom`](https://broom.tidymodels.org/), a popular open-source `R` package in the `tidyverse`.
 
-I'm on the job market, looking for academic, industry, or government roles.
+I'm currently looking a job as a post-doctoral researcher. My curriculum vitae is available [here](academic-cv.pdf) (pdf).
 
-<!-- I defended my dissertation in April 2024, but am sticking around UW-Madison for the moment to finish up some projects.-->
+I [blog](./posts) about statistics, programming, and data. Some posts I'm particularly proud of:
 
-<!-- I'm look I , and am sticking around UW-Madison a -->
+- [overfitting: a guided tour](./post/2020-01-06_overfitting-a-guide-tour/)
+- [hypothesis testing by example](./post/2022-11-02-hypothesis-testing-by-example/)
+- [fairness in repeated lotteries](./post/2024-06-09_repeated-lotteries/)
 
-<!--  I blog about statistics, programming, and data.  -->
+<!-- - I have extensive experience with network data, causal inference, regression, embeddings and clustering. -->
+
+<!-- - I excel at applied statistics, especially developing new methods to analyze complex data sets. -->
+
+<!-- - I love to collaborate with social scientists and product teams on involved projects. -->
+
+<!-- You can find my resume [here](./resume/). I'm currently based in Madison, WI. -->
+
+<!-- - I'm particularly well-suited for roles as a statistician, research scientist, research software engineer, or data scientist. -->
+
+<!-- I tend to focus on inference and uncertainty quantification (i.e., "how certain are we that this experiment caused a change") over prediction, but am open to both kinds of roles. For example, here's a short analysis  -->
 
 
-<!-- ### i'm looking for a job! -->
 
 <!-- - I am an experienced `R` package developer and open-source project maintainer. You might know me from my work on [`broom`](https://broom.tidymodels.org/), a popular open-source `R` package in the `tidyverse`. -->
 
