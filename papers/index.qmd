@@ -1,6 +1,6 @@
 ---
 title: "papers"
-date-modified: "2024-08-28"
+date-modified: "2024-10-03"
 ---
 
 I study statistical network models and causal inference on social networks. I do a mixture of methods, applied and computational work. I am especially interested in understanding what popular methods actually achieve, and developing methodological tools to overcome roadblocks from applied projects.
@@ -84,12 +84,12 @@ See also: [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3
 
 1. *Peer effects in the linear-in-means model may be inestimable even when identified*. **Alex Hayes** and Keith Levin. (working paper)
 <!-- 1. *Estimating causal peer influence in noisy networks*. **Alex Hayes** and Keith Levin. (working paper) -->
-1. *Estimating network-mediated causal effects via spectral embeddings*. **Alex Hayes**, Mark M. Fredrickson, and Keith Levin. arXiv, April 14, 2023. <http://arxiv.org/abs/2212.12041>. (pre-print)
+1. *Estimating network-mediated causal effects via principal components network regression*. **Alex Hayes**, Mark M. Fredrickson, and Keith Levin. arXiv, September 3, 2024. [arXiv (pre-print)](http://arxiv.org/abs/2212.12041), [`latentnetmediate` R package (Github)](https://github.com/alexpghayes/latentnetmediate)
 
 ### publications
 
-1. *Co-factor analysis of citation networks*. **Alex Hayes** and Karl Rohe. Journal of Computational and Graphical Statistics, 2024. [journal](http://www.tandfonline.com/10.1080/10618600.2024.2394464), [arXiv](https://arxiv.org/abs/2408.14604)
-1. *Welcome to the Tidyverse.* Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, **Alex Hayes**, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. Journal of Open Source Software, 2019. [journal](https://joss.theoj.org/papers/10.21105/joss.01686)
+1. *Co-factor analysis of citation networks*. **Alex Hayes** and Karl Rohe. Journal of Computational and Graphical Statistics, 2024. [journal (gated)](http://www.tandfonline.com/10.1080/10618600.2024.2394464), [post-print](cofactor-analysis-of-citation-networks-aom.pdf), [arXiv (pre-print)](https://arxiv.org/abs/2408.14604), [replication package](https://github.com/alexpghayes/citation-cofactoring-replication), [`fastadi` R package (CRAN)](https://rohelab.github.io/fastadi/)
+1. *Welcome to the Tidyverse.* Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, **Alex Hayes**, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. Journal of Open Source Software, 2019. [journal (open access)](https://joss.theoj.org/papers/10.21105/joss.01686), [tidyverse.org](https://www.tidyverse.org/)
 
 <!-- ### dormant projects -->
 
