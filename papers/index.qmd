@@ -1,11 +1,10 @@
 ---
 title: "papers"
-date-modified: "2024-10-03"
+date-modified: "2024-10-16"
 ---
 
 I study statistical network models and causal inference on social networks. I do a mixture of methods, applied and computational work. I am especially interested in understanding what popular methods actually achieve, and developing methodological tools to overcome roadblocks from applied projects.
 
-See also: [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIAAAAJ), [personal Github](https://github.com/alexpghayes), [lab Github](https://github.com/rohelab).
 
 <!-- My work with [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/) has focused on fast approaches to spectral estimation via sparse linear algebra. Our primary project together has been developing a method for network co-factor analysis for settings with missing edge data, which we applied to a large network of citations between statistics papers. We have also spent some time working to understand effective regularization strategies for spectral estimators, as well as developing diagnostic tools for PCA and varimax rotation. As part of an outgrowth of Karl's [murmuration project](https://murmuration.wisc.edu/) I developed extensive infrastructure to sample and analyze the Twitter following graph (see [code](../code)), and Twitter data remains near and dear to my heart. -->
 
@@ -80,17 +79,17 @@ See also: [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3
 <!-- - theory without methodological implications or immediate application -->
 
 
-### working papers, pre-prints & manuscripts under review
+### pre-prints
 
-1. *Peer effects in the linear-in-means model may be inestimable even when identified*. **Alex Hayes** and Keith Levin. (working paper)
-<!-- 1. *Estimating causal peer influence in noisy networks*. **Alex Hayes** and Keith Levin. (working paper) -->
-1. *Estimating network-mediated causal effects via principal components network regression*. **Alex Hayes**, Mark M. Fredrickson, and Keith Levin. arXiv, September 3, 2024. [arXiv](http://arxiv.org/abs/2212.12041), [`latentnetmediate`](https://github.com/alexpghayes/latentnetmediate)
+1. [Peer effects in the linear-in-means model may be inestimable even when identified](http://arxiv.org/abs/2410.10772). **Alex Hayes** and Keith Levin. *arXiv*. October 14, 2024.
+1. [Estimating network-mediated causal effects via principal components network regression](http://arxiv.org/abs/2212.12041). **Alex Hayes**, Mark M. Fredrickson, and Keith Levin. *arXiv*. September 3, 2024. [code](https://github.com/alexpghayes/latentnetmediate)
 
 ### publications
 
-1. *Co-factor analysis of citation networks*. **Alex Hayes** and Karl Rohe. Journal of Computational and Graphical Statistics, 2024. [journal](http://www.tandfonline.com/10.1080/10618600.2024.2394464), [post-print](cofactor-analysis-of-citation-networks-aom.pdf), [arXiv](https://arxiv.org/abs/2408.14604), [replication package](https://github.com/alexpghayes/citation-cofactoring-replication), [`fastadi`](https://rohelab.github.io/fastadi/)
-1. *Welcome to the Tidyverse.* Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, **Alex Hayes**, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. Journal of Open Source Software, 2019. [journal](https://joss.theoj.org/papers/10.21105/joss.01686), [`tidyverse`](https://www.tidyverse.org/)
+1. [Co-factor analysis of citation networks](http://www.tandfonline.com/10.1080/10618600.2024.2394464). **Alex Hayes** and Karl Rohe. *Journal of Computational and Graphical Statistics*. 2024. [post-print](cofactor-analysis-of-citation-networks-aom.pdf), [arXiv](https://arxiv.org/abs/2408.14604), [replication package](https://github.com/alexpghayes/citation-cofactoring-replication), [code](https://rohelab.github.io/fastadi/)
+1. [Welcome to the Tidyverse](https://joss.theoj.org/papers/10.21105/joss.01686). Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, **Alex Hayes**, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. *Journal of Open Source Software*. 2019. [code](https://www.tidyverse.org/)
 
+See also: [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIAAAAJ), [personal Github](https://github.com/alexpghayes), [lab Github](https://github.com/RoheLab).
 <!-- ### dormant projects -->
 
 <!-- 1. *Efficient estimation of mediated experimental regression guardrails* with Jiwei Zhao -->
