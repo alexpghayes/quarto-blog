@@ -9,7 +9,7 @@ I am not teaching for the foreseeable future.
 
 ## teaching material
 
-If you are teaching an introductory statistics class in the "barrage of hypothesis tests" tradition, you may find my [cheatsheet on common hypothesis tests](https://github.com/alexpghayes/classic-stats-formulas) useful. I also wrote [`distributions3`](https://alexpghayes.github.io/distributions3/dev/) to be an approachable set of tools for manipulating probability distributions for intro stat students. The package [vignettes](https://alexpghayes.github.io/distributions3/dev/articles/) are designed to walk students intro stat courses though many classic hypothesis tests as well.
+If you are teaching an introductory statistics class in the "barrage of hypothesis tests" tradition, you may find my [cheatsheet on common hypothesis tests](https://github.com/alexpghayes/classic-stats-formulas) useful. I also wrote [`distributions3`](https://alexpghayes.github.io/distributions3/dev/) to be an approachable set of tools for manipulating probability distributions. The package [vignettes](https://alexpghayes.github.io/distributions3/dev/articles/) are designed to walk students though many classic hypothesis tests.
 
 ## past courses
 
