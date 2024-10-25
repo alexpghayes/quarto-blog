@@ -1,24 +1,24 @@
 ---
 title: "about"
 image: headshot-small.png
-date-modified: "2024-08-28"
+date-modified: "2024-10-25"
 about:
   template: solana
   image-width: 10em
   image-shape: rounded
 ---
 
-
-I'm looking a job as a post-doctoral researcher. [curriculum vitae](academic-cv.pdf)
-
 I'm a PhD candidate in Statistics at the University of Wisconsin-Madison, where I am co-advised by [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) and [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/). I study spectral methods for network analysis, causal inference, and causal inference on networks. You might know me from my work on [`broom`](https://broom.tidymodels.org/), a popular open-source `R` package in the `tidyverse`.
 
+I'm looking a job as a post-doctoral researcher. To find out if we might be a good fit, take a look at my [academic cv](academic-cv.pdf).
 
-I [blog](./posts) about statistics, programming, and data. Some posts I'm particularly proud of:
+In a hobbyist capacity, I also blog about statistics, programming, and data. Some posts I'm particularly proud of:
 
 - [overfitting: a guided tour](./post/2020-01-06_overfitting-a-guide-tour/)
-- [hypothesis testing by example](./post/2022-11-02-hypothesis-testing-by-example/)
+- [consistency and the linear probability model](./post/2019-08-31_consistency-and-the-linear-probability-model/)
 - [fairness in repeated lotteries](./post/2024-06-09_repeated-lotteries/)
+
+These days I'm enjoying the slow resurgence of academic Twitter on Bluesky. You can find me there at [@alexpghayes.bsky.social](https://bsky.app/profile/alexpghayes.bsky.social).
 
 <!-- [schedule a meeting with me](https://calendly.com/alexpghayes) -->
 

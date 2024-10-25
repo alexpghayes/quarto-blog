@@ -18,7 +18,7 @@
     "href": "teaching/index.html#teaching-material",
     "title": "teaching",
     "section": "teaching material",
-    "text": "teaching material\nIf you are teaching an introductory statistics class in the “barrage of hypothesis tests” tradition, you may find my cheatsheet on common hypothesis tests useful. I also wrote distributions3 to be an approachable set of tools for manipulating probability distributions for intro stat students. The package vignettes are designed to walk students intro stat courses though many classic hypothesis tests as well."
+    "text": "teaching material\nIf you are teaching an introductory statistics class in the “barrage of hypothesis tests” tradition, you may find my cheatsheet on common hypothesis tests useful. I also wrote distributions3 to be an approachable set of tools for manipulating probability distributions. The package vignettes are designed to walk students though many classic hypothesis tests."
   },
   {
     "objectID": "teaching/index.html#past-courses",
@@ -718,7 +718,7 @@
     "href": "papers/index.html",
     "title": "papers",
     "section": "",
-    "text": "I study statistical network models and causal inference on social networks. I do a mixture of methods, applied and computational work. I am especially interested in understanding what popular methods actually achieve, and developing methodological tools to overcome roadblocks from applied projects.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npre-prints\n\nPeer effects in the linear-in-means model may be inestimable even when identified. Alex Hayes and Keith Levin. arXiv. October 14, 2024.\nEstimating network-mediated causal effects via principal components network regression. Alex Hayes, Mark M. Fredrickson, and Keith Levin. arXiv. September 3, 2024. code\n\n\n\npublications\n\nCo-factor analysis of citation networks. Alex Hayes and Karl Rohe. Journal of Computational and Graphical Statistics. 2024. post-print, arXiv, replication package, code\nWelcome to the tidyverse. Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, Alex Hayes, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. Journal of Open Source Software. 2019. code\n\nSee also: Google Scholar, personal Github, lab Github."
+    "text": "I study statistical network models and causal inference on social networks. I do a mixture of methods, applied and computational work. I am especially interested in understanding what popular methods actually achieve, and developing tools to overcome roadblocks from applied projects.\nI keep my Google Scholar updated.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nworking papers\n\nPeer effects in the linear-in-means model may be inestimable even when identified. Alex Hayes and Keith Levin. arXiv. October 14, 2024.\nEstimating network-mediated causal effects via principal components network regression. Alex Hayes, Mark M. Fredrickson, and Keith Levin. Journal of Machine Learning Research (accepted with minor revision). September 3, 2024. code\n\n\n\npublications\n\nCo-factor analysis of citation networks. Alex Hayes and Karl Rohe. Journal of Computational and Graphical Statistics. 2024. post-print, arXiv, replication package, code\nWelcome to the tidyverse. Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, Alex Hayes, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. Journal of Open Source Software. 2019. code"
   },
   {
     "objectID": "code/index.html",
@@ -739,7 +739,7 @@
     "href": "code/index.html#design-of-statistical-software",
     "title": "code",
     "section": "design of statistical software",
-    "text": "design of statistical software\nI am particularly interested in the design of statistical software and have been contributed to ROpenSci statistical software reviewing guidelines, as well as early versions of the tidymodels implementation principles. I have some long form explorations of modeling software design on my blog:\n\ntesting statistical software\ntype stable estimation\n\nI review for the Journal of Open Source Software and the R Journal."
+    "text": "design of statistical software\nI am interested in the design of statistical software and have contributed to ROpenSci’s statistical software reviewing guidelines, as well as early versions of the tidymodels implementation principles. I have some long form explorations of modeling software design on my blog:\n\ntesting statistical software\ntype stable estimation\n\nI review for the Journal of Open Source Software and the R Journal."
   },
   {
     "objectID": "code/index.html#rstats",
@@ -753,7 +753,7 @@
     "href": "index.html",
     "title": "about",
     "section": "",
-    "text": "I’m looking a job as a post-doctoral researcher. curriculum vitae\nI’m a PhD candidate in Statistics at the University of Wisconsin-Madison, where I am co-advised by Keith Levin and Karl Rohe. I study spectral methods for network analysis, causal inference, and causal inference on networks. You might know me from my work on broom, a popular open-source R package in the tidyverse.\nI blog about statistics, programming, and data. Some posts I’m particularly proud of:\n\noverfitting: a guided tour\nhypothesis testing by example\nfairness in repeated lotteries"
+    "text": "I’m a PhD candidate in Statistics at the University of Wisconsin-Madison, where I am co-advised by Keith Levin and Karl Rohe. I study spectral methods for network analysis, causal inference, and causal inference on networks. You might know me from my work on broom, a popular open-source R package in the tidyverse.\nI’m looking a job as a post-doctoral researcher. To find out if we might be a good fit, take a look at my academic cv.\nIn a hobbyist capacity, I also blog about statistics, programming, and data. Some posts I’m particularly proud of:\n\noverfitting: a guided tour\nconsistency and the linear probability model\nfairness in repeated lotteries\n\nThese days I’m enjoying the slow resurgence of academic Twitter on Bluesky. You can find me there at @alexpghayes.bsky.social."
   },
   {
     "objectID": "post/2019-06-07_testing-statistical-software/index.html",

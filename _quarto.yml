@@ -16,7 +16,8 @@ website:
     right:
       - text: about
         file: index.qmd
-      - posts.qmd
+      - text: blog
+        file: posts.qmd
       - papers/index.qmd
       - code/index.qmd
       - teaching/index.qmd
@@ -25,8 +26,6 @@ website:
         file: resume/index.qmd
       - icon: github
         href: https://github.com/alexpghayes
-      - icon: twitter
-        href: https://twitter.com/alexpghayes
       - icon: linkedin
         href: https://www.linkedin.com/in/alexpghayes/
   google-analytics: "G-G6PQFW2XSK"
