@@ -26,3 +26,9 @@ author:
   - name: Alex Hayes
     url: https://www.alexpghayes.com
     orcid: 0000-0002-4985-5160
+
+# https://albert-rapp.de/posts/13_quarto_blog_writing_guide/13_quarto_blog_writing_guide.html#comment-sections
+# https://quarto.org/docs/output-formats/html-basics.html#commenting
+comments: 
+  utterances: 
+    repo:  alexpghayes/quarto-blog
