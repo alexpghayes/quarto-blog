@@ -1,5 +1,7 @@
 project:
   type: website
+  resources: 
+    - "/.well-known/atproto-did"
 
 website:
   title: "alex hayes"
@@ -33,6 +35,7 @@ website:
     right:
       - text: website source
         href: https://github.com/alexpghayes/quarto-blog
+
 
 format:
   html:
