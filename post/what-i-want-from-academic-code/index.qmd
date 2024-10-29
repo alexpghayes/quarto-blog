@@ -97,6 +97,42 @@ Writing code for methods consumers is tough. First of all, it takes a lot of sof
 And this is the heart of it: translating new methods into software is *infrastructure work*. It enables research, but is rarely research itself.
 
 TODO: I'm realizing that the thing I'm leaving unsaid is that a lot of what I would consider attempts at writing hobbyist code fail, completely, horribly, utterly. don't want this! want something else instead. reallllly does help if a reference implementation is in an open source language so someone can build a package without having to by stata or matlab or whatever. a lot of folks think they are writing nice hobbyist code and instead they are creating unusable or borderline unusable packages.
+
+BEN:
+- set expectations that academic scripts cannot be immediately plugged into production
+
+consumer expectations:
+- some code should be available
+
+people shouldn't get research for infrastructure labor.  service work. joss publication citations sufficient credit. 
+
+i think cite software papers but not software packages
+
+research products: methods, and analyses. code is neither of these things, it enables other people to produce research.
+
+code is a less specific contribution than methods and analyses, more people can do it
+
+
+
+how much do i think academic needs to solve code infrastructure as opposed to do research? not that much. basically i think we can do it as a hobby, but i don't think it's the fundamental mandate. i value the code infrastucture but it's not the mandate. i want it but i don't think it's what we're here for. plus, academics write bad code. is it a particularly achievable goal. nicholas clark, noah grieffer, paul burkner
+
+on a tenure committee: is a person who works on code going to do research, or code? what are they going to work on? are they going to mentor successful students. confounded by the fact that students to work on code and get academic credit for. this a pressure from students to be viable on the academic and non-academic job markets.
+
+
+- point to examples of each of the types of software
+
+- software is aftermarket of the paper
+
+should get software credit because people misunderstand the quality of the code that they write
+
+
+academic credit for software paper if you implement methodological extension
+
+
+define the kind of contribution that software makes to make the contribution legible
+
+{mirt}
+
 <!-- 
 Instead, methods translators often perform the labor to bridge the gap between software designed for other methods producers and software designed for methods consumers. Some of the rough edges in hobbyist software a direct result of this split audience issue. Hobbyist code is typically written by someone much more background as either a method producer (who often have limited development background) or a method consumer (who often have less technical background). A key failure mode is when users cannot trust correctness of the code, in my experience this happens either because due to software quality issues, or concerns that the developer didn't understand the technical details of the original method fully.  It's important to note that the move from a proof-of-concept implementation to a middling implementation provides no personal benefit to the researcher, the benefit here. Oftentimes, hobbyist quality software is not written by the original methods producer. As a result, methods producers in academia are typically disincentivized from producing this kind of code.
 
