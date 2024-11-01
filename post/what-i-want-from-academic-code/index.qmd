@@ -12,7 +12,7 @@ draft: true
 
 There are many valuable reasons to write code beyond creating large, automated systems. Code is also valuable as a medium for precise communication, as a baseline for correctness, to demonstrate proof-of-concept, and as a tool to use intermittently and inefficiently. 
 
-Researchers in particular will often value these alternative goals more than developing large, automated systems. By differentiating between various kinds of code contributions, we may be able to better incentive narrow, purpose-specific academic software. Further, we may make it easier to eventually productionize code originally written for a different purpose.
+Researchers in particular will often value these alternative goals more than developing large, automated systems. By differentiating between various kinds of code contributions, we may be able to better incentivize narrow, purpose-specific academic software. Further, we may make it easier to eventually productionize code originally written for a different purpose.
 
 ### A normative typology of software, goals, and audiences
 
@@ -82,7 +82,7 @@ On the other hand, I want to clarify that not all code is created equal, and I a
 I want method consumers to:
 
 - pay software developers and methods translators to turn research products into tools that research and open source communities can use,
-- understand a lot of software is not intended for methods consumers, as odd as that may sound,^[I find it somewhat entertaining when a software engineering at FAANG, paid a quarter of a million dollars per year to write code, is frustrated that an academic has not implemented code for them already. That's where your job security comes from! Instead of pushing the academic to write code for you, push the academic to share material that makes it easier for you to write the code yourself.] and
+- understand a lot of software is not intended for methods consumers, as odd as that may sound,^[I find it somewhat entertaining when a software engineer at FAANG, paid a quarter of a million dollars per year to write code, is frustrated that an academic has not implemented code for them already. That's where your job security comes from! Instead of pushing the academic to write code for you, push the academic to share material that makes it easier for you to write the code yourself.] and
 - if they can, learn the technical and software engineering skills to write the software that you want to use. The best software is often software that is frequently used by the people who wrote it.
 
 I have become somewhat ambivalent about citing code in academic papers. It seems like a fine thing to do, but I'm not sure how much it actually helps people get tenure. I guess do it in the hopes that eventually people do get credit for citations to their software packages.
@@ -143,7 +143,7 @@ i would feel better about if they were more consistently functional. half of tim
 
 I, presumably like many others, would like more methods software and better methods software. To improve the quality of software in the sciences, I think we need to think carefully about the different reasons that software exists, and to be honest about existing incentivize structures. I've proposed some what I think are a fairly reasonable and acheivable set of expectations for methods producers. Namely, I don't think that methods producers need to be programmers turning out pristine code. Rather, I think methods producers need to produce percursor material that can easily be turned into high quality code. When methods producers try to produce code for methods consumers, it often is not usuable by the those very same methods consumers, and additionally, the attempt to make code more broadly usable often results in work that is challenging to use as the basis for future development work.
 
-I hope that methods consumers can have somewhat more realistic expectations in light of this. I think methods translators are excellent and I would like more of them, but I suspect that tenure committees by and large value research output over software infrastructure, and as such, I don't anticipate a reliable influx of translation labor in the near future. In the more distant future, I am optimistic about that values will evolve, although I still struggle to envision an academy that incentivizes software as living infrastructure rather than one-time outputs.
+I hope that methods consumers can have somewhat more realistic expectations in light of this. I think methods translators are excellent and I would like more of them, but I suspect that tenure committees by and large value research output over software infrastructure, and as such, I don't anticipate a reliable influx of translation labor in the near future. In the more distant future, I am optimistic about that values evolve, although I still struggle to envision an academy that incentivizes software as living infrastructure rather than one-time outputs.
 
 #### Acknowledgements
 
