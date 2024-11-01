@@ -3,34 +3,37 @@ title: "multilaterion"
 subtitle: |
   todo
 date: "2024-11-01"
+bibliography: multilateration.bib
 draft: true
 ---
 
 ```{r}
+library(brms)
+library(ellipse)
+library(geodist)
+library(glue)
+library(leaflet)
+library(sf)
+library(tidygeocoder)
 library(tidyverse)
+```
 
+```{r}
+#| execute: false
 # pulled from https://www.city-data.com/towers/cell-Madison-Wisconsin.html
 cell_towers <- tribble(
-  ~address,                ~latitude,   ~longitude,
+  ~address,                ~latitude,  ~longitude,
   "149 Wabesa Street",     43.097222,  -89.342306,
   "1844 Fordem Avenue",    43.096389,  -89.363333,
   "122 W. Main Street",    43.072722,  -89.385194,
   "600 Highland Ave",      43.075556,  -89.431944,
   "1410 Regent Street",    43.068056,  -89.409444
 )
-```
-
-
-```{r}
-library(tidygeocoder)
 
 breese_stevens_address <- "917 E Mifflin St, Madison, WI 53703"
+
 crash <- tibble(address = breese_stevens_address) |> 
   geocode(address, method = "osm")
-crash
-```
-```{r}
-library(geodist)
 
 distances <- cell_towers |>
   mutate(
@@ -40,9 +43,25 @@ distances <- cell_towers |>
         crash,
         measure = "geodesic"
       )
-    ),
-    dist_meters_rounded = signif(dist_meters, digits = 2)
+    )
   )
+```
+
+```{r}
+distances <- tribble(
+  ~address,                ~latitude,  ~longitude, ~dist_meters,
+  "149 Wabesa Street",     43.097222,  -89.342306,         3008,
+  "1844 Fordem Avenue",    43.096389,  -89.363333,         1690,
+  "122 W. Main Street",    43.072722,  -89.385194,         1490,
+  "600 Highland Ave",      43.075556,  -89.431944,         4794,
+  "1410 Regent Street",    43.068056,  -89.409444,          3347
+) |>
+  mutate(
+    dist_meters_rounded = signif(dist_meters, digits = 1)
+  )
+
+mean_latitude <- mean(distances$latitude)
+mean_longitude <- mean(distances$longitude)
 
 distances
 ```
@@ -58,12 +77,14 @@ another approach here: code up a loss function in jax, gradient descend since th
 ```{r}
 # key to subset to only data needed for distance computations for some reason
 nls_data <- distances |> 
-  select(latitude, longitude, dist_meters_rounded) |> 
-  head(4)
+  select(latitude, longitude, dist_meters)
+
+nls_data_rounded <- distances |> 
+  select(latitude, longitude, dist_meters_rounded)
 
 # https://www.appelsiini.net/2017/trilateration-with-n-points/
 nls_fit <- nls(
-  dist_meters_rounded ~ geodist(
+  dist_meters ~ geodist(
     nls_data,
     c(
       longitude = longitude,
@@ -73,8 +94,8 @@ nls_fit <- nls(
   ),
   data = nls_data,
   start = c(
-    longitude = mean(nls_data$longitude),
-    latitude = mean(nls_data$latitude)
+    longitude = mean_longitude,
+    latitude = mean_latitude
   ),
   control = list(
     maxiter = 1000,
@@ -86,31 +107,10 @@ nls_fit <- nls(
 ```
 
 ```{r}
-library(ellipse)
-library(sf)
-library(glue)
-
 # https://stackoverflow.com/questions/48383990/convert-sequence-of-longitude-and-latitude-to-polygon-via-sf-in-r
 # https://r-charts.com/spatial/interactive-maps-leaflet/#polygons
-
-uncertainty_ellipse <- ellipse(nls_fit) |>
-  as.data.frame() |>
-
-  # turn uncertainty ellipse into sf object
-  st_as_sf(coords = c("longitude", "latitude"), crs = 4326) |>
-  summarize(geometry = st_combine(geometry)) |>
-  st_cast("POLYGON") |>
-
-  # convert to leaflet project
-  st_transform(crs = '+proj=longlat +datum=WGS84')
-
-
+  
 leaflet_data <- distances |>
-  # add_row(
-  #   address = "crash",
-  #   latitude = coef(nls_fit)["latitude"],
-  #   longitude = coef(nls_fit)["longitude"],
-  # ) |>
   mutate(
     color = "blue",
     label_chr = glue(
@@ -120,13 +120,33 @@ leaflet_data <- distances |>
     label_html = map(label_chr, htmltools::HTML)
   )
 
-library(leaflet)
+# ellipse is a two-column matrix of longitude, latitude data points
+make_leaflet_polygon <- function(ellipse) {
+  ellipse |>
+    as.data.frame() |>
+    set_names(
+      c("longitude", "latitude")
+    ) |>
+
+    # turn uncertainty ellipse into sf object
+    st_as_sf(coords = c("longitude", "latitude"), crs = 4326) |>
+    summarize(geometry = st_combine(geometry)) |>
+    st_cast("POLYGON") |>
+
+    # convert to leaflet projection
+    st_transform(crs = '+proj=longlat +datum=WGS84')
+}
+
+nls_ellipse <- nls_fit |> 
+  ellipse() |> 
+  make_leaflet_polygon()
+
 
 annotated_map <- leaflet() |>
   addTiles() |>
   setView(
-    lng = mean(leaflet_data$longitude),
-    lat = mean(leaflet_data$latitude),
+    lng = mean_longitude,
+    lat = mean_latitude,
     zoom = 13
   ) |>
   addCircleMarkers(
@@ -135,7 +155,7 @@ annotated_map <- leaflet() |>
     label = leaflet_data$label_html
   ) |>
   addPolygons(
-    data = uncertainty_ellipse,
+    data = nls_ellipse,
     color = "red",
     stroke = 1
   )
@@ -147,6 +167,130 @@ annotated_map
 
 suppose we want to build out more of a model for this thing. might have measurement error or outcome censoring, etc, etc
 
+```{r}
+stan_funs <- "
+  real havdist(real long1, real lat1, real long2, real lat2) {
+    real diff_long = (long2 - long1);
+    real diff_lat = (lat2 - lat1);
+    real a = sin(diff_lat / 2)^2 + cos(lat1) * cos(lat2) * sin(diff_long / 2)^2;
+    real b = 2 * atan2(sqrt(a), sqrt(1 - a));
+    return 6378137 * b;
+  }
+"
+
+make_prior <- function(nls_data, sigma2 = 0.05) {
+  c(
+    prior_string(
+      glue("normal({mean_longitude}, {sigma2})"),
+      nlpar = "crashlong"
+    ),
+    prior_string(
+      glue("normal({mean_latitude}, {sigma2})"),
+      nlpar = "crashlat"
+    )
+  )
+}
+
+informative_prior <- make_prior(nls_data, 0.001)
+uninformative_prior <- make_prior(nls_data, 1)
+
+informative_prior
+```
+
+
+```{r}
+brm_informative <- brm(
+  bf(
+    dist_meters ~ havdist(longitude, latitude, crashlong, crashlat),
+    crashlong + crashlat ~ 1,
+    nl = TRUE
+  ),
+  data = nls_data,
+  stanvars = stanvar(scode = stan_funs, block = "functions"),
+  prior =  informative_prior,
+  backend = "cmdstanr",
+  chains = 4,
+  cores = 4,
+  seed = 27,
+  control = list(adapt_delta = 0.98)
+)
+
+brm_informative
+```
+
+can we do better by putting an informative prior on the error variance??
+
+```{r}
+brm_params <- fixef(brm_informative)[, "Estimate"] |>
+  set_names(
+    c("longitude", "latitude")
+  )
+
+brm_ellipse <- ellipse(vcov(brm_informative), center = brm_params) |>
+  make_leaflet_polygon()
+
+prior_vcov <- diag(0.001, nrow = 2)
+prior_mean <- c(mean_longitude, mean_latitude)
+
+prior_ellipse <- ellipse(prior_vcov, center = prior_mean) |>
+  make_leaflet_polygon()
+
+brm_informative_map <- leaflet() |>
+  addTiles() |>
+  setView(
+    lng = mean_longitude,
+    lat = mean_latitude,
+    zoom = 13
+  ) |>
+  addCircleMarkers(
+    data = leaflet_data,
+    color = leaflet_data$color,
+    label = leaflet_data$label_html
+  ) |>
+  addPolygons(
+    data = brm_ellipse,
+    color = "red",
+    stroke = 1
+  )
+
+brm_informative_map
+```
+
+```{r}
+brm_informative_map |> 
+  setView(
+    lng = mean_longitude,
+    lat = mean_latitude,
+    zoom = 12
+  ) |>
+  addPolygons(
+    data = prior_ellipse,
+    color = "green",
+    stroke = 1
+  )
+```
+
+can you fix this by using an uninformative prior?
+
+```{r}
+brm_uninformative <- brm(
+  bf(
+    dist_meters ~ havdist(longitude, latitude, crashlong, crashlat),
+    crashlong + crashlat ~ 1,
+    nl = TRUE
+  ),
+  data = nls_data,
+  stanvars = stanvar(scode = stan_funs, block = "functions"),
+  prior =  uninformative_prior,
+  backend = "cmdstanr",
+  chains = 4,
+  cores = 4,
+  seed = 27
+)
+
+brm_uninformative
+```
+
 my go-to move would be to use brms() to think as little about this problem as possible (i do not want to write out a censored likelihood for this problem, or even commit to a particular distributional family just yet)
 
 and we can do that, but we do need to implement the non-linearity in terms of things that brms can understand. this is a useful trick
@@ -157,6 +301,36 @@ BRMS implementation goes here
 - try to fit with uninformative prior
 
 presumably both don't work
+
+```{r}
+brm_uninformative_params <- fixef(brm_uninformative)[, "Estimate"] |>
+  set_names(
+    c("longitude", "latitude")
+  )
+
+brm_uninformative_ellipse <- ellipse(vcov(brm_uninformative), center = brm_uninformative_params) |>
+  make_leaflet_polygon()
+
+brm_uninformative_map <- leaflet() |>
+  addTiles() |>
+  setView(
+    lng = mean_longitude,
+    lat = mean_latitude,
+    zoom = 4
+  ) |>
+  addCircleMarkers(
+    data = leaflet_data,
+    color = leaflet_data$color,
+    label = leaflet_data$label_html
+  ) |>
+  addPolygons(
+    data = brm_uninformative_ellipse,
+    color = "red",
+    stroke = 1
+  )
+
+brm_uninformative_map
+```
 
 ## is it possible for bayesians to do multilaterion?
 
