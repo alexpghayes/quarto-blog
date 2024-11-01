@@ -1,11 +1,9 @@
 ---
 title: "teaching"
-date-modified: "2024-06-27"
+date-modified: "2024-11-01"
 ---
 
-## current
-
-I am not teaching for the foreseeable future.
+I am not teaching in Fall 2024 nor in the foreseeable future.
 
 ## teaching material
 
@@ -37,20 +35,3 @@ Spring 2018, COMP 540 Statistical Machine Learning, Rice University
 Fall 2017, COMP 330 Data Science: Tools & Models, Rice University
 
 Based on my teaching in the 2018-2019 academic year I received a Statistics Department Outstanding TA award. Outside of academic settings, I used to devote a fair amount of time to teaching R workshops for the Rice DataSci club, and to helping people make their first open source contributions, primarily to the [`broom`](https://broom.tidymodels.org/) package.
-
-## mentoring
-
-- [Nathan Kolbow](https://wid.wisc.edu/people/nathan-kolbow/) worked with me as a undergraduate RA to develop the [`neocache`](https://github.com/alexpghayes/neocache) data collection infrastructure. He is now a PhD student in Biostatistics at UW-Madison.
-
-## guest lectures
-
-**Confidence intervals**  
-October 25 & 27, 2022, STAT 340 Data Modeling II, UW-Madison
-
-**Sampling with Twitter following graph with `aPPR`**  
-October 8, 2020, STAT 992 Modern Multivariate Statistics, UW-Madison   
-[slides](https://github.com/alexpghayes/appr-presentation)
-
-**Hypothesis testing**  
-October 18, 2018, STAT 324 Intro to Statistics for Engineers, UW-Madison  
-[notes](https://alexpghayes.github.io/distributions3/articles/intro-to-hypothesis-testing.html)

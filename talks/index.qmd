@@ -1,28 +1,33 @@
 ---
 title: "talks"
-date-modified: "2024-06-25"
+date-modified: "2024-11-01"
 ---
 
-## upcoming talks 
+This page contains material from my past presentations. Many of these presentations are very similar to each other, but I have nonetheless included all the variations on my slides because I find the evolution of presentations (and multiple views on the same problem) to be interesting and informative.
 
-None currently scheduled.
+For those of you who prefer skimming slides to reading papers, I've highlighted a few presentations below that are good places to start.
 
-## past talks
+::: {.callout-note}
+# Summary of my work on network mediation
 
 **Estimating network-mediated causal effects via spectral embeddings**  
 2024-06-17 @ 11:45 am, [SINM Satellite](https://sinm.network/sinm2024/), NetSci 2024  
 Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
 [slides](https://github.com/alexpghayes/2024-06-17-netsci-slides)
+:::
+
+::: {.callout-note}
+# Summary of my work on colinearity in the linear-in-means model
 
 **Asymptotic identification of peer effects in linear models** (thesis defense)  
 2024-04-04 @ 12:30 pm, SMI 133, Medical Sciences Center  
 Alex Hayes and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
-[slides](https://github.com/alexpghayes/2024-04-04-defense-slides) (private for the time being)
+[slides](https://github.com/alexpghayes/2024-04-04-defense-slides)
+:::
 
 **Peer effects are parametrically indistinguishable from baseline behaviors in the asymptotic limit**  
 2023-11-27 @ 4 pm, Computer Science 1325, Statistics Grad Student Seminar  
 Alex Hayes and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
-[slides](https://github.com/alexpghayes/2023-11-27-sgsa-slides) (private for the time being)
 
 **Latent contagion in low-rank networks**  
 2023-10-11 @ 2 pm, SMI 133, Levin Lab Meeting
@@ -36,35 +41,32 @@ Alex Hayes and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)
 
 **Estimating network-mediated causal effects via spectral embeddings**  
 2023-08-09 @ 10:30 am, *Recent Developments in Causal Inference*, [JSM 2023](https://ww2.amstat.org/meetings/jsm/2023/index.cfm)  
-Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)
-
-Causal inference for network data is an area of active interest in the social sciences. Unfortunately, the complicated dependence structure of network data presents an obstacle to many causal inference procedures. We consider the task of mediation analysis for network data, and present a model in which mediation occurs in a latent embedding space. Under this model, node-level interventions have causal effects on nodal outcomes, and these effects can be partitioned into a direct effect independent of the network, and an indirect effect induced by homophily. To estimate network-mediated effects, we embed nodes into a low-dimensional space and fit two regression models: (1) an outcome model describing how nodal outcomes vary with treatment, controls, and position in latent space; and (2) a mediator model describing how latent positions vary with treatment and controls. We prove that the estimated coefficients are asymptotically normal about the true coefficients under a sub-gamma generalization of the random dot product graph, a widely-used latent space model. We show that these coefficients can be used in product-of-coefficients estimators for causal inference. Our method is easy to implement, scales to networks with millions of edges, and can be extended to accommodate a variety of structured data.
-[slides](https://github.com/alexpghayes/2023-08-09-jsm-slides), [pre-print](https://arxiv.org/abs/2212.12041)
+Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
+[slides](https://github.com/alexpghayes/2023-08-09-jsm-slides)
 
 **Estimating network-mediated causal effects via spectral embeddings**  
 2023-05-24 @ 5:30 pm, Poster Session 1, [ACIC 2023](https://sci-info.org/annual-meeting/)  
-Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)
-
-We consider the task of mediation analysis for network data, and present a model in which mediation occurs in a latent embedding space. Under this model, node-level interventions have causal effects on nodal outcomes, and these effects can be partitioned into a direct effect independent of the network, and an indirect effect induced by homophily. [poster](https://github.com/alexpghayes/2023-05-24-acic-poster), [pre-print](https://arxiv.org/abs/2212.12041)
-
-Thanks to the University of Wisconsin for funding a portion of my travel to ACIC with a Student Research Grants Competition-Combined Award.
+Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
+[poster](https://github.com/alexpghayes/2023-05-24-acic-poster)
 
 **Estimating network-mediated causal effects via spectral embeddings**  
 2023-04-24 @ 12:30 pm, Orchard View @ the WID, [IFDS Ideas Seminar](https://ifds.info/talks/)  
-Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)
-
-Causal inference for network data is an area of active interest in the social sciences. Unfortunately, the complicated dependence structure of network data presents an obstacle to many causal inference procedures. We consider the task of mediation analysis for network data, and present a model in which mediation occurs in a latent embedding space. Under this model, node-level interventions have causal effects on nodal outcomes, and these effects can be partitioned into a direct effect independent of the network, and an indirect effect induced by homophily. To estimate network-mediated effects, we embed nodes into a low-dimensional space and fit two regression models: (1) an outcome model describing how nodal outcomes vary with treatment, controls, and position in latent space; and (2) a mediator model describing how latent positions vary with treatment and controls. We prove that the estimated coefficients are asymptotically normal about the true coefficients under a sub-gamma generalization of the random dot product graph, a widely-used latent space model. We show that these coefficients can be used in product-of-coefficients estimators for causal inference. Our method is easy to implement, scales to networks with millions of edges, and can be extended to accommodate a variety of structured data.
-[pre-print](https://arxiv.org/abs/2212.12041), [slides](https://github.com/alexpghayes/2023-04-24-ifds-network-mediation-slides)
+Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
+[slides](https://github.com/alexpghayes/2023-04-24-ifds-network-mediation-slides)
 
 **Estimating network-mediated causal effects via spectral embeddings**  
-2022-10-14 @ 4:15 pm in MSC 1210, Statistics Graduate Student Association Seminar
+2022-10-14 @ 4:15 pm in MSC 1210, Statistics Graduate Student Association Seminar  
+Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
+[slides](https://github.com/alexpghayes/2022-10-14-causal-network-regression-slides)
 
-The last several years have seen a renewed and concerted effort to incorporate network data into standard tools for regression analysis, and to make network-linked data legible to practicing scientists. Thus far, this literature has primarily developed tools to infer associative relationships between nodal covariates and network structure. In contrast, we augment a statistical model for network regression with counterfactual assumptions and show how causal effects on a network can be partitioned into a direct effect that is uninfluenced by the network, and an indirect effect that is induced by homophily. [slides](https://github.com/alexpghayes/2022-10-14-causal-network-regression-slides)
+::: {.callout-note}
+# Summary of my network mediation work for a spectral networks audience
 
 **Estimating indirect effects induced by homophily via spectral network regression**  
-2022-07-07, [Tianxi Li](https://sites.google.com/view/tianxili-homepage/home) and [Can Le](https://statistics.ucdavis.edu/people/can-le) Joint Lab Meeting 
-
-The last several years have seen a renewed and concerted effort to incorporate network data into standard tools for regression analysis, and to make network-linked data legible to practicing scientists. Thus far, this literature has primarily developed tools to infer associative relationships between nodal covariates and network structure. In contrast, we augment a statistical model for network regression with counterfactual assumptions and show how causal effects on a network can be partitioned into a direct effect that is uninfluenced by the network, and an indirect effect that is induced by homophily. [slides](https://github.com/alexpghayes/2022-07-07-causal-network-regression-slides)
+2022-07-07, [Tianxi Li](https://sites.google.com/view/tianxili-homepage/home) and [Can Le](https://statistics.ucdavis.edu/people/can-le) Joint Lab Meeting  
+Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)   
+[slides](https://github.com/alexpghayes/2022-07-07-causal-network-regression-slides)
+:::
 
 **`distributions3`: From basic probability to probabilistic regression**  
 2022-06-23, [UseR 2022](https://user2022.r-project.org/program/talks/#session-34-regression-models)  
@@ -72,20 +74,27 @@ The last several years have seen a renewed and concerted effort to incorporate n
 
 The [`distributions3`](https://github.com/alexpghayes/distributions3) package provides a beginner-friendly and lightweight interface to probability distributions. It allows to create distribution objects in the S3 paradigm that are essentially data frames of parameters, for which standard methods are available: e.g., evaluation of the probability density, cumulative distribution, and quantile functions, as well as random samples. It has been designed such that it can be employed in introductory statistics and probability courses. By not only providing objects for a single distribution but also for vectors of distributions, users can transition seamlessly to a representation of probabilistic forecasts from regression models such as GLM (generalized linear models), GAMLSS (generalized additive models for location, scale, and shape), etc. We show how the package can be used both in teaching and in applied statistical modeling, for interpreting fitted models, visualizing their goodness of fit (e.g., via the `topmodels` package), and assessing their performance (e.g., via the `scoringRules` package). [video](https://www.youtube.com/watch?v=rs7ha1F5S0k), [slides](https://www.zeileis.org/papers/useR-2022.pdf)
 
+::: {.callout-note}
+# Summary of computational work on Twitter data and an analysis of #rstats Twitter
+
 **The Low Hanging Fruit of the Twitter Following Graph**  
 2021-08-11, Joint Statistical Meetings  
 Alex Hayes and [Karl Rohe](https://pages.stat.wisc.edu/~karlrohe/index.html)  
 
 In recent applied work on the Twitter media ecosystem, we have found that Twitter metadata (such as follows, likes, quotes, retweets, mentions, etc) is often more informative than the actual content of tweets themselves. The metadata, in some sense, is the right data to use for many inference tasks. In particular, we find that embedding the Twitter following graph is highly informative. However, collecting the following graph is rather challenging due to API rate limits, and storing graphs can also be challenging. We present some computational infrastructure to make access and storage of this high signal data more straightforward, and suggest that research progress would be well served by an increased focus on instrumentation. [slides](https://github.com/alexpghayes/JSM2021)
+:::
+
+::: {.callout-note}
+# An early, informal presentation about my work on co-factor analysis for citations networks
 
 **A new way to think about citations**  
 2020-11-17, Rohe Lab Group Meeting  
 [slides](https://github.com/alexpghayes/rohe-lab-citation-impute-slides)
+:::
 
 **Solving the model representation problem with broom**  
 2019-01-25, `rstudio::conf(2019)`  
-
-The R objects used to represent model fits are notoriously inconsistent, making data analysis inconvenient and frustrating. The broom package resolves this issue by defining a consistent way to represent model fits. By summarizing essential information about fits in tidy tibbles, broom makes it easy to programmatically work with model objects. Combining broom with list-columns results in an especially powerful way to work with many model fits at once. This talk will feature several case studies demonstrating how broom resolves common problems in data analysis. [video](https://resources.rstudio.com/rstudio-conf-2019/solving-the-model-representation-problem-with-broom), [slides](https://github.com/alexpghayes/rstudioconf2019-broom-talk)
+[video](https://resources.rstudio.com/rstudio-conf-2019/solving-the-model-representation-problem-with-broom), [slides](https://github.com/alexpghayes/rstudioconf2019-broom-talk)
 
 **Solving the model representation problem with broom**  
 2018-11-30, Statistics Graduate Student Seminar  
@@ -93,8 +102,7 @@ The R objects used to represent model fits are notoriously inconsistent, making 
 
 **Convenient data analysis with broom**  
 2018-11-14, RStudio Webinar Series  
-
-Broom is a package that converts statistical objects into tibbles. This consistent structure makes it easier to accomplish many standard modelling tasks. In this webinar I'll demonstrate how to use to broom to work with many models at once. We'll see how broom makes it easier to visualize models, work with bootstrapped fits and assess model diagnostics. [video](https://resources.rstudio.com/webinars/convenient-analysis-with-broom-alex-hayes), [slides](https://github.com/alexpghayes/rstudio-webinar-broom)
+[video](https://resources.rstudio.com/webinars/convenient-analysis-with-broom-alex-hayes), [slides](https://github.com/alexpghayes/rstudio-webinar-broom)
 
 **Solving the model representation problem with broom**  
 2018-09-19, Madison R User Group  

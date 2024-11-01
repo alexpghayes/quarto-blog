@@ -20,7 +20,6 @@ website:
         file: index.qmd
       - text: blog
         file: posts.qmd
-      - papers/index.qmd
       - code/index.qmd
       - teaching/index.qmd
       - talks/index.qmd
