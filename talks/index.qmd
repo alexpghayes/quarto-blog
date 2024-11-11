@@ -7,12 +7,21 @@ This page contains material from my past presentations. Many of these presentati
 
 For those of you who prefer skimming slides to reading papers, I've highlighted a few presentations below that are good places to start.
 
+-----
+
+**Estimating peer influence: limitations of linear-in-means models**  
+2024-11-12 @ 2:35 pm, American Family Funding Initiative Networking Meeting  
+[poster](https://github.com/alexpghayes/2024-11-12-afi-poster/)
+
+**Estimating peer influence: limitations of linear-in-means models**  
+2024-11-22 @ 5 pm, Wisconsin ASA Chapter Meeting  
+[poster](https://github.com/alexpghayes/2024-11-12-afi-poster/)
+
 ::: {.callout-note}
 # Summary of my work on network mediation
 
 **Estimating network-mediated causal effects via spectral embeddings**  
 2024-06-17 @ 11:45 am, [SINM Satellite](https://sinm.network/sinm2024/), NetSci 2024  
-Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
 [slides](https://github.com/alexpghayes/2024-06-17-netsci-slides)
 :::
 
@@ -21,42 +30,34 @@ Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfr
 
 **Asymptotic identification of peer effects in linear models** (thesis defense)  
 2024-04-04 @ 12:30 pm, SMI 133, Medical Sciences Center  
-Alex Hayes and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
 [slides](https://github.com/alexpghayes/2024-04-04-defense-slides)
 :::
 
 **Peer effects are parametrically indistinguishable from baseline behaviors in the asymptotic limit**  
 2023-11-27 @ 4 pm, Computer Science 1325, Statistics Grad Student Seminar  
-Alex Hayes and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
 
 **Latent contagion in low-rank networks**  
-2023-10-11 @ 2 pm, SMI 133, Levin Lab Meeting
-Alex Hayes and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
+2023-10-11 @ 2 pm, SMI 133, Levin Lab Meeting  
 [slides](https://github.com/alexpghayes/2023-10-11-levin-slides) (private for the time being)
 
 **Peer diffusion over uncertain networks**  
 2023-09-18 @ 12:30 pm, WID 1145, [IFDS Ideas Seminar](https://ifds.info/talks/)  
-Alex Hayes and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
 [slides](https://github.com/alexpghayes/2023-09-18-ifds-slides) (private for the time being)
 
 **Estimating network-mediated causal effects via spectral embeddings**  
 2023-08-09 @ 10:30 am, *Recent Developments in Causal Inference*, [JSM 2023](https://ww2.amstat.org/meetings/jsm/2023/index.cfm)  
-Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
 [slides](https://github.com/alexpghayes/2023-08-09-jsm-slides)
 
 **Estimating network-mediated causal effects via spectral embeddings**  
 2023-05-24 @ 5:30 pm, Poster Session 1, [ACIC 2023](https://sci-info.org/annual-meeting/)  
-Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
 [poster](https://github.com/alexpghayes/2023-05-24-acic-poster)
 
 **Estimating network-mediated causal effects via spectral embeddings**  
 2023-04-24 @ 12:30 pm, Orchard View @ the WID, [IFDS Ideas Seminar](https://ifds.info/talks/)  
-Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
 [slides](https://github.com/alexpghayes/2023-04-24-ifds-network-mediation-slides)
 
 **Estimating network-mediated causal effects via spectral embeddings**  
 2022-10-14 @ 4:15 pm in MSC 1210, Statistics Graduate Student Association Seminar  
-Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)  
 [slides](https://github.com/alexpghayes/2022-10-14-causal-network-regression-slides)
 
 ::: {.callout-note}
@@ -64,7 +65,6 @@ Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfr
 
 **Estimating indirect effects induced by homophily via spectral network regression**  
 2022-07-07, [Tianxi Li](https://sites.google.com/view/tianxili-homepage/home) and [Can Le](https://statistics.ucdavis.edu/people/can-le) Joint Lab Meeting  
-Alex Hayes, [Mark M. Fredrickson](https://lsa.umich.edu/stats/people/faculty/mfredric.html) and [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/)   
 [slides](https://github.com/alexpghayes/2022-07-07-causal-network-regression-slides)
 :::
 
@@ -79,7 +79,6 @@ The [`distributions3`](https://github.com/alexpghayes/distributions3) package pr
 
 **The Low Hanging Fruit of the Twitter Following Graph**  
 2021-08-11, Joint Statistical Meetings  
-Alex Hayes and [Karl Rohe](https://pages.stat.wisc.edu/~karlrohe/index.html)  
 
 In recent applied work on the Twitter media ecosystem, we have found that Twitter metadata (such as follows, likes, quotes, retweets, mentions, etc) is often more informative than the actual content of tweets themselves. The metadata, in some sense, is the right data to use for many inference tasks. In particular, we find that embedding the Twitter following graph is highly informative. However, collecting the following graph is rather challenging due to API rate limits, and storing graphs can also be challenging. We present some computational infrastructure to make access and storage of this high signal data more straightforward, and suggest that research progress would be well served by an increased focus on instrumentation. [slides](https://github.com/alexpghayes/JSM2021)
 :::

@@ -1,5 +1,53 @@
+@article{allen2013,
+  title = {Sparse and {{Functional Principal Components Analysis}}},
+  author = {Allen, Genevera I.},
+  year = {2013},
+  month = sep,
+  journal = {arXiv:1309.2895 [stat]},
+  eprint = {1309.2895},
+  primaryclass = {stat},
+  url = {http://arxiv.org/abs/1309.2895},
+  urldate = {2019-02-08},
+  abstract = {Regularized principal components analysis, especially Sparse PCA and Functional PCA, has become widely used for dimension reduction in high-dimensional settings. Many examples of massive data, however, may benefit from estimating both sparse AND functional factors. These include neuroimaging data where there are discrete brain regions of activation (sparsity) but these regions tend to be smooth spatially (functional). Here, we introduce an optimization framework that can encourage both sparsity and smoothness of the row and/or column PCA factors. This framework generalizes many of the existing approaches to Sparse PCA, Functional PCA and two-way Sparse PCA and Functional PCA, as these are all special cases of our method. In particular, our method permits flexible combinations of sparsity and smoothness that lead to improvements in feature selection and signal recovery as well as more interpretable PCA factors. We demonstrate our method on simulated data and a neuroimaging example on EEG data. This work provides a unified framework for regularized PCA that can form the foundation for a cohesive approach to regularization in high-dimensional multivariate analysis.},
+  archiveprefix = {arXiv},
+  langid = {english},
+  file = {/home/alex/Zotero/storage/V9DJS4MY/Allen - 2013 - Sparse and Functional Principal Components Analysi.pdf}
+}
 
-@article{lee_barely_2021,
+@inproceedings{allen2019b,
+  title = {Sparse and {{Functional Principal Components Analysis}}},
+  booktitle = {2019 {{IEEE Data Science Workshop}} ({{DSW}})},
+  author = {Allen, Genevera I. and Weylandt, Michael},
+  year = {2019},
+  month = jun,
+  pages = {11--16},
+  doi = {10.1109/DSW.2019.8755778},
+  url = {https://ieeexplore.ieee.org/document/8755778},
+  urldate = {2024-11-02},
+  abstract = {Regularized variants of Principal Components Analysis, especially Sparse PCA and Functional PCA, are among the most useful tools for the analysis of complex high-dimensional data. Many examples of massive data, have both sparse and functional (smooth) aspects and may benefit from a regularization scheme that can capture both forms of structure. For example, in neuro-imaging data, the brain's response to a stimulus may be restricted to a discrete region of activation (spatial sparsity), while exhibiting a smooth response within that region. We propose a unified approach to regularized PCA which can induce both sparsity and smoothness in both the row and column principal components. Our framework generalizes much of the previous literature, with sparse, functional, two-way sparse, and two-way functional PCA all being special cases of our approach. Our method permits flexible combinations of sparsity and smoothness that lead to improvements in feature selection and signal recovery, as well as more interpretable PCA factors. We demonstrate the efficacy of our method on simulated data and a neuroimaging example on EEG data.},
+  keywords = {multivariate analysis,regularized PCA},
+  file = {/home/alex/Zotero/storage/TQQFXGNR/Allen and Weylandt - 2019 - Sparse and Functional Principal Components Analysis.pdf;/home/alex/Zotero/storage/KD5VFRQ6/8755778.html}
+}
+
+@article{hayes2024b,
+  title = {Co-{{Factor Analysis}} of {{Citation Networks}}},
+  author = {Hayes, Alex and Rohe, Karl},
+  year = {2024},
+  month = oct,
+  journal = {Journal of Computational and Graphical Statistics},
+  volume = {00},
+  number = {0},
+  pages = {1--14},
+  issn = {1061-8600, 1537-2715},
+  doi = {10.1080/10618600.2024.2394464},
+  url = {https://www.tandfonline.com/doi/full/10.1080/10618600.2024.2394464},
+  urldate = {2024-10-02},
+  abstract = {One compelling use of citation networks is to characterize papers by their relationships to the surrounding literature. We propose a method to characterize papers by embedding them into two distinct ``co-factor'' spaces: one describing how papers send citations, and the other describing how papers receive citations. This approach presents several challenges. First, older documents cannot cite newer documents, and thus it is not clear that co-factors are even identifiable. We resolve this challenge by developing a co-factor model for asymmetric adjacency matrices with missing lower triangles and showing that identification is possible. We then frame estimation as a matrix completion problem and develop a specialized implementation of matrix completion because prior implementations are memory bound in our setting. Simulations show that our estimator has promising finite sample properties, and that naive approaches fail to recover latent cofactor structure. We leverage our estimator to investigate 255,780 papers published in statistics journals from 1898 to 2024, resulting in the most comprehensive topic model of the statistics literature to date. We find interpretable co-factors corresponding to many statistical subfields, including time series, variable selection, spatial methods, graphical models, GLM(M)s, causal inference, multiple testing, quantile regression, semiparametrics, dimension reduction, and several more. Supplementary materials for this article are available online.},
+  langid = {english},
+  file = {/home/alex/Zotero/storage/U3ES92DY/Hayes and Rohe - 2024 - Co-Factor Analysis of Citation Networks.pdf}
+}
+
+@article{lee2021a,
   title = {Barely Sufficient Practices in Scientific Computing},
   author = {Lee, Graham and Bacon, Sebastian and Bush, Ian and Fortunato, Laura and Gavaghan, David and Lestang, Thibault and Morton, Caroline and Robinson, Martin and {Rocca-Serra}, Philippe and Sansone, Susanna-Assunta and Webb, Helena},
   year = {2021},
@@ -10,20 +58,36 @@
   pages = {100206},
   issn = {26663899},
   doi = {10.1016/j.patter.2021.100206},
+  url = {https://linkinghub.elsevier.com/retrieve/pii/S2666389921000167},
+  urldate = {2021-06-29},
   langid = {english},
   file = {/home/alex/Zotero/storage/62KCPPE7/Lee et al. - 2021 - Barely sufficient practices in scientific computin.pdf}
 }
 
-@article{peer_active_2020,
+@article{peer2020,
   title = {Active {{Maintenance}}: {{A Proposal}} for the {{Long-term Computational Reproducibility}} of {{Scientific Results}}},
   author = {Peer, Limor and Orr, Lilla and Coppock, Alexander},
   year = {2020},
+  url = {https://osf.io/preprints/socarxiv/8jwhk/},
   abstract = {Computational reproducibility, or the ability to reproduce analytic results of a scientific study on the basis of publicly available code and data, is a shared goal of many researchers, journals, and scientific communities. Researchers in many disciplines including political science have made strides towards realizing that goal. A new challenge, however, has arisen. Code too often becomes obsolete within just a few years. We document this problem with a random sample of studies posted to the ISPS Data Archive; we encountered nontrivial errors in seven of 20 studies. In line with similar proposals for the long-term maintenance of data and commercial software, we propose that researchers dedicated to computational reproducibility should have a plan in place for ``active maintenance'' of their analysis code. We offer concrete suggestions for how data archives, journals, and research communities could encourage and reward the active maintenance of scientific code and data.},
   langid = {english},
   file = {/home/alex/Zotero/storage/EHA9GBHQ/Peer et al. - Active Maintenance A Proposal for the Long-term C.pdf}
 }
 
-@article{taschuk_ten_2017,
+@article{rohe2018,
+  title = {A {{Note}} on {{Quickly Sampling}} a {{Sparse Matrix}} with {{Low Rank Expectation}}},
+  author = {Rohe, Karl and Tao, Jun and Han, Xintian and Binkiewicz, Norbert},
+  year = {2018},
+  journal = {Journal of Machine Learning Research},
+  volume = {19},
+  pages = {1--13},
+  url = {https://jmlr.csail.mit.edu/papers/volume19/17-128/17-128.pdf},
+  abstract = {Given matrices X,Y {$\in$} Rn{\texttimes}K and S {$\in$} RK{\texttimes}K with positive elements, this paper proposes an algorithm fastRG to sample a sparse matrix A with low rank expectation E(A) = XSY T and independent Poisson elements. This allows for quickly sampling from a broad class of stochastic blockmodel graphs (degree-corrected, mixed membership, overlapping) all of which are specific parameterizations of the generalized random product graph model defined in Section 2.2. The basic idea of fastRG is to first sample the number of edges m and then sample each edge. The key insight is that because of the the low rank expectation, it is easy to sample individual edges. The naive ``element-wise'' algorithm requires O(n2) operations to generate the n {\texttimes} n adjacency matrix A. In sparse graphs, where m = O(n), ignoring log terms, fastRG runs in time O(n). An implementation in R is available on github. A computational experiment in Section 2.4 simulates graphs up to n = 10, 000, 000 nodes with m = 100, 000, 000 edges. For example, on a graph with n = 500, 000 and m = 5, 000, 000, fastRG runs in less than one second on a 3.5 GHz Intel i5.},
+  langid = {english},
+  file = {/home/alex/Zotero/storage/YVIWEQYK/Rohe et al. - A Note on Quickly Sampling a Sparse Matrix with Lo.pdf}
+}
+
+@article{taschuk2017,
   title = {Ten Simple Rules for Making Research Software More Robust},
   author = {Taschuk, Morgan and Wilson, Greg},
   year = {2017},
@@ -34,12 +98,14 @@
   pages = {e1005412},
   issn = {1553-7358},
   doi = {10.1371/journal.pcbi.1005412},
+  url = {https://dx.plos.org/10.1371/journal.pcbi.1005412},
+  urldate = {2019-11-18},
   abstract = {Software produced for research, published and otherwise, suffers from a number of common problems that make it difficult or impossible to run outside the original institution or even off the primary developer's computer. We present ten simple rules to make such software robust enough to be run by anyone, anywhere, and thereby delight your users and collaborators.},
   langid = {english},
   file = {/home/alex/Zotero/storage/KUQKRBHU/Taschuk and Wilson - 2017 - Ten simple rules for making research software more.pdf}
 }
 
-@article{wilson_good_2017,
+@article{wilson2017,
   title = {Good Enough Practices in Scientific Computing},
   author = {Wilson, Greg and Bryan, Jennifer and Cranston, Karen and Kitzes, Justin and Nederbragt, Lex and Teal, Tracy K.},
   editor = {Ouellette, Francis},
@@ -51,8 +117,8 @@
   pages = {e1005510},
   issn = {1553-7358},
   doi = {10.1371/journal.pcbi.1005510},
+  url = {https://dx.plos.org/10.1371/journal.pcbi.1005510},
+  urldate = {2021-09-16},
   langid = {english},
   file = {/home/alex/Zotero/storage/S9D5SHAT/Wilson et al. - 2017 - Good enough practices in scientific computing.pdf}
 }
-
-
