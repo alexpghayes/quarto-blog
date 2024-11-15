@@ -2,7 +2,7 @@
 title: "what i want from academic code"
 subtitle: |
   the purpose, audience, and value of methods software
-date: "2024-11-04"
+date: "2024-11-14"
 categories: [statistical software]
 bibliography: references.bib
 draft: true
@@ -10,120 +10,60 @@ draft: true
 
 ### Summary
 
+It is a bit of meme that academic software is disappointing, because it either fails to solve applied problems or behaves unreliably in production. I argue that this is not the right goal for academic code, primarily because it is unrealistic and somewhat at odds with academic incentive structures. Rather, academic code might function best as a medium for precise communication, as a baseline for correctness, to demonstrate proof-of-concept, or as hacky tool to solve problems intermittently and semi-reliably. I think that these alternative goals are valuable, and there are incentive-compatible reasons for various academic groups to produce code for these alternative ends. Understanding why these alternative goals are incentive-compatible for academics requires us to consider how various kinds of academic interact with code. 
 
+Several key stakeholders with respect to methodological software are (1) theorists who develop methods but only intermittently use them, (2) practitioners who constantly use methods in applied work, and (3) translational workers who take theoretical work and turn it into pragmatic tooling for practitioners. Incentives are different for each of these groups, and I argue that theorists, applied folks, and translators should all write very different kinds of code. I propose a substantial re-orientation for theorists, and, more generally, methods producers: rather than trying and failing to write user facing code, these folks should focus on the easier and more achievable task of writing psuedo-code, clear reference implementations and careful documentation that software engineers can then later use as the basis for user facing software. 
 
-infrastructure is good. everyone likes infrastructure, myself included. but how to give academic credit?
+This re-orientation towards software responsibilities relaxes the pressure on methods producers to be unicorn researcher-programmers. It acknowledges that software engineering labor is distinct from research labor, despite the fact that software is a form of research infrastructure. It acknowledges that academics are largely paid to produce research rather than code, and also that academics are typically much better at producing research. It also requires some humility for academics, to accept that large portions of academic code are not meaningful contributions, and that is isn't worthwhile to write code intended for other people if they can't actually use it. I hope that this re-orientation towards software responsibilities can also enable new opportunities for producing software that is in fact usable. Applied academics could make smaller, more reasonable requests of their theoretical colleagues. Academic departments could hire research software engineers, and allocate their resources in ways that reflect their relative interest in research products and research infrastructure. And most important, the folks who eventually do translate methods into software could start with a useful leg up rather than a confusing mess.
 
+### A normative typology of methods software and what it should do
 
-
-
-central theses:
-
-People should set realistic expectations around the code they write and explicitly state what the goal is.
-    People need to be more introspective around their goals for releasing research software
-
-- academic scripts cannot be immediately plugged into production and that's fine actually
-- there are a lot of academics attempts at producing code for other people, and these attempts often instead produce borderline useless garbage
-- it would be much better to try for less and succeed at a nice reference implementation instead
-- methods code is infrastructure for research, not a research product itself. it makes sense to value it differently from research products. 
-- more people can do the infrastructure work of writing the code than code the work of developing the method, so the code contributions are less specialized.
-- i think the research itself is a more fundamental mandate in academic than the research infrastructure. i think it's pretty fair for tenure committees to take difference stancse on how much they care about this breakdown. i also think that, for a lot of tenure committees, it'll be pretty tricky to understand the quality of code and how much of an infrastructure contribution it actually is. academic credit is confounded by the fact that students to work on code and get academic credit for. this a pressure from students to be viable on the academic and non-academic job markets.
-- methods work without pseudo-code and a reference implementation is incomplete, ideally also some proof-of-concept simulations or applications to toy problems. have to release at least some code.
-- the best way to get academic credit for writing software is to be on the original methods paper, and to ask software users to cite that paper
-- the second best way to get credit for software is to make a minor methdological extension, and write an R journal or paper about it
-
-- academics often attempt to write code for others to use, and rarely succeed. instead of writing code for software users, i propose a re-orientation: academics should write code for software developers. not to use themselves, but to extend. instead of trying and failing to write user facing code (ubiquituous), let's focus on clear pseudo-code and clean reference implementations, documentation about computational tricks. 
-
-- user unfriendly code is not in fact an infrastructure contribution. it's not worthwile to write shitty code that people can't use. 
-
-- it is much easier to write developer-friendly code than user-friendly code
-
-- methods code is an infrastructure contribution, not a research contribution (typically the theoretical derivation of the method itself, or empirical work using establish methods)
-
-- crucially, there are different kinds of code contributions, and we are more likely to succeed at making some than others
-
-there's correctness concerns and code quality concerns and maintanence concerns. 
-
-
-
-
-There are many valuable reasons to write code beyond creating large, automated systems. Code is also valuable as a medium for precise communication, as a baseline for correctness, to demonstrate proof-of-concept, and as a tool to use intermittently and inefficiently. 
-
-Researchers in particular value these alternative goals more than developing large, automated systems. By differentiating between various kinds of code contributions, we may be able to better incentivize narrow, purpose-specific academic software. Further, we may make it easier to eventually productionize code originally written for a different purpose.
-
-### A normative typology of software, goals, and audiences
-
-To my eye, there are roughly three audiences for statistical software:
-
-1. methods producers,
-2. methods consumers, and
-3. methods translators.
-
-Methods producers tend to be researchers, applied or theoretical, who develop solutions to open problems. Methods consumers have some question or real-world problem, and we know to answer that question or solve that problem, and they want the answer or the solution.Lastly, methods translators are tool builders and tutorial writers. They are interested in helping methods consumers get things done, and they understand that methods consumers may not have the time, inclination or background to implement solutions in code. Methods producers are rarely methods consumers themselves; methods translators are often methods consumers who want their daily workflows to be more ergonomic.
-
-Each of these groups has different software needs. With this in mind, here are five distinct kinds of software products, each of which serves some groups but not others.
-
-<!-- the type, the goal of the type, key features, things the contribution does not need to do, what kind of labor it takes to make the thing, the audience, maintained -->
-
-1. **Pseudo-code**. Pseudo-code describes an algorithm in formal and unambiguous language. The purpose of psuedo-code is to communicate and help others understand what an algorithm does. Pseudo-code is useful to methods producers who want to study theoretical properties of an algorithm, and also to methods translators who want to implement an algorithm. Pseudo-code does not need to be runnable software. Producing pseudo-code primarily requires theoretical labor.
+1. **Pseudo-code**. Pseudo-code describes an algorithm in formal and unambiguous language. The purpose of psuedo-code is to communicate and help others understand what an algorithm does. Pseudo-code is useful to methods producers who want to study theoretical properties of an algorithm, and also to software engineers or translational workers who want to actually implement a method. Pseudo-code is not runnable code. 
 
     An example of nice pseudo-code is given in @allen2019b:
 
     ![](sfpca-alg.png){fig-alt="Psuedo-code for the SFPCA algorithm." width=70% fig-align="center"}
 
-    This pseudo-code gives a clear conceptual overview of the algorithm, and most of the information needed for implementation. In practice, there are a number of minor implementation details that do not appear here: how to compute the singular values, the implementation of the proximal operator, and how to test for convergence. This small amount of remaining ambiguity is exactly why it's value to complement the pseudo-code with a reference implementation.
+    This pseudo-code gives a clear conceptual overview of the algorithm, and most of the information needed for implementation. In practice, there are a number of minor implementation details that do not appear here: how to compute the singular values, the implementation of the proximal operator, and how to test for convergence. This small amount of remaining ambiguity is exactly why it's valuable to complement the pseudo-code with a reference implementation.
 
 <!-- ![](fastrg.png){fig-alt="Psuedo-code for the SFPCA algorithm." width=70% fig-align="center"} -->
 
-2. **Reference implementation**. A reference implementation is a basic translation of pseudo-code into runnable code. The purpose of a reference implementation is to generate results on toy problems that can be used to test future implementations of an algorithm. Like pseudo-code, reference implementations should to be exceptionally readable. It is best if reference implementations run in a limited number of concrete settings and avoid complicated language features. Both the original author of a reference implementation and third parties should feel very confident about correctness. The notation in a reference implementation should also closely match the notation in the paper or document that proposes the algorithm. Inputs and outputs should be carefully documented, and tests on some key examples are valuable. Producing reference implementations requires software development labor. This labor may not feel particularly worthwhile, because maximizing readable of the code often comes at the cost of user friendliness. However, reference implementations primarily designed to be read rather than run.
+2. **Reference implementation**. A reference implementation is a basic translation of pseudo-code into runnable code. The purpose of a reference implementation is to generate results on toy problems that can be used to test future implementations of an algorithm. Like pseudo-code, reference implementations should to be exceptionally readable. It is best if reference implementations run in a limited number of concrete settings and avoid complicated language features. Both the original author of a reference implementation and third parties should feel very confident about correctness. The notation in a reference implementation should also closely match the notation in the paper or document that proposes the algorithm. Inputs and outputs should be carefully documented, and tests on some key examples are valuable. However, reference implementations primarily designed to be read rather than run. Ideally, reference implementations are written in freely available languages.
 
     The SFPCA algorithm above was [originally accompanied](https://web.archive.org/web/20170803083332/http://www.stat.rice.edu/~gallen/software/sfpca/sfpca_fixed.m) by the following MATLAB reference implementation:
 
     ![](sfpca-reference.png){fig-alt="Screenshot of the SFPCA reference implementation."}
 
-    This reference implementation has all the computational details you need to implement SFPCA. I ended up [implementing](https://github.com/alexpghayes/gsoc_moma_application) this algorithm in both R and C++ and [testing against]((https://github.com/alexpghayes/gsoc_moma_application/blob/master/tests/testthat/test-sfpca.R)) this reference implementation.
+    This reference implementation has all the computational details you need to implement SFPCA. I know this because I ended up [implementing](https://github.com/alexpghayes/gsoc_moma_application) SFPCA in both R and C++ and [testing against]((https://github.com/alexpghayes/gsoc_moma_application/blob/master/tests/testthat/test-sfpca.R)) this MATLAB script.
 
 3. **Proof-of-concept**. Proof-of-concept implementations are designed to run on research problems. They include features that researchers need to get their research done. Proof-of-concept implementations do not need to be fully featured or well-designed or computationally efficient. They should typically be released once and un-maintained. The code should primarily be useful for *other researchers* who also want to use the code *for research*. Proof-of-concept implementations can take a substantial amount of development labor, but this labor is unlikely to benefit anyone beyond the original authors of the scripts. Sharing proof-of-concept implementations is important for reproducibility purposes, but a reference implementation (easier to understand, at less risk of bit rot) or hobbyist implementation (actively maintained, documented, user-friendly) is a more meaningful contribution to the community at large. While proof-of-concept implementations enable future research, that future research is typically quite painful^[Proof-of-concept code, in case it isn't clear, is the minimum viable product need to successfully author an academic manuscript.].
 
-    My [CitationImpute](https://github.com/RoheLab/fastadi/blob/main/R/citation-impute2.R) code is an example of proof-of-concept code. I got that code to work enough for me to publish @hayes2024b. Some of the code and documentation is even pretty nice, but the point is that this code is primarily for myself. It's not particularly ready for someone else to use. It breaks in unexpected and barely documented ways: don't, for instance, pass in any missing data. There are actually two separate implementations of the underlying algorithm, with no explanation for why this is the case. The other day someone asked for a demonstration of how to actually use the code, and it took me four or five hours to write a (still very terse) [vignette](https://gist.github.com/alexpghayes/9ab8c37e75e5d91932e79037ba108371). I would not put this code in production. Do I trust the code and the results in my paper? Absolutely, I wrote a lot of correctness tests and simulated to show that estimation error goes down! Do I think that *someone else* could use this code to do something useful? No idea!
-
-    you could try to plug `fastadi::adaptive_impute()` into production, and i think you might have decent luck even, but this is so far from my goal with that code. i trust correctness, i just don't know how big the problems are and if the code will scale 
-    
-
-    Based on another proof of concept implementation: https://github.com/chojuhee/hello-world (there is one bug in this code that is theoretically concerning)
+    My [CitationImpute](https://github.com/RoheLab/fastadi/blob/main/R/citation-impute2.R) code is an example of proof-of-concept code. That worked enough for me to publish @hayes2024b. Some of the code and documentation is even pretty nice, but the point is that this code is primarily for myself. It's not particularly ready for someone else to use. It breaks in unexpected and barely documented ways: don't, for instance, pass in any missing data. There are actually two separate implementations of the underlying algorithm, with no explanation for why this is the case. The other day someone asked for a demonstration of how to actually use the code, and it took me four or five hours to write a (still very terse) [vignette](https://gist.github.com/alexpghayes/9ab8c37e75e5d91932e79037ba108371). I would not put this code in production. Do I trust the code and the results in my paper? Absolutely, I wrote a lot of correctness tests and simulated to show that estimation error goes down! Do I think that *someone else* could use this code to do something useful? Maybe, but I think it's likely that they'd have a bad time. Another example of a proof-of-concept implementation of `AdaptiveImpute` is [here](https://github.com/chojuhee/hello-world). This codes works and was enough to publish a paper, but computationally, there are a lot of unexplained things happening and there's a small bug or two!
 
 4. **Hobbyist software**. Hobbyist software, for lack of a better name, is designed for methods consumers. The goal is to solve practical but technically approachable problems. Hobbyist code should be usable, well-documented, tested and released in an easily installable form. The authors should provide at least some ongoing maintenance for the code. They should also make a genuine effort to disseminate the software by advertising it and providing tutorials on its use. The internal structure of the code does not have to be perfect, but it needs to be understandable enough to have moderate faith in its correctness. Hobbyist software doesn't necessarily need to have the reliability of software for a big production system, but it should solve most problems that an applied researcher might tackle on a personal computer. Note that hobbyist software takes a substantial amount of labor to develop, and the primary benefit is to the community of methods consumers. 
 
-    I consider my [`fastRG`](https://github.com/RoheLab/fastRG) package to be hobbyist level code. It's documented, somewhat tested, and I use it myself on a frequent basis. I also know that other people use the package on a frequent basis, and presumably they would not if it were unbearably buggy or dysfunctional. Most importantly, in contrast to `fastadi::citation_impute()`, I feel *good* about people using `fastRG`. I maintain it! `vsp` maybe but I am behind on maintainence, know a couple bugs that users are probably hitting and giving up on. work to maintain!!
+    I consider my [`fastRG`](https://github.com/RoheLab/fastRG) package to be hobbyist level code. It's documented, somewhat tested, and I use it myself on a frequent basis. I also know that other people use the package on a frequent basis, and presumably they would not if it were unbearably buggy or dysfunctional. Most importantly, in contrast to `fastadi::citation_impute()`, I feel *good* about people using `fastRG`. 
 
-5. **Production code**. Lastly, there is software that is ready for production, by which I mean that is reliable, feature-complete and scalable to technically challenging settings. These implementations should follow software engineering best practices, use good defaults, and have responsive maintenance teams, as well as a semi-frequent release cycle and extensive documentation. The primary differences between a hobbyist implementation and a production implementation are the internal design of the software, increased UX polish, and thorough testing. Production implementations should handle errors and edge cases gracefully and produce results that are reliably correct. The purpose of production code is to enable developers to build large and automated systems. Production implementations often look very different from pseudo-code, due to system and scaling constraints. Documentation should clearly describe how and why the implementation deviates from the pseudo-code.
+5. **Production code**. Lastly, there is software that is ready for production, by which I mean that is reliable, feature-complete and scalable to technically challenging settings. These implementations should follow software engineering best practices, use good defaults, and have responsive maintenance teams, as well as a semi-frequent release cycle and extensive documentation. The primary differences between a hobbyist implementation and a production implementation are the internal design of the software, increased UX polish, and thorough testing. Production implementations should handle errors and edge cases gracefully and produce results that are reliably correct. The purpose of production code is to enable developers to build large and automated systems. Due to system and scaling constraints, production implementations often look very different from pseudo-code. Documentation should clearly describe how and why the implementation deviates from the pseudo-code.
 
-    Some examples of production-grade code include packages in the  [tidyverse](https://www.tidyverse.org/), [Stan](https://mc-stan.org/), [Jax](https://jax.readthedocs.io/en/latest/index.html), etc.
+    Some examples of production-grade code include packages in the [tidyverse](https://www.tidyverse.org/), [Stan](https://mc-stan.org/), and [Jax](https://jax.readthedocs.io/en/latest/index.html).
 
-I believe that each of these different types of software represents a valuable and worthwhile code contribution.
-
-::: {.callout-tip icon=false}
-# Proposal
-
-Software developers should state the **purpose** and **audience** of their code.
-
-I rather like the idea of Github badges:
+My first proposal is that academics writing methodological code should state the **goals** and the **audience** of their code. One way to do this would be with Github badges. For instance:
 
 - `goal: reference-implementation`,
-- `goal: proof-of-concept`,
-- `goal: hobbyist-ready`, and 
+- `goal: proof-of-concept-implementation`,
+- `goal: reliable-on-small-to-moderate-problems`, and 
 - `goal: production-ready`.
 
-Also Github badges:
+Or potentially:
 
-- `audience: methods researchers`,
-- `audience: methods translators`, and
-- `audience: methods consumers`.
-:::
+- `audience: theorists doing methodological research`,
+- `audience: software engineers who want to make this useful to the broader community`, and
+- `audience: applied scientists`.
 
-We can then evaluate code by asking if it achieves it's stated goal, rather than some other goal that we made up ourselves.
+I think the language here needs a moderate amount of work, but by adding these labels to the software we produce, we can then evaluate code by asking if it achieves it's stated goal, rather than some other goal that someone else made up for us.
 
-### Academic credit for methods producers
+### What I want from people who develop new methods
 
 I want to methods producers to:
 
@@ -133,13 +73,13 @@ I want to methods producers to:
 
 The goal of these outputs is to facilitate communication, understanding, and future software development. I consider these products to be an essential part of research. In particular, I personally think of these code products as a minimum standard, and I don't assign any intellectual credit for achieving this basic goal. If an academic researcher doesn't share these outputs, it actively detracts from capacity to continue the research enterprise and methods dissemination effort, and I consider the intellectual contribution incomplete.
 
-In contrast, I don't think that it is a good use of method-producer time to write hobbyist or production-ready code. Especially in academia, methods producers are not incentivized to make tools for methods consumers, and so there is little reason to pressure to method producers to be unicorn programmer-researchers. Instead, methods-producers should set realistic expectations about the goal of their code, and we should evaluate them based on whether or not they achieve those goals. If methods producers go above and beyond and do in fact create hobbyist or production grade code, we should clearly acknowledge this as a meaningful contribution. However, this contribution is a software development contribution rather than a research contribution.
+In contrast, I don't think that it is a good use of method-producer time to write hobbyist or production-ready code. Especially in academia, methods producers are not incentivized to make tools for methods consumers. Instead, methods-producers should set realistic expectations about the goal of their code, and we should evaluate them based on whether or not they achieve those goals. If methods producers go above and beyond and do in fact create hobbyist or production grade code, we should clearly acknowledge this as a meaningful contribution. However, this contribution is a software development contribution rather than a research contribution.
 
-On one hand, I want to free method producers from unreasonable expectations, which are sometimes explicit and sometimes implicit. There are many genuinely constructive attempts to improve the quality of statistical software^[See, for example, the ROpenSci [stats software review](https://stats-devguide.ropensci.org/) and [tidymodels implementation principles](https://github.com/tidymodels/model-implementation-principles) projects, both of which I was briefly involved in, as well as a plethora of academic papers such as @lee2021a, @peer2020, @taschuk2017, and @wilson2017. Beyond that, there's  software checklists and standards for journals such as the [Journal of Open Source Software](https://joss.theoj.org/), the [Journal of Statistical Software](https://www.jstatsoft.org/index), the [R Journal](https://journal.r-project.org/), etc, etc]. To my eye, the aspirational goal of these attempts is often to get people to write production-ready code. I think it's perfectly okay not to do this, especially if you set expectations about what you actually want your code to do^[My attitude on this has shifted substantially over the last several years, as I have started to produce methods. When I spent more time in open-source and primarily acted as a methods consumer, I used to be frustrated by papers that didn't come accompanied by production-ready code. In contrast, these days I find myself frustrated by papers without easy-to-read reference implementations.]. 
+I want to free method producers from unreasonable expectations, which are sometimes explicit and sometimes implicit. There are many genuinely constructive attempts to improve the quality of statistical software^[See, for example, the ROpenSci [stats software review](https://stats-devguide.ropensci.org/) and [tidymodels implementation principles](https://github.com/tidymodels/model-implementation-principles) projects, both of which I was briefly involved in, as well as a plethora of academic papers such as @lee2021a, @peer2020, @taschuk2017, and @wilson2017. Beyond that, there's  software checklists and standards for journals such as the [Journal of Open Source Software](https://joss.theoj.org/), the [Journal of Statistical Software](https://www.jstatsoft.org/index), the [R Journal](https://journal.r-project.org/), etc, etc]. To my eye, the aspirational goal of these attempts is often to get people to write production-ready code. I think it's perfectly okay not to do this, especially if you set expectations about what you actually want your code to do^[My attitude on this has shifted substantially over the last several years, as I have started to produce methods. When I spent more time in open-source and primarily acted as a methods consumer, I used to be frustrated by papers that didn't come accompanied by production-ready code. In contrast, these days I find myself frustrated by papers without easy-to-read reference implementations.]. 
 
-On the other hand, I want to clarify that not all code is created equal, and I am not actually giving most academics any additional credit for the code that they release. To be exceptionally clear on this last point: if you share barely-legible, thousand-line spaghetti script, you don't get to pretend you made a useful tool for other people, and you don't get to pretend you've done anything meaningful to disseminate your method. You have simply completed the research, and have done so in a way that will frustrate future researchers. At best, you’ve completed the research, at worst you’ve obfuscated any attempt at replicating what you’ve developed. It really still is good to learn some programming so that others can more easily build on your work.
+On the other hand, I want to clarify that not all code is created equal, and I am not actually giving most academics any additional credit for the code that they release. To be exceptionally clear on this last point: if you share a barely-legible, thousand-line spaghetti script, you don't get to pretend you made a useful tool for other people, and you don't get to pretend you've done anything meaningful to disseminate your method. You have simply completed the research, and have done so in a way that will greatly frustrate future researchers.
 
-### Some expectations for methods consumers
+### What I want from people who hope to use cutting edge methodological tools in applied work
 
 I want method consumers to:
 
@@ -152,22 +92,40 @@ I have become somewhat ambivalent about citing code in academic papers. It seems
 There is separate set of standards for methods consumer producing data analytic code (as opposed to methods code), but I'm not going to get into that here.
 <!-- Briefly: those standards should be high^[I mean this lovingly, and also with concern: nothing makes me discount empirical work faster than poor data management or messy analytical code.]. -->
 
-### Methods translation is difficult and largely unincentivized
+### So who should be writing user-facing software?
+
+I don't anticipate a reliable influx of translation labor in the near future
+
+i'm not sure if nsf should be funding a full R package for every methods project because like it's a lot of labor and the r package will get bit rot and die if no one uses it.
+
+how often are methods actually getting used? what methods are important?
+
+I don't know! econ twitter talks about wanting someone to implement everything in the same nice and usable package, arnold ventures might fund this kind of work, chan zuckerberg might fund this kind of work, academic might fund this kind of work but not in the way it needs
+
+ropensci/pyopensci packages
 
 Writing code for methods consumers is tough. First of all, it takes a lot of software engineering labor. But beyond this, once you start writing hobbyist or production grade code, you start getting evaluated by two different sets of standards at the same time. Methods producers evaluate the technical and theoretical quality of your work. But methods consumers evaluate the quality and usability of your software. This is rough, and also correct. The challenges run deeper yet, because not only are the methods producers and the methods consumers both holding your work to high standards, neither is giving you any academic credit for your work: good software is neither a novel method, nor is it an intriguing piece of empirical work.
 
 And this is the heart of it: translating new methods into software is *infrastructure work*. It enables research, but is rarely research itself.
 
 
+- user unfriendly code is not in fact an infrastructure contribution. it's not worthwile to write shitty code that people can't use.
+- methods code is infrastructure for research, not a research product itself. it makes sense to value it differently from research products. 
+- i think the research itself is a more fundamental mandate in academic than the research infrastructure. i think it's pretty fair for tenure committees to take difference stancse on how much they care about 
 
-### Conclusion
+- the best way to get academic credit for writing software is to be on the original methods paper, and to ask software users to cite that paper
+- the second best way to get credit for software is to make a minor methdological extension, and write an R journal or paper about it
+
+- software engineer is a less specific type of labor than research labor. however, simultaneously having software engineering chops and being able to read theory papers is pretty rare
+
+infrastructure is good. everyone likes infrastructure, myself included. but how to give academic credit?
+
+central theses:
+- more people can do the infrastructure work of writing the code than code the work of developing the method, so the code contributions are less specialized.this breakdown. i also think that, for a lot of tenure committees, it'll be pretty tricky to understand the quality of code and how much of an infrastructure contribution it actually is. academic credit is confounded by the fact that students to work on code and get academic credit for. this a pressure from students to be viable on the academic and non-academic job markets.
 
 software is often aftermarket of the original methods paper, and when that happens it's really hard to know how to evaluate it
 
-
-I, presumably like many others, would like more methods software and better methods software. To improve the quality of software in the sciences, I think we need to think carefully about the different reasons that software exists, and to be honest about existing incentivize structures. I've proposed some what I think are a fairly reasonable and acheivable set of expectations for methods producers. Namely, I don't think that methods producers need to be programmers turning out pristine code. Rather, I think methods producers need to produce percursor material that can easily be turned into high quality code. When methods producers try to produce code for methods consumers, it often is not usuable by the those very same methods consumers, and additionally, the attempt to make code more broadly usable often results in work that is challenging to use as the basis for future development work.
-
-I hope that methods consumers can have somewhat more realistic expectations in light of this. I think methods translators are excellent and I would like more of them, but I suspect that tenure committees by and large value research output over software infrastructure, and as such, I don't anticipate a reliable influx of translation labor in the near future. In the more distant future, I am optimistic about that values evolve, although I still struggle to envision an academy that incentivizes software as living infrastructure rather than one-time outputs.
+I, presumably like many others, would like more methods software and better methods software. 
 
 #### Acknowledgements
 
