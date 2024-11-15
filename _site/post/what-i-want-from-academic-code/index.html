@@ -1,2 +1,797 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.45">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alex Hayes">
+<meta name="dcterms.date" content="2024-11-14">
+
+<title>what i want from academic code – alex hayes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G6PQFW2XSK"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="alex hayes - what i want from academic code">
+<meta property="og:description" content="the purpose, audience, and value of methods software">
+<meta property="og:image" content="https://www.alexpghayes.com/post/what-i-want-from-academic-code/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta property="og:site_name" content="alex hayes">
+<meta name="twitter:title" content="alex hayes - what i want from academic code">
+<meta name="twitter:description" content="the purpose, audience, and value of methods software">
+<meta name="twitter:image" content="https://www.alexpghayes.com/post/what-i-want-from-academic-code/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta name="twitter:creator" content="@alexpghayes">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">alex hayes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html"> 
+<span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../code/index.html"> 
+<span class="menu-text">code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../teaching/index.html"> 
+<span class="menu-text">teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talks/index.html"> 
+<span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resume/index.html"> 
+<span class="menu-text">resume</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/alexpghayes"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/alexpghayes/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">what i want from academic code</h1>
+            <p class="subtitle lead"></p><p>the purpose, audience, and value of methods software</p><p></p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">statistical software</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p><a href="https://www.alexpghayes.com">Alex Hayes</a> <a href="https://orcid.org/0000-0002-4985-5160" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 14, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#a-typology-of-methods-software" id="toc-a-typology-of-methods-software" class="nav-link active" data-scroll-target="#a-typology-of-methods-software">A typology of methods software</a></li>
+  <li><a href="#a-modest-proposal" id="toc-a-modest-proposal" class="nav-link" data-scroll-target="#a-modest-proposal">A modest proposal</a></li>
+  <li><a href="#what-i-want-from-methods-producers" id="toc-what-i-want-from-methods-producers" class="nav-link" data-scroll-target="#what-i-want-from-methods-producers">What I want from methods producers</a></li>
+  <li><a href="#who-should-write-user-facing-software" id="toc-who-should-write-user-facing-software" class="nav-link" data-scroll-target="#who-should-write-user-facing-software">Who should write user-facing software?</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/what-i-want-from-academic-code/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>It is a bit of meme that academic software is disappointing, because it either fails to solve applied problems or behaves unreliably in production. This is not the right goal for academic code, primarily because it is unrealistic and somewhat at odds with academic incentive structures. Rather, academic code might function best as a medium for precise communication, as a baseline for correctness, to demonstrate proof-of-concept, or as hacky tool to solve problems intermittently and semi-reliably. I think that these alternative goals are valuable, and there are incentive-compatible reasons for various academic groups to produce code for these alternative ends.</p>
+<p>Understanding why these alternative goals are incentive-compatible for academics requires us to consider stakeholders of methodological software. I think the key stakeholders are (1) theorists who develop methods but only intermittently use them, (2) practitioners who constantly use methods in applied work, and (3) translational workers who take theoretical work and turn it into pragmatic tooling for practitioners. Incentives are different for each of these groups, and I argue that theorists, applied folks, and translators should all write very different kinds of code. I propose a substantial re-orientation for theorists and methodologists in particular: rather than trying and failing to write user facing code, these folks should focus on the less stressful and more achievable task of writing psuedo-code, reference implementations and careful documentation that software engineers can then later use as the basis for user facing software.</p>
+<p>This re-assignment of software responsibilities relaxes the pressure on methods producers to be perfect unicorn researcher-programmers. It acknowledges that software engineering labor is distinct from research labor, despite the fact that software is often a form of research infrastructure. It acknowledges that academics are largely paid to produce research rather than code, and also that academics are typically much better at producing research. It also requires some humility from academics, to accept that large portions of academic code are not particularly valuable, and that is isn’t worthwhile to write code intended for other people if they can’t actually use it.</p>
+<p>I think that a re-assessment of software responsibilities might enable new opportunities for producing high-quality, user-facing software. Applied academics could make smaller, more reasonable requests of their theoretical colleagues. Academic departments could hire research software engineers, and allocate their resources in ways that reflect their relative interest in research products and research infrastructure. And the folks who eventually do translate methods into software could start with a useful leg up.</p>
+<section id="a-typology-of-methods-software" class="level3">
+<h3 class="anchored" data-anchor-id="a-typology-of-methods-software">A typology of methods software</h3>
+<p>My (normative) claim is there are a couple different kinds of valuable software contributions:</p>
+<ol type="1">
+<li>Pseudo-code</li>
+<li>Reference implementations</li>
+<li>Proofs-of-concept</li>
+<li>Hobbyist code (please help me come up with a better name!)</li>
+<li>Production code</li>
+</ol>
+<p>Pseudo-code, reference implementations and proofs-of-concept are not user-facing, but hobbyist code and production code are. In more detail:</p>
+<ol type="1">
+<li><p><strong>Pseudo-code</strong>. Pseudo-code describes an algorithm in formal and unambiguous language. The purpose of psuedo-code is to communicate and help others understand what an algorithm does. Pseudo-code is useful to methods producers who want to study theoretical properties of an algorithm, and also to software engineers or translational workers who want to actually implement a method. Pseudo-code is not runnable code.</p>
+<p>An example of nice pseudo-code is given in <span class="citation" data-cites="allen2019b">Allen and Weylandt (<a href="#ref-allen2019b" role="doc-biblioref">2019</a>)</span>:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="sfpca-alg.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Psuedo-code for the SFPCA algorithm."></p>
+</figure>
+</div>
+<p>This pseudo-code gives a clear conceptual overview of the algorithm, and most of the information needed for implementation. In practice, there are a number of minor implementation details that do not appear here: how to compute the singular values, the implementation of the proximal operator, and how to test for convergence. This small amount of remaining ambiguity is exactly why it’s valuable to complement the pseudo-code with a reference implementation.</p></li>
+</ol>
+<!-- ![](fastrg.png){fig-alt="Psuedo-code for the SFPCA algorithm." width=70% fig-align="center"} -->
+<ol start="2" type="1">
+<li><p><strong>Reference implementation</strong>. A reference implementation is a basic translation of pseudo-code into runnable code. The purpose of a reference implementation is to generate results on toy problems that can be used to test future implementations of an algorithm. Like pseudo-code, reference implementations should to be exceptionally readable. It is best if reference implementations run in a limited number of concrete settings and avoid complicated language features. Both the original author of a reference implementation and third parties should feel very confident about correctness. The notation in a reference implementation should also closely match the notation in the paper or document that proposes the algorithm. Inputs and outputs should be carefully documented, and tests on some key examples are valuable. However, reference implementations primarily designed to be read rather than run. Ideally, reference implementations are written in freely available languages.</p>
+<p>The SFPCA algorithm above was <a href="https://web.archive.org/web/20170803083332/http://www.stat.rice.edu/~gallen/software/sfpca/sfpca_fixed.m">originally accompanied</a> by the following MATLAB reference implementation:</p>
+<p><img src="sfpca-reference.png" class="img-fluid" alt="Screenshot of the SFPCA reference implementation."></p>
+<p>This reference implementation has all the computational details you need to implement SFPCA. I know this because I ended up <a href="https://github.com/alexpghayes/gsoc_moma_application">implementing</a> SFPCA in both R and C++ and <a href="(https://github.com/alexpghayes/gsoc_moma_application/blob/master/tests/testthat/test-sfpca.R)">testing against</a> the MATLAB above.</p></li>
+<li><p><strong>Proof-of-concept</strong>. Proof-of-concept implementations are designed to run on research problems. They include features that researchers need to get their research done. Proof-of-concept implementations do not need to be fully featured or well-designed or computationally efficient. They should typically be released once and un-maintained. The code should primarily be useful for <em>other researchers</em> who also want to use the code <em>for research</em>. Proof-of-concept implementations can take a substantial amount of development labor, but this labor is unlikely to benefit anyone beyond the original authors of the scripts. Sharing proof-of-concept implementations is important for reproducibility purposes, but a reference implementation (easier to understand, at less risk of bit rot) or hobbyist implementation (actively maintained, documented, user-friendly) is a more meaningful contribution to the community at large. While proof-of-concept implementations enable future research, that future research is typically quite painful<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>My <a href="https://github.com/RoheLab/fastadi/blob/main/R/citation-impute2.R">CitationImpute</a> code is an example of proof-of-concept code. That worked enough for me to publish <span class="citation" data-cites="hayes2024b">Hayes and Rohe (<a href="#ref-hayes2024b" role="doc-biblioref">2024</a>)</span>. Some of the code and documentation is even pretty nice, but the point is that this code is primarily for myself. It’s not particularly ready for someone else to use. It breaks in unexpected and barely documented ways: don’t, for instance, pass in any missing data. There are actually two separate implementations of the underlying algorithm, with no explanation for why this is the case. The other day someone asked for a demonstration of how to actually use the code, and it took me four or five hours to write a (still very terse) <a href="https://gist.github.com/alexpghayes/9ab8c37e75e5d91932e79037ba108371">vignette</a>. I would not put this code in production. Do I trust the code and the results in my paper? Absolutely, I wrote a lot of correctness tests and simulated to show that estimation error goes down! Do I think that <em>someone else</em> could use this code to do something useful? Maybe, but I think it’s likely that they’d have a bad time. Another example of a proof-of-concept implementation of <code>AdaptiveImpute</code> is <a href="https://github.com/chojuhee/hello-world">here</a>. This codes works and was enough to publish a paper, but computationally, there are a lot of unexplained things happening and there’s a small bug or two!</p></li>
+<li><p><strong>Hobbyist software</strong>. Hobbyist software, for lack of a better name, is designed for methods consumers. The goal is to solve practical but technically approachable problems. Hobbyist code should be usable, well-documented, tested and released in an easily installable form. The authors should provide at least some ongoing maintenance for the code. They should also make a genuine effort to disseminate the software by advertising it and providing tutorials on its use. The internal structure of the code does not have to be perfect, but it needs to be understandable enough to have moderate faith in its correctness. Hobbyist software doesn’t necessarily need to have the reliability of software for a big production system, but it should solve most problems that an applied researcher might tackle on a personal computer. Note that hobbyist software takes a substantial amount of labor to develop, and the primary benefit is to the community of methods consumers.</p>
+<p>I consider my <a href="https://github.com/RoheLab/fastRG"><code>fastRG</code></a> package to be hobbyist level code. It’s documented, somewhat tested, and I use it myself on a frequent basis. I also know that other people use the package on a frequent basis, and presumably they would not if it were unbearably buggy or dysfunctional. Most importantly, in contrast to <code>fastadi::citation_impute()</code>, I feel <em>good</em> about people using <code>fastRG</code>.</p></li>
+<li><p><strong>Production code</strong>. Lastly, there is software that is ready for production, by which I mean that is reliable, feature-complete and scalable to technically challenging settings. These implementations should follow software engineering best practices, use good defaults, and have responsive maintenance teams, as well as a semi-frequent release cycle and extensive documentation. The primary differences between a hobbyist implementation and a production implementation are the internal design of the software, increased UX polish, and thorough testing. Production implementations should handle errors and edge cases gracefully and produce results that are reliably correct. The purpose of production code is to enable developers to build large and automated systems. Due to system and scaling constraints, production implementations often look very different from pseudo-code. Documentation should clearly describe how and why the implementation deviates from the pseudo-code.</p>
+<p>Some examples of production-grade code include packages in the <a href="https://www.tidyverse.org/">tidyverse</a>, <a href="https://mc-stan.org/">Stan</a>, and <a href="https://jax.readthedocs.io/en/latest/index.html">Jax</a>.</p></li>
+</ol>
+</section>
+<section id="a-modest-proposal" class="level3">
+<h3 class="anchored" data-anchor-id="a-modest-proposal">A modest proposal</h3>
+<p>My first proposal is that academics writing methodological code should state the <strong>goals</strong> and the <strong>audience</strong> of their code. One way to do this would be with Github badges. For instance:</p>
+<ul>
+<li><code>purpose: reference-implementation</code>,</li>
+<li><code>purpose: proof-of-concept-implementation</code>,</li>
+<li><code>purpose: reliable-on-small-to-moderate-problems</code>, or</li>
+<li><code>purpose: production-ready</code>.</li>
+</ul>
+<p>Or potentially:</p>
+<ul>
+<li><code>audience: theorists doing methodological research</code>,</li>
+<li><code>audience: software engineers who want to make this useful to the broader community</code>, and</li>
+<li><code>audience: applied scientists</code>.</li>
+</ul>
+<p>I think the language here needs a moderate amount of work, but by adding these labels to the software we produce, we can then evaluate code by asking if it achieves it’s stated goal, rather than some other goal that someone else made up.</p>
+</section>
+<section id="what-i-want-from-methods-producers" class="level3">
+<h3 class="anchored" data-anchor-id="what-i-want-from-methods-producers">What I want from methods producers</h3>
+<p>I want to methods producers to:</p>
+<ul>
+<li>share pseudo-code for their methods,</li>
+<li>share a proof-of-concept implementation that is sufficient to reproduce computational aspects of their work, and</li>
+<li>share a reference implementation <em>distinct</em> from the proof-of-concept code, which is exceptionally clear and readable.</li>
+</ul>
+<p>The goal of these outputs is to facilitate communication, understanding, and future software development. I consider these products to be an essential part of research. In particular, I personally think of these code products as a minimum standard, and I don’t assign any intellectual credit for achieving this basic goal. If an academic researcher doesn’t share these outputs, it actively detracts from capacity to continue the research enterprise and methods dissemination efforts, and I consider the intellectual contribution incomplete.</p>
+<p>In contrast, I don’t think that it is a good use of method-producer time to write hobbyist or production-ready code. Especially in academia, methods producers are not incentivized to make tools for methods consumers. Instead, methods-producers should set realistic expectations about the goal of their code, and we should evaluate them based on whether or not they achieve those goals. If methods producers go above and beyond and do in fact create hobbyist or production grade code, we should clearly acknowledge this as a meaningful contribution. However, this contribution is a software development contribution rather than a research contribution.</p>
+<p>I want to free method producers from unreasonable expectations, which are sometimes explicit and sometimes implicit. There are many genuinely constructive attempts to improve the quality of statistical software<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. To my eye, the aspirational goal of these attempts is often to get people to write production-ready code. I think it’s perfectly okay not to do this, especially if you set expectations about what you actually want your code to do<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>On the other hand, I want to clarify that not all code is created equal, and I am not actually giving most academics additional credit for the code that they release. To be exceptionally clear on this last point: if you share a barely-legible, thousand-line spaghetti script, you don’t get to pretend you’ve done anything meaningful to disseminate your method. You have simply completed the research, and have done so in a way that will greatly frustrate future researchers.</p>
+</section>
+<section id="who-should-write-user-facing-software" class="level3">
+<h3 class="anchored" data-anchor-id="who-should-write-user-facing-software">Who should write user-facing software?</h3>
+<p>In short, paid professionals. I think that people who want a nice implementation of method should pay for the nice implementation of that method. This can take a number of different forms:</p>
+<ul>
+<li>industry paying software engineers to produce in-house or open-source implementations of methods,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></li>
+<li>academic departments hiring research software engineers,</li>
+<li>philanthropic efforts subsidizing open-source work, and</li>
+<li>applied researchers with software chops, implementing methods to facilitate their own research.</li>
+</ul>
+<p>This view is somewhat less expansive than other visions of methodological dissemination. My opinion is that not every method is important or useful enough to justify a high quality implementation, and we mainly want quality software for methods that are obviously important and get used a lot. I think this follows naturally from a desire to use resources in an efficient manner, but also because software that people use is better software, and software that people don’t use is subject to bugs and bit-rot and death.</p>
+<p>You’ll note that academics are not really on this list, mostly because I think it’s incentive-incompatible for most academics to write software for the masses. I don’t think this is uniformly the case, but as a general rule I think it holds. The issue is two-fold: first, academics are ill-prepared to write software for methods consumers. Writing code for methods consumers is tough. First of all, it takes a lot of software engineering labor. But beyond this, once you start writing hobbyist or production grade code, you start getting evaluated by two different sets of standards at the same time. Methods producers evaluate the technical and theoretical quality of your work. But methods consumers evaluate the software design and usability of your software. This is rough, and also as it should be: methodological software needs to both correct and usable. A lot of existing software clears only one of these bars.</p>
+<p>The second reason why I don’t think that academics should write user-facing methods software is that the credit that academics get for code is inconsistent and somewhat volatile and a rough thing to stake a tenure case on, depending on your precise discipline and department. If you write research software, not only are the methods producers and the methods consumers both holding your work to high standards, neither is giving you research credit for your work: good software is neither a novel method, nor is it an intriguing piece of empirical work. Translating methods into software enables research, but it is rarely research itself. I think it’s pretty fair for tenure committees to take any number of opinions on how to value research proper versus research infrastructure. Research infrastructure definitely is something valuable, but exactly how valuable it is relative to research is ambiguous to me.</p>
+<p>The best way to get academic credit for writing software, I think, is to get authorship on the original methods paper. Then both the paper and the software accumulate citations (the software almost always get cited orders of magnitude more often than the content of the paper does) and this is good for everybody involved. The trick is timing: the software has to come out at the same time as the paper. This is a pretty rare occurrence, because lots of software is developed aftermarket of the original methods paper. And there’s a very weird dynamic here, because software engineering labor is much less specialized than methodological labor, but being able to <em>read</em> methods papers is still a pretty specialized skill, to the extent that it’s quite hard to find folks who both have software engineering chops are also able to translate methods work into R and Python packages. One idea that has become somewhat popular in recent years is to cite software packages in academic papers. I am somewhat ambivalent about this. It seems like a fine thing to do, but I’m not sure how much it actually helps people get tenure. I guess do it in the hopes that eventually people do get credit for citations to their software packages.</p>
+<p>On the whole, I don’t anticipate a large influx of translational labor in the near future. I also don’t anticipate that methods will disseminate quickly and effectively without this labor, because methods dissemination requires user-facing software. I’m at peace with this, since academic compensation for user-friendly software is weird and often inadequate, and I think the current state of affairs is actual pretty reasonable for a certain priorization of research relative to research infrastructure. It’s very possible this leaves us with an infrastructure problem, where people want to use methods but the software doesn’t exist. My argument: if we don’t have the capacity to write production-ready software ourselves, the next-best attainable thing is to create material that helps other people write production-ready software in our stead.</p>
+<section id="acknowledgements" class="level4">
+<h4 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h4>
+<p>My thoughts have been heavily influenced by conversations with <a href="https://github.com/benlistyg">Ben Listyg</a>, who also provided extensive feedback on this post.</p>
+
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-allen2019b" class="csl-entry" role="listitem">
+Allen, Genevera I., and Michael Weylandt. 2019. <span>“Sparse and <span>Functional Principal Components Analysis</span>.”</span> In <em>2019 <span>IEEE Data Science Workshop</span> (<span>DSW</span>)</em>, 11–16. <a href="https://doi.org/10.1109/DSW.2019.8755778">https://doi.org/10.1109/DSW.2019.8755778</a>.
+</div>
+<div id="ref-hayes2024b" class="csl-entry" role="listitem">
+Hayes, Alex, and Karl Rohe. 2024. <span>“Co-<span>Factor Analysis</span> of <span>Citation Networks</span>.”</span> <em>Journal of Computational and Graphical Statistics</em> 00 (0): 1–14. <a href="https://doi.org/10.1080/10618600.2024.2394464">https://doi.org/10.1080/10618600.2024.2394464</a>.
+</div>
+<div id="ref-lee2021a" class="csl-entry" role="listitem">
+Lee, Graham, Sebastian Bacon, Ian Bush, Laura Fortunato, David Gavaghan, Thibault Lestang, Caroline Morton, et al. 2021. <span>“Barely Sufficient Practices in Scientific Computing.”</span> <em>Patterns</em> 2 (2): 100206. <a href="https://doi.org/10.1016/j.patter.2021.100206">https://doi.org/10.1016/j.patter.2021.100206</a>.
+</div>
+<div id="ref-peer2020" class="csl-entry" role="listitem">
+Peer, Limor, Lilla Orr, and Alexander Coppock. 2020. <span>“Active <span>Maintenance</span>: <span>A Proposal</span> for the <span class="nocase">Long-term Computational Reproducibility</span> of <span>Scientific Results</span>.”</span> <a href="https://osf.io/preprints/socarxiv/8jwhk/">https://osf.io/preprints/socarxiv/8jwhk/</a>.
+</div>
+<div id="ref-taschuk2017" class="csl-entry" role="listitem">
+Taschuk, Morgan, and Greg Wilson. 2017. <span>“Ten Simple Rules for Making Research Software More Robust.”</span> <em>PLOS Computational Biology</em> 13 (4): e1005412. <a href="https://doi.org/10.1371/journal.pcbi.1005412">https://doi.org/10.1371/journal.pcbi.1005412</a>.
+</div>
+<div id="ref-wilson2017" class="csl-entry" role="listitem">
+Wilson, Greg, Jennifer Bryan, Karen Cranston, Justin Kitzes, Lex Nederbragt, and Tracy K. Teal. 2017. <span>“Good Enough Practices in Scientific Computing.”</span> Edited by Francis Ouellette. <em>PLOS Computational Biology</em> 13 (6): e1005510. <a href="https://doi.org/10.1371/journal.pcbi.1005510">https://doi.org/10.1371/journal.pcbi.1005510</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Proof-of-concept code, in case it isn’t clear, is the minimum viable product need to successfully author an academic manuscript.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>See, for example, the ROpenSci <a href="https://stats-devguide.ropensci.org/">stats software review</a> and <a href="https://github.com/tidymodels/model-implementation-principles">tidymodels implementation principles</a> projects, both of which I was briefly involved in, as well as a plethora of academic papers such as <span class="citation" data-cites="lee2021a">Lee et al. (<a href="#ref-lee2021a" role="doc-biblioref">2021</a>)</span>, <span class="citation" data-cites="peer2020">Peer, Orr, and Coppock (<a href="#ref-peer2020" role="doc-biblioref">2020</a>)</span>, <span class="citation" data-cites="taschuk2017">Taschuk and Wilson (<a href="#ref-taschuk2017" role="doc-biblioref">2017</a>)</span>, and <span class="citation" data-cites="wilson2017">Wilson et al. (<a href="#ref-wilson2017" role="doc-biblioref">2017</a>)</span>. Beyond that, there’s software checklists and standards for journals such as the <a href="https://joss.theoj.org/">Journal of Open Source Software</a>, the <a href="https://www.jstatsoft.org/index">Journal of Statistical Software</a>, the <a href="https://journal.r-project.org/">R Journal</a>, etc, etc<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>My attitude on this has shifted substantially over the last several years, as I have started to produce methods. When I spent more time in open-source and primarily acted as a methods consumer, I used to be frustrated by papers that didn’t come accompanied by production-ready code. In contrast, these days I find myself frustrated by papers without easy-to-read reference implementations.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>I find it somewhat entertaining when a software engineer at FAANG, paid a quarter of a million dollars per year to write code, is frustrated that an academic has not implemented code for them already. That’s where your job security comes from! Instead of pushing the academic to write code for you, ask the academic to share material that makes it easier for you to write the code yourself.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.alexpghayes\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="alexpghayes/quarto-blog" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/what-i-want-from-academic-code/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alexpghayes/quarto-blog">
+<p>website source</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
