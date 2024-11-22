@@ -4,10 +4,40 @@ subtitle: |
   todo
 date: "2024-11-01"
 bibliography: multilateration.bib
+execute: 
+  cache: true
 draft: true
 ---
 
+## Summary
+
+- I briefly demonstrate how multilaterion works in R
+- I highlight some cool tricks for non-linear least squares in R
+- I show how some quick tricks for non-linear modeling in Stan
+- I highlight a setting where Bayesian methods (at least, the naive ones that I used) do something weird that I don't know how to fix
+
+## Motivation
+
+In a somewhat unfortunate turn of events, about a month ago, my car was totalled. It was parked on the side of the road, someone driving down the road fell asleep, and then they woke up when they hit my car. Luckily, the driver wasn't injured, and no one else was involved.
+
+The crash happened early in the morning, so I heard it through my window. I made to the crash at almost the same time as the Madison police, which shocked me. It turns out that the driver's iPhone automatically detected a crash and called the police. But how did they know where to go?
+
+The real answer, of course, is GPS, but in the interest of telling a simpler story, I'm going to pretend that GPS doesn't exist. Instead, we'll assume that emergency services can detect how close the iPhone was to several cell towers in the Madison area, and show how these multiple distance measurements can be used to back out the location of the crash, a process known as *trilaterion*, or *multilaterion* more generally.
+
+For readers interested in consider this problem in the full glory of GPS, I highly recommend *Pinpoint* by Greg Milner.
+
+[![](pinpoint.jpg){width=35% fig-align="center"}](https://www.goodreads.com/book/show/32191741-pinpoint)
+
+In this post, I'll demonstrate how to perform multilateration using non-linear least squares in R, and then I'll point out a setting where Bayesian methods (at least, my naive approaches) run into fairly substantial problems.
+
+## Multilaterion via `stats::nls()` 
+
+Alright, so let's assume that the emergency services department has access to several different distance measurements, each measurement coming from a different [cell tower](https://www.city-data.com/towers/cell-Madison-Wisconsin.html) in the Madison area.
+
 ```{r}
+#| messsage: false
+#| warning: false
+#| echo: false
 library(brms)
 library(ellipse)
 library(geodist)
@@ -20,6 +50,7 @@ library(tidyverse)
 
 ```{r}
 #| execute: false
+#| echo: false
 # pulled from https://www.city-data.com/towers/cell-Madison-Wisconsin.html
 cell_towers <- tribble(
   ~address,                ~latitude,  ~longitude,
@@ -55,35 +86,43 @@ distances <- tribble(
   "122 W. Main Street",    43.072722,  -89.385194,         1490,
   "600 Highland Ave",      43.075556,  -89.431944,         4794,
   "1410 Regent Street",    43.068056,  -89.409444,          3347
-) |>
+)
+```
+
+To find the crash site, we would like to find a point such that distances from the cell towers to the point match the measurements as closely as possible. If we have three or more measurements, the point that minimizes these these deviations is uniquely determined. As [Mike Tuupola](https://www.appelsiini.net/2017/trilateration-with-n-points/) demonstrates, we can use `stats::nls()` to find this minimizer with a minimum of fuss^[It would also be straightforward to solve this problem in Jax, or using a number of other approaches, and `stats::nls()` is a little less stable than you might hope, but the convenience factor is hard to beat, especially for quick scratch work.].
+
+To understand how this works, let's first consider the `geodist::geodist()` function, which is a function that calculates distances between (latitude, longitude) pairs using a performant C++ implementation.
+
+```{r}
+mean_latitude <- mean(distances$latitude)
+mean_longitude <- mean(distances$longitude)
+
+geodist(
+  distances,
+  c(
+    longitude = mean_longitude,
+    latitude = mean_latitude
+  ),
+  measure = "geodesic"
+)
+```
+
+We can pass this distance-calculation function almost directly to `stats::nls()`, asking for the point that minimizes average deviation from the observed distances^[Note that we do not need to provide any gradient information to `nls()`, and that the `geodist()` can be an essentially arbitrary function, provided the non-linear least squares minimizer is unique.].
+
+```{r}
+distances <- distances  |>
   mutate(
     dist_meters_rounded = signif(dist_meters, digits = 1)
   )
 
-mean_latitude <- mean(distances$latitude)
-mean_longitude <- mean(distances$longitude)
-
-distances
-```
-
-## A cool `nls()` tricky (not my own)
-
-why this is cool, don't need to know anything about internals of geodist, it's a highly performant C++ nonlinearity
-
-flip side of this trick: failure with fewer data points although it should be fine
-
-another approach here: code up a loss function in jax, gradient descend since things should be convex. infrastructure not quite as desired though, super convenient when exploring to not need to write up. would be nice if nls() were a little more transparent in its errors and more stable though.
-
-```{r}
 # key to subset to only data needed for distance computations for some reason
 nls_data <- distances |> 
   select(latitude, longitude, dist_meters)
 
-nls_data_rounded <- distances |> 
-  select(latitude, longitude, dist_meters_rounded)
-
-# https://www.appelsiini.net/2017/trilateration-with-n-points/
 nls_fit <- nls(
+
+  # dist_meters is the outcome to predict, geodist() is a performant C++ function
+  # that calculates geodesic distances between (latitude, longitude) pairs 
   dist_meters ~ geodist(
     nls_data,
     c(
@@ -92,19 +131,25 @@ nls_fit <- nls(
     ),
     measure = "geodesic"
   ),
-  data = nls_data,
+
+  data = distances,
+
+  # initialize estimated position of crash site as the "average" position of the cell towers
   start = c(
     longitude = mean_longitude,
     latitude = mean_latitude
   ),
+
+  # add a fudge factor to avoid optimization issues related to (near) perfect fits
   control = list(
-    maxiter = 1000,
-    tol = 0.00001,
-    # help avoid convergence testing failure under perfect prediction
     scaleOffset = 1
   )
 )
+
+nls_fit
 ```
+
+The estimated parameters are the estimated location of the crash site. Next we visualize the estimated crash site (red), as well as the five cell towers used for measurement data. We see that the estimated crash site is right at Breese Stevens field, exactly where it should be.
 
 ```{r}
 # https://stackoverflow.com/questions/48383990/convert-sequence-of-longitude-and-latitude-to-polygon-via-sf-in-r
@@ -120,7 +165,53 @@ leaflet_data <- distances |>
     label_html = map(label_chr, htmltools::HTML)
   )
 
-# ellipse is a two-column matrix of longitude, latitude data points
+# TODO: add the estimated crash site back to the map
+annotated_map <- leaflet() |>
+  addTiles() |>
+  setView(
+    lng = mean_longitude,
+    lat = mean_latitude,
+    zoom = 13
+  ) |>
+  addCircleMarkers(
+    data = leaflet_data,
+    color = leaflet_data$color,
+    label = leaflet_data$label_html
+  )
+
+annotated_map
+```
+
+In this constructed data, the distance measurements are all exact, and so it doesn't make a ton of sense to consider estimation uncertainty, but we can also consider the case where distances are subject to some kind of measurement error or truncation. For instance, suppose that cell towers are only able estimate distances rounded to the nearest kilometer. In this case, we see that there `nls()` estimates, under a Gaussian error model, substantial uncertainty in the location of the crash site.
+
+```{r}
+distances_rounded <- distances  |>
+  mutate(
+    dist_meters_rounded = signif(dist_meters, digits = 1)
+  ) |> 
+  # subset to only the necessary columns of data to avoid nls() errors
+  select(latitude, longitude, dist_meters_rounded)
+
+nls_fit_rounded <- nls(
+  dist_meters_rounded ~ geodist(
+    distances_rounded,
+    c(
+      longitude = longitude,
+      latitude = latitude
+    ),
+    measure = "geodesic"
+  ),
+  data = distances_rounded,
+  start = c(
+    longitude = mean_longitude,
+    latitude = mean_latitude
+  ),
+  control = list(
+    scaleOffset = 1
+  )
+)
+
+# ellipse should be a two-column matrix of longitude, latitude data points
 make_leaflet_polygon <- function(ellipse) {
   ellipse |>
     as.data.frame() |>
@@ -137,10 +228,9 @@ make_leaflet_polygon <- function(ellipse) {
     st_transform(crs = '+proj=longlat +datum=WGS84')
 }
 
-nls_ellipse <- nls_fit |> 
+nls_ellipse <- nls_fit_rounded |> 
   ellipse() |> 
   make_leaflet_polygon()
-
 
 annotated_map <- leaflet() |>
   addTiles() |>
@@ -153,8 +243,8 @@ annotated_map <- leaflet() |>
     data = leaflet_data,
     color = leaflet_data$color,
     label = leaflet_data$label_html
-  ) |>
-  addPolygons(
+  ) |> 
+    addPolygons(
     data = nls_ellipse,
     color = "red",
     stroke = 1
@@ -163,9 +253,14 @@ annotated_map <- leaflet() |>
 annotated_map
 ```
 
-## bringing even more infrastructure to the problem
+This looks fairly reasonable to me! The uncertainty in the estimate of the crash site, however, could be poorly estimated. In particular, `nls()` is appropriate for Gaussian errors, but here the distances interval censored, and so we might want to model that more directly.
 
-suppose we want to build out more of a model for this thing. might have measurement error or outcome censoring, etc, etc
+To my eye, the easiest way to try to model interesting and potentially varied error structure, such as censored responses, is to use `brms`. We can start by matching the analysis we've done so far, and then once we have that working, it should hopefully be easy to iterate and consider various assumptions about errors in distance measurements.
+
+## Reaching for the flexible Bayesian modelling toolkit
+
+To replicate our analysis in Stan, we run into an issue. `geodist::geodist()` is implemented in C++, and the `brms` non-linear interface only supports non-linearities as implemented in either `R` or `Stan` code. We will start by implemented a simple estimate of geodesic distance, the Haversine distance, in `Stan`. This turns out to look like
+
 
 ```{r}
 stan_funs <- "
@@ -177,8 +272,13 @@ stan_funs <- "
     return 6378137 * b;
   }
 "
+```
 
-make_prior <- function(nls_data, sigma2 = 0.05) {
+With this `Stan` code in hand, we specify priors for the latitude and longitude of the crash, and then we'll be ready to model. We'll start with an informative prior that places most of the prior density around mean latitude and longitude of the cell towers.
+
+```{r}
+
+make_prior <- function(sigma2 = 0.05) {
   c(
     prior_string(
       glue("normal({mean_longitude}, {sigma2})"),
@@ -191,14 +291,14 @@ make_prior <- function(nls_data, sigma2 = 0.05) {
   )
 }
 
-informative_prior <- make_prior(nls_data, 0.001)
-uninformative_prior <- make_prior(nls_data, 1)
+informative_prior <- make_prior(0.001)
+uninformative_prior <- make_prior(1)
 
 informative_prior
 ```
 
-
 ```{r}
+#| message: false
 brm_informative <- brm(
   bf(
     dist_meters ~ havdist(longitude, latitude, crashlong, crashlat),
@@ -212,7 +312,9 @@ brm_informative <- brm(
   chains = 4,
   cores = 4,
   seed = 27,
-  control = list(adapt_delta = 0.98)
+  control = list(adapt_delta = 0.98),
+  silent = 2,
+  refresh = 0
 )
 
 brm_informative
@@ -285,7 +387,9 @@ brm_uninformative <- brm(
   backend = "cmdstanr",
   chains = 4,
   cores = 4,
-  seed = 27
+  seed = 27,
+  silent = 2,
+  refresh = 0
 )
 
 brm_uninformative
