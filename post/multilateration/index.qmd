@@ -4,8 +4,6 @@ subtitle: |
   a clever way to use `stats::nls()` and a modeling problem that seems tricky for bayesians
 date: "2024-11-21"
 bibliography: multilateration.bib
-execute: 
-  cache: true
 ---
 
 ## Motivation
@@ -14,13 +12,13 @@ In a somewhat unfortunate turn of events my car was totalled a month ago. It was
 
 The crash happened early in the morning, so I heard it through my window. I made to the crash at almost the same time as the Madison police, which shocked me. It turned out that the driver's iPhone automatically detected a crash and called the police. How did they know where to go?
 
-The real answer, of course, is GPS, but in the interest of telling a simpler story, I'm going to pretend that GPS doesn't exist. Instead, we'll assume that emergency services can detect how close the iPhone was to several cell towers in the Madison area, and show how these multiple distance measurements can be used to back out the location of the crash, a process known as *trilaterion*, or *multilaterion* when more than three distance measurements are used.
+The real answer, of course, is GPS, but in the interest of telling a simpler story, I'm going to pretend that GPS doesn't exist[^gps-note]. Instead, we'll assume that emergency services can detect how close the iPhone was to several cell towers in the Madison area, and show how these multiple distance measurements can be used to back out the location of the crash, a process known as *trilaterion*, or *multilaterion* when more than three distance measurements are used.
 
-In this post, I'll demonstrate how to perform multilateration using non-linear least squares in R, and then I'll point out a setting where Bayesian methods (at least, my naive approaches) run into fairly substantial problems.
+[^gps-note]: For readers interested in learning far more about multilaterion and GPS, I highly recommend *Pinpoint* by Greg Milner.
 
-For readers interested in learning far more about multilaterion and GPS, I highly recommend *Pinpoint* by Greg Milner.
+    [![](pinpoint.jpg){width=35% fig-align="center"}](https://www.goodreads.com/book/show/32191741-pinpoint)
 
-[![](pinpoint.jpg){width=35% fig-align="center"}](https://www.goodreads.com/book/show/32191741-pinpoint)
+In this post, I'll demonstrate how to perform multilateration using non-linear least squares in R, and then I'll point out a setting where Bayesian methods (at least, my naive approaches) run into fairly substantial problems. I would love to see how Bayesians approach this problem.
 
 ## Multilaterion via `stats::nls()` 
 
@@ -100,7 +98,7 @@ geodist(
 )
 ```
 
-We can pass this distance-calculation function almost directly to `stats::nls()`, asking for the point that minimizes average deviation from the observed distances^[Note that we do not need to provide any gradient information to `nls()`, and that the `geodist()` can be an essentially arbitrary function, provided the non-linear least squares minimizer is unique.].
+We can pass this distance-calculation almost directly to `stats::nls()`, asking for the point that minimizes average deviation from the observed distances^[Note that we do not need to provide any gradient information to `nls()`, and that the `geodist()` can be an essentially arbitrary function, provided the non-linear least squares minimizer is unique.].
 
 ```{r}
 nls_fit <- nls(
@@ -135,7 +133,7 @@ nls_fit <- nls(
 nls_fit
 ```
 
-The estimated parameters are the estimated location of the crash site. Next we visualize the estimated crash site (red), as well as the five cell towers used for measurement data. We see that the estimated crash site is right at Breese Stevens field, exactly where it should be.
+The estimated parameters are the estimated location of the crash site. We see that the estimated crash site (red) is right at Breese Stevens field, exactly where it should be.
 
 <!-- https://stackoverflow.com/questions/48383990/convert-sequence-of-longitude-and-latitude-to-polygon-via-sf-in-r -->
 <!-- https://r-charts.com/spatial/interactive-maps-leaflet/#polygons -->
@@ -147,10 +145,11 @@ leaflet_data <- distances |>
   mutate(
     color = "blue",
     label_chr = glue(
-      "<p>{address}</p>
+      "<p>Cell Tower</p>
+       <p>{address}</p>
        <p>{round(dist_meters)} meters from crash</p>"
     ),
-    label_html = map(label_chr, htmltools::HTML)
+    label_html = map(label_chr, htmltools::HTML),
   )
 
 leaflet_nls_data <- tibble(
@@ -182,7 +181,7 @@ base_map |>
 ```
 
 
-In this constructed data, the distance measurements are all exact, and so it doesn't make a ton of sense to consider estimation uncertainty, but we can also consider the case where distances are subject to some kind of measurement error or truncation. For instance, suppose that the measurement devices in the cell towers only report two significant digits and round the rest of the data. In this case, we see that there `nls()` estimates, under a Gaussian error model, have substantial uncertainty in the location of the crash site. If you're struggling to see the difference between the maps, try zooming in on the estimating crash site.
+In this constructed data, the distance measurements are all exact, and so it doesn't make a ton of sense to consider estimation uncertainty, but we can also consider the case where distances are subject to some kind of measurement error or truncation. For instance, suppose that the measurement devices in the cell towers only report two significant digits and round the rest of the data. In this case, we see that there `nls()` estimates, under a Gaussian error model, have substantial uncertainty in the location of the crash site. If you're struggling to see the difference between the maps, try zooming in on the estimated crash sites.
 
 ```{r}
 #| message: false
@@ -234,7 +233,34 @@ nls_ellipse <- nls_fit_rounded |>
   ellipse() |> 
   make_leaflet_polygon()
 
-base_map |> 
+leaflet_data_rounded <- distances  |>
+  mutate(
+    dist_meters_rounded = signif(dist_meters, digits = 2)
+  ) |>
+  mutate(
+    color = "blue",
+    label_chr = glue(
+      "<p>Cell Tower</p>
+       <p>{address}</p>
+       <p>{dist_meters_rounded} meters from crash</p>"
+    ),
+    label_html = map(label_chr, htmltools::HTML),
+  )
+
+base_map_rounded <- leaflet() |>
+  addTiles() |>
+  setView(
+    lng = mean_longitude,
+    lat = mean_latitude,
+    zoom = 13
+  ) |>
+  addCircleMarkers(
+    data = leaflet_data_rounded,
+    color = leaflet_data_rounded$color,
+    label = leaflet_data_rounded$label_html
+  )
+
+base_map_rounded |> 
   addPolygons(
     data = nls_ellipse,
     color = "red",
@@ -243,13 +269,13 @@ base_map |>
   )
 ```
 
-This looks fairly reasonable to me! The uncertainty in the estimate of the crash site, however, could be poorly estimated. In particular, `nls()` is appropriate for Gaussian errors, but here the distances interval censored, and so we might want to model that more directly.
+This looks fairly reasonable to me! The uncertainty in the estimate of the crash site, however, could be poorly estimated. In particular, `nls()` is appropriate for Gaussian errors, but here the distances are interval censored, and so we might want to model that more directly.
 
 To my eye, the easiest way to try to model interesting and potentially varied error structure, such as censored responses, is to use `brms`. We can start by matching the analysis we've done so far, and then once we have that working, it should hopefully be easy to iterate and consider various assumptions about errors in distance measurements.
 
 ## Reaching for the flexible Bayesian modelling toolkit
 
-To replicate our analysis in Stan, we run into an issue. `geodist::geodist()` is implemented in C++, and the `brms` non-linear interface only supports non-linearities as implemented in either `R` or `Stan` code. We will start by implemented a simple estimate of geodesic distance, the Haversine distance, in `Stan`. This turns out to look like
+To replicate our analysis in Stan, we run into an issue. `geodist::geodist()` is implemented in C++, and the `brms` non-linear interface only supports non-linearities as implemented in either `R` or `Stan` code. We will start by implemented a simpler estimate of geodesic distance, the Haversine distance, in `Stan`. This turns out to look like
 
 ```{r}
 stan_funs <- "
@@ -306,7 +332,7 @@ brm_informative <- brm(
 )
 ```
 
-This fit seems reasonable (summary omitted for verbosity reasons) and Stan hasn't issue any warnings, so we visualize the result. Unfortunately, the estimated position of the crash site isn't great, and suggests that the Bayesian variant of our model thinks the crash probably happened in a lake, which is impossible.
+This fit seems reasonable (summary omitted for verbosity reasons) and Stan doesn't issue any warnings, so we visualize the result. Unfortunately, the estimated position of the crash site isn't great, and suggests that the Bayesian variant of our model thinks the crash probably happened in a lake, which is impossible.
 
 ::: {.callout-tip}
 ## An unrelated question I've been curious about for a while
@@ -340,7 +366,7 @@ base_map |>
   )
 ```
 
-Maybe the issue was that our prior was too informative and we can improve the Bayesian estimate with a more diffuse prior that acts as a weaker regularizer? I went ahead and did this and I am again omitting the model summary for the sake of brevity, but the diagnostics are terrible and Stan warns us we need stronger priors. For giggles, we visualize the 95% credible interval for the crash site and get the following. Indeed, the crash site is in fact contained in this interval. But we have more than enough data to completely determine the exact location of the crash site, and in light of that fact, this is pretty disappointing!
+Maybe the issue was that our prior was too informative and we can improve the Bayesian estimate with a more diffuse prior that regularizes the estimate less stronger towards the mean latitude and longitude of the towers? I went ahead and did this and I am again omitting the model summary for the sake of brevity, but the diagnostics are terrible and Stan warns us we need stronger priors. If we visualize the 95% credible interval for the crash site we get the following.
 
 ```{r}
 #| message: false
@@ -383,6 +409,8 @@ base_map |>
   )
 ```
 
-Is there any way for a Bayesian to fix this? If you care about coverage properties of your credible interval, @balch2019 says no^[I should emphasize that my multilaterion problem is a simpler variant of the satellite collision problem considered in @balch2019. A couple years ago I spent a little time reading some of Ryan Martin's work on imprecise probability, which I understood very poorly, but one of my big takeaways was that one can think of Bayesians as expressing a priori uncertainty with probability measures, and frequentists as expressioning a priori uncertainty via constant possibility measures. In Ryan's words: "There must/should be a mathematical description of the frequentists' assumption '$\theta$ is unknown, no prior info available'.  This can't be described via (precise) probability, so it makes sense to look beyond that to imprecise probability.  And it turns out that the frequentist 'no-prior' belief can be perfectly described via the vacuous possibility measure with contour identically equal to 1. ... This is what prior ignorance means: all values of $\theta$ are equally and fully possible." For further details, see @martin2022 and @martin2023.].
+This is obviously not what we'd hope for. The crash site is in fact contained in this interval, but we have more than enough data to completely determine the exact location of the crash site. We're only using five observations, and so the Bayesian posterior has only been slightly updated away from the prior, which in this case continues a fair portion of the Midwest.
 
-If you don't care about coverage properties of your credible interval, I'm not really sure what is possible here, and I would love to hear from dedicated Bayesians how they would approach this problem^[If you search for "Bayesian Multilaterion," you are likely to come across @alencar2022, which suggests that a Bayesian approach works well. However, the "prior" in this approach is a normal centered on the frequentist point estimate, with variance equal to the corresponding bootstrapped standard error.].
+Is there any way for a Bayesian to get a reasonable estimate of the position of the crash site? I would love to hear from dedicated Bayesians how they would approach this problem^[If you search for "Bayesian Multilaterion," you are likely to come across @alencar2022, which suggests that a Bayesian approach works well. However, the "prior" in this approach is a normal centered on the frequentist point estimate, with variance equal to the corresponding bootstrapped standard error.].
+
+If you care about coverage properties of your credible interval, @balch2019 states are always some parameters that will be poorly covered by Bayesian credible intervals^[Note that the crash site my multilaterion problem is a simpler variant of the satellite collision problem considered in this paper]. @martin2024d discusses which parameters are suspectible to poor coverage in more detail. 
