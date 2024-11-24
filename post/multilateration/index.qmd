@@ -6,6 +6,8 @@ date: "2024-11-21"
 bibliography: multilateration.bib
 ---
 
+2024-11-23 update: some code in the initial version of this blog post was incorrect, and as a result the second half of the post is now incoherent 😬. Thanks to Jouni Helske for pointing me in the direction of the bug.
+
 ## Motivation
 
 In a somewhat unfortunate turn of events my car was totalled a month ago. It was parked on the side of the road, someone driving down the road fell asleep, and then they woke up when they hit my car. Luckily, the driver wasn't injured, and no one else was involved.
@@ -57,7 +59,23 @@ breese_stevens_address <- "917 E Mifflin St, Madison, WI 53703"
 crash <- tibble(address = breese_stevens_address) |> 
   geocode(address, method = "osm")
 
-distances <- cell_towers |>
+# this matches the Stan implementation of havdist later on
+havdist <- function(long1, lat1, long2, lat2) {
+  long1_rad <- long1 * pi / 180
+  lat1_rad <- lat1 * pi / 180
+  long2_rad <- long2 * pi / 180
+  lat2_rad <- lat2 * pi / 180
+  
+  diff_long <- (long2_rad - long1_rad)
+  diff_lat <- (lat2_rad - lat1_rad)
+  
+  a <- sin(diff_lat / 2)^2 + cos(lat1_rad) * cos(lat2_rad) * sin(diff_long / 2)^2
+  b <- 2 * atan2(sqrt(a), sqrt(1 - a))
+  
+  6378137 * b
+}
+
+distances_check <- cell_towers |>
   mutate(
     dist_meters = drop(
       geodist(
@@ -65,8 +83,12 @@ distances <- cell_towers |>
         crash,
         measure = "geodesic"
       )
-    )
+    ),
+    havdist_meters = havdist(longitude, latitude, crash$long, crash$lat)
   )
+
+# geodesic and haversine distances match to within a few meters
+distances_check
 ```
 
 ```{r}
@@ -279,13 +301,20 @@ To replicate our analysis in Stan, we run into an issue. `geodist::geodist()` is
 
 ```{r}
 stan_funs <- "
-  real havdist(real long1, real lat1, real long2, real lat2) {
-    real diff_long = (long2 - long1);
-    real diff_lat = (lat2 - lat1);
-    real a = sin(diff_lat / 2)^2 + cos(lat1) * cos(lat2) * sin(diff_long / 2)^2;
-    real b = 2 * atan2(sqrt(a), sqrt(1 - a));
-    return 6378137 * b;
-  }
+real havdist(real long1, real lat1, real long2, real lat2) {
+  real long1_rad = long1 * pi() / 180;
+  real lat1_rad = lat1 * pi() / 180;
+  real long2_rad = long2 * pi() / 180;
+  real lat2_rad = lat2 * pi() / 180;
+  
+  real diff_long = (long2_rad - long1_rad);
+  real diff_lat = (lat2_rad - lat1_rad);
+  
+  real a = sin(diff_lat / 2)^2 + cos(lat1_rad) * cos(lat2_rad) * sin(diff_long / 2)^2;
+  real b = 2 * atan2(sqrt(a), sqrt(1 - a));
+  
+  return 6378137 * b;
+}
 "
 ```
 
@@ -383,6 +412,7 @@ brm_uninformative <- brm(
   backend = "cmdstanr",
   chains = 4,
   cores = 4,
+  control = list(adapt_delta = 0.99),
   seed = 27,
   silent = 2,
   refresh = 0
@@ -397,17 +427,15 @@ brm_uninformative_ellipse <- ellipse(vcov(brm_uninformative), center = brm_uninf
   make_leaflet_polygon()
 
 base_map |> 
-  setView(
-    lng = mean_longitude,
-    lat = mean_latitude,
-    zoom = 5
-  ) |> 
   addPolygons(
     data = brm_uninformative_ellipse,
     color = "red",
-    stroke = 1
+    stroke = 1,
+    label = htmltools::HTML("95% credible ellipse for crash site")
   )
 ```
+
+**Note:** from here on is incoherent.
 
 This is obviously not what we'd hope for. The crash site is in fact contained in this interval, but we have more than enough data to completely determine the exact location of the crash site. We're only using five observations, and so the Bayesian posterior has only been slightly updated away from the prior, which in this case continues a fair portion of the Midwest.
 
