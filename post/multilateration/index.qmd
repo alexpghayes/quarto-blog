@@ -4,6 +4,7 @@ subtitle: |
   a clever way to use `stats::nls()` and a modeling problem that seems tricky for bayesians
 date: "2024-11-21"
 bibliography: multilateration.bib
+draft: true
 ---
 
 2024-11-23 update: some code in the initial version of this blog post was incorrect, and as a result the second half of the post is now incoherent 😬. Thanks to Jouni Helske for pointing me in the direction of the bug.
