@@ -25,6 +25,8 @@ website:
       - talks/index.qmd
       - text: resume
         file: resume/index.qmd
+      - text: '{{< fa brands bluesky >}}'
+        href: https://bsky.app/profile/alexpghayes.com
       - icon: github
         href: https://github.com/alexpghayes
       - icon: linkedin
