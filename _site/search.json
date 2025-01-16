@@ -784,18 +784,18 @@
     "text": "I’m a PhD candidate in Statistics at the University of Wisconsin-Madison, where I am co-advised by Keith Levin and Karl Rohe. I study spectral methods for network analysis, causal inference, and causal inference on networks. You might know me from my work on broom, a popular open-source R package in the tidyverse.\nI’m on the job market; here’s my academic cv. I keep Google Scholar updated."
   },
   {
-    "objectID": "index.html#working-papers",
-    "href": "index.html#working-papers",
+    "objectID": "index.html#pre-prints",
+    "href": "index.html#pre-prints",
     "title": "about",
-    "section": "working papers",
-    "text": "working papers\n\nPeer effects in the linear-in-means model may be inestimable even when identified. Alex Hayes and Keith Levin. arXiv. October 14, 2024.\nEstimating network-mediated causal effects via principal components network regression. Alex Hayes, Mark M. Fredrickson, and Keith Levin. Journal of Machine Learning Research (accepted with minor revisions). September 3, 2024. code"
+    "section": "pre-prints",
+    "text": "pre-prints\n\nPeer effects in the linear-in-means model may be inestimable even when identified. Alex Hayes and Keith Levin. arXiv. October 14, 2024."
   },
   {
     "objectID": "index.html#publications",
     "href": "index.html#publications",
     "title": "about",
     "section": "publications",
-    "text": "publications\n\nCo-factor analysis of citation networks. Alex Hayes and Karl Rohe. Journal of Computational and Graphical Statistics. 2024. post-print, arXiv, replication package, code\nWelcome to the tidyverse. Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, Alex Hayes, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. Journal of Open Source Software. 2019. website\n\n\nMaterial from my presentations is available on my talks page.\n\nIn a hobbyist capacity, I also blog about statistics, programming, and data. Some posts I’m particularly proud of:\n\noverfitting: a guided tour\nconsistency and the linear probability model\nfairness in repeated lotteries\n\nThese days I’m enjoying the slow resurgence of academic Twitter on Bluesky. You can find me there at @alexpghayes.com."
+    "text": "publications\n\nEstimating network-mediated causal effects via principal components network regression. Alex Hayes, Mark M. Fredrickson, and Keith Levin. Journal of Machine Learning Research. 2025 (forthcoming). replication package, code\nCo-factor analysis of citation networks. Alex Hayes and Karl Rohe. Journal of Computational and Graphical Statistics. 2024. post-print, arXiv, replication package, code\nWelcome to the tidyverse. Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, Alex Hayes, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. Journal of Open Source Software. 2019. website\n\n\nMaterial from my presentations is available on my talks page.\n\nIn a hobbyist capacity, I also blog about statistics, programming, and data. Some posts I’m particularly proud of:\n\noverfitting: a guided tour\nconsistency and the linear probability model\nfairness in repeated lotteries\n\nThese days I’m enjoying the slow resurgence of academic Twitter on Bluesky. You can find me there at @alexpghayes.com."
   },
   {
     "objectID": "code/index.html",
