@@ -4,7 +4,7 @@
     "href": "teaching/index.html",
     "title": "teaching",
     "section": "",
-    "text": "I am not teaching in Fall 2024 nor in the foreseeable future."
+    "text": "I am not teaching in Spring 2025."
   },
   {
     "objectID": "teaching/index.html#teaching-material",
@@ -795,7 +795,7 @@
     "href": "index.html#publications",
     "title": "about",
     "section": "publications",
-    "text": "publications\n\nEstimating network-mediated causal effects via principal components network regression. Alex Hayes, Mark M. Fredrickson, and Keith Levin. Journal of Machine Learning Research. 2025 (forthcoming). replication package, code\nCo-factor analysis of citation networks. Alex Hayes and Karl Rohe. Journal of Computational and Graphical Statistics. 2024. post-print, arXiv, replication package, code\nWelcome to the tidyverse. Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, Alex Hayes, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. Journal of Open Source Software. 2019. website\n\n\nMaterial from my presentations is available on my talks page.\n\nIn a hobbyist capacity, I also blog about statistics, programming, and data. Some posts I’m particularly proud of:\n\noverfitting: a guided tour\nconsistency and the linear probability model\nfairness in repeated lotteries\n\nThese days I’m enjoying the slow resurgence of academic Twitter on Bluesky. You can find me there at @alexpghayes.com."
+    "text": "publications\n\nEstimating network-mediated causal effects via principal components network regression. Alex Hayes, Mark M. Fredrickson, and Keith Levin. Journal of Machine Learning Research. 2025. replication package, code\nCo-factor analysis of citation networks. Alex Hayes and Karl Rohe. Journal of Computational and Graphical Statistics. 2024. post-print, arXiv, replication package, code\nWelcome to the tidyverse. Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, Alex Hayes, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. Journal of Open Source Software. 2019. website\n\n\nMaterial from my presentations is available on my talks page.\n\nIn a hobbyist capacity, I also blog about statistics, programming, and data. Some posts I’m particularly proud of:\n\noverfitting: a guided tour\nconsistency and the linear probability model\nfairness in repeated lotteries\n\nThese days I’m enjoying the slow resurgence of academic Twitter on Bluesky. You can find me there at @alexpghayes.com."
   },
   {
     "objectID": "code/index.html",
