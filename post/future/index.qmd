@@ -1,0 +1,62 @@
+---
+title: "what i want from academic code"
+subtitle: |
+  the purpose, audience, and value of methods software
+date: "2024-11-14"
+categories: [statistical software]
+draft: true
+---
+
+## tools i use
+
+writing papers:
+
+- VS Code for Latex
+- store in Github repo
+- lualatex + biber
+- computations in R (Positron IDE, targets for build system, renv for reproducibility, sometimes RStudio for package dev)
+
+programming/data analysis:
+
+math:
+
+- latex
+    - latex resources i like
+    - slowly developing templates for myself
+    - latex-workshop extension in vs code
+- pen and paper
+
+website:
+
+- quarto, edit in Positron
+
+literature search:
+
+- Zotero to save papers
+- never edit a .bib file by hand, better bibtex to lock citation keys and automatically export zotero collections whenever they change
+- pay for zotero sync across multiple computers
+
+staying up to date with the literature:
+
+- google scholar notifications for anyone who writes something interesting
+- following arxiv feeds primarily with bluesky bots ()
+
+literature review:
+
+- <connectedpapers.com>
+- <researchrabbit.com> -- import a zotero collection
+- <scite> -- see how a paper is being cited, i don't think i'd ever pay for this though
+
+
+
+notes
+
+- obsidian
+
+messaging;
+
+- discord
+- signal
+
+
+- VS Code

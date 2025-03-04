@@ -7,6 +7,8 @@ categories: [statistical software]
 draft: true
 ---
 
+**TODO**: median, median absolute deviation because some estimators converge in distribution but not in $L_p$ norms / moments. Thomas Lumley has a tweet or bluesky post about this.
+
 Suppose you have some estimator $\hat \theta$ of $\theta$ and you prove that 
 
 $$

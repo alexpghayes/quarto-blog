@@ -18,13 +18,13 @@ I'm on the job market; here's my [academic cv](academic-cv.pdf). I keep [Google 
 
 :::
 
-## working papers
+## pre-prints
 
 1. [Peer effects in the linear-in-means model may be inestimable even when identified](http://arxiv.org/abs/2410.10772). **Alex Hayes** and Keith Levin. *arXiv*. October 14, 2024.
 
-1. [Estimating network-mediated causal effects via principal components network regression](http://arxiv.org/abs/2212.12041). **Alex Hayes**, Mark M. Fredrickson, and Keith Levin. *Journal of Machine Learning Research (accepted with minor revisions)*. September 3, 2024. [code](https://github.com/alexpghayes/latentnetmediate)
-
 ## publications
+
+1. [Estimating network-mediated causal effects via principal components network regression](http://jmlr.org/papers/v26/23-1317.html). **Alex Hayes**, Mark M. Fredrickson, and Keith Levin. *Journal of Machine Learning Research*. 2025.  [replication package](https://github.com/alexpghayes/network-mediation-replication), [code](https://github.com/alexpghayes/latentnetmediate)
 
 1. [Co-factor analysis of citation networks](http://www.tandfonline.com/10.1080/10618600.2024.2394464). **Alex Hayes** and Karl Rohe. *Journal of Computational and Graphical Statistics*. 2024. [post-print](./papers/cofactor-analysis-of-citation-networks-aom.pdf), [arXiv](https://arxiv.org/abs/2408.14604), [replication package](https://github.com/alexpghayes/citation-cofactoring-replication), [code](https://rohelab.github.io/fastadi/)
 
