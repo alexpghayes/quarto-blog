@@ -98,3 +98,7 @@ log-log plot here suggests that things are working, just need to turn up the sim
 
 Converging at some rate, but might need to check the slope to know if it's converging at *your* rate. 
 
+**TODO**:
+
+- Use Monte-Carlo summary statistics that work under convergence in distribution with convergence of moments. See https://bsky.app/profile/tslumley.bsky.social/post/3lbpru5ufx22q
+
