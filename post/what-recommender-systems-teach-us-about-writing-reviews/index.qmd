@@ -1,0 +1,82 @@
+---
+title: "what recommender systems teach us about writing reviews"
+subtitle: |
+  todo
+date: "2025-03-04"
+categories: [statistical software]
+draft: true
+---
+
+## Summary
+
+- BGG as a running example
+
+- the new hobby problem / cold start problem
+
+- ratings
+  - solutions: lower confidence bound
+  - solutions: regularization / james-stein (or bayes) (link to BGG)
+  - regression to the mean
+  - sort by average rating is bad -- noisy point estimates (screencap and link to BGG)
+  - link to evan miller blog posts
+
+- explore is expensive, seeking as much data as cheaply as possible -- go play things for free
+
+- tastes vary
+  - user types: for instance, dexterity games/ERS/speed slap and strategy gamers, random vs non-random, Ameritrash vs Euro
+  - each game has a type, each user has a type, rating primarily determined by how much each user type likes each game type
+  - bipartite graph
+  - link to low-rank network models
+  - this is fundamentally a reasonable intuition about how recommender systems work
+  - this idea is known as *collaborative filtering*
+
+- now there is no ranking, the ranking of items reflects the tastes of each user type, weighted by how prevalent that user type is in the ratings (note that some user types will be far more likely to rate than others)
+
+- if a system knows enough of your ratings, it can guess your user type, and then it can rank games according to predicting rating of games for your user type
+
+this doesn't work if you are totally new! don't know what you like, you have no ratings so far.
+
+recommendations are typically opaque! i don't super want my own understanding of my preferences to be limited to "the recommender thinks i will like this." i want to understand why i like particular games so that i can predict for myself if i'll like something new
+
+collaborative filtering: purely grouping games based on which games are liked by the same people
+
+- average and variance in ratings at a per-user level. this gets us most of the way to a DCMMSBM
+
+what about the actual features of the game? this gets us to *content-based filtering*. designer (knizia, feld, lacerda, uwe rosenberg), IP/theme, publisher, mechanics, length, player-count, how hard it is to teach
+
+you can combine these systems! for instance, different user types might each have different content based preferences. can imagine 5 different user types, and that each user type feels differently about some game features. strategy gamers might want no randomness and high asymmetry/variable player powers
+
+- aside: how to write reviews
+  - how to assign a rating to an item? on the view that tastes vary
+    - one option: does this appeal to a general audience? Praik on culinary class wars
+    - does this appeal to the reviewer's personal taste? Shelfside personal scores
+    - regardless of taste preferences, how well is this executed? i think of this like, does this appeal to the intended audience? by the standards of a roll-and-write lover, how is this roll-and-write. Shelfside recommender score
+    - one thing that is super confusing is when you get
+  - what user type is the reviewer? lots of reviewers in board game land rate everything highly, or everything very low. when ratings don't vary across games, they do not reveal much about games, and my guess at game type and quality does not up date after learning review scores
+    - do want: to see lots of reviewer ratings all at once so that i can start to guess the user type of the reviewer
+  - what i want from reviews
+    - features of the game
+    - information on the content side (r/boardgames asks you for information about content preferences and other games you like, letting people tap into both content and collaborative filtering intuitions)
+    - context: sometimes i want to play heavy games, sometimes i want to play social reduction, sometimes i want light and silly
+    - distribution of reviewer ratings
+      - explanation of the rating system they use
+      - on BGG you can see this
+
+
+## transitivity, the existing of total orders
+
+so far, the idea has been that we are building estimates of user and item types based on individual game ratings.
+
+there are other ways we could try to learn about game preferences. for instance, i would give you two games: Catan and Monopoly. Prefer A, prefer B, or rate them about the same.
+
+more generally, you might have a list of items to rank
+
+this is very often the case when you are deciding which of several items to buy. people recommend 6 games to you and you are comparing them amongst each other to figure out which one you think you will enjoy the most.
+
+"In a classic example, Efron and Morris [14] showed that if we want  to estimate a baseball batter’s skill from a sample of at-bats, we  should shrink each batter’s estimated skill independently towards the global average by an amount that is proportional to the variance  in our estimate" @ragain_improving_2018
+
+@ameli2024 ties
+
+choosing which LLM to consider
+
+- contrastive learning and pairs of games? prefer one over another?
