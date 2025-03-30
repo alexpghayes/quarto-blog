@@ -53,53 +53,26 @@ methodologists are on the painful end of a weird and limited inversion of brando
 
 The social scientists here also deserve a lot of sympathy, because they genuinely want to do good science, and aren't getting the support they need to do so, and also maybe are getting blasted and called idiots in the process.
 
+
 on data analysis done by scientists:
 to be frank, my personal assessment is that a lot of it is irreemably bad, a lot of it is sloppy but probably redeemable, and a small portion is done very well. The portion that is bad varies a lot by discipline. it is often acutely painful, in an aesthetic sense, to be a methodologist.  there is a common adage that data science is the intersection of statistical expertise, data manipulation skills, and domain expertise, and that you need all three of these skills to analyze data well. to realize that a data analysis is hopelessly flawed, statistical expertise alone suffices. small surprise that methodologists are often in a bad mood and grumpy at the state of the world. can see that an enormous, obvious statistic mistake has been made, and the interpretation of the results is simply incorrect
 
 allowing myself a moment of deep cyncism: the replications crisis people were like "the house is on fire, look at all these questionable research practices and outright fraud" in fields where, from a statistical viewpoint, there is no need to distinguish between fraudulent work and non-fraudulent work because it is uniformly garbage. also, it's been clear that the house has been on fire to outsiders for years, so the loud yelling also is a bit irritating. there's also the fact that a lot of proposed methodological reforms will at best lead to marginal improvements in cookie cutter garbage regressions, rather than, like, good data analysis (see @leek2015 for a similar view, minus the heavy dose of cyncism.)
 
-even if you don't do a lot of data analysis yourself as a statician, you are still probably far better at it than folks blind firing regressions in the social sciences. ^[When I think about really good data analysis done by non-statisticians, I primarily think about people who people who makes lots of plots and can tell a sort where simply visualizing the data makes the result obvious. Curiousity, data manipulation skills and ggplot go a lot further, in my book, than the typical 1-3 stats classes an applied scientist might get.]
-
-
-it is frankly impossible to look at the current state of applied work and to find yourself anywhere other than having epistemic trust issues.
-
-methodologists are sad; grumpy. perhaps one positive framing is that methodologists tend to have low-epistemic trust.
 
 knowledge is a social endeavour (extreme example: https://mathbabe.org/2012/08/06/what-is-a-proof/, see also the version about the contraversial intratechmueller theory and hodges stuff, @shapin1994, take an STS or philosophy of science class). like there are social processes that lead to knowledge (for instance: peer review!), the question is how much do you trust other people. and in my experience methodologists can be pretty chary. corresponding: an interest in work that is (a la Onora O'Neil) epistemically trustworthy, that makes the basis of the work legible in a way that it can be probed and assessed.
 
 another perhaps more positive spin to but on this attitude is that methodologists might find themselves motivated to seek additional context when assessing research products. see *Exhaustive* and *Skeptical* and *Second Order* principles in @hicks2019 (this is a really good paper that folks should read, although i must say i dramatically prefer the pre-print to the version that eventually made it through peer review). see also *Transparent*
 
-Context seeking, low epistemic trust, trying to be epistemologically trustworthy
-
 - do want to have an influence on the practice of data analysis in the academy? if so, i think we need to completely and utterly re-imagine our vision for statistics education and start getting involved in how *applied* folks learn to do data analysis in addition to teaching statisticans how to do data analysis
 
 - how can we do inference after model selection? can we come with versions of selective inference that correspond to scientifically meaningful estimates? what about the model selection processes that people use in practice?
 
-- are the assumptions that we make realistic? how can we tell, especially as these assumptions get more abstract and/or esoteric
-
-- how to handle uncertainty the number of clusters?
-
-## Statisticians resent being seen as useless and helpful, especially when methodological errors in applied work are so common, but an institutional level have not 
-
 We are data analysts when it is convenient (being experts at a thing) but not when it is inconvenient (teaching, service obligations)
-
-Let me state frankly: the content in statistical service courses is, by and large, a criminal abomination and a horrifying embarassment
-
-## Despite... ambivalence about service, statisticians expect to be treated as experts in data analysis
-
-
-"statisticians have been doing data science all along"
-[benn stancil]
-
 
 **statistical resentment**. at not having influence. if there's is anything for statisticians in this post, what i want to say is this: i firmly believe that improving the practice of statistics in the academy is a primarily a social problem, and one that our current incentive structures discourage us from addressing in meaningful ways. what statisticians sometimes think of themselves as doing: construct and disseminating statistical methods. this idea that we disseminate methods is delusional. if you ~~build it~~ prove it, they will not come.
 
 put in other words: academic statistics is a deeply insular institution that on occasion wishes to exert cultural capital to change the practice of applied statistics. so far as i can tell, very few statisticians actually have much pull here, with the possible exception of Andrew Gelman, who roasted psych so hard he started the replication crisis (with help), a movement which has now been almost entirely co-opted by psychologists who are still making egregious statistical mistakes, just slightly different from the ones they were making before.
-
-## Methodology is primarily a social problem, not a technical problem
-
-
-
 
 ## Collaboration does not solve the misaligned incentives problem
 
@@ -145,7 +118,7 @@ what i want to do in this post:
 - i understand your frustration!
 - i am also frustrated! frustrated at the state of methods work in science, and also frustrated that some scientists think they know better than i do 
 
-a lot of this is boundary problems. personally, i am all for a view of statistics as a service discipline. i think statistics tenure packets should be evaluated for tutorial papers, for collaboration with actual scientists, for code, for outreach work, etc.
+personally, i am all for a view of statistics as a service discipline. i think statistics tenure packets should be evaluated for tutorial papers, for collaboration with actual scientists, for code, for outreach work, etc.
 - one of my strongest beliefs is that statistics should be about service to the broader scientific enterprise, alas it is not. at least, partially.
 - i also think crayon statistics in applied work is embarassing
 - training is time, labor, incentive intensive. data analysis is hard. enormously undervalued. scaling problem.
@@ -153,17 +126,7 @@ a lot of this is boundary problems. personally, i am all for a view of statistic
 - sometimes feel despondent about how slowly academic changes
 - people who have tenure might be more willing to do service
 
-- OSU consulting obligation for teure review; senior statistician listed off the "good statisticians" in the department, and they weren't the people doing applied work
-
-
 Cognitive limits, scaffolds, familiarity/super users as dramatically misjudging the depth of their schema/scaffolds, at least in math. Why shared understanding is hard. Why XXXXX is hard to work with. Why I myself am hard to work with on projects outside of my expertise
 
 Another thing I have been thinking about recently: it surprises me that statistics departments do not offer classes that require little scaffolding. A stat 101 course on critical thinking/quantitative reasoning, along the lines of Art of Statistics or calling bullshit; i.e. a class design for people who are exclusively going to consume, but never produce, statistics, and who don't know any math. this would be a super valuable thing for us to do and for some reason we do not.
-
-
-
-
-::: {.callout-note}
-While I generalize extensively in this post, academia is large and highly varied. I have done my best to characterize the parts of the academy that I am familiar with, but this post is almost certainly subject to some myopia due to my own limited experience.
-:::
 
