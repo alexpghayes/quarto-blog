@@ -1,0 +1,131 @@
+---
+title: "a functionalist view of academic statistics"
+subtitle: |
+  some comments on the relationship between statistics and data analysis
+date: "2025-06-05"
+bibliography: functionalist-view.bib
+draft: true
+---
+
+**n.b.:** lots of variation within the academy, probably myopic, the goal is to help people understand how tenure incentives in statistics have far reaching consequences. that said, the post-data science flood of assistant professors have arrived at statistics departments and the academic faculty is now substantially larger than it once was, and i think goals are shifting.
+
+- tried to write out in english things that everybody knows but maybe hasn't collected it all into one place just yet
+
+## Incentives in academic statistics
+
+One very natural misconception is that academic statistics is the study of data analysis. This is not strictly speaking incorrect, but it is misleading. Academic statisticians, by and large, are not paid to analyze data, or even to explain how to analyze data. Rather, we are paid to describe how to estimate the parameters of probability models under assumptions that plausibly obtain in the real world. 
+
+As a statistician, theory work for estimators is canonical: you must show asymptotic normality or posterior contraction of your estimates or something along those lines. There are other contributions you can make, but theory is the most legible. So academic statisticians are, first and foremost, people who derive theoretical properties of estimators under probability models.
+
+## A surprising ambivalence towards data analysis
+
+This has some surprising consequences. The first is that statistics has an at times ambivalent relationship to data analysis. For instance, nearly 80 years ago, in @tukey1962, Tukey took great care to describe himself as a data analyst first, and a statistician second, and to plead with statisticians to contribute more to data analysis. @breiman2001 can be read in a similar light, goading statisticians to expand their tools outside of mathematical statistics to approaches with more relevance for real world problem. Statistics is ambivalent about data analysis, because statisticians are only weakly incentivized to do data analysis. 
+
+You can have a career at the highest level in statistics without ever analyzing data. This fact is heavily reflected in how academic statisticians are trained. In statistics graduate programs, we mostly learn mathematical statistics. A surprising portion of statistics PhD graduate with little or no experience working with data. When we do work with data, we often use data examples to illustrate how estimators work, rather than to learn about the world.
+
+To learn about the world with data, there are a number of necessary skills outside of mathematical statistics. In addition to the statistical background necessary to understand probability models and mathematical properties of estimators, you need the computational skills to interact with data, and most importantly, the ability to determine if a formal probability model is a reliable representation of the real world. This requires you know a lot about the process that generated the data in the world, a topic notably absent from graduate statistics education^[Perhaps as a consequence, applied statisticians often describe a rule of thumb is that you aren't capable of doing meaningful applied work until you've been working in and learning about a particular domain for at least three years.].
+
+## What it looks like when statisticians publish data analysis
+
+When statisticians do use data, it tends to happen in one of the following ways: as a data application in a methods paper, or a complicated standalone data analysis. Crucially, the point of data applications is to help readers understand the method, not the data^[Two representative examples of data applications in my own sub-field are @qing2022 and @chen2020. @qing2022 develops a new network formation model and shows it fits better data better than an older model. There is no really scientific inference on the data itself in the paper. @chen2020 develops a new method for locally clustering social networks, and then applies that method to Twitter data.]. Data analysis can sometimes end up in statistics journals. Typically, this happens when there is a complicated dataset and someone comes up with a method specifically to analyze that data. For instance, my own paper @hayes2025a does some methods work, but it's all in the service of analyzing one very specific dataset. To get this type of work published, the analysis needs to be new or interesting or impactful or just very complicated. Biostatistics departments tend to be more applied than statistics departments, and have a lot more high impact data, and so they do this kind of work more than academic statistics proper.
+
+When statisticians do careful analyses on interesting data without statistically novel elements, these papers *do not end up in statistics journals*. They end up scientific or social scientific journals, and in a lot of departments, they count towards tenure a tiny bit, but certaintly not proportional to the labor it takes to actually do good science. Personally, I enjoy applied work in collaboration with people doing actual science, but I have never tried to publish any. Sometimes, after folks get tenured, they pivot more into applied work and away from the theory work that got them tenure in the first place.
+
+To briefly summarize: there is a substantial difference between a *methodological contribution* and a *scientific contribution*, and statisticians are primarily incentivized to make methodological contributions. This fact is reflected in graduate training programs.
+
+## This ambivalence towards data analysis is frustrating to people trying to do science or learn about the world
+
+It is also reflected in the occasional frustrations of hiring managers:
+
+<!-- > As someone who has spent good entire adult life in academic statistics departments I can say with certainty that we have lost the Mandate of Heaven. I would certainly prefer hiring someone trained as an economist or a political scientist if my goal was finding truth from data https://x.com/pli_cachete/status/1836042146505244807 -->
+
+{{< tweet user=pli_cachete id=1836042146505244807 >}}
+
+The fallout from this metholodogical focus is wide-reaching and often counterintuitive. For instance, it is somewhat rare for statisticians to dogfood their own research outputs. Many statisticians are methods producers only, and not methods consumers, because you primarily need to use methods when making scientific contributions, and statisticians don't do that very often. Unsurprisingly, a frequent complaint about statisticians is that methods from academic statistics are not actually useful:
+
+<!-- > Statistics is a funny field: it so spectacularly fails at its "building tools for scientific enquiry" remit that most applied fields have to invent their own versions of it (data science, biostatistics, econometrics, psychometrics, pol methodology,...) and yet it persists. https://x.com/Apoorva__Lal/status/1836149850444021978 -->
+
+{{< tweet user=Apoorva__Lal id=1836149850444021978 >}}
+
+Nominally, I should say that most statisticians I know very genuinely do want to develop useful methods. Practically, I think the critique above is quite valid. I am, however, optimistic about the future. In at least some sub-fields of statistics, such as causal inference, it is important to make genuinely useful tools, and I think the data science revolution has pushed the entire field somewhat more in an applied direction. At the very least, statisticians are somewhat more aware of the potential for our own irrelevance, especially at the hands of computer scientists building large-scale prediction systems.
+
+## Statistics both is and is not a service discipline, but it's mostly not a service discipline
+
+Outside fields are further frustrated with statisticians because we have more generally abdicated any sense of service or responsibility to be helpful to other disciplines. The issue is not malice so much as prioritization. Actual science is just not on our on critical path all that often. And while statisticians do teach service courses to students in other departments, I have categorically never heard someone recommend one of those courses as useful or helpful for a future career in science. This is understandably a source of animous that flares up on occassion^[A notable episode from several years back on Twitter involved a prominent psychologist making the claim that psychologists could teach statistics better than statisticians.].
+
+Since statistics doesn't really do service work, what tends to happen is that in many applied departments, especially in the social sciences, the department will hire a small number of methodologists with a mixture of statistical and domain background. These methodologists teach statistics courses to graduate students in their own departments and do lots of translational labor, turning esoteric theory papers into comprehensible guides or usable software^[The dynamic here is that statisticians understand the original, technical methods paper, and applied folks are too scared to even try reading or understanding them. Or, in other words, most of the time the statisticians don't actually need a tutorial, and. On occassion statisticians do publish tutorials and it is glorious, but, again, the tradeoff in terms of tenure credit to labor cost is poor].
+
+I have extremely mixed feelings about this state of affairs. On one hand, I recognize it is as an a rational response to statistical indifference. And indeed a lot of the work that these folks do is excellent applied statistics. On the other hand, a lot of it is also mediocre, or worse.
+
+An especially ironic consequence of this system is that statisticians to have minimal impact on how data analysis happens in practice. This is a definite blow to the ego of statisticians, as we would very much like to seen as and treated like experts. Which, notably, we are. Even if you don't do a lot of data analysis yourself as a statician, you are still probably far better at it than folks blind firing regressions in the social sciences. It's very easy to feel jaded about this as a statistician, because a lot of data analysis in science is irreemably bad, a lot of it is sloppy but probably redeemable, and a small portion is done very well^[Methodologists are on the end of a weird and limited inversion of Brandolini's law, where it is far easier to recognize a bad data analysis than it is to produce a good one. There is a common adage that data science is the intersection of statistical expertise, data manipulation skills, and domain expertise, and that you need all three of these skills to analyze data well. To realize that a data analysis is hopelessly flawed, statistical expertise alone suffices. Small surprise that methodologists are often in a bad mood and grumpy at the state of the world. To be a methodologist with any sense of taste means a frequent aesthetic pain.]. Here is, for instance, a somewhat hyperbolic statement that is clearly inspired by too much, rather than too little, contact with reality:
+
+<!-- > Almost all the statistics used in econometrics is completely wrong, to the extent its questionable whether the field actually understands it at all. This is why the discipline of statistics persists https://x.com/drStuartGilmour/status/1836312249344077831 -->
+
+{{< tweet user=drStuartGilmour id=1836312249344077831 >}}
+
+In other words: academic statistics is a rather insular institution that on occasion wishes to exert cultural capital to change the practice of applied statistics. At few points has academic statistics cultivated that capital.
+
+## Putting it all together
+
+My goal with this post is to explain how tenure incentives in academic statistics shape a variety of dynamics within the academy. I also want to lay out on the table a number of stylized facts: academic statistics has largely opted out of service responsibilities to other disciplines. Other disciplines have responded by building in-house capacity of variable quality and ignoring us. As a consequence, a lot of statistics isn't useful to scientists, and a lot of data analysis by scientists is quite bad. Frustrations abound on all sides. Statistics are often seen as, at best, aloof, or, at worst, apathetic and indifferent (c.f. computer science, economics). 
+
+In some sense, the field of statistics is constantly in a state of crisis, on the verge of irrelevance. On the other hand, there is never any real risk of irrelevance because baseline statistical competency is generally low.
+
+
+some critiques of the field:
+
+- we are often seen as, at best, aloof, or, at worst, apathetic and indifferent (c.f. computer science, economics)
+- Do we want to be a discipline that exists in service to science more generally? If that's the case, do our current tenure processes align with that goal?
+- it is, in my veiw, rude to yell at people about their bad data analysis without providing meaningful resources to learn to do good data analysis. it is also, in my vein, embarassing to do bad science.
+- it is delusional to think that the training we provide is helpful to graduate students in other classes.
+- improving the practice of statistics is not a training problem, because we are providing the wrong type of training. our training serves the functional goal of creating more tenure statistics faculty. training is time, labor, incentive intensive. data analysis is hard. enormously undervalued. scaling problem.
+- I think people should respond to their incentives, and that incentive structures are hard and slow to change
+
+
+graduate service courses - copy-pasted stat grad courses or undergrad courses aimed at teaching people to derive and understand new methods, not at analyzing data
+
+My strong belief is that improving the practice of statistics in the academy is a *social* problem, not a technical problem, and one that our current incentive structures discourage us from addressing. 
+
+personally, i am all for a view of statistics as a service discipline. i think statistics tenure packets should be evaluated for tutorial papers, for collaboration with actual scientists, for code, for outreach work, etc.
+- one of my strongest beliefs is that statistics should be about service to the broader scientific enterprise, alas it is not. at least, partially.
+
+
+<!-- the replications crisis people were like "the house is on fire, look at all these questionable research practices and outright fraud" in fields where, from a statistical viewpoint, there is no need to distinguish between fraudulent work and non-fraudulent work because the quality is often indistinguishable. also, it's been clear that the house has been on fire to outsiders for years, so the loud yelling all of a sudden is a bit irritating. -->
+
+
+<!-- 
+- every field has it's own data analytic traditions
+- don't get that much data analysis training, folks stumbling along
+- teaching data analysis within own department, taught by methodologists -->
+
+<!-- 
+
+other fields to comment on:
+- psychology
+- econometrics
+- computer science
+- applied math & engineering
+
+## on collaborations across disciplinary boundaries
+
+seems to work best when data analysis is fully outsourced
+joint methods development has, so far i can tell, mostly been a disaster
+
+really hard to get to shared understanding of the project
+
+- maybe you want help analyzing your data, and you do reach out to a statistican, at which point you discover: they maybe think your whole field is non-sense, they are maybe a grumpy methodologist, and they aren't incentivized to publish with you, so your collaboration is going to be a low priority for them. even if they are super excited to do data analytic work with you, pre-tenure folks are still going to be subject to incentives that are not in favor of collaboration.
+
+near-universal adage that working with statisticians is a royal pain in the ass. slow. unenthused, etc.
+
+Here's a rough model of how things actually work:
+
+statistics culture: somewhat nitpicky, apathetic towards other, and not particularly charismatic. sociologically outcompeted at every turn by computer scientists, who build impressive large systems that kick ass at prediction, who have money, who are charisma, and tend not to sweat the inferential details, actually market their work, etc, etc
+
+- joint methods development with social scientists is often quite painful. hourly rates meme
+- what passes muster in social sciences is desk reject worthy in statistics
+- i have been involved in 2-3 collaborative projects where i bowed out because the methodological content of the projects would have been embarrassing and potentially detrimental to my career to attach my name to. weird weird dynamics here when getting paid to help a social scientist with a thing.
+
+Advice for people who need statistical help:
+- pay statisticians
+- do a transactional data analysis for authorship trade
+- make sure the statistician understands the scientific question -->
