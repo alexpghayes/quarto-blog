@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab Manual – alex hayes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-7b70cd7d0d287aa12196b7b1f14af662.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/academicons-1.9.4/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G6PQFW2XSK"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="Lab Manual – alex hayes">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://www.alexpghayes.com/assets/images/manual/jscbb.jpg">
+<meta property="og:site_name" content="alex hayes">
+<meta name="twitter:title" content="Lab Manual – alex hayes">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://www.alexpghayes.com/assets/images/manual/jscbb.jpg">
+<meta name="twitter:creator" content="@alexpghayes">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">alex hayes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../posts.html"> 
+<span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../code/index.html"> 
+<span class="menu-text">code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../teaching/index.html"> 
+<span class="menu-text">teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../talks/index.html"> 
+<span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/alexpghayes.com"> 
+<span class="menu-text"><i class="fa-brands fa-bluesky" aria-label="bluesky"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=6g1T3WIAAAAJ"> 
+<span class="menu-text"><i class="ai  ai-google-scholar ai-xl" aria-label="google-scholar"></i></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/alexpghayes"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/alexpghayes/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome!</a></li>
+  <li><a href="#expectations-responsibilities" id="toc-expectations-responsibilities" class="nav-link" data-scroll-target="#expectations-responsibilities">Expectations &amp; Responsibilities</a>
+  <ul class="collapse">
+  <li><a href="#everyone-the-big-picture" id="toc-everyone-the-big-picture" class="nav-link" data-scroll-target="#everyone-the-big-picture">Everyone: The Big Picture</a></li>
+  <li><a href="#everyone-the-small-picture" id="toc-everyone-the-small-picture" class="nav-link" data-scroll-target="#everyone-the-small-picture">Everyone: The Small Picture</a></li>
+  <li><a href="#expectations-of-post-docs" id="toc-expectations-of-post-docs" class="nav-link" data-scroll-target="#expectations-of-post-docs">Expectations of Post-docs</a></li>
+  <li><a href="#expectations-of-graduate-students" id="toc-expectations-of-graduate-students" class="nav-link" data-scroll-target="#expectations-of-graduate-students">Expectations of Graduate Students</a></li>
+  <li><a href="#what-you-can-expect-of-me" id="toc-what-you-can-expect-of-me" class="nav-link" data-scroll-target="#what-you-can-expect-of-me">What you can expect of me</a></li>
+  </ul></li>
+  <li><a href="#open-science-communication" id="toc-open-science-communication" class="nav-link" data-scroll-target="#open-science-communication">Open Science &amp; Communication</a></li>
+  <li><a href="#meetings" id="toc-meetings" class="nav-link" data-scroll-target="#meetings">Meetings</a></li>
+  <li><a href="#miscellaneous" id="toc-miscellaneous" class="nav-link" data-scroll-target="#miscellaneous">Miscellaneous</a></li>
+  <li><a href="#engagement-publicity" id="toc-engagement-publicity" class="nav-link" data-scroll-target="#engagement-publicity">Engagement &amp; Publicity</a></li>
+  <li><a href="#onboarding-checklist" id="toc-onboarding-checklist" class="nav-link" data-scroll-target="#onboarding-checklist">Onboarding Checklist</a></li>
+  <li><a href="#how-to-science-series" id="toc-how-to-science-series" class="nav-link" data-scroll-target="#how-to-science-series">“How to Science” Series</a></li>
+  <li><a href="#other-resources-and-guides" id="toc-other-resources-and-guides" class="nav-link" data-scroll-target="#other-resources-and-guides">Other Resources and Guides</a></li>
+  <li><a href="#boundaries-social-events" id="toc-boundaries-social-events" class="nav-link" data-scroll-target="#boundaries-social-events">Boundaries &amp; Social Events</a></li>
+  <li><a href="#the-clauset-lab" id="toc-the-clauset-lab" class="nav-link" data-scroll-target="#the-clauset-lab">The Clauset Lab</a></li>
+  <li><a href="#when-problems-come-up" id="toc-when-problems-come-up" class="nav-link" data-scroll-target="#when-problems-come-up">When problems come up…</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/alexpghayes/quarto-blog/edit/main/lab/manual.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab Manual</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="welcome" class="level2">
+<h2 class="anchored" data-anchor-id="welcome">Welcome!</h2>
+<p>This is a Lab Manual that summarizes how the Larremore Lab works. If you’re reading it, I hope you’re either joining the lab or thinking about doing so! The manual is a mixture of prescriptions (how things ought to be done) and descriptions (how things around the lab typically operate). To that end, you’ll find that this document is a mix of reference material, a statement of culture and philosophy, and the outlines of a contract among all of us on the research team.</p>
+<p><strong>Our mission is to do good science.</strong> To make discoveries. To have fun while we do so. To support each other, but challenge each other too. To give away as many good ideas as possible. To spend our time and the funds of our supporters wisely. To be members of good standing and good reputation in our communities, both scientific and geographic. To feel no shame when we don’t yet know something, but to fill the gaps, patch the holes, and learn everything we can. To be constructive with our criticism. To be creative and collaborative. To follow our experiments, data, and analyses to whatever interesting conclusions they support, even if those aren’t the conclusions we’d hoped for. To be curious. To respect each other, both by giving the respect due to every human being, and by earning the respect of others by how we act.</p>
+<p><strong>Our lab focuses on three areas.</strong> - We study mathematical and computational methods for their own sake, to build better, more powerful, and more reliable tools. Typically, these take the form of statistical inference or network methods. - Second, we study social science with a data-rich and computational perspective. This often means trying to understand the ecosystem of academic science itself by using information about who scientists are and what scientists do. - Third, we study infectious diseases with a mathematical and statistically rigorous toolkit, focusing usually on malaria parasites and respiratory pathogens.</p>
+<p><img src="../assets/images/manual/jscbb.jpg"></p>
+</section>
+<section id="expectations-responsibilities" class="level2">
+<h2 class="anchored" data-anchor-id="expectations-responsibilities">Expectations &amp; Responsibilities</h2>
+<section id="everyone-the-big-picture" class="level3">
+<h3 class="anchored" data-anchor-id="everyone-the-big-picture">Everyone: The Big Picture</h3>
+<ul>
+<li>Work on what you’re passionate about, work hard at it, and be proud of it.</li>
+<li>Scientists have to be careful. Don’t rush your work. Think first. Then implement. Incorporate sanity checks. Ask others to look at your code or data if you need help, and help others when they ask. It’s ok to makes mistakes, but mistakes shouldn’t be because of carelessness or rushed work.</li>
+<li>If you do make a mistake, tell your collaborators (if they have already seen the results, and <em>especially</em> if the paper is being written up, is already submitted, or already accepted). We admit our mistakes, and then we correct them and move on.</li>
+<li>We all want to make discoveries, get papers published, and do great things. But we do this honestly. It is never ok to plagiarize, tamper with data, make up data, omit data, or fudge results in any way. Science is about finding out the truth, and null results and unexpected results are still important. This can’t be emphasized enough: <em>no academic misconduct!</em></li>
+<li>Support your fellow lab-mates. Help them out if they need help (even if you aren’t on the project), and let them vent when they need to. Science in this lab is collaborative, not competitive. Help others, and you can expect others to help you when you need it.</li>
+<li>Respect your fellow lab-mates. Respect their strengths and weaknesses, respect their desire for quiet if they need it, and for support and a kind ear when they need that. Respect their culture, their religion, their beliefs, their sexual orientation.</li>
+<li>If there is any tension or hostility in the lab, something has to be done about it immediately. We can’t thrive in an environment we aren’t comfortable in, and disrespect or rudeness will not be tolerated in the lab. If you don’t feel comfortable addressing the situations, tell Dan. (Actually, in any case, tell Dan about this sort of thing. It’s important!)</li>
+<li>If you have a problem with Dan and are comfortable telling him about it, do! If you aren’t comfortable, then there are a few others you can talk to. Those folks are Prof.&nbsp;Leslie Leinwand and Prof.&nbsp;Aaron Clauset, both based in the JSCBB.</li>
+<li>Stay up to date on the latest research by attending a seminar series and following scientists on Google Scholar or on social media. Unfollow people who complain more than they post science.</li>
+<li>Have a life outside of the lab and take care of your health. If you’re struggling, tell someone. Health comes first. The lab looks out for the well-being of all its members. We are here to help. It’s ok to go through hard patches (we all do), but you shouldn’t feel shy about asking for help or just venting.</li>
+</ul>
+</section>
+<section id="everyone-the-small-picture" class="level3">
+<h3 class="anchored" data-anchor-id="everyone-the-small-picture">Everyone: The Small Picture</h3>
+<ul>
+<li>You aren’t expected to come into lab on weekends and holidays, and you aren’t expected to stay late at night. You are expected to get your work done (whatever time of day you like to do it).</li>
+<li>Keeping regular hours in the lab is required, and it’s up to you to decide which and how many those hours those are. Working from home, a study room, or a coffee shop is fine, but we’ve also set up the lab intentionally so that it’s open, collaborative, and community oriented. It’s up to you to get things done, and active experimentation with what kind of schedule works well for you is recommended (and fun)!</li>
+<li>Keep the living room clean, and no food on the couches please. Eating at your desk is fine, but clean up food waste, crumbs, spills.</li>
+<li>Be on time for meetings. Colorado has high-variance weather, so be prepared!</li>
+<li>Vacation is important. Make sure that your collaborators know well in advance so that they can plan ahead.</li>
+<li>We study infectious diseases, so if you’re sick, stay home. If you’re going to miss a meeting or a deadline, let people know ASAP and then rest up!</li>
+<li>Because I believe strongly that in-person community and collaboration are important, fully remote positions are not an option.</li>
+</ul>
+<p><img src="../assets/images/manual/hours.jpg"></p>
+</section>
+<section id="expectations-of-post-docs" class="level3">
+<h3 class="anchored" data-anchor-id="expectations-of-post-docs">Expectations of Post-docs</h3>
+<ul>
+<li>Eventually develop your own independent line of research.</li>
+<li>Help train and mentor students in the lab (both undergraduate and graduate) when they need it—either because they ask, or because I ask you to.</li>
+<li>Present your work widely.</li>
+<li>Meet with Dan every semester to talk about professional development and career progress.</li>
+<li>Apply for grants and fellowships. I will only hire you if I can support you, but it’s nevertheless in your best interest to get experience writing grants. Plus, if you get them, you’ll be building career momentum, and helping out the entire lab’s budget in the process. You’ll free up funds previously allocated to you, and grants, fellowships, and awards look great on a CV!</li>
+<li>Apply for jobs (of whatever type you choose) when you’re ready. If you think you’d like to leave academia, that’s completely ok—but you should still treat your post-doc seriously, and talk to me about how to best train for a job outside academia. When you’re ready, we can talk about strategies for strong application materials.</li>
+<li>Challenge me (Dan) when I’m wrong or when your opinion is different, and treat the rest of the lab to your unique expertise.</li>
+</ul>
+</section>
+<section id="expectations-of-graduate-students" class="level3">
+<h3 class="anchored" data-anchor-id="expectations-of-graduate-students">Expectations of Graduate Students</h3>
+<ul>
+<li>Develop your dissertation research. Your dissertation should consist of around 3 projects, built around answering answer a big-picture question. In cartoon form, those 3 projects, chronologically, are (1) a project that I suggest that you do, (2) a project that we discuss and develop together, and (3) a project that you decide on and drive forward.</li>
+<li>Prioritize time for research. Coursework and TAing are important, but ultimately your research gets you your PhD and prepares you for the next stage of your career.</li>
+<li>Work in the lab on a regular schedule.</li>
+<li>Help mentor undergraduate students in the lab when they need it—either because they ask, or because I ask you to.</li>
+<li>Present your work at departmental events, at other labs (if invited), and at conferences.</li>
+<li>Apply for fellowships, conference funding, and awards, like the NSF GRFP or the Microsoft Ada Lovelace fellowship. When you’re ready, we can talk about strategies for writing good statements and proposals.</li>
+<li>Meet with Dan annually to talk professional development and progress toward a degree.</li>
+<li>Make sure you meet all departmental deadlines (e.g., for your exams and thesis), and make sure Dan is aware of them!</li>
+</ul>
+</section>
+<section id="what-you-can-expect-of-me" class="level3">
+<h3 class="anchored" data-anchor-id="what-you-can-expect-of-me">What you can expect of me</h3>
+<p>I will… - Support you (scientifically, financially, and emotionally to the extent that’s relevant in the ups and downs of research) - Give you feedback on a timely basis, including feedback on project ideas, conference, posters, talks, manuscripts, figures, and proposals. - Be available in person, and via e-mail or Slack on a regular basis, including regular meetings to discuss your research (and anything else you’d like to discuss). - Give my perspective on where the lab is going, where the field is going, and tips about surviving and thriving in science and academia. - Support your career development by introducing you to other researchers in the field, promoting your work at talks, writing recommendation letters for you, and letting you attend conferences as often as finances permit. - Help you prepare for the next step of your career, whether it’s a job, a post-doc, or a faculty position. - Care for your emotional and physical well-being, and prioritize that above all else. This may even involve a suggestion to take a leave of absence.</p>
+</section>
+</section>
+<section id="open-science-communication" class="level2">
+<h2 class="anchored" data-anchor-id="open-science-communication">Open Science &amp; Communication</h2>
+<p>The lab takes a pragmatic view of Open Science, meaning that papers, code, and data should be shared, but there may also be reasonable exceptions. One such exception is ethical: when we collect large datasets on the behaviors, opinions, or biospecimens of other people, with IRB approval, we may avoid openly posting data to protect privacy. Another exception reflects the cost of data collection: some datasets require huge up-front efforts to collect and clean, and will not be published immediately after the first study that analyzes them. Still, even those datasets will be made available within 3 years of the first publication. In some cases, these commitments are superceded by data use agreements with other parties.</p>
+<p>We collaborate and share code via GitHub. Internally, we also collaborate on drafts using shared Dropbox folders, Overleaf, and Google Docs.</p>
+<p>We communicate using email, Slack, and GitHub, and each has a different purpose. For instance, codebase decisions, discussions, and to-dos should be on GitHub so they can be tracked properly. Anything that falls into a chat, DM, or meme category should go on Slack. Email is required for anything official, anything long, anything with external collaborators, or anything that you 100% don’t want to fall through the cracks. If something is time sensitive, make sure to say so. I am happy to be nudged about things if it has been a couple working days. WhatsApp is reserved for conferences. The creation of custom slack emojis is encouraged.</p>
+</section>
+<section id="meetings" class="level2">
+<h2 class="anchored" data-anchor-id="meetings">Meetings</h2>
+<p>There are weekly lab meetings of a few varieties. First, in some semesters we have an all-hands meeting with the Clauset Lab. This is actually registered as a course, so please enroll (CSCI-7000). There may also be a weekly meeting for the Science of Science team and another for the Infectious Diseases team.</p>
+<p>In general, please schedule a weekly meeting with Dan at the start of each semester.</p>
+<p>Each calendar year (each semester for postdocs), we will also have a one-on-one professional development meeting that focuses solely on career, goals, tactics, and strategy.</p>
+<p><img src="../assets/images/manual/meeting.jpg"></p>
+</section>
+<section id="miscellaneous" class="level2">
+<h2 class="anchored" data-anchor-id="miscellaneous">Miscellaneous</h2>
+<ul>
+<li>No food on the couches please. Especially no raspberry vinaigrette dressing on the couches.</li>
+<li>Bring your own coffee pods.</li>
+<li>No dogs or bikes inside (building policy).</li>
+</ul>
+</section>
+<section id="engagement-publicity" class="level2">
+<h2 class="anchored" data-anchor-id="engagement-publicity">Engagement &amp; Publicity</h2>
+<p>When we work on something really interesting, journalists may get in touch. This is generally a good thing, but any press inquiries should be forwarded or deflected to <a href="mailto:daniel.larremore@colorado.edu">Dan</a>. First authors will be included in any interviews, as a rule.</p>
+<p>Use social media for good, if at all.</p>
+<p>Make your work easily Googleable, but consider also doing privacy checks, and an Incognito Google Audit, where you turn off cookies and look yourself up. Do you like what you see?</p>
+<p>Be a good person at conferences. Compliment speakers only on their science or talk, not their appearance. Go to the talks of your peers in the lab. Invite stragglers to join your group for meals.</p>
+</section>
+<section id="onboarding-checklist" class="level2">
+<h2 class="anchored" data-anchor-id="onboarding-checklist">Onboarding Checklist</h2>
+<ol type="1">
+<li>Join the Slack</li>
+<li>Make a Dropbox account.</li>
+<li>Ask to be added to the lab calendar.</li>
+<li>Email a pic of your BuffOne card to Dan for lab access.</li>
+<li>Make a github account.</li>
+<li>Schedule a recurring meeting.</li>
+<li>Schedule a professional development meeting.</li>
+<li>Make a Google Scholar page.</li>
+<li>Swap phone numbers with a couple people in the lab in case of emergency.</li>
+<li>Decide on and commit to a regular JSCBB schedule.</li>
+</ol>
+</section>
+<section id="how-to-science-series" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-science-series">“How to Science” Series</h2>
+<ul>
+<li>Writing Abstracts</li>
+<li>Writing Results</li>
+<li>Writing Discussions</li>
+<li><a href="https://drive.google.com/file/d/1LouVvISCRlWkItZgzoHcgoU5Q1VyHT4U/view?usp=sharing">Data visualization</a></li>
+<li><a href="https://drive.google.com/file/d/13efH6iA6toPtJ91KBt_QCeAyQBcSN7SA/view?usp=sharing">Giving a talk</a></li>
+<li><a href="https://drive.google.com/file/d/1TraVwRkbkCbHq-s_-NS69ZEbRNwH8XNh/view?usp=sharing">Clean code</a></li>
+<li><a href="https://drive.google.com/file/d/1g7VSbUkF9wBszcjHCeZlGHoHqUqYfDC0/view?usp=sharing">Peer review</a></li>
+<li><a href="https://drive.google.com/file/d/1X7pp1FXT53Zk-VDWAXggUM7uWjd7VMou/view?usp=sharing">LaTeX</a></li>
+<li>CVs</li>
+<li>Lab Budgets</li>
+</ul>
+</section>
+<section id="other-resources-and-guides" class="level2">
+<h2 class="anchored" data-anchor-id="other-resources-and-guides">Other Resources and Guides</h2>
+<ul>
+<li><a href="https://www.colorado.edu/biofrontiers/travel">Travel Guide</a></li>
+<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeW8teJFpCJHA2_dvI9i4_khitU04IOFZWq8LYiiPuM7KFakg/viewform?usp=sf_link">Travel Auth Form</a></li>
+<li><a href="https://bit.colorado.edu/desktop-services/printing/building-printers/">Printing</a></li>
+</ul>
+</section>
+<section id="boundaries-social-events" class="level2">
+<h2 class="anchored" data-anchor-id="boundaries-social-events">Boundaries &amp; Social Events</h2>
+<p>The Larremore Lab is a community, and my job as PI is to lead that community in a direction that’s good for the science and good for the members of the lab. But there are also social aspects to the community. For instance, I host open and optional lab dinners that I also invite my friends and family to, we have a joint happy hour from time to time with the Clauset Lab and Kissler Lab, and many people regularly eat lunch together or even exercise together. In my opinion, these social events and connections are a wonderful and important part of being in any lab. However, they can also blur boundaries, particularly when labels like employer, advisor, and friend start to collide. So to be clear: my roles as PI, professor, and your advisor will always be my top priority.</p>
+</section>
+<section id="the-clauset-lab" class="level2">
+<h2 class="anchored" data-anchor-id="the-clauset-lab">The Clauset Lab</h2>
+<p>We work closely with the <a href="http://tuvalu.santafe.edu/~aaronc/">Clauset Lab</a>. We have shared lab meetings, shared lab space, a shared slack, and a few big shared projects. We also share many of the same values about openness and culture. Aaron Clauset and I have been collaborating since 2012. We work well together, and as of last count (Summer 2024), that included 23 publications and 3 large grants. While our labs are distinct from each other, the degree of overlap between them has, so far, been highly productive!</p>
+<p><img src="../assets/images/manual/clausetlab.jpg"></p>
+</section>
+<section id="when-problems-come-up" class="level2">
+<h2 class="anchored" data-anchor-id="when-problems-come-up">When problems come up…</h2>
+<p>Health. Personal. Research. Coursework. Whatever. If you feel like you are in trouble, or need to sort something out that is related to life in the Larremore Lab, talk to Dan. If you have a problem with Dan, or want an outside opinion, consider speaking with Prof.&nbsp;Aaron Clauset or BioFrontiers’ Chief Scientific Officer, Prof.&nbsp;Leslie Leinwand.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.alexpghayes\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/alexpghayes/quarto-blog/edit/main/lab/manual.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alexpghayes/quarto-blog">
+<p>website source</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

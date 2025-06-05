@@ -39,11 +39,4 @@ experiments, causal
 
 - pedagogical, can we construct a two-course sequence that leads from the gaussian linear model and logistic regression to doubly-robust causal estimators using machine learning and cross-fitting?
 
-- do want to have an influence on the practice of data analysis in the academy? if so, i think we need to completely and utterly re-imagine our vision for statistics education and start getting involved in how *applied* folks learn to do data analysis in addition to teaching statisticans how to do data analysis
-
-- how can we do inference after model selection? can we come with versions of selective inference that correspond to scientifically meaningful estimates? what about the model selection processes that people use in practice?
-
-- are the assumptions that we make realistic? how can we tell, especially as these assumptions get more abstract and/or esoteric
-
-- how to handle uncertainty the number of clusters?
-
+- VS Code

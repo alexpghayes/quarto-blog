@@ -23,8 +23,6 @@ website:
       - code/index.qmd
       - teaching/index.qmd
       - talks/index.qmd
-      - text: resume
-        file: resume/index.qmd
       - text: '{{< fa brands bluesky >}}'
         href: https://bsky.app/profile/alexpghayes.com
       # sizing documentation: https://github.com/schochastics/academicons#readme
@@ -39,7 +37,6 @@ website:
     right:
       - text: website source
         href: https://github.com/alexpghayes/quarto-blog
-
 
 format:
   html:
