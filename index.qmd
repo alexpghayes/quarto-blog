@@ -5,10 +5,9 @@ about:
   id: hero-heading
   template: solana
   image-width: 10em
-  image-alt: Professional headshot of Alex
+  image-alt: Headshot of Alex
   image-shape: rounded
 ---
-
 
 :::{#hero-heading}
 
@@ -16,9 +15,27 @@ I am an incoming post-doctoral researcher in Economics at Stanford University, w
 
 I completed my PhD in Statistics at the University of Wisconsin-Madison, where I was co-advised by [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) and [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/). I study spectral methods for network analysis, causal inference, and causal inference on networks. You might know me from my work on [`broom`](https://broom.tidymodels.org/), a popular open-source `R` package in the `tidyverse`. 
 
-My curriculum vitae is available [here](academic-cv.pdf). I also keep [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIAAAAJ) up to date.
+My curriculum vitae is available [here](academic-cv.pdf). I also keep [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIAAAAJ) up to date. You can find me on Bluesky at [@alexpghayes.com](https://bsky.app/profile/alexpghayes.com).
 
 :::
+
+
+## what i'm doing now
+
+As of August 2025, I'm putting my time towards:
+
+- Packing up and moving to Palo Alto
+- Finishing up a project on asymptotic collinearity of peer effects in the linear-in-means model
+- Figuring out how to estimate peer effects in noisy networks
+- Developing guardrails to detect when hard-to-measure metrics regress in huge online experiments
+- Making data collection for in person social networks cheaper and more efficient
+- Software development to keep `R` packages up to date and on CRAN
+
+From August 3 to August 7, 2025 I will be at the Joint Statistical Meetings 2025 in Nashville, Tennessee. I'm presenting on Thursday in the *Business and Economic Statistics Student Paper Awards* session:
+
+**Peer effects in the linear-in-means model may be inestimable even when identified**  
+Thursday, Aug 7: 8:30 AM - 10:20 AM   
+Music City Center, Room CC-103C
 
 ## pre-prints
 
@@ -32,19 +49,13 @@ My curriculum vitae is available [here](academic-cv.pdf). I also keep [Google Sc
 
 1. [Welcome to the tidyverse](https://joss.theoj.org/papers/10.21105/joss.01686). Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, **Alex Hayes**, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. *Journal of Open Source Software*. 2019. [website](https://www.tidyverse.org/)
 
------
-
-Material from my presentations is available on my [talks](./talks/) page.
-
------
+## blog
 
 In a hobbyist capacity, I also blog about statistics, programming, and data. Some posts I'm particularly proud of:
 
 - [overfitting: a guided tour](./post/2020-01-06_overfitting-a-guide-tour/)
 - [consistency and the linear probability model](./post/2019-08-31_consistency-and-the-linear-probability-model/)
 - [fairness in repeated lotteries](./post/2024-06-09_repeated-lotteries/)
-
-These days I'm enjoying the slow resurgence of academic Twitter on Bluesky. You can find me there at [@alexpghayes.com](https://bsky.app/profile/alexpghayes.com).
 
 <!-- [schedule a meeting with me](https://calendly.com/alexpghayes) -->
 
