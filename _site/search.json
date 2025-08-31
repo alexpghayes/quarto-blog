@@ -95,14 +95,14 @@
     "href": "index.html",
     "title": "about",
     "section": "",
-    "text": "I am an incoming post-doctoral researcher in Economics at Stanford University, where I will work with Arun Chandrasekhar. Beginning in September 2026, I will join Oregon State University as an Assistant Professor in Statistics.\nI completed my PhD in Statistics at the University of Wisconsin-Madison, where I was co-advised by Keith Levin and Karl Rohe. I study spectral methods for network analysis, causal inference, and causal inference on networks. You might know me from my work on broom, a popular open-source R package in the tidyverse.\nMy curriculum vitae is available here. I also keep Google Scholar up to date. You can find me on Bluesky at @alexpghayes.com."
+    "text": "I am a Postdoctoral Scholar at Stanford University in the Economics Department, where I work with Arun Chandrasekhar on methods to make network experiments more cost efficient. After my postdoc, in September 2026, I will join Oregon State University as an Assistant Professor in Statistics.\nI completed my PhD in Statistics at the University of Wisconsin-Madison, where I was co-advised by Keith Levin and Karl Rohe. During my PhD I studied spectral methods for network analysis, causal inference, and causal inference on networks. During my PhD I also spent some time working on broom, a popular open-source R package in the tidyverse.\nMy curriculum vitae is available here. I also keep Google Scholar up to date. You can find me on Bluesky at @alexpghayes.com."
   },
   {
     "objectID": "index.html#what-im-doing-now",
     "href": "index.html#what-im-doing-now",
     "title": "about",
     "section": "what i’m doing now",
-    "text": "what i’m doing now\nAs of August 2025, I’m putting my time towards:\n\nPacking up and moving to Palo Alto\nFinishing up a project on asymptotic collinearity of peer effects in the linear-in-means model\nFiguring out how to estimate peer effects in noisy networks\nDeveloping guardrails to detect when hard-to-measure metrics regress in huge online experiments\nMaking data collection for in person social networks cheaper and more efficient\nSoftware development to keep R packages up to date and on CRAN\n\nFrom August 3 to August 7, 2025 I will be at the Joint Statistical Meetings 2025 in Nashville, Tennessee. I’m presenting on Thursday in the Business and Economic Statistics Student Paper Awards session:\nPeer effects in the linear-in-means model may be inestimable even when identified\nThursday, Aug 7: 8:30 AM - 10:20 AM\nMusic City Center, Room CC-103C"
+    "text": "what i’m doing now\nAs of September 2025, I’m putting my time towards:\n\nGetting settled into Palo Alto\nFinishing up a project on asymptotic collinearity of peer effects in the linear-in-means model\nFiguring out how to estimate peer effects in noisy networks\nDeveloping guardrails to detect when hard-to-measure metrics regress in huge online experiments\nMaking data collection for in person social networks cheaper and more efficient"
   },
   {
     "objectID": "index.html#pre-prints",
@@ -123,7 +123,7 @@
     "href": "index.html#blog",
     "title": "about",
     "section": "blog",
-    "text": "blog\nIn a hobbyist capacity, I also blog about statistics, programming, and data. Some posts I’m particularly proud of:\n\noverfitting: a guided tour\nconsistency and the linear probability model\nfairness in repeated lotteries"
+    "text": "blog\nIn a hobbyist capacity, I also blog about statistics, programming, and data. Some posts you might enjoy:\n\noverfitting: a guided tour\nconsistency and the linear probability model\nfairness in repeated lotteries"
   },
   {
     "objectID": "talks/index.html",
