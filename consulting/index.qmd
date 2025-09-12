@@ -1,0 +1,49 @@
+---
+title: "consulting"
+date-modified: "2025-09-12"
+---
+
+At Stanford, an informal but important part of my position is to offer statistical feedback and brainstorming to the economics department, especially economics graduate students.
+
+## what you might get out of statistics consulting
+
+- Help designing a new experiment or project
+- Suggestions for how to analyze your data, including methodological advice, pointers to code samples, and links to statistical resources
+- Feedback about whether an analysis is compelling or not
+- Advice about how to respond to reviewers
+- Some pair programming and joint analysis of your data
+- Etc
+
+Note: if you are looking for someone to fully analyze your data for you or write methods or results sections of your paper, you're probably looking for a longer term [collaboration](#collaborations) rather than a quick consultation.
+
+## before signing up for statistics consulting
+
+Before scheduling a statistics consultation with me, it's important to do some prep work. That way, when we meet, we can have a productive discussion that uses both of our time effectively.
+
+Please take a moment to answer the following questions in writing. If any of these questions are irrelevant to you, just skip them.
+
+- **What are you trying to learn or do?** It's especially helpful to me if you can describe in plain language what you want to learn. It's most helpful to tell me what you're hoping to do without saying anything about how you can want to do it.
+
+- **Why does this project matter?** I am not an expert in your field, so it is really hard for me to know what parts of your project matter most. Help me focus my energy by explaining why your work is important or the decisions you will make based on your analysis.
+
+- **Who is the audience for your work?** I want to help you solve your problem in a way that your audience will accept, and to do that, I need to know a little bit about your audience. If you're trying to publish an academic paper, where are you trying to publish it? If not, what do your stakeholders or audience members care about? How much statistical background do they have? What kind of relationship do you have to them?
+
+- **What kind of constraints do you have?** Is it more important to get a correct answer or a quick answer? What kind of computational and fiscal resources can you allocate to this project?
+
+- **What data do you have?** How did you collected any data you have, and what kinds of cleaning or pre-processing steps have you taken? It's important to know about data cleaning and prep because those processes can greatly influence what kinds of analysis are appropriate. Please create a data dictionary that describes what each row of data represents and a description of each column. 
+- **How are you currently trying to solve your problem or analyze your data?** It's helpful if you can give me two answers to this, actually: one answer an abstract level, using as little statistical or scientific jargon as possible, and then another with lots of technical detail.
+
+::: {.callout-warning}
+## Heads up
+Without a detailed data dictionary I might not be able to help you!
+:::
+
+Once have you answers to these questions, [schedule a meeting](https://calendly.com/alexpghayes) and [email me](mailto:alexpgh@stanford.edu) a copy of your responses!
+
+If you are hoping to collaboratively analyze data during our consultation, it's important that you **organize your data**. It's critical to know where the raw data is, how it gets cleaned, and where the clean data is. Ideally, store your data in `.csv` files in [tidy format](https://vita.had.co.nz/papers/tidy-data.pdf). Jeff Leek has an extensive guide [how to share data with a statistician](https://github.com/jtleek/datasharing) that may be helpful, and the [Data tidying](https://r4ds.hadley.nz/data-tidy.html) chapter of *R for Data Science* has details on how to tidy data in `R`.
+
+## collaborations
+
+I am excited to find new collaborators, and to work together on longer term applied projects. One thing that is important to know when collaborating with a statistician is that it can be difficult for statisticians to get professional credit for collaborations. I describe some of the dynamics at play in my post [making sense of academic statistics](./post/making-sense-of-academic-statistics/).
+
+If our interests are particularly aligned, I may be able to take on a bigger role in your project as part of an ongoing collaboration. This might happen if there's something interesting about your problem from a statistical perspective, if you're doing research that I'm personally excited about, or if part of my time is allocated to consulting projects^[At Oregon State, I will have a 15% consulting obligation in the College of Agriculture and I will happily take on a larger role in your project!].
