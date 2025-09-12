@@ -10,14 +10,16 @@ about:
 ---
 
 :::{#hero-heading}
-
-I am a Postdoctoral Scholar at Stanford University in the Economics Department, where I work with [Arun Chandrasekhar](https://stanford.edu/~arungc/) on methods to make network experiments more cost efficient. After my postdoc, in September 2026, I will join Oregon State University as an Assistant Professor in Statistics. 
+I am a Postdoctoral Scholar at Stanford University in the Economics Department, where I work with [Arun Chandrasekhar](https://stanford.edu/~arungc/). In September 2026, I will join Oregon State University as an Assistant Professor in Statistics. 
 
 I completed my PhD in Statistics at the University of Wisconsin-Madison, where I was co-advised by [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) and [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/). During my PhD I studied spectral methods for network analysis, causal inference, and causal inference on networks. During my PhD I also spent some time working on [`broom`](https://broom.tidymodels.org/), a popular open-source `R` package in the `tidyverse`. 
 
-My curriculum vitae is available [here](academic-cv.pdf). I also keep [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIAAAAJ) up to date. You can find me on Bluesky at [@alexpghayes.com](https://bsky.app/profile/alexpghayes.com).
-
+My curriculum vitae is available [here](academic-cv.pdf). I also keep [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIAAAAJ) up to date, and you can find me on Bluesky at [@alexpghayes.com](https://bsky.app/profile/alexpghayes.com).
 :::
+
+## statistical consulting
+
+At Stanford, an informal but important part of my position is to offer statistical feedback and brainstorming to the economics department, especially economics graduate students. [Learn more](./consulting/).
 
 
 ## what i'm doing now
@@ -25,10 +27,9 @@ My curriculum vitae is available [here](academic-cv.pdf). I also keep [Google Sc
 As of September 2025, I'm putting my time towards:
 
 - Getting settled into Palo Alto
-- Finishing up a project on asymptotic collinearity of peer effects in the linear-in-means model
-- Figuring out how to estimate peer effects in noisy networks
-- Developing guardrails to detect when hard-to-measure metrics regress in huge online experiments
-- Making data collection for in person social networks cheaper and more efficient
+- Making data collection for in-person social networks cheaper and more efficient
+- Developing estimators for peer effects in noisy networks
+- Developing guardrails to detect when hard-to-measure metrics regress in large online experimentation programs
 
 ## pre-prints
 
@@ -50,16 +51,7 @@ In a hobbyist capacity, I also blog about statistics, programming, and data. Som
 - [consistency and the linear probability model](./post/2019-08-31_consistency-and-the-linear-probability-model/)
 - [fairness in repeated lotteries](./post/2024-06-09_repeated-lotteries/)
 
-<!-- [schedule a meeting with me](https://calendly.com/alexpghayes) -->
-
-<!-- ## news
-
-[mit page on direct and indirect costs](https://ras.mit.edu/grant-and-contract-administration/sponsored-projects-basics/direct-and-indirect-costs)
- -->
 <!-- 
-## consulting at oregon state
-
-- how to collaborate with me
 
 ## students
 - classes i'm teaching
