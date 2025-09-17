@@ -1,54 +1,44 @@
 ---
 title: "consulting"
-date-modified: "2025-09-12"
 ---
 
-At Stanford, one of the most rewarding parts of my role is offering statistical feedback and brainstorming support to the economics department, especially to graduate students. I genuinely enjoy these collaborations!
+I would love to chat with you about your statistics questions!
 
-## What I can help you with
+## what i can help with
 
-I'm here to support your research journey in various ways:
+- Suggesting methods to analyze your data, offering relevant code samples, links to resources, etc
+- Giving you feedback about a data analysis or helping you respond to reviewers
+- Designing experiments or figuring how to approach a new project
+- Programming in `R` or `Python`, organizing your code and data, making a replication package
+- Digging through data together
 
-- Brainstorming and designing new experiments or projects together
-- Exploring analysis approaches for your data, including methodology suggestions, code samples, and helpful statistical resources
-- Providing constructive feedback on whether an analysis feels compelling
-- Thinking through how to respond to reviewers (we've all been there!)
-- Some pair programming and collaborative data analysis
-- And much more!
+Quick note: if you need someone to do your entire analysis or write your methods section, you probably want an ongoing collaborator rather than a consultant.
 
-*Quick note: If you're looking for someone to fully analyze your data or write your methods/results sections, that sounds more like a longer-term [collaboration](#collaborations) — which could be great! Let's talk about it.*
+## before we meet
 
-## Getting the most out of our meeting
+If you do some prep work before we meet, it makes consulting a lot smoother. Take a few minutes to jot down answers to these questions (skip any that don't apply):
 
-I've found that a little prep work goes a long way in making our consultations productive and enjoyable for both of us. Taking a few minutes to think through these questions beforehand will help us dive right into the good stuff when we meet.
+- **What are you trying to learn or do?** Tell me in plain language what you want to learn. Don't worry about the technical details yet.
 
-Here are some questions to consider (no worries if some don't apply — just skip those!):
+- **Why does this matter?** Help me focus my efforts by explaining why your work is important or the decisions you will make based on your analysis.
 
-- **What are you hoping to learn or accomplish?** I find it super helpful when folks describe their goals in plain language. Tell me what you want to discover, without worrying about the technical how — we'll figure that out together!
+- **Who is your audience?** Where are you trying to publish? What do your stakeholders care about? How much statistical background do they have?
 
-- **Why does this work matter to you?** Since I'm not an expert in your specific field, understanding what excites you about this project helps me focus my energy where it counts most. What makes this important?
+- **What kind of constraints do you have?** Is it more important to get a correct answer or a fast answer?
 
-- **Who's your audience?** Understanding who will read or use your work helps me tailor my suggestions. Are you aiming for a particular journal? Working with stakeholders? What's their statistical background like? This context really helps!
+- **What have you tried so far?** Give me two versions: explain once like I'm your friend who doesn't know any statistics, and then a second time with all the technical details.
 
-- **What are your practical constraints?** Let's be realistic — do you need quick results or can we take time for thoroughness? What computational resources do you have access to? What's your timeline looking like?
-
-- **Tell me about your data!** How did you collect it? What cleaning or preprocessing have you done? These details really matter for choosing the right analysis approach. A data dictionary would be fantastic — just a simple description of what each row represents and what's in each column.
-
-- **What have you tried so far?** I'd love to hear this two ways: first, explain it like you're talking to a friend outside your field (no jargon needed!), then give me all the technical details you think might be relevant.
+- **What data do you have?** Please create a data dictionary that describes each column in your data and what each row of data represents.
 
 ::: {.callout-tip}
-## Pro tip
-A good data dictionary is like a map for our conversation — it helps us navigate your analysis much more smoothly!
+Sending me a detailed data dictionary is the best way to get fast help.
 :::
 
-Once you've thought through these questions, [let's find a time to meet](https://calendly.com/alexpghayes) and please [send me](mailto:alexpgh@stanford.edu) your responses. I'm looking forward to learning about your work!
+Once you've got these answers, [grab a time on my calendar](https://calendly.com/alexpghayes) and [email me](mailto:alexpgh@stanford.edu) what you wrote!
 
-If you're hoping we can dig into data analysis together during our consultation, having **organized data** makes a huge difference. It really helps to know where your raw data lives, how it gets cleaned, and where the clean version is stored. CSV files in [tidy format](https://vita.had.co.nz/papers/tidy-data.pdf) are ideal. Jeff Leek has a fantastic guide on [how to share data with a statistician](https://github.com/jtleek/datasharing) that many find helpful, and the [Data tidying](https://r4ds.hadley.nz/data-tidy.html) chapter of *R for Data Science* is great for tidying data in R.
+If you want to dig through data together during our meeting, please organize your data ahead of time. It's great to have data in `.csv` files in [tidy format](https://vita.had.co.nz/papers/tidy-data.pdf).
 
-## Interested in a collaboration?
+If you need help making this happen, take a look at the [Data tidying](https://r4ds.hadley.nz/data-tidy.html) chapter of *R for Data Science* or the [Data Wrangling](https://wesmckinney.com/book/data-wrangling) chapter of *Python for Data Analysis*.
 
-I'm always excited to meet potential collaborators and explore longer-term applied projects! One thing worth knowing: it can sometimes be challenging for statisticians to get professional credit for collaborative work. I've written about these dynamics in my post [making sense of academic statistics](./post/making-sense-of-academic-statistics/) if you're curious.
+For more details, see Jeff Leek's guide on [sharing data with a statistician](https://github.com/jtleek/datasharing).
 
-If our research interests align well, I'd be delighted to take on a more substantial role in your project. This often happens when there's an intriguing statistical challenge, when your research connects with topics I'm passionate about, or when part of my time is specifically allocated for consulting projects^[At Oregon State, I'll have a 15% consulting commitment in the College of Agriculture, and I'm excited to dive deeper into projects there!].
-
-Looking forward to working with you!
