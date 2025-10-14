@@ -18,10 +18,11 @@ website:
     right:
       - text: about
         file: index.qmd
-      - text: blog
-        file: posts.qmd
+      - consulting/index.qmd
       - code/index.qmd
       - teaching/index.qmd
+      - text: blog
+        file: posts.qmd
       - talks/index.qmd
       - text: '{{< fa brands bluesky >}}'
         href: https://bsky.app/profile/alexpghayes.com

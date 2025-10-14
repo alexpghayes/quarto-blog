@@ -1,0 +1,44 @@
+---
+title: "consulting"
+---
+
+I would love to chat with you about your statistics questions!
+
+## what i can help with
+
+- Suggesting methods to analyze your data, offering relevant code samples, links to resources, etc
+- Giving you feedback about a data analysis or helping you respond to reviewers
+- Designing experiments or figuring how to approach a new project
+- Programming in `R` or `Python`, organizing your code and data, making a replication package
+- Digging through data together
+
+Quick note: if you need someone to do your entire analysis or write your methods section, you probably want an ongoing collaborator rather than a consultant.
+
+## before we meet
+
+If you do some prep work before we meet, it makes consulting a lot smoother. Take a few minutes to jot down answers to these questions (skip any that don't apply):
+
+- **What are you trying to learn or do?** Tell me in plain language what you want to learn. Don't worry about the technical details yet.
+
+- **Why does this matter?** Help me focus my efforts by explaining why your work is important or the decisions you will make based on your analysis.
+
+- **Who is your audience?** Where are you trying to publish? What do your stakeholders care about? How much statistical background do they have?
+
+- **What kind of constraints do you have?** Is it more important to get a correct answer or a fast answer?
+
+- **What have you tried so far?** Give me two versions: explain once like I'm your friend who doesn't know any statistics, and then a second time with all the technical details.
+
+- **What data do you have?** Please create a data dictionary that describes each column in your data and what each row of data represents.
+
+::: {.callout-tip}
+Sending me a detailed data dictionary is the best way to get fast help.
+:::
+
+Once you've got these answers, [grab a time on my calendar](https://calendly.com/alexpghayes) and [email me](mailto:alexpgh@stanford.edu) what you wrote!
+
+If you want to dig through data together during our meeting, please organize your data ahead of time. It's great to have data in `.csv` files in [tidy format](https://vita.had.co.nz/papers/tidy-data.pdf).
+
+If you need help making this happen, take a look at the [Data tidying](https://r4ds.hadley.nz/data-tidy.html) chapter of *R for Data Science* or the [Data Wrangling](https://wesmckinney.com/book/data-wrangling) chapter of *Python for Data Analysis*.
+
+For more details, see Jeff Leek's guide on [sharing data with a statistician](https://github.com/jtleek/datasharing).
+
