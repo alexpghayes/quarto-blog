@@ -9,6 +9,10 @@ draft: true
 
 **TODO**: median, median absolute deviation because some estimators converge in distribution but not in $L_p$ norms / moments. Thomas Lumley has a tweet or bluesky post about this.
 
+BLOG:
+
+- convergence rates from slopes in log-log plots, overlaying in ggplot from log-log regression
+
 Suppose you have some estimator $\hat \theta$ of $\theta$ and you prove that 
 
 $$
@@ -104,3 +108,4 @@ Converging at some rate, but might need to check the slope to know if it's conve
 
 - Use Monte-Carlo summary statistics that work under convergence in distribution with convergence of moments. See https://bsky.app/profile/tslumley.bsky.social/post/3lbpru5ufx22q
 
+- estimating and including parameters (via log-log OLS and also via power-law MLE -- see clauset2009)
