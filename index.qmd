@@ -23,16 +23,17 @@ At Stanford, I do some informal statistical consulting in the economics departme
 
 ## what i'm doing now
 
-As of September 2025, I'm putting my time towards:
+As of April 2026, I'm putting my time towards:
 
-- Getting settled into Palo Alto
 - Making data collection for in-person social networks cheaper and more efficient
 - Developing estimators for peer effects in noisy networks
-- Developing guardrails to detect when hard-to-measure metrics regress in large online experimentation programs
+<!-- - Developing guardrails to detect when hard-to-measure metrics regress in large online experimentation programs -->
 
-## pre-prints
+## working papers & pre-prints
 
-1. [Peer effects in the linear-in-means model may be inestimable even when identified](http://arxiv.org/abs/2410.10772). **Alex Hayes** and Keith Levin. *arXiv*. October 14, 2024.
+1. [Estimating peer effects in noisy, low-rank networks via network smoothing](./papers/latent-contagion-wp.pdf) (pdf). **Alex Hayes** and Keith Levin. April 10, 2026
+
+1. [Minimax rates for the linear-in-means model reveal an identifiability-estimability gap](http://arxiv.org/abs/2410.10772). **Alex Hayes** and Keith Levin. *arXiv*. November 4, 2025.
 
 ## publications
 
@@ -44,7 +45,7 @@ As of September 2025, I'm putting my time towards:
 
 ## blog
 
-In a hobbyist capacity, I also blog about statistics, programming, and data. Some posts I'm particularly proud of:
+In a hobbyist capacity, I also blog about statistics, programming, and data. Some posts I enjoyed writing:
 
 - [overfitting: a guided tour](./post/2020-01-06_overfitting-a-guide-tour/)
 - [consistency and the linear probability model](./post/2019-08-31_consistency-and-the-linear-probability-model/)

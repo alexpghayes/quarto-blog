@@ -11,3 +11,5 @@ academic-cv.fls
 academic-cv.log
 academic-cv.out
 academic-cv.synctex.gz
+
+**/*.quarto_ipynb
