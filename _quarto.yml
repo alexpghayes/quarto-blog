@@ -44,3 +44,5 @@ format:
     theme: ember.scss
     css: styles.css
     linkcolor: black
+    axe:
+      output: document
