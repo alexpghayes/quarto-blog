@@ -19,7 +19,7 @@ The real answer, of course, is GPS, but in the interest of telling a simpler sto
 
 [^gps-note]: For readers interested in learning far more about multilaterion and GPS, I highly recommend *Pinpoint* by Greg Milner.
 
-    [![](pinpoint.jpg){width=35% fig-align="center"}](https://www.goodreads.com/book/show/32191741-pinpoint)
+    [![](pinpoint.jpg){width=35% fig-align="center" fig-alt="Cover of the book 'Pinpoint: How GPS Is Changing Our World' by Greg Milner."}](https://www.goodreads.com/book/show/32191741-pinpoint)
 
 In this post, I'll demonstrate how to perform multilateration using non-linear least squares in R, and then I'll point out a setting where Bayesian methods (at least, my naive approaches) run into fairly substantial problems. I would love to see how Bayesians approach this problem.
 

@@ -30,7 +30,7 @@ The consequence of this is that you are most likely to get timely and useful hel
 
 All of my important public facing code lives in repositories on Github, or in Github gists, or my blog, which is hosted on Github. The unambiguously correct way to ask for help with any of this code is to (1) find the relevant Github repository, and (2) open an issue. If you do not know how to create a Github account, or how to open a Github issue, this is a good moment to take some initiative and teach yourself. Finding the relevant repository might be a little bit harder, but typically, you can browse my repositories on my Github profile, or CRAN packages often list a URL where you can file bug reports. For example, here's the CRAN page for the [`vsp`](https://cran.r-project.org/package=vsp) package that I maintain.
 
-![](vsp-cran.png)
+![Screenshot of the CRAN page for the vsp package](vsp-cran.png){fig-alt="Screenshot of the CRAN package page for 'vsp', showing the title, version, and links to the Github repository for bug reports."}
 
 ::: {.callout-note}
 ## Cultural note: do not email, text or call software developers with questions about code

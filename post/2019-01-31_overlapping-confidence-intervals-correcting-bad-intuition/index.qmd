@@ -1,7 +1,7 @@
 ---
 title: "overlapping confidence intervals: correcting bad intuition"
 subtitle: |
-  some math to show that confidence interals of significantly different parameters can overlap
+  some math to show that confidence intervals of significantly different parameters can overlap
 date: "2019-01-31"
 categories: [math stat, methods]
 execute:
@@ -21,12 +21,13 @@ Sometimes you may want to check if two (or more) means are statistically disting
 This might seem especially useful when someone sends you plots like:
 
 ```{r}
+#| fig-alt: "A dot-and-whisker plot showing regression coefficients for various predictors of miles per gallon (mpg) in the mtcars dataset. Most coefficients have confidence intervals that overlap with each other, though some like 'wt' (weight) are clearly distinct from zero."
 library(tidyverse)
 
 theme_set(theme_classic())
 
 fit <- lm(hp ~ ., mtcars)
-td <- broom::tidy(fit, conf.int = TRUE) %>% 
+td <- broom::tidy(fit, conf.int = TRUE) %>%
   filter(term != "(Intercept)")
 
 ggplot(td, aes(term, estimate)) +
@@ -39,9 +40,10 @@ ggplot(td, aes(term, estimate)) +
 
 In this case you might say, oh hey, the confidence intervals for the `carb` and `qsec` coefficients overlap, so those coefficients must be different[^covariance]. Or you might get a plot like the following:
 
-[^covariance]: This is actually a bad example because OLS estimates for regression coefficents are correlated. A better example would be plotting confidence intervals for independent groups means like you get from classic cross-sectional experimental designs.
+[^covariance]: This is actually a bad example because OLS estimates for regression coefficients are correlated. A better example would be plotting confidence intervals for independent groups means like you get from classic cross-sectional experimental designs.
 
 ```{r}
+#| fig-alt: "A bar chart showing the same regression coefficients as the previous plot, but using bars for estimates and error bars for confidence intervals. The visualization emphasizes the overlap between intervals for different terms."
 ggplot(td, aes(term, estimate)) +
   geom_bar(stat = "identity") +
   geom_errorbar(aes(x = term, ymin = conf.low, ymax = conf.high))
@@ -141,10 +143,11 @@ So if we drop the $\sqrt 2$ term, we get what we want!
 In practice, though, the $\sqrt 2$ is still there, and we have this expression $2 \cdot (1 - \Phi(\sqrt 2 \cdot \color{purple}{z_{1 - \alpha / 2}} ))$, which is a bit hard to parse. To get an idea of what this looks like, I've plotted $\alpha$ (used to construct the confidence intervals for mean) against the actual type I error:
 
 ```{r}
+#| fig-alt: "Line chart comparing the desired type I error rate (alpha) on the x-axis to the true type I error rate on the y-axis. A dashed identity line shows that the true error rate is always lower than the desired one, indicating that the confidence interval overlap heuristic is conservative."
 tibble(
   alpha = seq(0.00001, 0.9999, length.out = 200),
   type_i_error = 2 * (1 - pnorm(sqrt(2) * qnorm(1 - alpha / 2)))
-) %>% 
+) %>%
   ggplot(aes(alpha, type_i_error)) +
   geom_line(size = 1) +
   geom_abline(size = 1, slope = 1, color = "steelblue", linetype = "dashed") +

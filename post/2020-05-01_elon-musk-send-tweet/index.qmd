@@ -24,20 +24,24 @@ I used the S&P500 as my synthetic control and pull 1-minute resolution ticker da
 ```{r}
 #| message: false
 #| warning: false
+#| fig-alt: "Three-panel CausalImpact plot showing the impact of Elon Musk's tweet on Tesla stock price. The top panel compares the actual Tesla stock price (black line) with its counterfactual prediction (blue line with 95% interval) based on the S&P 500. After the tweet (indicated by a vertical dashed line), the actual price drops significantly below the predicted price. The second panel shows the pointwise causal effect, and the third panel shows the cumulative causal effect, estimated at approximately -$40 per share."
 library(tidyverse)
-library(rtweet)
 library(zoo)
 library(CausalImpact)
 
-data_path <- here::here("post", "2020-05-01_elon-musk-send-tweet", "telsa-sp500-prices.rds")
+data_path <- here::here(
+  "post",
+  "2020-05-01_elon-musk-send-tweet",
+  "telsa-sp500-prices.rds"
+)
 
 if (!file.exists(data_path)) {
   library(riingo)
-  
+
   riingo_set_token(token = "3a9fd63f56e2e2e63cabd1ac6b5a717ac03d8e7c")
-  
+
   # be careful: requests *most recent* data
-  
+
   data <- riingo_iex_latest(c("TSLA", "SPY"), resample_frequency = "1min")
   write_rds(data, data_path)
 }
@@ -55,7 +59,7 @@ tidy <- data %>%
 # tweeted at 2020-05-01 15:11:26 UTC
 # https://twitter.com/elonmusk/status/1256239815256797184
 
-tweet <- rtweet::lookup_statuses("1256239815256797184")
+# tweet <- rtweet::lookup_statuses("1256239815256797184")
 # tweet$created_at
 
 zood <- read.zoo(tidy)

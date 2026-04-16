@@ -20,6 +20,7 @@ I find myself referring back to this figure on a regular basis.
 #| fig-align: center
 #| column: body-outset
 #| out-width: 100%
+#| fig-alt: "Line chart titled 'Risks accumulating with repetition' showing ten curves for annual event probabilities from 1 percent to 10 percent. The x-axis shows years 1 to 50 and the y-axis shows the probability of at least one event occurring from 0 to 100 percent. Even a 1 percent annual risk reaches roughly 40 percent over 50 years; a 10 percent annual risk exceeds 99 percent within 50 years."
 
 library(dplyr)
 library(tidyr)
@@ -64,6 +65,7 @@ If you want to toy around with the numbers and make your own figure, you should 
 #| fig-align: center
 #| column: body-outset
 #| out-width: 100%
+#| fig-alt: "Interactive line chart showing risk accumulation over time. Ten curves represent annual event probabilities from 1 percent to 10 percent. Modify the p_event and time values in the code and click Run Code to regenerate the chart."
 
 library(ggplot2)
 

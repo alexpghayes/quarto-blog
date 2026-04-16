@@ -53,6 +53,7 @@ https://economicsfromthetopdown.com/2022/04/08/the-dunning-kruger-effect-is-auto
 
 
 ```{r}
+#| fig-alt: "Scatter plot of self-assessed IQ (SAIQ) versus actual IQ. A dashed identity line shows that most points fall above the line, indicating general overestimation of IQ across all levels."
 data |> 
   ggplot(aes(IQ, SAIQ)) +
   geom_point(alpha = 0.5) +
@@ -62,6 +63,7 @@ data |>
 
 
 ```{r}
+#| fig-alt: "Scatter plot of overconfidence (SAIQ minus IQ) versus IQ. A downward-sloping trend line shows that as IQ increases, the level of overconfidence decreases."
 data |> 
   ggplot(aes(IQ, overconfidence)) +
   geom_point(alpha = 0.5) +
@@ -106,14 +108,17 @@ sigma_pred <- predict(model, what = "sigma", se.fit = TRUE) |>
     sigma_low = sigma_hat - 2 * sigma_se,
     sigma_high = sigma_hat + 2 * sigma_se
   )
+```
 
+```{r}
+#| fig-alt: "Plot showing estimated sigma (variability) of self-assessed IQ as a function of IQ. A ribbon shows the uncertainty around the estimate, with actual squared residuals overlaid as points."
 data |> 
   bind_cols(sigma_pred) |> 
   mutate(SAIQ2 = residuals(model)^2) |> 
   ggplot(aes(IQ, y = sigma_hat, ymin = sigma_low, ymax = sigma_high)) +
   geom_point(aes(IQ, SAIQ2)) +
   geom_ribbon(alpha = 0.5)
-
+```
 bind_rows(mu_pred, sigma_pred, .id = "param")
 
 mu_pred
@@ -126,6 +131,7 @@ as_tibble(preds)
 ```
 
 ```{r}
+#| fig-alt: "Fitted plot from the gamlss model showing the conditional distribution of SAIQ as a function of IQ."
 fittedPlot(model, x = data$IQ)
 ```
 
@@ -163,6 +169,7 @@ To test this hypothesis, the paper authors asked people to guess their IQ and th
 The core of the article comes down to the following diagram. Essentially, the traditional argument in favor of the Dunning-Kruger effect is graphical, and comes in the form of the plots in panels A and B. However, these plots dichotomize objective IQ and turn out to be misleading, especially in the presence of [measurement error][dlm]. The arguments against this methodology are worthwhile but I will skip over them to consider evidence for the Dunning-Kruger effect itself.
 
 ```{r}
+#| fig-alt: "A diagram showing traditional Dunning-Kruger plots in panels A and B, which dichotomize performance, and a more appropriate scatter plot in panel C."
 knitr::include_graphics("/img/dunning-kruger.png", error = FALSE)
 ```
 
@@ -237,6 +244,7 @@ model
 Note that the slope is less than one, and the confidence interval is tight around the point estimate of 0.34. This means that, on average, for every one unit increase in `IQ`, someone's self-assessed IQ goes up by 0.34. To see how this is evidence of Dunning-Kruger, we can plot the regression.
 
 ```{r}
+#| fig-alt: "Two-panel plot visualizing the Dunning-Kruger effect from regression. The left panel shows that high IQ individuals overestimate their IQ by less than low IQ individuals. The right panel shows the fitted overconfidence decreasing as IQ increases."
 library(patchwork)
 
 data <- tibble(

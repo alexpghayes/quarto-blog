@@ -232,6 +232,7 @@ Looking at the expectations of the models, we can see they aren't wildly differe
 #| echo: false
 #| message: false
 #| warning: false
+#| fig-alt: "Comparison of expectations for three models: binomial GLM (S-shaped curve), Gaussian GLM (linear diagonal), and linear probability model (linear diagonal clipped at 0 and 1). All three are similar in the range where probabilities are between 0.2 and 0.8."
 library(tidyverse)
 
 labels <- c("binomial GLM (linear rescaling)", "Gaussian GLM", "linear probability model")

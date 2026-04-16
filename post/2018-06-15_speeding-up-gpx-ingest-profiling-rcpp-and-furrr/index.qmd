@@ -265,6 +265,7 @@ useful
 We can quickly visualize instantaneous speed throughout the run:
 
 ```{r}
+#| fig-alt: "Line and point chart showing speed in mph over time for a single run. The speed fluctuates mostly between 6 and 9 mph, with two clear pauses where speed drops to zero."
 ggplot(useful, aes(time, speed, group = segment)) +
   geom_point() +
   geom_line(alpha = 0.5) +
@@ -570,12 +571,12 @@ Which means we can also write this as a parallelized `map` call with `furrr` lik
 #| message: false
 #| column: body-outset
 library(furrr)
-plan(multiprocess, workers = 12)
+plan(multisession, workers = 12)
 
 future_map_dfr(run_files, read_gpx3, .id = "run")
 ```
 
-Note that other than loading `furrr` and calling `plan(multiprocess)` all we've had to do to get parallelism is to call `furrr::future_map_dfr`, which has exactly the same API as `purrr::map_dfr`. My computer has twelve cores, meaning there's a maximum possible speedup of twelve.
+Note that other than loading `furrr` and calling `plan(multisession)` all we've had to do to get parallelism is to call `furrr::future_map_dfr`, which has exactly the same API as `purrr::map_dfr`. My computer has twelve cores, meaning there's a maximum possible speedup of twelve.
 
 ```{r}
 mark(

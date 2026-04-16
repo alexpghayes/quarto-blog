@@ -19,7 +19,7 @@ We don't know $F$, but we can treat the data as an approximation $\hat F$ of $F$
 
 The canonical diagram comes from @efron1994. In the diagram the bootstrap world approximates the real world:
 
-![](bootstrap_world.png){fig-alt="TODO"}
+![](bootstrap_world.png){fig-alt="Diagram explaining the logic of the bootstrap: given an observed sample, generate bootstrap samples by sampling from the empirical distribution of the observed sample."}
 
 In terms of assessing model performance, this means that we sample our original data $X \in \mathbb{R}^{n, p}$ with replacement to generate new datasets $X^*_1, ..., X^*_B \in \mathbb{R}^{n, p}$, and then we estimate model performance on each of the bootstrap samples $X^*_b$.
 
@@ -59,10 +59,16 @@ library(Metrics)
 
 set.seed(27)
 
-data <- read_xlsx(here("post", "2018-05-03_performance-assessments-via-bootstrap-variants", "us_avg_tuition.xlsx")) %>% 
-  transmute(state = State,
-            avg_tuition_15_16 = `2015-16`,
-            avg_tuition_14_15 = `2014-15`) %>% 
+data <- read_xlsx(here(
+  "post",
+  "2018-05-03_performance-assessments-via-bootstrap-variants",
+  "us_avg_tuition.xlsx"
+)) %>%
+  transmute(
+    state = State,
+    avg_tuition_15_16 = `2015-16`,
+    avg_tuition_14_15 = `2014-15`
+  ) %>%
   mutate_if(is.numeric, round)
 
 data
@@ -71,13 +77,16 @@ data
 We quickly plot the data with a linear regression overlaid:
 
 ```{r}
+#| fig-alt: "Scatterplot of average college tuition in 2014-2015 on the x axis versus average college tuition in 2015-2016 on the y axis, with an overlaid regression line. The two tuitions are very close to perfectly linearly related."
 ggplot(data, aes(avg_tuition_14_15, avg_tuition_15_16)) +
-  geom_smooth(method = "lm", se = FALSE) +
+  geom_smooth(method = "lm", se = FALSE, formula = 'y ~ x') +
   geom_point(size = 2) +
-  labs(title = "Average College Tuition",
-       subtitle = "Each point represents one state",
-       y = "2015-2016 Average Tuition (dollars)",
-       x = "2014-2015 Average Tuition (dollars)") +
+  labs(
+    title = "Average College Tuition",
+    subtitle = "Each point represents one state",
+    y = "2015-2016 Average Tuition (dollars)",
+    x = "2014-2015 Average Tuition (dollars)"
+  ) +
   theme_classic()
 ```
 
@@ -102,7 +111,7 @@ response <- function(formula, data) model.response(model.frame(formula, data))
 pred <- predict(model, data)
 true <- response(formula, data)
 
-# in the code I use root mean squared error (RMSE) as a metric rather than 
+# in the code I use root mean squared error (RMSE) as a metric rather than
 # MSE. this keeps the presentation of the math slightly nicer, since I can
 # omit square roots, but keeps the errors on a more interpretable scale.
 
@@ -202,10 +211,9 @@ Now we want to fit models on each of the bootstrap samples and assess various pe
 ```{r}
 # evaluate model performance on a particular dataset
 performance <- function(model, data, metric = Metrics::rmse) {
-  
   # aside: it would be nice to be able to extract a data/design object from
   # the model, and then extract the response from that. someday.
-  
+
   true <- response(formula, data)
   pred <- predict(model, data)
   metric(true, pred)
@@ -214,10 +222,9 @@ performance <- function(model, data, metric = Metrics::rmse) {
 # get the no info error rate. should be used on the model
 # fit to full original data
 no_info_error_rate <- function(model, formula, data, metric = Metrics::rmse) {
-  
   true <- response(formula, data)
   pred <- predict(model, data)
-  
+
   crossed <- crossing(true, pred)
   with(crossed, metric(true, pred))
 }
@@ -243,61 +250,65 @@ Now we can fit models on each bootstrapped dataset:
 ```{r}
 no_info_perf <- no_info_error_rate(model, formula, data)
 
-boot_performance <- boots %>% 
+boot_performance <- boots %>%
   mutate(
     # fit a model on *bootstrap sample* of data
-    model = map(splits, ~lm(formula, analysis(.x))),
-    
+    model = map(splits, ~ lm(formula, analysis(.x))),
+
     # bootstrap in sample error
-    bs_is_perf = map2_dbl(model, splits, ~performance(.x, analysis(.y))),
-    
+    bs_is_perf = map2_dbl(model, splits, ~ performance(.x, analysis(.y))),
+
     # bootstrap out of sample error
-    bs_os_perf = map2_dbl(model, splits, ~performance(.x, assessment(.y))),
-    
+    bs_os_perf = map2_dbl(model, splits, ~ performance(.x, assessment(.y))),
+
     # bootstrap error on full data
-    data_perf = map_dbl(model, ~performance(.x, data)),
-    
+    data_perf = map_dbl(model, ~ performance(.x, data)),
+
     # optimism
     optimism = bs_is_perf - data_perf,
-    
+
     # optimism corrected error estimate
     bs_optimism = in_sample - optimism,
-    
+
     # 0.632 bootstrap error estimate
     bs_632_perf = bs_632(bs_is_perf, bs_os_perf),
-    
+
     # 0.632+ bootstrap error estimate
-    bs_632p_perf = bs_632p(bs_is_perf, bs_os_perf, no_info_perf))
+    bs_632p_perf = bs_632p(bs_is_perf, bs_os_perf, no_info_perf)
+  )
 ```
 
 We can calculate the point estimates we discussed above:
 
 ```{r}
-clean_performance <- boot_performance %>% 
-  select_if(is.numeric) %>% 
-  select(-optimism, -data_perf) %>% 
-  gather(model, statistic) %>% 
-  transmute(measure = recode(
-    model,
-    "bs_is_perf" = "bootstrap in sample",
-    "bs_os_perf" = "bootstrap out of sample" ,
-    "bs_optimism" = "optimism bootstrap",
-    "bs_632_perf" = "0.632 bootstrap",
-    "bs_632p_perf" = "0.632+ bootstrap"),
+clean_performance <- boot_performance %>%
+  select_if(is.numeric) %>%
+  select(-optimism, -data_perf) %>%
+  gather(model, statistic) %>%
+  transmute(
+    measure = recode(
+      model,
+      "bs_is_perf" = "bootstrap in sample",
+      "bs_os_perf" = "bootstrap out of sample",
+      "bs_optimism" = "optimism bootstrap",
+      "bs_632_perf" = "0.632 bootstrap",
+      "bs_632p_perf" = "0.632+ bootstrap"
+    ),
     error = statistic
   )
 
-clean_performance %>% 
-  group_by(measure) %>% 
-  summarize_if(is.numeric, mean) %>% 
-  mutate_if(is.numeric, round) %>% 
+clean_performance %>%
+  group_by(measure) %>%
+  summarize_if(is.numeric, mean) %>%
+  mutate_if(is.numeric, round) %>%
   knitr::kable()
 ```
 
 However, point estimates aren't good ways to compare the performance of two models because they don't give us a sense of how much model performance might vary on different data sets. Visualizing the sampling distribution of each of the metrics gives us a more complete view of model performance:
 
 ```{r}
-clean_performance %>% 
+#| fig-alt: "Boxplots overlaid with jittered actual values of performance metrics for each of the bootstrap approaches. All five bootstrap approaches produce similar estimates of the root mean squared prediction error."
+clean_performance %>%
   ggplot(aes(measure, error, color = measure)) +
   geom_boxplot() +
   geom_jitter() +
@@ -306,7 +317,7 @@ clean_performance %>%
   labs(
     title = "Sampling distributions of bootstrap performance metrics",
     y = "rmse error (dollars)"
-  ) + 
+  ) +
   theme_classic() +
   theme(
     axis.title.y = element_blank(),
@@ -324,7 +335,7 @@ When you have fewer than 20,000 data points, it's reasonable to use the optimism
 
 [^4]: Cross validation is much less stable than the bootstrap on data sets with less than 20,000 data points (@steyerberg2001). Frank Harrell has run a number of simulations showing that you need at least 100 repetitions of 10-fold cross-validation to get accurate error estimates at this data size (@harrell2015).
 
-In some studies (@steyerberg2001) the 0.632 and 0.632+ estimators have similar performance. Asymptotically, the 0.632 estimator is equivalent to the optimism bootstrap (@efron1994)[^5]. It isn't clear if one is preferrable over the other in finite samples, so I'd just stick with the estimator your audience is most likely to already be familiar with. You should be fine so long as you avoid using the *bootstrap in sample error* estimate.
+In some studies (@steyerberg2001) the 0.632 and 0.632+ estimators have similar performance. Asymptotically, the 0.632 estimator is equivalent to the optimism bootstrap (@efron1994)[^5]. It isn't clear if one is preferable over the other in finite samples, so I'd just stick with the estimator your audience is most likely to already be familiar with. You should be fine so long as you avoid using the *bootstrap in sample error* estimate.
 
 [^5]: The relevant chapter can be [found online](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.473.2742&rep=rep1&type=pdf). You may also enjoy the draft of Frank Harrell's [new book](http://www.fharrell.com/doc/bbr.pdf).
 

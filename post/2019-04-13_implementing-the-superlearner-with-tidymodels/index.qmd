@@ -42,13 +42,13 @@ opts <- furrr_options(
 
 # use `plan(sequential)` to effectively convert all
 # subsequent `future_map*` calls to `map*`
-# calls. this will result in sequential execution of 
-# embarassingly parallel model fitting procedures
+# calls. this will result in sequential execution of
+# embarrassingly parallel model fitting procedures
 # but may prevent R from getting angry at parallelism
 
-plan(multicore)  
+plan(multisession, workers = 12)
 
-set.seed(27)  # the one true seed
+set.seed(27) # the one true seed
 ```
 
 We'll build a super learner on the `iris` dataset, which is build into R. `iris` looks like:
@@ -92,8 +92,8 @@ hp_grid
 Now we create a [`tibble`](https://tibble.tidyverse.org/) with a list-column of completed model specifications (C5.0 trees where we've specified the hyperparameter values). It'll be useful to keep track of precisely which tree we're working with, so we also add a `model_id` column:
 
 ```{r}
-spec_df <- merge(model, hp_grid) %>%  # tune::merge(), formerly dials::merge()
-  dplyr::rename(spec = x) %>% 
+spec_df <- merge(model, hp_grid) %>% # tune::merge(), formerly dials::merge()
+  dplyr::rename(spec = x) %>%
   mutate(model_id = row_number())
 
 spec_df
@@ -102,8 +102,8 @@ spec_df
 Now that we've specified our library of models, we'll describe the data design we'd like to use with a [`recipe`](https://tidymodels.github.io/recipes/). For giggles, we'll use the first two principle components:
 
 ```{r}
-recipe <- data %>% 
-  recipe(Species ~ .) %>% 
+recipe <- data %>%
+  recipe(Species ~ .) %>%
   step_pca(all_predictors(), num_comp = 2)
 
 recipe
@@ -117,7 +117,7 @@ prepped <- prep(recipe, training = data)
 x <- juice(prepped, all_predictors())
 y <- juice(prepped, all_outcomes())
 
-full_fits <- spec_df %>% 
+full_fits <- spec_df %>%
   mutate(fit = future_map(spec, fit_xy, x, y, .options = opts))
 
 full_fits
@@ -135,10 +135,9 @@ We will want to fit a model on each fold, which is a mapping operation like befo
 
 ```{r}
 fit_on_fold <- function(spec, prepped) {
-  
   x <- juice(prepped, all_predictors())
   y <- juice(prepped, all_outcomes())
-  
+
   fit_xy(spec, x, y)
 }
 ```
@@ -166,24 +165,23 @@ Now that we have our fits, we need to get holdout predictions. Recall that we tr
 
 ```{r}
 predict_helper <- function(fit, new_data, recipe) {
-  
   # new_data can either be an rsample::rsplit object
   # or a data frame of genuinely new data
-  
+
   if (inherits(new_data, "rsplit")) {
     obs <- as.integer(new_data, data = "assessment")
-    
+
     # never forget to bake when predicting with recipes!
     new_data <- bake(recipe, assessment(new_data))
   } else {
     obs <- 1:nrow(new_data)
     new_data <- bake(recipe, new_data)
   }
-  
+
   # if you want to generalize this code to a regression
   # super learner, you'd need to set `type = "response"` here
-  
-  predict(fit, new_data, type = "prob") %>% 
+
+  predict(fit, new_data, type = "prob") %>%
     tibble::add_column(obs = obs, .before = TRUE)
 }
 ```
@@ -193,13 +191,17 @@ Now we use our helper to get predictions for each fold, for each hyperparameter 
 ```{r}
 drop_last_column <- function(df) df[, -ncol(df)]
 
-holdout_preds <- cv_fits %>% 
+holdout_preds <- cv_fits %>%
   mutate(
-    raw_preds = future_pmap(list(fit, splits, prepped), predict_helper, .options = opts),
+    raw_preds = future_pmap(
+      list(fit, splits, prepped),
+      predict_helper,
+      .options = opts
+    ),
     preds = future_map(raw_preds, drop_last_column, .options = opts)
   )
 
-holdout_preds %>% 
+holdout_preds %>%
   unnest(preds)
 ```
 
@@ -222,8 +224,8 @@ We're going to need to use this operation over and over again, so we'll put it i
 
 ```{r}
 spread_nested_predictions <- function(data) {
-  data %>% 
-    unnest(preds) %>% 
+  data %>%
+    unnest(preds) %>%
     pivot_wider(
       id_cols = obs,
       names_from = model_id,
@@ -238,9 +240,9 @@ holdout_preds
 We're almost ready to fit a the metalearning model on top of these predictions, but first we need to join these predictions back to the original dataset using `obs` to recover the labels!
 
 ```{r}
-meta_train <- data %>% 
-  mutate(obs = row_number()) %>% 
-  right_join(holdout_preds, by = "obs") %>% 
+meta_train <- data %>%
+  mutate(obs = row_number()) %>%
+  right_join(holdout_preds, by = "obs") %>%
   select(Species, contains(".pred"))
 
 meta_train
@@ -253,7 +255,7 @@ I'm going to use a multinomial regression as the metalearner. You can use any me
 ```{r}
 # these settings correspond to multinomial regression
 # with a small ridge penalty. the ridge penalty makes
-# sure this doesn't explode when the number of columns  
+# sure this doesn't explode when the number of columns
 # of heldout predictions is greater than the number of
 # observations in the original data set
 #
@@ -261,8 +263,8 @@ I'm going to use a multinomial regression as the metalearner. You can use any me
 # libraries that large due to difficulties estimating
 # the relative performance of the base learners
 
-metalearner <- multinom_reg(penalty = 0.01, mixture = 0) %>% 
-  set_engine("glmnet") %>% 
+metalearner <- multinom_reg(penalty = 0.01, mixture = 0) %>%
+  set_engine("glmnet") %>%
   fit(Species ~ ., meta_train)
 ```
 
@@ -273,11 +275,17 @@ new_data <- head(iris)
 
 # run the new data through the library of base learners first
 
-base_preds <- full_fits %>% 
-  mutate(  
-    raw_preds = future_map(fit, predict_helper, new_data, prepped, .options = opts),
+base_preds <- full_fits %>%
+  mutate(
+    raw_preds = future_map(
+      fit,
+      predict_helper,
+      new_data,
+      prepped,
+      .options = opts
+    ),
     preds = future_map(raw_preds, drop_last_column, .options = opts)
-  ) %>% 
+  ) %>%
   spread_nested_predictions()
 
 # then through the metalearner
@@ -295,7 +303,7 @@ Note that this is a reference implementation and in practice I recommend followi
 #' Fit the super learner!
 #'
 #' @param library A data frame with a column `spec` containing
-#'   complete `parsnip` model specifications for the base learners 
+#'   complete `parsnip` model specifications for the base learners
 #'   and a column `model_id`.
 #' @param recipe An untrained `recipe` specifying data design
 #' @param meta_spec A singe `parsnip` model specification
@@ -313,33 +321,36 @@ Note that this is a reference implementation and in practice I recommend followi
 #'   - `recipe`: A trained version of the original recipe
 #'
 super_learner <- function(library, recipe, meta_spec, data) {
-  
   folds <- vfold_cv(data, v = 5)
-  
+
   cv_fits <- expand_grid(folds, library) %>%
     mutate(
       prepped = future_map(splits, prepper, recipe, .options = opts),
       fit = future_pmap(list(spec, prepped), fit_on_fold, .options = opts)
     )
-  
+
   prepped <- prep(recipe, training = data)
-  
+
   x <- juice(prepped, all_predictors())
   y <- juice(prepped, all_outcomes())
-  
-  full_fits <- library %>% 
+
+  full_fits <- library %>%
     mutate(fit = future_map(spec, fit_xy, x, y, .options = opts))
-  
-  holdout_preds <- cv_fits %>% 
+
+  holdout_preds <- cv_fits %>%
     mutate(
-      raw_preds = future_pmap(list(fit, splits, prepped), predict_helper, .options = opts),
+      raw_preds = future_pmap(
+        list(fit, splits, prepped),
+        predict_helper,
+        .options = opts
+      ),
       preds = future_map(raw_preds, drop_last_column, .options = opts)
-    ) %>% 
-    spread_nested_predictions() %>% 
+    ) %>%
+    spread_nested_predictions() %>%
     select(-obs)
-  
+
   metalearner <- fit_xy(meta_spec, holdout_preds, y)
-  
+
   sl <- list(full_fits = full_fits, metalearner = metalearner, recipe = prepped)
   class(sl) <- "super_learner"
   sl
@@ -350,17 +361,22 @@ We also write an S3 predict method:
 
 ```{r}
 predict.super_learner <- function(x, new_data, type = c("class", "prob")) {
-  
   type <- rlang::arg_match(type)
-  
-  new_preds <- x$full_fits %>% 
+
+  new_preds <- x$full_fits %>%
     mutate(
-      raw_preds = future_map(fit, predict_helper, new_data, x$recipe, .options = opts),
+      raw_preds = future_map(
+        fit,
+        predict_helper,
+        new_data,
+        x$recipe,
+        .options = opts
+      ),
       preds = future_map(raw_preds, drop_last_column, .options = opts)
-    ) %>% 
-    spread_nested_predictions() %>% 
+    ) %>%
+    spread_nested_predictions() %>%
     select(-obs)
-    
+
   predict(x$metalearner, new_preds, type = type)
 }
 ```
@@ -371,14 +387,14 @@ Our helpers do assume that we're working on a classification problem, but other 
 
 ```{r}
 # we have to do this because `modeldata` doesn't use lazy data loading
-data("credit_data")  
+data("credit_data")
 
-data_split <- credit_data %>% 
-  na.omit() %>% 
+data_split <- credit_data %>%
+  na.omit() %>%
   initial_split(strata = "Status", prop = 0.75)
 
 credit_train <- training(data_split)
-credit_test  <- testing(data_split)
+credit_test <- testing(data_split)
 
 credit_recipe <- recipe(Status ~ ., data = credit_train) %>%
   step_center(all_numeric()) %>%
@@ -392,9 +408,9 @@ But now let's fit a Super Learner based on a stack of MARS fits instead of a neu
 ```{r message = FALSE}
 # needed due to a namespace bug at the moment,
 # but not in general
-library(earth)  
+library(earth)
 
-credit_model <- mars(mode = "classification", prune_method = "backward") %>% 
+credit_model <- mars(mode = "classification", prune_method = "backward") %>%
   set_engine("earth")
 
 credit_hp_grid <- grid_random(
@@ -403,11 +419,11 @@ credit_hp_grid <- grid_random(
   size = 5
 )
 
-credit_library <- merge(credit_model, credit_hp_grid) %>% 
-  dplyr::rename(spec = x) %>% 
+credit_library <- merge(credit_model, credit_hp_grid) %>%
+  dplyr::rename(spec = x) %>%
   mutate(model_id = row_number())
 
-credit_meta <- multinom_reg(penalty = 0, mixture = 1) %>% 
+credit_meta <- multinom_reg(penalty = 0, mixture = 1) %>%
   set_engine("glmnet")
 ```
 
@@ -425,10 +441,11 @@ credit_sl <- super_learner(
 Since we inherit the tidymodels `predict()` conventions, getting a holdout ROC curve is as easy as: 
 
 ```{r}
+#| fig-alt: "ROC curve for the super learner model on credit data."
 pred <- predict(credit_sl, credit_test, type = "prob")
 
-pred %>% 
-  bind_cols(credit_test) %>% 
+pred %>%
+  bind_cols(credit_test) %>%
   roc_curve(Status, .pred_bad) %>%
   autoplot()
 ```

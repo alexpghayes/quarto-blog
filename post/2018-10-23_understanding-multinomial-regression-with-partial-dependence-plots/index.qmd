@@ -87,8 +87,8 @@ var <- quo(Sepal.Length)
 Now we can split the dataset into this predictor and other predictors:
 
 ```{r}
-x_s <- select(data, !!var)   # grid where we want partial dependencies
-x_c <- select(data, -!!var)  # other predictors
+x_s <- select(data, !!var) # grid where we want partial dependencies
+x_c <- select(data, -!!var) # other predictors
 ```
 
 Then we create a dataframe of all combinations of these datasets[^2]:
@@ -119,7 +119,7 @@ Now we have the predictions and we marginalize by taking the average for each po
 
 ```{r}
 pd <- au %>%
-  gather(class, prob, setosa, versicolor, virginica) %>% 
+  gather(class, prob, setosa, versicolor, virginica) %>%
   group_by(class, !!var) %>%
   summarize(marginal_prob = mean(prob))
 pd
@@ -128,13 +128,16 @@ pd
 We can visualize this as well:
 
 ```{r}
+#| fig-alt: "Partial dependence plot for Sepal.Length showing estimated marginal probabilities for each of three iris species. Setosa has a high probability for small sepal lengths, while versicolor and virginica have higher probabilities for larger sepal lengths."
 pd %>%
   ggplot(aes(!!var, marginal_prob, color = class)) +
   geom_line(size = 1) +
   scale_color_viridis_d() +
-  labs(title = paste("Partial dependence plot for", quo_name(var)),
-       y = "Average class probability across all other predictors",
-       x = quo_name(var)) +
+  labs(
+    title = paste("Partial dependence plot for", quo_name(var)),
+    y = "Average class probability across all other predictors",
+    x = quo_name(var)
+  ) +
   theme_classic()
 ```
 
@@ -146,21 +149,20 @@ In practice it's useful to look at partial dependence plots for all of the predi
 
 ```{r}
 partial_dependence <- function(predictor) {
-  
   var <- ensym(predictor)
   x_s <- select(data, !!var)
   x_c <- select(data, -!!var)
   grid <- crossing(x_s, x_c)
 
-  augment(fit, grid) %>% 
-    gather(class, prob, setosa, versicolor, virginica) %>% 
+  augment(fit, grid) %>%
+    gather(class, prob, setosa, versicolor, virginica) %>%
     group_by(class, !!var) %>%
     summarize(marginal_prob = mean(prob))
 }
 
-all_dependencies <- colnames(iris)[1:4] %>% 
-  map_dfr(partial_dependence) %>% 
-  gather(feature, feature_value, -class, -marginal_prob) %>% 
+all_dependencies <- colnames(iris)[1:4] %>%
+  map_dfr(partial_dependence) %>%
+  gather(feature, feature_value, -class, -marginal_prob) %>%
   na.omit()
 
 all_dependencies
@@ -169,18 +171,21 @@ all_dependencies
 Then we can plot everything at once!
 
 ```{r}
-all_dependencies %>% 
+#| fig-alt: "Partial dependence plots for all four iris features. Sepal.Length and Sepal.Width show relatively flat marginal probabilities. In contrast, Petal.Length and Petal.Width show strong separation, with setosa associated with low values, versicolor with middle values, and virginica with high values."
+all_dependencies %>%
   ggplot(aes(feature_value, marginal_prob, color = class)) +
   geom_line(size = 1) +
   facet_wrap(vars(feature), scales = "free_x") +
   scale_color_viridis_d() +
-  labs(title = "Partial dependence plots for all features",
-       y = "Marginal probability of class",
-       x = "Value of feature") +
+  labs(
+    title = "Partial dependence plots for all features",
+    y = "Marginal probability of class",
+    x = "Value of feature"
+  ) +
   theme_classic()
 ```
 
-Here we see that `Sepal.Length` and `Sepal.Width` don't influence class probabilites that much on average, but that `Petal.Length` and `Petal.Width` do.
+Here we see that `Sepal.Length` and `Sepal.Width` don't influence class probabilities that much on average, but that `Petal.Length` and `Petal.Width` do.
 
 ## Takeaways
 

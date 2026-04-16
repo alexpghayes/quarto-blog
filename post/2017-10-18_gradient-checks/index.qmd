@@ -39,6 +39,7 @@ $$\nabla_\mathcal{L}(\beta) = -\frac{1}{n} (y - X \beta)^T X$$
 We can now implement an analytical version of $\nabla_\mathcal{L}(\beta)$ and compare it to a finite difference approximation. First we simulate and visualize some data:
 
 ```{r}
+#| fig-alt: "Scatterplot of simulated x,y data points with an overlaid regression line."
 library(tidyverse)
 
 n <- 20
@@ -94,16 +95,16 @@ numerical_grad <- function(f, x, eps = 1e-8) {
   }
   grad
 }
-    
+
 relative_error <- function(want, got) {
-  (want - got) / want  # assumes want is not zero
+  (want - got) / want # assumes want is not zero
 }
 ```
 
 Now we can check the relative error between our analytical implementation of the gradient and the numerical approximation.
 
 ```{r}
-b <- c(2, 3)  # point in parameter space to check gradient at
+b <- c(2, 3) # point in parameter space to check gradient at
 
 num_grad <- numerical_grad(loss, b)
 ana_grad <- analytical_grad(b)

@@ -135,6 +135,7 @@ $$
 The simulated data looks like:
 
 ```{r}
+#| fig-alt: "Scatter plot of 20 simulated data points showing a clear negative linear relationship. A dashed grey line represents the true conditional expectation."
 library(tidyverse)
 
 theme_set(theme_minimal(15))
@@ -173,8 +174,8 @@ regression_data %>%
 
 If we consider a $7^{th}$ degree polynomial fit, our estimate for the
 conditional expectation is shown in maroon below and looks like:
-
 ```{r}
+#| fig-alt: "Degree 7 polynomial fit shown as a maroon line. The line wiggles excessively to pass through training data points, deviating significantly from the true linear expectation (grey dashed line)."
 library(broom)
 
 d7_fit <- lm(y ~ poly(x, 7), regression_data)
@@ -185,8 +186,8 @@ get_predictions <- function(lm_model) {
   tibble(x = new_x_dbl, .fitted = predict(lm_model, new_x))
 }
 
-d7_fit %>% 
-  get_predictions() %>% 
+d7_fit %>%
+  get_predictions() %>%
   ggplot(aes(x, .fitted)) +
   geom_line(color = "maroon", size = 1) +
   geom_point(
@@ -215,10 +216,11 @@ inference or prediction is a bad idea. By contrast, a correctly
 specified linear model does much better.
 
 ```{r}
+#| fig-alt: "Simple linear regression fit shown as a green line. The line closely follows the true linear expectation (grey dashed line) and does not overfit to the random noise in the data."
 d1_fit <- lm(y ~ x, regression_data)
 
-d1_fit %>% 
-  get_predictions() %>% 
+d1_fit %>%
+  get_predictions() %>%
   ggplot(aes(x, .fitted)) +
   geom_line(color = "darkgreen", size = 1) +
   geom_point(
@@ -262,12 +264,13 @@ high degree, even though the true data generating process has degree
 one.
 
 ```{r}
+#| fig-alt: "Line plot of R-squared versus polynomial degree. As the degree of the polynomial increases from 1 to 17, the R-squared value steadily increases towards 1, suggesting a better fit even though the true model is degree 1."
 fit_model <- function(degree) {
   form <- as.formula(glue::glue("y ~ poly(x, {degree})"), env = globalenv())
   lm(form, regression_data)
 }
 
-fits <- tibble(degree = 1:17) %>% 
+fits <- tibble(degree = 1:17) %>%
   mutate(
     lm_model = purrr::map(degree, fit_model),
     glanced = purrr::map(lm_model, glance)
@@ -280,7 +283,10 @@ fits %>%
   geom_line(size = 1) +
   ylim(0, 1) +
   labs(
-    title =  expression(paste("High degree polynomials fit better according to ", R^2)),
+    title = expression(paste(
+      "High degree polynomials fit better according to ",
+      R^2
+    )),
     y = expression(R^2),
     x = "Degree",
     caption = "k = 18, 19, 20 omitted due to numerical issues during fitting"
@@ -293,12 +299,13 @@ fit the data better and better while doing a worse and worse job at
 estimating the systematic structure in the data.
 
 ```{r}
+#| fig-alt: "Faceted scatter plots with polynomial fits of degrees 2, 4, 7, 11, 14, and 17. As the degree increases, the maroon prediction lines become increasingly wiggly, conforming more to the random noise in the data points and moving further away from the true dashed grey line."
 fits %>%
-  filter(degree %in% c(2, 4, 7, 11, 14, 17)) %>% 
+  filter(degree %in% c(2, 4, 7, 11, 14, 17)) %>%
   mutate(
     preds = purrr::map(lm_model, get_predictions)
-  ) %>% 
-  unnest(preds) %>% 
+  ) %>%
+  unnest(preds) %>%
   ggplot(aes(x, .fitted)) +
   geom_line(color = "maroon", size = 1) +
   geom_point(
@@ -383,7 +390,10 @@ cluster_data <- cluster_1 %>%
   set_names(c("x", "y")) %>% 
   as_tibble() %>% 
   mutate(cluster = rep(LETTERS[1:2], each = n))
+```
 
+```{r}
+#| fig-alt: "Scatter plot showing bivariate data points clearly separated into two elliptical clusters, labeled A and B, with different colors and shapes."
 cluster_data %>% 
   as_tibble() %>% 
   ggplot(aes(x, y, color = cluster, shape = cluster)) +
@@ -399,6 +409,7 @@ But if we assume that the data comes from a more flexible model, our
 estimated cluster memberships are wonky and off:
 
 ```{r}
+#| fig-alt: "Estimated clusters using a 5-component Gaussian Mixture Model. The plot shows the original two clusters being incorrectly split into five overlapping ellipses, demonstrating overfitting."
 library(mclust)
 library(factoextra)
 

@@ -65,6 +65,7 @@ The data is boring, whatever, here's a histogram:
 
 ```{r}
 #| echo: false
+#| fig-alt: "Histogram of miles per gallon for various cars. The distribution is somewhat right-skewed, with most values between 15 and 25 mpg."
 set.seed(27)
 
 library(ggplot2)
@@ -222,6 +223,7 @@ At this point you could do a paired T-test on the differences, or you could just
 
 ```{r}
 #| echo: false
+#| fig-alt: "Histogram of bootstrap differences in log-likelihoods between the original and transformed models. Most of the distribution lies to the left of zero, indicating that the transformed model is consistently better across bootstrap samples."
 
 fits %>% 
   mutate(
@@ -342,6 +344,7 @@ If we plot this log-likelihood as a function of $\lambda$ we see that a `log` tr
 
 ```{r}
 #| echo: false
+#| fig-alt: "Plot of induced log-likelihood as a function of lambda for a simple Box-Cox transformation. The peak is very close to lambda equals zero, which corresponds to a log transformation."
 x <- mtcars$mpg
 
 simple <- tibble::tibble(
@@ -392,6 +395,7 @@ Using the `wt` variable from the `mtcars` dataset as a predictor for `y` in a li
 
 ```{r}
 #| echo: false
+#| fig-alt: "Plot of induced profile log-likelihood as a function of lambda for Box-Cox transformation in a linear regression. The peak is around lambda equals -0.25, indicating that an inverse quartic root transformation is optimal in this setting."
 x <- mtcars$mpg
 z <- mtcars$wt
 

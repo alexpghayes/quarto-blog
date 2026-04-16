@@ -38,6 +38,7 @@ $$s_2 = s_1 \cdot \left(d_1 \over d_2 \right)^k$$
 Using this equation for a set of distances, we can estimate a curve describing maximal speeds at each distance. For example, my best recent effort was a 5K that I completed in 18:52, which results in the following curve:
 
 ```{r}
+#| fig-alt: "Line chart titled 'Riegel curve based on 5K in 18:52' showing the black line of maximal maintainable speed for a given distance. The chart is overlaid on colored rectangles representing different exercise intensity zones: recovery (lightest), endurance, tempo, threshold, VO2 max, and anaerobic (darkest)."
 library(tidyverse)
 library(here)
 library(lubridate)
@@ -111,12 +112,15 @@ In total I have recordings of 45 runs from November 2017 to April 2018[^3]. The 
 
 [^3]: I stopped running in April after being proscribed Cipro for an infection. Cipro and other fluoroquinolone's have the side effect of [*spontaneous tendon rupture*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4080593/pdf/i1062-6050-49-3-422.pdf) for up to 6 months after use, although most of the risk is in the first month after usage. Achilles tendons are at the highest risk. If you run, ask to be put on another medication!
 
-```{r fig.cap = "Run in black."}
+```{r}
+#| fig-cap: "Run in black."
+#| fig-alt: "Map showing the path of a single run in black on a watercolor-style map of a neighborhood."
 runs <- read_rds(here::here("post", "2018-05-16_comparing-runs-with-riegels-formula-and-gams", "2018-04-17-runs-alex.rds"))
 
 r <- filter(runs, run == 42)
 
 run_map <- function(run_df) {
+  register_stadiamaps("3d423846-01ad-4275-a087-0e2301fc56bb")
   
   run_bbox <- c(
     left = min(run_df$lon),
@@ -125,7 +129,7 @@ run_map <- function(run_df) {
     top = max(run_df$lat)
   )
   
-  get_stamenmap(run_bbox, zoom = 15, maptype = "watercolor") %>% 
+  get_stadiamap(run_bbox, zoom = 15, maptype = "stamen_watercolor") %>% 
     ggmap() + 
     geom_path(
       data = run_df,
@@ -134,7 +138,7 @@ run_map <- function(run_df) {
       lineend = "round",
       color = "black"
     ) +
-    theme_nothing()
+    theme_void()
 }
 
 run_map(r)
@@ -145,6 +149,7 @@ This is a fairly typical run of mine around Rice's outer loop[^4]. In addition t
 [^4]: Houston is totally flat so I ignore the effect of hills on my runs. If you live in a hilly place you probably want to use a grade adjusted speed. Here's a [post](https://medium.com/strava-engineering/improving-grade-adjusted-pace-b9a2a332a5dc) by the Strava team on calculating grade adjusted pace, although it's not enough to recreate their calculation. References to literature on an established way to do this appreciated.
 
 ```{r}
+#| fig-alt: "Four-panel facet plot showing summary statistics for 45 runs over time from November 2017 to April 2018. The panels show Time (minutes), Distance (miles), Speed (mph), and Riegel 5K Time (minutes). Each panel includes individual data points and a smoothed trend line."
 metrics <- runs %>% 
   mutate_at(vars(run), as.numeric) %>% 
   group_by(run) %>% 
@@ -210,6 +215,7 @@ anova(m1$lme, m2$lme)
 We also plot the fit model:
 
 ```{r}
+#| fig-alt: "Line chart titled 'Riegel 5K Equivalent Running Times' showing individual run data points and a GAM-estimated mean line in steelblue with a 95% confidence interval shaded in grey. The chart shows Riegel 5K time in minutes over time, with a rug plot on the x-axis indicating the timing of runs."
 new <- with(metrics, tibble(t = seq(min(t), max(t), length.out = 200)))
 preds <- bind_cols(new, predict(m1$gam, new, type = "response", se.fit = TRUE)) %>% 
   mutate(lower = fit - 2 * se.fit,
@@ -237,6 +243,7 @@ My estimated fitness passes some sanity checks: (1) I lose fitness over winter b
 What I'm really interested in here is how my fitness changes over time, or the derivative of my smoothed Riegel 5K times. To estimate this, we can draw simulations from the posterior of the GAM, and then approximate the derivative via finite differences. Gavin Simpson's wonderful [gratia](https://github.com/gavinsimpson/gratia) package provides this functionality, and we plot the first derivative of the GAM below:
 
 ```{r}
+#| fig-alt: "Line chart titled 'Instantaneous change in Riegel 5K time' showing the estimated first derivative of the GAM fit. The y-axis shows the change in mean Riegel 5K time (minutes/day). A horizontal dashed line at zero separates fitness improvements (below zero) from fitness losses (above zero). The estimated curve and its simultaneous 95% confidence interval show that the change is never statistically significant."
 d <- fderiv(m1, newdata = new)
 
 d_ci <- new %>% 
@@ -260,4 +267,3 @@ Here we see the same trends as before: losing fitness over winter break, big imp
 ## Takeaways
 
 Riegel's formula provides a nice way to standardize runs, and GAMs are a satisfying and interpretable way to investigate how run capacity changes over time. An interesting problem is to model best efforts rather than mean efforts. I'm brainstorming on this at the moment. In a future blog post I'll show how to efficiently process and tidy Strava GPX files. I'm also curious to replicate @vickers, or to repeat this analysis using Gaussian processes or state space models.
-

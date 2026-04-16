@@ -24,6 +24,7 @@ under some model, or some similar bound. In my experience it's essentially manda
 Also, even when things are working, it can be surprisingly difficult to tell that this is actually the case. Ideally I'd average $\left \Vert \hat \theta - \theta \right \Vert$ over a bunch of simulations and have a nice estimate of $\mathbb E \left \Vert \hat \theta - \theta \right \Vert$ that I can plot against $n$, as below:
 
 ```{r}
+#| fig-alt: "Line plot of Error versus Number of data points. The error decreases as the number of data points increases, following a curve that approaches zero but never reaches it."
 library(ggplot2)
 
 theme_set(theme_minimal(14))
@@ -48,6 +49,7 @@ It turns out that I have horrible intuition about the function $f(x) = 1 / \sqrt
 One thing that helps a lot here is to plot $\log \left(\left \Vert \hat \theta - \theta \right \Vert \right)$ as a function of $\log n$, and check if the resulting line has constant negative slope. The idea here is that if $\left \Vert \hat \theta - \theta \right \Vert \le C n^{-\alpha}$ with high probability, or whatever bound you prove, then $\log \left(\left \Vert \hat \theta - \theta \right \Vert \right) \le -C \alpha \log n$. So we can just check if things are linear after transformation, and this is easier to do visually.
 
 ```{r}
+#| fig-alt: "The same Error versus Number of data points plot but on a log-log scale. The curve is now a perfectly straight line with a constant negative slope, making the rate of convergence much easier to identify."
 ggplot() +
   aes(n, nice_error) +
   geom_line() +
@@ -63,6 +65,7 @@ ggplot() +
 This is particularly helpful when working with noisy estimates of some quantity like $\mathbb E \left \Vert \hat \theta - \theta \right \Vert$. In this setting the untransformed plot can be tricky to read. Here's an example of noisy estimates that are converging, but you will never convince yourself or a referee that this is the case:
 
 ```{r}
+#| fig-alt: "Plot of noisy error estimates versus number of data points. The points bounce up and down significantly, making it difficult to see any underlying downward trend."
 library(patchwork)
 
 set.seed(26)
@@ -85,6 +88,7 @@ when do you need a better estimate of the error, and when do you need to push $n
 laziness in having few reps per $n$ but actually increasing the reps per $n$ is better than pushing $n$ higher. also: increasing the SNR ratio of the simulations.
 
 ```{r}
+#| fig-alt: "The noisy error estimates plot on a log-log scale with a linear regression line overlaid. Despite the noise, the downward linear trend is clearly visible, and the points cluster around the regression line."
 noisy_log_log <- ggplot() +
   aes(n, error) +
   geom_line() +

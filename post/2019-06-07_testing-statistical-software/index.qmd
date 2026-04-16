@@ -67,13 +67,13 @@ In practice, most people end up writing a reference implementation and checking 
 
 Consider *Algorithm 1* of @allen_sparse_2013-1:
 
-![](sfpca_algorithm_1.png){fig-alt="Psuedo-code for the SFPCA algorithm."}
+![](sfpca_algorithm_1.png){fig-alt="Pseudo-code for the SFPCA algorithm."}
 
 There used a MATLAB reference implementation available online^[It has seen been replaced with a more full fledged R package [`MoMa`](https://github.com/DataSlingers/MoMA).], which looked like:
 
 [sfpca_reference_implementation]: http://www.stat.rice.edu/~gallen/software/sfpca/
 
-![](sfpca_ref_impl.png){fig-alt="Screen of the SFPCA reference implementation."}
+![](sfpca_ref_impl.png){fig-alt="Screencap of the SFPCA reference implementation in MATLAB."}
 
 This is a good reference implementation because the pseudocode is close enough to the actual code that we can be confident that the translation is correct almost by eyeballing it. I ended up [implementing][gsoc_repo] this algorithm in both R and C++ and testing against this reference implementation. Curious parties read the correctness test [here][gsoc_test]. 
 
@@ -88,7 +88,7 @@ Note that my test is really an integration test, making sure the entire computat
 In other cases, the connection between the reference implementation and the algorithm pseudocode is less clear. For example, consider Algorithm 2 of @cho_intelligent_2018:
 
 
-![](adaptive_impute.png){fig-alt="Screenshot of psuedocode for the AdaptiveImpute matrix completion algorithm."}
+![](adaptive_impute.png){fig-alt="Screenshot of pseudocode for the AdaptiveImpute matrix completion algorithm."}
 
 You can read the corresponding reference implementation [here][adaptive_impute_reference]. While the code does perform the computations outlined in the algorithm pseudocode, it is much harder to make the connection between the two.
 
@@ -98,7 +98,7 @@ The first deviation is in `AdaptImpute()`, which truncates the reconstructed SVD
 
 [^sfpca_too]: The astute reader may note that the SFPCA implementation from earlier also deviates from the algorithm pseudocode, scaling by $p$ and $n$. This sort of thing is a common occurrence that makes reproducing work very difficult without access to the original code.
 
-**Aside**: While it's nice for the algorithm pseudocode to match up nicely with the reference implementation, there are good reasons why this might not be the case. Often the psuedocode will express abstract concepts that are easier to understand when we omit lower level computational details. In cases like this, it's essential to have good documentation linking the reference implementation and the pseudocode.
+**Aside**: While it's nice for the algorithm pseudocode to match up nicely with the reference implementation, there are good reasons why this might not be the case. Often the pseudocode will express abstract concepts that are easier to understand when we omit lower level computational details. In cases like this, it's essential to have good documentation linking the reference implementation and the pseudocode.
 
 ### Parameter recovery tests
 
@@ -125,19 +125,17 @@ For example, I recently came across a modeling function that calculated estimate
 ```{r}
 #| echo: true
 #| eval: false
-function (x, eps = 1e-07) 
-{
-  
+function(x, eps = 1e-07) {
   # prep work
-  
+
   for (iteration in 1:1000) {
-    
     # gradient descent steps
-    
-    if (relative_change_is_small) 
+
+    if (relative_change_is_small) {
       break
+    }
   }
-  
+
   # return
 }
 ```

@@ -32,6 +32,7 @@ Alright, onward. To make the problem a little more concrete, let's start by visu
 ```{r}
 #| label: fig-observed
 #| fig-cap: Sequences A, B, C, D, E and F. Only one sequence was generated randomly using a fair coin.
+#| fig-alt: "Six panels showing sequences of 200 coin flips. Sequence A alternates perfectly (HTHT...). Sequence E has extremely long streaks of heads then tails. Sequences B, C, D, and F show more typical-looking variations, though F has noticeably fewer heads."
 #| message: false
 #| warning: false
 #| column: body-outset
@@ -93,6 +94,7 @@ So next I generate six sequences by repeatedly flipping a fair coin (from this p
 #| column: body-outset
 #| code-fold: true
 #| fig-cap: Six sequences sampled by repeatedly flipping a fair coin, for comparison.
+#| fig-alt: "Six panels showing random sequences of coin flips generated from a fair coin. Unlike the observed sequences, these all show irregular patterns without obvious alternating or long-streak structures."
 set.seed(27)
 
 sample_sequence <- function() {
@@ -140,6 +142,7 @@ The next thing that comes to mind is that, if a coin is fair, then roughly half 
 ```{r}
 #| column: body-outset
 #| code-fold: true
+#| fig-alt: "Six histograms showing the null distribution of head counts (centered around 100). A vertical line in each panel shows the observed head count for that sequence. Sequence F's line is far to the left, while others are near the center."
 count_heads <- function(results) {
   sum(results == "H")
 }
@@ -276,6 +279,7 @@ Okay, so we tried one test and it helped us eliminate some options. But we would
 ```{r}
 #| column: body-outset
 #| code-fold: true
+#| fig-alt: "Six histograms showing the null distribution of the longest streak of heads. Vertical lines show that Sequences A, B, and F have streaks that are too short, while Sequence E has a streak that is too long."
 plot_test <- function(test_statistic) {
   
   null_distribution <- sample_statistic_under_null(test_statistic)
@@ -338,6 +342,7 @@ So now I go back to sequences $C$ and $D$ and stare at both of them for a while.
 ```{r}
 #| column: body-outset
 #| code-fold: true
+#| fig-alt: "Six histograms showing the null distribution of the total number of streaks. A vertical line shows that Sequence C has significantly fewer streaks than expected under the null model."
 num_islands <- function(results) {
   rle_encoded <- rle(results)
   sum(table(rle_encoded$lengths))
@@ -357,6 +362,7 @@ But wait! Staring at the sequence $D$, I realize that it contains the subsequenc
 ```{r}
 #| column: body-outset
 #| code-fold: true
+#| fig-alt: "Six histograms showing the null distribution of the frequency of a specific long subsequence. The vertical line for Sequence D is at 1, while the null distribution is entirely at 0."
 num_subseq <- function(results, subseq) {
   collapsed <- paste0(results, collapse = "")
   str_count(collapsed, subseq)

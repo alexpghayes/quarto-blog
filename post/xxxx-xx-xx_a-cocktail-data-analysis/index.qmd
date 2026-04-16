@@ -113,17 +113,20 @@ A <- sign(A)
 
 fa <- vsp(A, rank = 20, degree_normalize = FALSE, center = TRUE)
 fa
+```
 
+```{r}
+#| fig-alt: "Localization statistics plot showing cumulative curves for row and column sums of the cocktail-ingredient incidence matrix. Vertical lines indicate average row and column sums."
 s <- localization_statistics(A, 20)
 plot_cumulative_curves(s) +
   geom_vline(xintercept = s$avg_row_sum) +
   geom_vline(xintercept = s$avg_col_sum)
-
-
-# TODO: clarify the idea of "component eigen-swapping" and point out that jitters in the localization plot probably indicate eigen-swapping
 ```
 
+# TODO: clarify the idea of "component eigen-swapping" and point out that jitters in the localization plot probably indicate eigen-swapping
+
 ```{r}
+#| fig-alt: "Mixed visualization showing IPR pairs, mixing matrix, and varimax factor pairs for both rows (cocktails) and columns (ingredients)."
 plot_ipr_pairs(fa)
 plot_mixing_matrix(fa)
 plot_varimax_y_pairs(fa, 1:10)
@@ -131,6 +134,7 @@ plot_varimax_z_pairs(fa, 1:10)
 ```
 
 ```{r}
+#| fig-alt: "Scree plot showing the eigenvalues or singular values of the cocktail data matrix, used to determine the appropriate rank for factor analysis."
 screeplot(fa)
 ```
 
@@ -139,11 +143,13 @@ get_y_hubs(fa, hubs_per_factor = 3)
 ```
 
 ```{r}
+#| fig-alt: "Sparsity plot (spy plot) of the Z matrix, showing that individual drinks typically only have a few main ingredients."
 # Z is sparse: drinks typically only load on a few ingredients at a time
 image(fa$Z)
 ```
 
 ```{r}
+#| fig-alt: "Mixing matrix plot showing the relationships between cocktail factors and ingredient factors, with custom names for the factors."
 z_names <- fa |> 
   get_z_hubs(1) |> 
   pull(id)
@@ -163,6 +169,7 @@ plot_mixing_matrix(fa_named) +
 ```
 
 ```{r}
+#| fig-alt: "Bar chart of ingredient loadings for cocktail factors. PC1 highlights the contrast between powdered sugar/egg/gin and simple syrup/lime/tequila."
 fa |> 
   get_y_hubs(3) |> 
   mutate(id = reorder_within(id, loading, factor)) %>%
@@ -179,6 +186,7 @@ fa |>
 > So PC1 is about powdered sugar + egg + gin drinks vs. simple syrup + lime + tequila drinks. This is the component that explains the most variation in drinks. PC2 is mostly about vermouth, both sweet and dry.
 
 ```{r}
+#| fig-alt: "Bar chart of cocktail loadings for factors, showing which specific drinks most strongly represent each component."
 fa |> 
   get_z_hubs(5) |> 
   mutate(id = reorder_within(id, loading, factor)) %>%
@@ -217,6 +225,7 @@ ig <- igraph::graph_from_incidence_matrix(A, weighted = TRUE)
 ### Normalization / scaling
 
 ```{r}
+#| fig-alt: "IPR pairs and mixing matrix for the scaled cocktail data model."
 library(Matrix)
 
 L <- sign(A) # rowScale(A, 1 / rowSums(A))
@@ -224,7 +233,10 @@ faL <- vsp(L, rank = 20, degree_normalize = FALSE)
 
 plot_ipr_pairs(faL)
 plot_mixing_matrix(faL)
+```
 
+```{r}
+#| eval: false
 faL |> 
   get_y_hubs(3) |> 
   View()

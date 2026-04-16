@@ -701,6 +701,7 @@ theta_draws <- theta_0_draws %>%
 and then can visualize response probabilities by question and class
 
 ```{r}
+#| fig-alt: "Density plots of estimated response probabilities for each of 15 questions across 5 response categories, faceted by question and response, comparing Group 0 and Group 1."
 library(ggplot2)
 
 theta_draws %>% 
