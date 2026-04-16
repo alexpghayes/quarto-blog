@@ -13,8 +13,48 @@ $font-family-sans-serif:  "Atkinson Hyperlegible", -apple-system, BlinkMacSystem
 $code-color: "black";
 
 /*-- scss:rules --*/
-  
+
   // litera is serif by default: revert to san-serif
 p {
   font-family: $font-family-sans-serif;
+}
+
+// Fix: .quarto-category uses opacity:.6, making its effective text color
+// (~#7a7c7f, 4.19:1 on white) fall below the WCAG AA 4.5:1 minimum.
+// Replace opacity with an explicit muted color at full opacity (#595959 = 7:1 on white).
+// We use !important because Quarto sometimes injects these styles late.
+.quarto-title .quarto-categories .quarto-category,
+.quarto-category {
+  opacity: 1 !important;
+  color: #595959 !important;
+  border-color: #595959 !important;
+
+  a {
+    color: #595959 !important;
+  }
+}
+
+// Fix: TOC nav-link default color is #2a76dd (~4.3:1 on white), failing WCAG AA 4.5:1.
+// !important needed because Quarto injects sidebar CSS after the compiled theme bundle.
+nav[role="doc-toc"] .nav-link,
+#TOC .nav-link {
+  color: #404040 !important;
+
+  &.active,
+  &:hover,
+  &:focus {
+    color: #000000 !important;
+  }
+}
+
+// Fix: code-fold summary color defaults to #2a76dd (~4.3:1 on white), failing WCAG AA 4.5:1.
+// !important needed because Quarto injects sidebar CSS after the compiled theme bundle.
+details.code-fold summary {
+  color: #404040 !important;
+
+  &.active,
+  &:hover,
+  &:focus {
+    color: #000000 !important;
+  }
 }

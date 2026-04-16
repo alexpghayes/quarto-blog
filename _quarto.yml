@@ -25,13 +25,17 @@ website:
         file: posts.qmd
       - talks/index.qmd
       - text: '{{< fa brands bluesky >}}'
+        aria-label: bluesky
         href: https://bsky.app/profile/alexpghayes.com
       # sizing documentation: https://github.com/schochastics/academicons#readme
       - text: '{{< ai google-scholar size=xl >}}'
+        aria-label: google-scholar
         href: https://scholar.google.com/citations?user=6g1T3WIAAAAJ
       - icon: github
+        aria-label: github
         href: https://github.com/alexpghayes
       - icon: linkedin
+        aria-label: linkedin
         href: https://www.linkedin.com/in/alexpghayes/
   google-analytics: "G-G6PQFW2XSK"
   page-footer: 
@@ -42,7 +46,8 @@ website:
 format:
   html:
     theme: ember.scss
-    css: styles.css
     linkcolor: black
-    axe:
-      output: document
+    highlight-style: a11y
+    include-after-body: accessibility-fixes.html
+    # axe:
+    #   output: document
