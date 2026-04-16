@@ -23,9 +23,9 @@ library(stringr)
 
 # list names of post folders
 posts <- list.dirs(
-    path = here::here("post"),
-    full.names = FALSE,
-    recursive = FALSE
+  path = here::here("post"),
+  full.names = FALSE,
+  recursive = FALSE
 )
 
 # extract the slugs
@@ -35,16 +35,16 @@ slugs <- gsub("^.*_", "", posts)
 post_redirects <- glue::glue("/{slugs} /post/{slugs}")
 
 post_redirects <- c(
-    post_redirects,
-    "/2022-10-18-intel-mkl-data-race/ /post/2022-10-30-intel-mkl-data-race/",
-    "/post/2022-10-18-intel-mkl-data-race/ /post/2022-10-30-intel-mkl-data-race/"
+  post_redirects,
+  "/2022-10-18-intel-mkl-data-race/ /post/2022-10-30-intel-mkl-data-race/",
+  "/post/2022-10-18-intel-mkl-data-race/ /post/2022-10-30-intel-mkl-data-race/"
 )
 
 hugo_redirects <- readLines(here::here("post", "hugo_redirects"))
 
 hugo_redirected_to <- hugo_redirects |>
-    str_extract("\\s(.*)") |>
-    str_trim()
+  str_extract("\\s(.*)") |>
+  str_trim()
 
 # parsing or redirect file failure if there is an NA here
 stopifnot(all(!is.na(hugo_redirected_to)))
@@ -60,7 +60,6 @@ writeLines(redirects, here::here("_site", "_redirects"))
 
 ```{r}
 #| eval: false
-
 # quick code to test that everything has been redirected to a place
 # that works / doesn't result in a 404 error
 
