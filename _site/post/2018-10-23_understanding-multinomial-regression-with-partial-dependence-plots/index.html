@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,10 +76,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-cd621904f3d98aa77183c9e507a6dfcb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -151,16 +151,21 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="understanding multinomial regression with partial dependence plots – alex hayes">
 <meta property="og:description" content="some intuition for multinomial regression’s initially intimidating functional form">
-<meta property="og:image" content="https://www.alexpghayes.com/post/2018-10-23_understanding-multinomial-regression-with-partial-dependence-plots/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta property="og:image" content="https://www.alexpghayes.com/post/2018-10-23_understanding-multinomial-regression-with-partial-dependence-plots/index_files/figure-html/unnamed-chunk-8-1.png">
 <meta property="og:site_name" content="alex hayes">
+<meta property="og:image:alt" content="Partial dependence plot for Sepal.Length showing estimated marginal probabilities for each of three iris species. Setosa has a high probability for small sepal lengths, while versicolor and virginica have higher probabilities for larger sepal lengths.">
+<meta property="og:image:height" content="960">
+<meta property="og:image:width" content="1344">
 <meta name="twitter:title" content="understanding multinomial regression with partial dependence plots – alex hayes">
 <meta name="twitter:description" content="some intuition for multinomial regression’s initially intimidating functional form">
-<meta name="twitter:image" content="https://www.alexpghayes.com/post/2018-10-23_understanding-multinomial-regression-with-partial-dependence-plots/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta name="twitter:image" content="https://www.alexpghayes.com/post/2018-10-23_understanding-multinomial-regression-with-partial-dependence-plots/index_files/figure-html/unnamed-chunk-8-1.png">
 <meta name="twitter:creator" content="@alexpghayes">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="Partial dependence plot for Sepal.Length showing estimated marginal probabilities for each of three iris species. Setosa has a high probability for small sepal lengths, while versicolor and virginica have higher probabilities for larger sepal lengths.">
+<meta name="twitter:image-height" content="960">
+<meta name="twitter:image-width" content="1344">
 </head>
 
 <body class="floating nav-fixed quarto-light">
@@ -213,12 +218,12 @@ window.Quarto = {
 <span class="menu-text"><i class="ai  ai-google-scholar ai-xl" aria-label="google-scholar"></i></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/alexpghayes"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/alexpghayes"> <i class="bi bi-github" role="img" aria-label="github">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/alexpghayes/"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/alexpghayes/"> <i class="bi bi-linkedin" role="img" aria-label="linkedin">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -247,7 +252,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p><a href="https://www.alexpghayes.com">Alex Hayes</a> <a href="https://orcid.org/0000-0002-4985-5160" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+               <p><a href="https://www.alexpghayes.com">Alex Hayes</a> </p>
             </div>
     </div>
       
@@ -372,8 +377,8 @@ AIC: 31.89973 </code></pre>
 </div>
 <p>Now we can split the dataset into this predictor and other predictors:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x_s <span class="ot">&lt;-</span> <span class="fu">select</span>(data, <span class="sc">!!</span>var)   <span class="co"># grid where we want partial dependencies</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x_c <span class="ot">&lt;-</span> <span class="fu">select</span>(data, <span class="sc">-!!</span>var)  <span class="co"># other predictors</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x_s <span class="ot">&lt;-</span> <span class="fu">select</span>(data, <span class="sc">!!</span>var) <span class="co"># grid where we want partial dependencies</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x_c <span class="ot">&lt;-</span> <span class="fu">select</span>(data, <span class="sc">-!!</span>var) <span class="co"># other predictors</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then we create a dataframe of all combinations of these datasets<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
 <div class="cell">
@@ -394,26 +399,26 @@ AIC: 31.89973 </code></pre>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>au</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5,005 × 8
-   Sepal.Length Sepal.Width Petal.Length Petal…¹ Spe…²   setosa versi…³ virgin…⁴
-          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
- 1          4.3         2            3.5     1   vers… 2.15e-11 1.00e+0 2.34e- 7
- 2          4.3         2.2          4       1   vers… 9.89e-14 1.00e+0 6.84e- 6
- 3          4.3         2.2          4.5     1.5 vers… 4.76e-17 1.27e-1 8.73e- 1
- 4          4.3         2.2          5       1.5 virg… 3.96e-22 1.31e-3 9.99e- 1
- 5          4.3         2.3          1.3     0.3 seto… 9.99e- 1 7.32e-4 6.71e-26
- 6          4.3         2.3          3.3     1   vers… 5.06e- 9 1.00e+0 4.82e- 9
- 7          4.3         2.3          4       1.3 vers… 5.98e-13 9.99e-1 8.33e- 4
- 8          4.3         2.3          4.4     1.3 vers… 1.94e-15 9.65e-1 3.48e- 2
- 9          4.3         2.4          3.3     1   vers… 1.21e- 8 1.00e+0 2.48e- 9
-10          4.3         2.4          3.7     1   vers… 4.05e-11 1.00e+0 1.07e- 7
-# … with 4,995 more rows, and abbreviated variable names ¹​Petal.Width,
-#   ²​Species, ³​versicolor, ⁴​virginica</code></pre>
+   Sepal.Length Sepal.Width Petal.Length Petal.Width Species   setosa versicolor
+          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+ 1          4.3         2            3.5         1   versic… 2.15e-11   1.000   
+ 2          4.3         2.2          4           1   versic… 9.89e-14   1.000   
+ 3          4.3         2.2          4.5         1.5 versic… 4.76e-17   0.127   
+ 4          4.3         2.2          5           1.5 virgin… 3.96e-22   0.00131 
+ 5          4.3         2.3          1.3         0.3 setosa  9.99e- 1   0.000732
+ 6          4.3         2.3          3.3         1   versic… 5.06e- 9   1.000   
+ 7          4.3         2.3          4           1.3 versic… 5.98e-13   0.999   
+ 8          4.3         2.3          4.4         1.3 versic… 1.94e-15   0.965   
+ 9          4.3         2.4          3.3         1   versic… 1.21e- 8   1.000   
+10          4.3         2.4          3.7         1   versic… 4.05e-11   1.000   
+# ℹ 4,995 more rows
+# ℹ 1 more variable: virginica &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <p>Now we have the predictions and we marginalize by taking the average for each point in <span class="math inline">\(x_s\)</span>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> au <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(class, prob, setosa, versicolor, virginica) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(class, prob, setosa, versicolor, virginica) <span class="sc">%&gt;%</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class, <span class="sc">!!</span>var) <span class="sc">%&gt;%</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">marginal_prob =</span> <span class="fu">mean</span>(prob))</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>pd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -432,7 +437,7 @@ AIC: 31.89973 </code></pre>
  8 setosa          5           0.322
  9 setosa          5.1         0.322
 10 setosa          5.2         0.322
-# … with 95 more rows</code></pre>
+# ℹ 95 more rows</code></pre>
 </div>
 </div>
 <p>We can visualize this as well:</p>
@@ -441,14 +446,16 @@ AIC: 31.89973 </code></pre>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="sc">!!</span>var, marginal_prob, <span class="at">color =</span> class)) <span class="sc">+</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>() <span class="sc">+</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Partial dependence plot for"</span>, <span class="fu">quo_name</span>(var)),</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Average class probability across all other predictors"</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">quo_name</span>(var)) <span class="sc">+</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Partial dependence plot for"</span>, <span class="fu">quo_name</span>(var)),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Average class probability across all other predictors"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">quo_name</span>(var)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" alt="Partial dependence plot for Sepal.Length showing estimated marginal probabilities for each of three iris species. Setosa has a high probability for small sepal lengths, while versicolor and virginica have higher probabilities for larger sepal lengths." width="672"></p>
 </figure>
 </div>
 </div>
@@ -460,24 +467,23 @@ AIC: 31.89973 </code></pre>
 <p>In practice it’s useful to look at partial dependence plots for all of the predictors at once. We can do this by wrapping the code we’ve written so far into a helper function and then mapping over all the predictors.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>partial_dependence <span class="ot">&lt;-</span> <span class="cf">function</span>(predictor) {</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  var <span class="ot">&lt;-</span> <span class="fu">ensym</span>(predictor)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  x_s <span class="ot">&lt;-</span> <span class="fu">select</span>(data, <span class="sc">!!</span>var)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  x_c <span class="ot">&lt;-</span> <span class="fu">select</span>(data, <span class="sc">-!!</span>var)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  grid <span class="ot">&lt;-</span> <span class="fu">crossing</span>(x_s, x_c)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(fit, grid) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gather</span>(class, prob, setosa, versicolor, virginica) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(class, <span class="sc">!!</span>var) <span class="sc">%&gt;%</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">marginal_prob =</span> <span class="fu">mean</span>(prob))</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>all_dependencies <span class="ot">&lt;-</span> <span class="fu">colnames</span>(iris)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="sc">%&gt;%</span> </span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(partial_dependence) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(feature, feature_value, <span class="sc">-</span>class, <span class="sc">-</span>marginal_prob) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>all_dependencies</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  var <span class="ot">&lt;-</span> <span class="fu">ensym</span>(predictor)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  x_s <span class="ot">&lt;-</span> <span class="fu">select</span>(data, <span class="sc">!!</span>var)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  x_c <span class="ot">&lt;-</span> <span class="fu">select</span>(data, <span class="sc">-!!</span>var)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  grid <span class="ot">&lt;-</span> <span class="fu">crossing</span>(x_s, x_c)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(fit, grid) <span class="sc">%&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gather</span>(class, prob, setosa, versicolor, virginica) <span class="sc">%&gt;%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(class, <span class="sc">!!</span>var) <span class="sc">%&gt;%</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">marginal_prob =</span> <span class="fu">mean</span>(prob))</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>all_dependencies <span class="ot">&lt;-</span> <span class="fu">colnames</span>(iris)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(partial_dependence) <span class="sc">%&gt;%</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(feature, feature_value, <span class="sc">-</span>class, <span class="sc">-</span>marginal_prob) <span class="sc">%&gt;%</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>all_dependencies</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 369 × 4
 # Groups:   class [3]
@@ -493,29 +499,31 @@ AIC: 31.89973 </code></pre>
  8 setosa         0.322 Sepal.Length           5  
  9 setosa         0.322 Sepal.Length           5.1
 10 setosa         0.322 Sepal.Length           5.2
-# … with 359 more rows</code></pre>
+# ℹ 359 more rows</code></pre>
 </div>
 </div>
 <p>Then we can plot everything at once!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>all_dependencies <span class="sc">%&gt;%</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>all_dependencies <span class="sc">%&gt;%</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(feature_value, marginal_prob, <span class="at">color =</span> class)) <span class="sc">+</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(feature), <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>() <span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Partial dependence plots for all features"</span>,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Marginal probability of class"</span>,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Value of feature"</span>) <span class="sc">+</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Partial dependence plots for all features"</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Marginal probability of class"</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Value of feature"</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" alt="Partial dependence plots for all four iris features. Sepal.Length and Sepal.Width show relatively flat marginal probabilities. In contrast, Petal.Length and Petal.Width show strong separation, with setosa associated with low values, versicolor with middle values, and virginica with high values." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Here we see that <code>Sepal.Length</code> and <code>Sepal.Width</code> don’t influence class probabilites that much on average, but that <code>Petal.Length</code> and <code>Petal.Width</code> do.</p>
+<p>Here we see that <code>Sepal.Length</code> and <code>Sepal.Width</code> don’t influence class probabilities that much on average, but that <code>Petal.Length</code> and <code>Petal.Width</code> do.</p>
 </section>
 <section id="takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
@@ -533,6 +541,97 @@ AIC: 31.89973 </code></pre>
 <li id="fn2"><p>At one point I began wondering how to get a small but representative subset of <span class="math inline">\(x_c\)</span>, which lead me down the rabbit hole of sampling from convex sets (for this problem I was imagining using the convex hulls of <span class="math inline">\(x_c\)</span>). There’s an interesting observation that you can use the Dirichlet distribution for this in an <a href="https://stat.ethz.ch/pipermail/r-help/2007-March/128299.html">old R-help thread</a>. Then I stumbled across <a href="http://sci-hub.tw/https://www.tandfonline.com/doi/abs/10.1080/15326349808807500">hit and run samplers</a>, which are intuitively satisfying, and finally the <a href="https://github.com/andyyao95/walkr"><code>walkr</code></a> package and the more sophisticated methods it implements. I imagine sampling this is just a hard problem in high dimensions, but if anybody can show me how to convert the convex hull of a dataset calculated using <code>chull()</code> into a format suitable for <code>walkr</code>, please email me!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Fix: #title-block-header sits between the site <header> and <main>, so its
+  // content (h1, subtitle, date) is outside every landmark. Moving it to the top
+  // of <main> puts it inside the main landmark and eliminates the duplicate
+  // role="banner" produced by having two top-level <header> elements.
+  var titleHeader = document.getElementById('title-block-header');
+  var mainContent = document.getElementById('quarto-document-content');
+  if (titleHeader && mainContent) {
+    mainContent.insertBefore(titleHeader, mainContent.firstChild);
+  }
+
+  // Fix: <nav class="navbar"> and <nav id="quarto-sidebar"> both have implicit
+  // role="navigation" with no label, producing duplicate unlabelled nav landmarks.
+  var siteNav = document.querySelector('#quarto-header nav.navbar');
+  if (siteNav && !siteNav.getAttribute('aria-label')) {
+    siteNav.setAttribute('aria-label', 'Site');
+  }
+
+  var sidebar = document.getElementById('quarto-sidebar');
+  if (sidebar && !sidebar.getAttribute('aria-label')) {
+    sidebar.setAttribute('aria-label', 'On this page');
+  }
+
+  // Fix: #quarto-margin-sidebar is a plain <div> with no landmark role, so its
+  // content (TOC, margin notes) is outside every landmark. Adding
+  // role="complementary" makes it an <aside>-equivalent landmark.
+  var marginSidebar = document.getElementById('quarto-margin-sidebar');
+  if (marginSidebar && !marginSidebar.getAttribute('role')) {
+    marginSidebar.setAttribute('role', 'complementary');
+    marginSidebar.setAttribute('aria-label', 'On this page');
+  }
+
+  // Fix: #quarto-search-results is outside every landmark.
+  var searchResults = document.getElementById('quarto-search-results');
+  if (searchResults && !searchResults.getAttribute('role')) {
+    searchResults.setAttribute('role', 'region');
+    searchResults.setAttribute('aria-label', 'Search results');
+  }
+
+  // Fix: #quarto-sidebar-glass is outside every landmark.
+  var sidebarGlass = document.getElementById('quarto-sidebar-glass');
+  if (sidebarGlass && !sidebarGlass.getAttribute('aria-hidden')) {
+    sidebarGlass.setAttribute('aria-hidden', 'true');
+  }
+
+  // Fix: collapsible callout headers need role="button" and tabindex="0"
+  // to be keyboard accessible and correctly support their ARIA attributes.
+  var calloutHeaders = document.querySelectorAll('.callout-header[data-bs-toggle="collapse"]');
+  calloutHeaders.forEach(function (header) {
+    if (!header.getAttribute('role')) {
+      header.setAttribute('role', 'button');
+    }
+    if (!header.getAttribute('tabindex')) {
+      header.setAttribute('tabindex', '0');
+    }
+  });
+
+  // Fix: ARIA progressbar nodes must have an accessible name.
+  // Fix: profvis separator images are decorative and need alt="" or role="presentation".
+  // Fix: Scrollable regions need tabindex="0" to be keyboard accessible.
+  var fixDynamicContent = function() {
+    var progressBars = document.querySelectorAll('[role="progressbar"]');
+    progressBars.forEach(function (bar) {
+      if (!bar.getAttribute('aria-label') && !bar.getAttribute('aria-labelledby')) {
+        bar.setAttribute('aria-label', 'Progress');
+      }
+    });
+
+    var profvisSeparators = document.querySelectorAll('.profvis-status-bar .separator-image');
+    profvisSeparators.forEach(function (img) {
+      if (!img.hasAttribute('alt')) {
+        img.setAttribute('alt', '');
+      }
+    });
+
+    var scrollableRegions = document.querySelectorAll('.cell-output-display, .column-page, .cell-output pre, .sourceCode pre');
+    scrollableRegions.forEach(function (el) {
+      if ((el.clientWidth < el.scrollWidth || el.clientHeight < el.scrollHeight) && !el.hasAttribute('tabindex')) {
+        el.setAttribute('tabindex', '0');
+      }
+    });
+  };
+  fixDynamicContent();
+  new MutationObserver(fixDynamicContent).observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+  window.addEventListener('resize', fixDynamicContent);
+});
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

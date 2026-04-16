@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -39,10 +39,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="/site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="/site_libs/quarto-html/anchor.min.js"></script>
 <link href="/site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="/site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="/site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="/site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="/site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="/site_libs/bootstrap/bootstrap-cd621904f3d98aa77183c9e507a6dfcb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="/site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="/site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="/site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="/site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -85,7 +85,6 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </script>
 
 
-<link rel="stylesheet" href="/styles.css">
 <meta property="og:title" content="Page Not Found – alex hayes">
 <meta property="og:description" content="">
 <meta property="og:site_name" content="alex hayes">
@@ -145,12 +144,12 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span class="menu-text"><i class="ai  ai-google-scholar ai-xl" aria-label="google-scholar"></i></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/alexpghayes"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/alexpghayes"> <i class="bi bi-github" role="img" aria-label="github">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/alexpghayes/"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/alexpghayes/"> <i class="bi bi-linkedin" role="img" aria-label="linkedin">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -194,6 +193,97 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 
 </main> <!-- /main -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Fix: #title-block-header sits between the site <header> and <main>, so its
+  // content (h1, subtitle, date) is outside every landmark. Moving it to the top
+  // of <main> puts it inside the main landmark and eliminates the duplicate
+  // role="banner" produced by having two top-level <header> elements.
+  var titleHeader = document.getElementById('title-block-header');
+  var mainContent = document.getElementById('quarto-document-content');
+  if (titleHeader && mainContent) {
+    mainContent.insertBefore(titleHeader, mainContent.firstChild);
+  }
+
+  // Fix: <nav class="navbar"> and <nav id="quarto-sidebar"> both have implicit
+  // role="navigation" with no label, producing duplicate unlabelled nav landmarks.
+  var siteNav = document.querySelector('#quarto-header nav.navbar');
+  if (siteNav && !siteNav.getAttribute('aria-label')) {
+    siteNav.setAttribute('aria-label', 'Site');
+  }
+
+  var sidebar = document.getElementById('quarto-sidebar');
+  if (sidebar && !sidebar.getAttribute('aria-label')) {
+    sidebar.setAttribute('aria-label', 'On this page');
+  }
+
+  // Fix: #quarto-margin-sidebar is a plain <div> with no landmark role, so its
+  // content (TOC, margin notes) is outside every landmark. Adding
+  // role="complementary" makes it an <aside>-equivalent landmark.
+  var marginSidebar = document.getElementById('quarto-margin-sidebar');
+  if (marginSidebar && !marginSidebar.getAttribute('role')) {
+    marginSidebar.setAttribute('role', 'complementary');
+    marginSidebar.setAttribute('aria-label', 'On this page');
+  }
+
+  // Fix: #quarto-search-results is outside every landmark.
+  var searchResults = document.getElementById('quarto-search-results');
+  if (searchResults && !searchResults.getAttribute('role')) {
+    searchResults.setAttribute('role', 'region');
+    searchResults.setAttribute('aria-label', 'Search results');
+  }
+
+  // Fix: #quarto-sidebar-glass is outside every landmark.
+  var sidebarGlass = document.getElementById('quarto-sidebar-glass');
+  if (sidebarGlass && !sidebarGlass.getAttribute('aria-hidden')) {
+    sidebarGlass.setAttribute('aria-hidden', 'true');
+  }
+
+  // Fix: collapsible callout headers need role="button" and tabindex="0"
+  // to be keyboard accessible and correctly support their ARIA attributes.
+  var calloutHeaders = document.querySelectorAll('.callout-header[data-bs-toggle="collapse"]');
+  calloutHeaders.forEach(function (header) {
+    if (!header.getAttribute('role')) {
+      header.setAttribute('role', 'button');
+    }
+    if (!header.getAttribute('tabindex')) {
+      header.setAttribute('tabindex', '0');
+    }
+  });
+
+  // Fix: ARIA progressbar nodes must have an accessible name.
+  // Fix: profvis separator images are decorative and need alt="" or role="presentation".
+  // Fix: Scrollable regions need tabindex="0" to be keyboard accessible.
+  var fixDynamicContent = function() {
+    var progressBars = document.querySelectorAll('[role="progressbar"]');
+    progressBars.forEach(function (bar) {
+      if (!bar.getAttribute('aria-label') && !bar.getAttribute('aria-labelledby')) {
+        bar.setAttribute('aria-label', 'Progress');
+      }
+    });
+
+    var profvisSeparators = document.querySelectorAll('.profvis-status-bar .separator-image');
+    profvisSeparators.forEach(function (img) {
+      if (!img.hasAttribute('alt')) {
+        img.setAttribute('alt', '');
+      }
+    });
+
+    var scrollableRegions = document.querySelectorAll('.cell-output-display, .column-page, .cell-output pre, .sourceCode pre');
+    scrollableRegions.forEach(function (el) {
+      if ((el.clientWidth < el.scrollWidth || el.clientHeight < el.scrollHeight) && !el.hasAttribute('tabindex')) {
+        el.setAttribute('tabindex', '0');
+      }
+    });
+  };
+  fixDynamicContent();
+  new MutationObserver(fixDynamicContent).observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+  window.addEventListener('resize', fixDynamicContent);
+});
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

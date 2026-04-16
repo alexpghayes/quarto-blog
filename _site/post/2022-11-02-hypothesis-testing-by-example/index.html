@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,10 +76,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-cd621904f3d98aa77183c9e507a6dfcb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -151,16 +151,21 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="hypothesis testing by example – alex hayes">
 <meta property="og:description" content="some pointers on things that can go right and wrong">
-<meta property="og:image" content="https://www.alexpghayes.com/post/2022-11-02-hypothesis-testing-by-example/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta property="og:image" content="https://www.alexpghayes.com/post/2022-11-02-hypothesis-testing-by-example/index_files/figure-html/fig-observed-1.png">
 <meta property="og:site_name" content="alex hayes">
+<meta property="og:image:alt" content="Six panels showing sequences of 200 coin flips. Sequence A alternates perfectly (HTHT...). Sequence E has extremely long streaks of heads then tails. Sequences B, C, D, and F show more typical-looking variations, though F has noticeably fewer heads.">
+<meta property="og:image:height" content="1152">
+<meta property="og:image:width" content="1920">
 <meta name="twitter:title" content="hypothesis testing by example – alex hayes">
 <meta name="twitter:description" content="some pointers on things that can go right and wrong">
-<meta name="twitter:image" content="https://www.alexpghayes.com/post/2022-11-02-hypothesis-testing-by-example/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta name="twitter:image" content="https://www.alexpghayes.com/post/2022-11-02-hypothesis-testing-by-example/index_files/figure-html/fig-observed-1.png">
 <meta name="twitter:creator" content="@alexpghayes">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="Six panels showing sequences of 200 coin flips. Sequence A alternates perfectly (HTHT...). Sequence E has extremely long streaks of heads then tails. Sequences B, C, D, and F show more typical-looking variations, though F has noticeably fewer heads.">
+<meta name="twitter:image-height" content="1152">
+<meta name="twitter:image-width" content="1920">
 </head>
 
 <body class="floating nav-fixed quarto-light">
@@ -213,12 +218,12 @@ window.Quarto = {
 <span class="menu-text"><i class="ai  ai-google-scholar ai-xl" aria-label="google-scholar"></i></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/alexpghayes"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/alexpghayes"> <i class="bi bi-github" role="img" aria-label="github">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/alexpghayes/"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/alexpghayes/"> <i class="bi bi-linkedin" role="img" aria-label="linkedin">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -249,7 +254,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p><a href="https://www.alexpghayes.com">Alex Hayes</a> <a href="https://orcid.org/0000-0002-4985-5160" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+               <p><a href="https://www.alexpghayes.com">Alex Hayes</a> </p>
             </div>
     </div>
       
@@ -352,10 +357,10 @@ window.Quarto = {
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display page-columns page-full">
-<div id="fig-observed" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<div id="fig-observed" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Six panels showing sequences of 200 coin flips. Sequence A alternates perfectly (HTHT...). Sequence E has extremely long streaks of heads then tails. Sequences B, C, D, and F show more typical-looking variations, though F has noticeably fewer heads.">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-observed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
-<img src="index_files/figure-html/fig-observed-1.png" class="img-fluid figure-img column-body-outset" width="960">
+<img src="index_files/figure-html/fig-observed-1.png" class="img-fluid figure-img column-body-outset" alt="Six panels showing sequences of 200 coin flips. Sequence A alternates perfectly (HTHT...). Sequence E has extremely long streaks of heads then tails. Sequences B, C, D, and F show more typical-looking variations, though F has noticeably fewer heads." width="960">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-observed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Sequences A, B, C, D, E and F. Only one sequence was generated randomly using a fair coin.
@@ -417,10 +422,10 @@ Figure&nbsp;1: Sequences A, B, C, D, E and F. Only one sequence was generated ra
 <span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display page-columns page-full">
-<div id="fig-fair" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<div id="fig-fair" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Six panels showing random sequences of coin flips generated from a fair coin. Unlike the observed sequences, these all show irregular patterns without obvious alternating or long-streak structures.">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-fair-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
-<img src="index_files/figure-html/fig-fair-1.png" class="img-fluid figure-img column-body-outset" width="960">
+<img src="index_files/figure-html/fig-fair-1.png" class="img-fluid figure-img column-body-outset" alt="Six panels showing random sequences of coin flips generated from a fair coin. Unlike the observed sequences, these all show irregular patterns without obvious alternating or long-streak structures." width="960">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fair-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for comparison.
@@ -483,7 +488,7 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img column-body-outset" width="960"></p>
+<p class="page-columns page-full"><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img column-body-outset" alt="Six histograms showing the null distribution of head counts (centered around 100). A vertical line in each panel shows the observed head count for that sequence. Sequence F's line is far to the left, while others are near the center." width="960"></p>
 </figure>
 </div>
 </div>
@@ -516,14 +521,26 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="debvpofyig" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="debvpofyig" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#debvpofyig table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#debvpofyig thead, #debvpofyig tbody, #debvpofyig tfoot, #debvpofyig tr, #debvpofyig td, #debvpofyig th {
+  border-style: none;
+}
+
+#debvpofyig p {
+  margin: 0;
+  padding: 0;
 }
 
 #debvpofyig .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -546,16 +563,9 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   border-left-color: #D3D3D3;
 }
 
-#debvpofyig .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#debvpofyig .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 #debvpofyig .gt_title {
@@ -574,12 +584,24 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
+}
+
+#debvpofyig .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
 }
 
 #debvpofyig .gt_bottom_border {
@@ -653,6 +675,10 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   overflow-x: hidden;
   display: inline-block;
   width: 100%;
+}
+
+#debvpofyig .gt_spanner_row {
+  border-bottom-style: hidden;
 }
 
 #debvpofyig .gt_group_heading {
@@ -754,6 +780,10 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   border-top-width: 2px;
 }
 
+#debvpofyig .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
 #debvpofyig .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
@@ -803,6 +833,16 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   border-top-color: #D3D3D3;
 }
 
+#debvpofyig .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
 #debvpofyig .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
@@ -833,8 +873,8 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 #debvpofyig .gt_footnote {
   margin: 0px;
   font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -891,10 +931,9 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 }
 
 #debvpofyig .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
 #debvpofyig .gt_asterisk {
@@ -921,13 +960,22 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 #debvpofyig .gt_indent_5 {
   text-indent: 25px;
 }
+
+#debvpofyig .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#debvpofyig div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
 </style>
 
-<table class="gt_table caption-top table table-sm table-striped small">
-<thead class="gt_col_headings">
-<tr class="header">
-<th id="Sequence" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Sequence</th>
-<th id="Heads in sequence" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Heads in sequence</th>
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="name" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Sequence</th>
+<th id="statistic" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Heads in sequence</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
@@ -975,14 +1023,26 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="fdnmgbldmw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="fdnmgbldmw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fdnmgbldmw table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#fdnmgbldmw thead, #fdnmgbldmw tbody, #fdnmgbldmw tfoot, #fdnmgbldmw tr, #fdnmgbldmw td, #fdnmgbldmw th {
+  border-style: none;
+}
+
+#fdnmgbldmw p {
+  margin: 0;
+  padding: 0;
 }
 
 #fdnmgbldmw .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -1005,16 +1065,9 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   border-left-color: #D3D3D3;
 }
 
-#fdnmgbldmw .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#fdnmgbldmw .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 #fdnmgbldmw .gt_title {
@@ -1033,12 +1086,24 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
+}
+
+#fdnmgbldmw .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
 }
 
 #fdnmgbldmw .gt_bottom_border {
@@ -1112,6 +1177,10 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   overflow-x: hidden;
   display: inline-block;
   width: 100%;
+}
+
+#fdnmgbldmw .gt_spanner_row {
+  border-bottom-style: hidden;
 }
 
 #fdnmgbldmw .gt_group_heading {
@@ -1213,6 +1282,10 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   border-top-width: 2px;
 }
 
+#fdnmgbldmw .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
 #fdnmgbldmw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
@@ -1262,6 +1335,16 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   border-top-color: #D3D3D3;
 }
 
+#fdnmgbldmw .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
 #fdnmgbldmw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
@@ -1292,8 +1375,8 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 #fdnmgbldmw .gt_footnote {
   margin: 0px;
   font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -1350,10 +1433,9 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 }
 
 #fdnmgbldmw .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
 #fdnmgbldmw .gt_asterisk {
@@ -1380,13 +1462,22 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 #fdnmgbldmw .gt_indent_5 {
   text-indent: 25px;
 }
+
+#fdnmgbldmw .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#fdnmgbldmw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
 </style>
 
-<table class="gt_table caption-top table table-sm table-striped small">
-<thead class="gt_col_headings">
-<tr class="header">
-<th id="Sequence" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Sequence</th>
-<th id="P-value" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">P-value</th>
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="name" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Sequence</th>
+<th id="p_value" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">P-value</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
@@ -1471,14 +1562,26 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="zwuobxtlof" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="zwuobxtlof" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zwuobxtlof table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#zwuobxtlof thead, #zwuobxtlof tbody, #zwuobxtlof tfoot, #zwuobxtlof tr, #zwuobxtlof td, #zwuobxtlof th {
+  border-style: none;
+}
+
+#zwuobxtlof p {
+  margin: 0;
+  padding: 0;
 }
 
 #zwuobxtlof .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -1501,16 +1604,9 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   border-left-color: #D3D3D3;
 }
 
-#zwuobxtlof .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#zwuobxtlof .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 #zwuobxtlof .gt_title {
@@ -1529,12 +1625,24 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
+}
+
+#zwuobxtlof .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
 }
 
 #zwuobxtlof .gt_bottom_border {
@@ -1608,6 +1716,10 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   overflow-x: hidden;
   display: inline-block;
   width: 100%;
+}
+
+#zwuobxtlof .gt_spanner_row {
+  border-bottom-style: hidden;
 }
 
 #zwuobxtlof .gt_group_heading {
@@ -1709,6 +1821,10 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   border-top-width: 2px;
 }
 
+#zwuobxtlof .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
 #zwuobxtlof .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
@@ -1758,6 +1874,16 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
   border-top-color: #D3D3D3;
 }
 
+#zwuobxtlof .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
 #zwuobxtlof .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
@@ -1788,8 +1914,8 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 #zwuobxtlof .gt_footnote {
   margin: 0px;
   font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -1846,10 +1972,9 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 }
 
 #zwuobxtlof .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
 #zwuobxtlof .gt_asterisk {
@@ -1876,16 +2001,25 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 #zwuobxtlof .gt_indent_5 {
   text-indent: 25px;
 }
+
+#zwuobxtlof .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#zwuobxtlof div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
 </style>
 
-<table class="gt_table caption-top table table-sm table-striped small">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <caption>Even though sequence C has exactly the expected number of heads under the null model, every single sequence is equally likely under the null model.</caption>
-<thead class="gt_col_headings">
-<tr class="header">
-<th id="Sequence" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Sequence</th>
-<th id="Heads in sequence" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Heads in sequence</th>
-<th id="E[num heads|null model]" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">E[num heads|null model]</th>
-<th id="log P(data|null model)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">log P(data|null model)</th>
+<thead>
+<tr class="gt_col_headings header">
+<th id="name" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Sequence</th>
+<th id="statistic" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Heads in sequence</th>
+<th id="expected" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">E[num heads|null model]</th>
+<th id="log_likelihood" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">log P(data|null model)</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
@@ -1995,7 +2129,7 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img column-body-outset" width="960"></p>
+<p class="page-columns page-full"><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img column-body-outset" alt="Six histograms showing the null distribution of the longest streak of heads. Vertical lines show that Sequences A, B, and F have streaks that are too short, while Sequence E has a streak that is too long." width="960"></p>
 </figure>
 </div>
 </div>
@@ -2022,7 +2156,7 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img column-body-outset" width="960"></p>
+<p class="page-columns page-full"><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img column-body-outset" alt="Six histograms showing the null distribution of the total number of streaks. A vertical line shows that Sequence C has significantly fewer streaks than expected under the null model." width="960"></p>
 </figure>
 </div>
 </div>
@@ -2051,7 +2185,7 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img column-body-outset" width="960"></p>
+<p class="page-columns page-full"><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img column-body-outset" alt="Six histograms showing the null distribution of the frequency of a specific long subsequence. The vertical line for Sequence D is at 1, while the null distribution is entirely at 0." width="960"></p>
 </figure>
 </div>
 </div>
@@ -2097,6 +2231,97 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <li id="fn1"><p>If you want to treat tests as dependent, you may not be able to calculate the precise probability of one or more false positive, but you can bound it using Fréchet’s inequality: <span class="math inline">\(P(A \text{ or } B) \le P(A) + P(B)\)</span> for possibly dependent events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Fix: #title-block-header sits between the site <header> and <main>, so its
+  // content (h1, subtitle, date) is outside every landmark. Moving it to the top
+  // of <main> puts it inside the main landmark and eliminates the duplicate
+  // role="banner" produced by having two top-level <header> elements.
+  var titleHeader = document.getElementById('title-block-header');
+  var mainContent = document.getElementById('quarto-document-content');
+  if (titleHeader && mainContent) {
+    mainContent.insertBefore(titleHeader, mainContent.firstChild);
+  }
+
+  // Fix: <nav class="navbar"> and <nav id="quarto-sidebar"> both have implicit
+  // role="navigation" with no label, producing duplicate unlabelled nav landmarks.
+  var siteNav = document.querySelector('#quarto-header nav.navbar');
+  if (siteNav && !siteNav.getAttribute('aria-label')) {
+    siteNav.setAttribute('aria-label', 'Site');
+  }
+
+  var sidebar = document.getElementById('quarto-sidebar');
+  if (sidebar && !sidebar.getAttribute('aria-label')) {
+    sidebar.setAttribute('aria-label', 'On this page');
+  }
+
+  // Fix: #quarto-margin-sidebar is a plain <div> with no landmark role, so its
+  // content (TOC, margin notes) is outside every landmark. Adding
+  // role="complementary" makes it an <aside>-equivalent landmark.
+  var marginSidebar = document.getElementById('quarto-margin-sidebar');
+  if (marginSidebar && !marginSidebar.getAttribute('role')) {
+    marginSidebar.setAttribute('role', 'complementary');
+    marginSidebar.setAttribute('aria-label', 'On this page');
+  }
+
+  // Fix: #quarto-search-results is outside every landmark.
+  var searchResults = document.getElementById('quarto-search-results');
+  if (searchResults && !searchResults.getAttribute('role')) {
+    searchResults.setAttribute('role', 'region');
+    searchResults.setAttribute('aria-label', 'Search results');
+  }
+
+  // Fix: #quarto-sidebar-glass is outside every landmark.
+  var sidebarGlass = document.getElementById('quarto-sidebar-glass');
+  if (sidebarGlass && !sidebarGlass.getAttribute('aria-hidden')) {
+    sidebarGlass.setAttribute('aria-hidden', 'true');
+  }
+
+  // Fix: collapsible callout headers need role="button" and tabindex="0"
+  // to be keyboard accessible and correctly support their ARIA attributes.
+  var calloutHeaders = document.querySelectorAll('.callout-header[data-bs-toggle="collapse"]');
+  calloutHeaders.forEach(function (header) {
+    if (!header.getAttribute('role')) {
+      header.setAttribute('role', 'button');
+    }
+    if (!header.getAttribute('tabindex')) {
+      header.setAttribute('tabindex', '0');
+    }
+  });
+
+  // Fix: ARIA progressbar nodes must have an accessible name.
+  // Fix: profvis separator images are decorative and need alt="" or role="presentation".
+  // Fix: Scrollable regions need tabindex="0" to be keyboard accessible.
+  var fixDynamicContent = function() {
+    var progressBars = document.querySelectorAll('[role="progressbar"]');
+    progressBars.forEach(function (bar) {
+      if (!bar.getAttribute('aria-label') && !bar.getAttribute('aria-labelledby')) {
+        bar.setAttribute('aria-label', 'Progress');
+      }
+    });
+
+    var profvisSeparators = document.querySelectorAll('.profvis-status-bar .separator-image');
+    profvisSeparators.forEach(function (img) {
+      if (!img.hasAttribute('alt')) {
+        img.setAttribute('alt', '');
+      }
+    });
+
+    var scrollableRegions = document.querySelectorAll('.cell-output-display, .column-page, .cell-output pre, .sourceCode pre');
+    scrollableRegions.forEach(function (el) {
+      if ((el.clientWidth < el.scrollWidth || el.clientHeight < el.scrollHeight) && !el.hasAttribute('tabindex')) {
+        el.setAttribute('tabindex', '0');
+      }
+    });
+  };
+  fixDynamicContent();
+  new MutationObserver(fixDynamicContent).observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+  window.addEventListener('resize', fixDynamicContent);
+});
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,10 +76,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-cd621904f3d98aa77183c9e507a6dfcb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -125,16 +125,21 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
-<link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="many models workflows in python ii – alex hayes">
 <meta property="og:description" content="a tidymodels workflow in python using list columns in pandas dataframes, now with hyperparameter sweep and parallelism">
-<meta property="og:image" content="https://www.alexpghayes.com/post/2021-03-28_many-models-workflows-in-python-part-ii/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta property="og:image" content="https://www.alexpghayes.com/post/2021-03-28_many-models-workflows-in-python-part-ii/index_files/figure-html/cell-9-output-1.png">
 <meta property="og:site_name" content="alex hayes">
+<meta property="og:image:alt" content="Line plot showing Adjusted Rand Score across different numbers of components and covariance types. Three components generally perform best.">
+<meta property="og:image:height" content="433">
+<meta property="og:image:width" content="567">
 <meta name="twitter:title" content="many models workflows in python ii – alex hayes">
 <meta name="twitter:description" content="a tidymodels workflow in python using list columns in pandas dataframes, now with hyperparameter sweep and parallelism">
-<meta name="twitter:image" content="https://www.alexpghayes.com/post/2021-03-28_many-models-workflows-in-python-part-ii/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
+<meta name="twitter:image" content="https://www.alexpghayes.com/post/2021-03-28_many-models-workflows-in-python-part-ii/index_files/figure-html/cell-9-output-1.png">
 <meta name="twitter:creator" content="@alexpghayes">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="Line plot showing Adjusted Rand Score across different numbers of components and covariance types. Three components generally perform best.">
+<meta name="twitter:image-height" content="433">
+<meta name="twitter:image-width" content="567">
 </head>
 
 <body class="floating nav-fixed quarto-light">
@@ -187,12 +192,12 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span class="menu-text"><i class="ai  ai-google-scholar ai-xl" aria-label="google-scholar"></i></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/alexpghayes"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/alexpghayes"> <i class="bi bi-github" role="img" aria-label="github">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/alexpghayes/"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/alexpghayes/"> <i class="bi bi-linkedin" role="img" aria-label="linkedin">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -223,7 +228,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p><a href="https://www.alexpghayes.com">Alex Hayes</a> <a href="https://orcid.org/0000-0002-4985-5160" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+               <p><a href="https://www.alexpghayes.com">Alex Hayes</a> </p>
             </div>
     </div>
       
@@ -284,7 +289,8 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'body_mass_g'</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>penguins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>penguins.index.name <span class="op">=</span> <span class="st">'row_index'</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>penguins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display column-body-outset" data-execution_count="1">
 <div>
 
@@ -292,7 +298,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">row_index</th>
 <th data-quarto-table-cell-role="th">species</th>
 <th data-quarto-table-cell-role="th">island</th>
 <th data-quarto-table-cell-role="th">bill_length_mm</th>
@@ -301,6 +307,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <th data-quarto-table-cell-role="th">body_mass_g</th>
 <th data-quarto-table-cell-role="th">sex</th>
 <th data-quarto-table-cell-role="th">year</th>
+<td></td>
 </tr>
 </thead>
 <tbody>
@@ -314,6 +321,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <td>3750.0</td>
 <td>male</td>
 <td>2007</td>
+<td></td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
@@ -325,6 +333,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <td>3800.0</td>
 <td>female</td>
 <td>2007</td>
+<td></td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
@@ -336,6 +345,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <td>3250.0</td>
 <td>female</td>
 <td>2007</td>
+<td></td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">4</th>
@@ -347,6 +357,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <td>3450.0</td>
 <td>female</td>
 <td>2007</td>
+<td></td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">5</th>
@@ -358,9 +369,11 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <td>3650.0</td>
 <td>male</td>
 <td>2007</td>
+<td></td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
 <td>...</td>
 <td>...</td>
 <td>...</td>
@@ -380,6 +393,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <td>4000.0</td>
 <td>male</td>
 <td>2009</td>
+<td></td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">340</th>
@@ -391,6 +405,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <td>3400.0</td>
 <td>female</td>
 <td>2009</td>
+<td></td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">341</th>
@@ -402,6 +417,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <td>3775.0</td>
 <td>male</td>
 <td>2009</td>
+<td></td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">342</th>
@@ -413,6 +429,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <td>4100.0</td>
 <td>male</td>
 <td>2009</td>
+<td></td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">343</th>
@@ -424,6 +441,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <td>3775.0</td>
 <td>female</td>
 <td>2009</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -529,7 +547,8 @@ Fold 4 has 267 train and 66 test observations.</code></pre>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>model_grid <span class="op">=</span> pd.DataFrame(param_grid)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>model_grid.index.name <span class="op">=</span> <span class="st">'grid_index'</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display column-body-outset" data-execution_count="4">
 <div>
 
@@ -537,7 +556,7 @@ Fold 4 has 267 train and 66 test observations.</code></pre>
 <table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">grid_index</th>
 <th data-quarto-table-cell-role="th">covariance_type</th>
 <th data-quarto-table-cell-role="th">n_components</th>
 </tr>
@@ -596,7 +615,8 @@ Fold 4 has 267 train and 66 test observations.</code></pre>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> hyperparameters <span class="kw">in</span> param_grid</span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>model_grid.index.name <span class="op">=</span> <span class="st">'grid_index'</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display column-body-outset" data-execution_count="5">
 <div>
 
@@ -604,7 +624,7 @@ Fold 4 has 267 train and 66 test observations.</code></pre>
 <table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">grid_index</th>
 <th data-quarto-table-cell-role="th">covariance_type</th>
 <th data-quarto-table-cell-role="th">n_components</th>
 <th data-quarto-table-cell-role="th">cv_fits</th>
@@ -676,7 +696,8 @@ Fold 4 has 267 train and 66 test observations.</code></pre>
 <span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> fits <span class="kw">in</span> model_grid.cv_fits</span>
 <span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>model_grid.index.name <span class="op">=</span> <span class="st">'grid_index'</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>model_grid.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display column-body-outset" data-execution_count="6">
 <div>
 
@@ -684,7 +705,7 @@ Fold 4 has 267 train and 66 test observations.</code></pre>
 <table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">grid_index</th>
 <th data-quarto-table-cell-role="th">covariance_type</th>
 <th data-quarto-table-cell-role="th">n_components</th>
 <th data-quarto-table-cell-role="th">cv_fits</th>
@@ -782,7 +803,7 @@ dtype: object</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img" alt="Line plot showing Adjusted Rand Score across different numbers of components and covariance types. Three components generally perform best."></p>
 </figure>
 </div>
 </div>
@@ -816,7 +837,8 @@ dtype: object</code></pre>
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>fancy_model_grid <span class="op">=</span> pd.DataFrame(fancy_param_grid)</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>fancy_model_grid.tail()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>fancy_model_grid.index.name <span class="op">=</span> <span class="st">'fancy_grid_index'</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>fancy_model_grid.tail()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
@@ -824,7 +846,7 @@ dtype: object</code></pre>
 <table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">fancy_grid_index</th>
 <th data-quarto-table-cell-role="th">covariance_type</th>
 <th data-quarto-table-cell-role="th">n_components</th>
 </tr>
@@ -900,21 +922,23 @@ dtype: object</code></pre>
 </div>
 <p>Now we can compare BIC across our absurdly large number of models. <code>seaborn</code> will automatically drop <code>np.nan()</code> values, so our <code>@safely</code> approach plays very nice here.</p>
 <div id="cell-21" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># more seaborn &lt;-&gt; pandas deprecation warning suppression for</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cleaner output</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> warnings.catch_warnings():</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    warnings.simplefilter(action<span class="op">=</span><span class="st">'ignore'</span>, category<span class="op">=</span><span class="pp">FutureWarning</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    plot <span class="op">=</span> sns.lineplot(</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        data<span class="op">=</span>fancy_model_grid,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">'n_components'</span>, y<span class="op">=</span><span class="st">'bic'</span>, hue<span class="op">=</span><span class="st">'covariance_type'</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># more seaborn &lt;-&gt; pandas deprecation warning suppression for</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># cleaner output</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> warnings.catch_warnings():</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    warnings.simplefilter(action<span class="op">=</span><span class="st">'ignore'</span>, category<span class="op">=</span><span class="pp">FutureWarning</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    plot <span class="op">=</span> sns.lineplot(</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        data<span class="op">=</span>fancy_model_grid,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">'n_components'</span>, y<span class="op">=</span><span class="st">'bic'</span>, hue<span class="op">=</span><span class="st">'covariance_type'</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img" alt="Line plot showing BIC across an absurdly large number of components. BIC decreases as the number of components increases, indicating overfitting."></p>
 </figure>
 </div>
 </div>
@@ -938,6 +962,97 @@ dtype: object</code></pre>
 <li id="fn1"><p><strong>Aside about <code>tidymodels</code></strong>: Early work in the <code>tidymodels</code> ecosystem focused on low level infrastructure that facilitated many-models workflows. I still use this infrastructure a lot, especially combined with <a href="https://docs.ropensci.org/targets/"><code>targets</code></a>, which is a <code>make</code> variant for R that plays nicely with modeling workflows, and <code>tidymodels</code> inspired much of the approach I took in the post above. However, current work in the <code>tidymodels</code> ecosystem focuses on high level infrastructure for tuning hyperparameters in predictive modeling scenarios. This mixture of general purpose low level infrastructure and more prediction specific high level infrastructure leads to some interesting discussions like <a href="https://community.rstudio.com/t/mixed-effect-models-and-anova-in-the-tidyverse/48029">this one</a>, where someone asks how to use <code>tidymodels</code> to analyze designed experiments, which <code>tidymodels</code> <a href="https://community.rstudio.com/t/mixed-effect-models-and-anova-in-the-tidyverse/48029/7?u=alexpghayes">doesn’t really provide any tools for</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Fix: #title-block-header sits between the site <header> and <main>, so its
+  // content (h1, subtitle, date) is outside every landmark. Moving it to the top
+  // of <main> puts it inside the main landmark and eliminates the duplicate
+  // role="banner" produced by having two top-level <header> elements.
+  var titleHeader = document.getElementById('title-block-header');
+  var mainContent = document.getElementById('quarto-document-content');
+  if (titleHeader && mainContent) {
+    mainContent.insertBefore(titleHeader, mainContent.firstChild);
+  }
+
+  // Fix: <nav class="navbar"> and <nav id="quarto-sidebar"> both have implicit
+  // role="navigation" with no label, producing duplicate unlabelled nav landmarks.
+  var siteNav = document.querySelector('#quarto-header nav.navbar');
+  if (siteNav && !siteNav.getAttribute('aria-label')) {
+    siteNav.setAttribute('aria-label', 'Site');
+  }
+
+  var sidebar = document.getElementById('quarto-sidebar');
+  if (sidebar && !sidebar.getAttribute('aria-label')) {
+    sidebar.setAttribute('aria-label', 'On this page');
+  }
+
+  // Fix: #quarto-margin-sidebar is a plain <div> with no landmark role, so its
+  // content (TOC, margin notes) is outside every landmark. Adding
+  // role="complementary" makes it an <aside>-equivalent landmark.
+  var marginSidebar = document.getElementById('quarto-margin-sidebar');
+  if (marginSidebar && !marginSidebar.getAttribute('role')) {
+    marginSidebar.setAttribute('role', 'complementary');
+    marginSidebar.setAttribute('aria-label', 'On this page');
+  }
+
+  // Fix: #quarto-search-results is outside every landmark.
+  var searchResults = document.getElementById('quarto-search-results');
+  if (searchResults && !searchResults.getAttribute('role')) {
+    searchResults.setAttribute('role', 'region');
+    searchResults.setAttribute('aria-label', 'Search results');
+  }
+
+  // Fix: #quarto-sidebar-glass is outside every landmark.
+  var sidebarGlass = document.getElementById('quarto-sidebar-glass');
+  if (sidebarGlass && !sidebarGlass.getAttribute('aria-hidden')) {
+    sidebarGlass.setAttribute('aria-hidden', 'true');
+  }
+
+  // Fix: collapsible callout headers need role="button" and tabindex="0"
+  // to be keyboard accessible and correctly support their ARIA attributes.
+  var calloutHeaders = document.querySelectorAll('.callout-header[data-bs-toggle="collapse"]');
+  calloutHeaders.forEach(function (header) {
+    if (!header.getAttribute('role')) {
+      header.setAttribute('role', 'button');
+    }
+    if (!header.getAttribute('tabindex')) {
+      header.setAttribute('tabindex', '0');
+    }
+  });
+
+  // Fix: ARIA progressbar nodes must have an accessible name.
+  // Fix: profvis separator images are decorative and need alt="" or role="presentation".
+  // Fix: Scrollable regions need tabindex="0" to be keyboard accessible.
+  var fixDynamicContent = function() {
+    var progressBars = document.querySelectorAll('[role="progressbar"]');
+    progressBars.forEach(function (bar) {
+      if (!bar.getAttribute('aria-label') && !bar.getAttribute('aria-labelledby')) {
+        bar.setAttribute('aria-label', 'Progress');
+      }
+    });
+
+    var profvisSeparators = document.querySelectorAll('.profvis-status-bar .separator-image');
+    profvisSeparators.forEach(function (img) {
+      if (!img.hasAttribute('alt')) {
+        img.setAttribute('alt', '');
+      }
+    });
+
+    var scrollableRegions = document.querySelectorAll('.cell-output-display, .column-page, .cell-output pre, .sourceCode pre');
+    scrollableRegions.forEach(function (el) {
+      if ((el.clientWidth < el.scrollWidth || el.clientHeight < el.scrollHeight) && !el.hasAttribute('tabindex')) {
+        el.setAttribute('tabindex', '0');
+      }
+    });
+  };
+  fixDynamicContent();
+  new MutationObserver(fixDynamicContent).observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+  window.addEventListener('resize', fixDynamicContent);
+});
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
