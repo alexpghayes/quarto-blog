@@ -23,7 +23,6 @@ website:
       - teaching/index.qmd
       - text: blog
         file: posts.qmd
-      - talks/index.qmd
       - text: '{{< fa brands bluesky >}}'
         aria-label: bluesky
         href: https://bsky.app/profile/alexpghayes.com
