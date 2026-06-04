@@ -27,29 +27,13 @@ My curriculum vitae is available [here](academic-cv.pdf). I also keep [Google Sc
 
 - 2026-04-09: I have a new working paper [Estimating peer effects in noisy, low-rank networks via network smoothing](./papers/latent-contagion-wp.pdf) with Keith Levin.
 
-- 2026-04-06: I presented [Spectral Estimation and Trait Selection for Aggregated Relational Data](https://github.com/alexpghayes/2026-04-06-metrics-lunch) at the Stanford Metrics Lunch.
-
 - 2025-12-15: I presented [Minimax rates for the linear-in-means model reveal an identifiability-estimability gap](https://github.com/alexpghayes/2025-12-15-cmstat) virtually at CMStatistics 2025.
-
-- 2025-11-19: I presented my poster [Estimating how much people influence their friends when friendship\ measurements are unreliable](https://github.com/alexpghayes/2025-11-19-sc2-poster) at the Stanford Causal Science Center student conference.
-
-- 2025-11-14: I presented early work [Mapping Social Networks on a Budget: Using Aggregated Relational Data in Development Economics](https://github.com/alexpghayes/2025-11-14-madison-networks-talk) at the UW-Madison Networks Seminar.
-
-- 2025-11-04: I posted an updated draft [Minimax rates for the linear-in-means model reveal an identifiability-estimability gap](http://arxiv.org/abs/2410.10772) to ArXiV. This new draft generalizes our previous result loading bounding estimation error in ordinary least squares estimators for the linear-in-means model to a generic minimax lower bound that holds for all possible estimators.
-
-- 2025-09-22: I presented [Minimax rates for the linear-in-means model reveal an identifiability-estimability gap](https://github.com/alexpghayes/2025-09-22-stanford-metrics-lunch) at the Stanford Metrics Lunch.
-
-- 2025-09-01: I joined Stanford as a Postdoctoral Scholar working with Arun Chandrasekhar.
-
-- 2025-08-07 I presented [Peer effects in the linear-in-means model may be inestimable even when identified](https://github.com/alexpghayes/2025-08-07-jsm-slides) at the Joint Statistical Meetings 2025.
-
-- 2025-05-09: I graduated from the University of Wisconsin-Madison with a PhD in Statistics.
 
 Material from older talks, presentations, posters, etc, can be found [on my Github](https://github.com/alexpghayes/).
 
 ## working papers & pre-prints
 
-1. [Estimating peer effects in noisy, low-rank networks via network smoothing](./papers/latent-contagion-wp.pdf) (pdf). **Alex Hayes** and Keith Levin. April 10, 2026
+1. [Estimating peer effects in noisy, low-rank networks via network smoothing](https://arxiv.org/abs/2605.03204). **Alex Hayes** and Keith Levin. *arXiv*. May 4, 2026. [replication package](https://github.com/alexpghayes/latent-contagion-replication-package)
 
 1. [Minimax rates for the linear-in-means model reveal an identifiability-estimability gap](http://arxiv.org/abs/2410.10772). **Alex Hayes** and Keith Levin. *arXiv*. November 4, 2025. [replication package](https://github.com/alexpghayes/asymptotic-collinearity-replication)
 
