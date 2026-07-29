@@ -17,7 +17,10 @@ I completed my PhD in Statistics at the University of Wisconsin-Madison, where I
 My curriculum vitae is available [here](academic-cv.pdf). I also keep [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIAAAAJ) up to date, and you can find me on Bluesky at [@alexpghayes.com](https://bsky.app/profile/alexpghayes.com).
 :::
 
+
 ## recent updates
+
+- 2026-07-29: I'll be at New Researchers Conference 2026 this weekend chatting about some recent work on estimating peer effects in noisy networks! [slide](https://github.com/alexpghayes/2026-09-nrc-lightning-talk)
 
 - 2026-04-16: [`vsp 0.1.4`](https://rohelab.github.io/vsp/) is on CRAN. This update adds several heuristic localization metrics useful for investigating the quality of estimated embeddings.
 
@@ -25,7 +28,7 @@ My curriculum vitae is available [here](academic-cv.pdf). I also keep [Google Sc
 
 - 2026-04-11: I presented on [Spectral Estimation and Trait Selection for Aggregated Relational Data](https://github.com/alexpghayes/2026-04-11-nsec-2026) at Network Science in Economics 2026.
 
-- 2026-04-09: I have a new working paper [Estimating peer effects in noisy, low-rank networks via network smoothing](./papers/latent-contagion-wp.pdf) with Keith Levin.
+- 2026-04-09: I have a new working paper [Estimating peer effects in noisy, low-rank networks via network smoothing](https://arxiv.org/abs/2605.03204) with Keith Levin.
 
 - 2025-12-15: I presented [Minimax rates for the linear-in-means model reveal an identifiability-estimability gap](https://github.com/alexpghayes/2025-12-15-cmstat) virtually at CMStatistics 2025.
 
@@ -45,9 +48,10 @@ Material from older talks, presentations, posters, etc, can be found [on my Gith
 
 1. [Welcome to the tidyverse](https://joss.theoj.org/papers/10.21105/joss.01686). Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, **Alex Hayes**, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. *Journal of Open Source Software*. 2019. [website](https://www.tidyverse.org/)
 
+<!-- 
 ## statistical consulting
 
-At Stanford, I do some informal statistical consulting in the economics department, especially for grad students. [Learn more](./consulting/).
+At Stanford, I do some informal statistical consulting in the economics department, especially for grad students. [Learn more](./consulting/). -->
 
 ## blog
 
