@@ -2,27 +2,13 @@
   {
     "listing": "/posts.html",
     "items": [
-      "/post/epistemic-caution/index.html",
       "/post/making-sense-of-academic-statistics/index.html",
-      "/post/what-recommender-systems-teach-us-about-writing-reviews/index.html",
-      "/post/multilateration/index.html",
-      "/post/tooling/index.html",
-      "/post/the-joy-of-the-academic-tradition/index.html",
       "/post/what-i-want-from-academic-code/index.html",
-      "/post/power-users/index.html",
       "/post/2024-06-09_repeated-lotteries/index.html",
-      "/post/xxxx-xx-xx_dunning-kruger/index.html",
-      "/post/xxxx-xx-xx_a-cocktail-data-analysis/index.html",
       "/post/2023-12-20_getting-statistics-help/index.html",
       "/post/2023-12-12-accumulation-of-risk/index.html",
-      "/post/xxxx-xx-xx_getting-help-with-open-source-software/index.html",
       "/post/2022-11-02-hypothesis-testing-by-example/index.html",
       "/post/2022-10-30-intel-mkl-data-race/index.html",
-      "/post/xxxx-xx-xx-checking-convergence-with-simulations/index.html",
-      "/post/xxxx-xx-xx_frequentists-are-possibilistic-bayesians/index.html",
-      "/post/incoherent-statistical-stances-on-realism/index.html",
-      "/post/xxxx-xx-xx_three-design-patterns-for-statistical-software/index.html",
-      "/post/xxxx-xx-xx_marginal-means-and-linear-models/index.html",
       "/post/2021-03-28_many-models-workflows-in-python-part-ii/index.html",
       "/post/2020-08-25_many-models-workflows-in-python-part-i/index.html",
       "/post/2020-05-04_using-the-data-twice/index.html",
@@ -42,7 +28,6 @@
       "/post/2018-05-16_comparing-runs-with-riegels-formula-and-gams/index.html",
       "/post/2018-05-03_performance-assessments-via-bootstrap-variants/index.html",
       "/post/2017-10-18_gradient-checks/index.html",
-      "/post/xxxx-xx-xx_citing-r-packages/index.html",
       "/post/2017-08-07_gentle-tidy-eval/index.html"
     ]
   }
