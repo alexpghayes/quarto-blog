@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,10 +76,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-975e726794ce811e14261b5ab5acfd7c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0732fb268a8da304e632f8e6aea0557a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -259,21 +259,21 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>starwars</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 87 × 14
-   name        height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
-   &lt;chr&gt;        &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
- 1 Luke Skywa…    172    77 blond   fair    blue       19   male  mascu… Tatooi…
- 2 C-3PO          167    75 &lt;NA&gt;    gold    yellow    112   none  mascu… Tatooi…
- 3 R2-D2           96    32 &lt;NA&gt;    white,… red        33   none  mascu… Naboo  
- 4 Darth Vader    202   136 none    white   yellow     41.9 male  mascu… Tatooi…
- 5 Leia Organa    150    49 brown   light   brown      19   fema… femin… Aldera…
- 6 Owen Lars      178   120 brown,… light   blue       52   male  mascu… Tatooi…
- 7 Beru White…    165    75 brown   light   blue       47   fema… femin… Tatooi…
- 8 R5-D4           97    32 &lt;NA&gt;    white,… red        NA   none  mascu… Tatooi…
- 9 Biggs Dark…    183    84 black   light   brown      24   male  mascu… Tatooi…
-10 Obi-Wan Ke…    182    77 auburn… fair    blue-g…    57   male  mascu… Stewjon
-# … with 77 more rows, 4 more variables: species &lt;chr&gt;, films &lt;list&gt;,
-#   vehicles &lt;list&gt;, starships &lt;list&gt;, and abbreviated variable names
-#   ¹​hair_color, ²​skin_color, ³​eye_color, ⁴​birth_year, ⁵​homeworld</code></pre>
+   name     height  mass hair_color skin_color eye_color birth_year sex   gender
+   &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+ 1 Luke Sk…    172    77 blond      fair       blue            19   male  mascu…
+ 2 C-3PO       167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
+ 3 R2-D2        96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
+ 4 Darth V…    202   136 none       white      yellow          41.9 male  mascu…
+ 5 Leia Or…    150    49 brown      light      brown           19   fema… femin…
+ 6 Owen La…    178   120 brown, gr… light      blue            52   male  mascu…
+ 7 Beru Wh…    165    75 brown      light      blue            47   fema… femin…
+ 8 R5-D4        97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
+ 9 Biggs D…    183    84 black      light      brown           24   male  mascu…
+10 Obi-Wan…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+# ℹ 77 more rows
+# ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
 </div>
 <section id="using-strings-to-refer-to-column-names" class="level2">
@@ -287,21 +287,21 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="sc">!!!</span>groups) <span class="sc">%&gt;%</span>               <span class="co"># use list of symbols with !!!</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_mass =</span> <span class="fu">mean</span>(<span class="sc">!!</span>mass))    <span class="co"># use single symbol with !!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 58 × 3
+<pre><code># A tibble: 57 × 3
 # Groups:   homeworld [49]
    homeworld      species   avg_mass
    &lt;chr&gt;          &lt;chr&gt;        &lt;dbl&gt;
  1 Alderaan       Human         NA  
  2 Aleen Minor    Aleena        15  
  3 Bespin         Human         79  
- 4 Bestine IV     Human        110  
+ 4 Bestine IV     &lt;NA&gt;         110  
  5 Cato Neimoidia Neimodian     90  
  6 Cerea          Cerean        82  
  7 Champala       Chagrian      NA  
  8 Chandrila      Human         NA  
  9 Concord Dawn   Human         79  
 10 Corellia       Human         78.5
-# … with 48 more rows</code></pre>
+# ℹ 47 more rows</code></pre>
 </div>
 </div>
 <p>The usage <code>mass &lt;- rlang::sym("mass")</code> is <a href="https://twitter.com/hadleywickham/status/885993307968593920">Hadley approved</a>:</p>
@@ -315,21 +315,21 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_by</span>(starwars, <span class="fu">c</span>(<span class="st">"homeworld"</span>, <span class="st">"species"</span>), <span class="st">"mass"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 58 × 3
+<pre><code># A tibble: 57 × 3
 # Groups:   homeworld [49]
    homeworld      species   summarized_mean
    &lt;chr&gt;          &lt;chr&gt;               &lt;dbl&gt;
  1 Alderaan       Human                NA  
  2 Aleen Minor    Aleena               15  
  3 Bespin         Human                79  
- 4 Bestine IV     Human               110  
+ 4 Bestine IV     &lt;NA&gt;                110  
  5 Cato Neimoidia Neimodian            90  
  6 Cerea          Cerean               82  
  7 Champala       Chagrian             NA  
  8 Chandrila      Human                NA  
  9 Concord Dawn   Human                79  
 10 Corellia       Human                78.5
-# … with 48 more rows</code></pre>
+# ℹ 47 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -342,14 +342,13 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(starwars, <span class="sc">!!</span>homeworld <span class="sc">==</span> <span class="st">"Alderaan"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 14
-  name         height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
-  &lt;chr&gt;         &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
-1 Leia Organa     150    49 brown   light   brown        19 fema… femin… Aldera…
-2 Bail Presto…    191    NA black   tan     brown        67 male  mascu… Aldera…
-3 Raymus Anti…    188    79 brown   light   brown        NA male  mascu… Aldera…
-# … with 4 more variables: species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;,
-#   starships &lt;list&gt;, and abbreviated variable names ¹​hair_color, ²​skin_color,
-#   ³​eye_color, ⁴​birth_year, ⁵​homeworld</code></pre>
+  name      height  mass hair_color skin_color eye_color birth_year sex   gender
+  &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 Leia Org…    150    49 brown      light      brown             19 fema… femin…
+2 Bail Pre…    191    NA black      tan        brown             67 male  mascu…
+3 Raymus A…    188    79 brown      light      brown             NA male  mascu…
+# ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
 </div>
 <p>We can also use <code>UQ</code> and <code>UQS</code> directly to be explicit about what we’re unquoting.</p>
@@ -357,43 +356,42 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(starwars, <span class="fu">UQ</span>(homeworld) <span class="sc">==</span> <span class="st">"Alderaan"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 14
-  name         height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
-  &lt;chr&gt;         &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
-1 Leia Organa     150    49 brown   light   brown        19 fema… femin… Aldera…
-2 Bail Presto…    191    NA black   tan     brown        67 male  mascu… Aldera…
-3 Raymus Anti…    188    79 brown   light   brown        NA male  mascu… Aldera…
-# … with 4 more variables: species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;,
-#   starships &lt;list&gt;, and abbreviated variable names ¹​hair_color, ²​skin_color,
-#   ³​eye_color, ⁴​birth_year, ⁵​homeworld</code></pre>
+  name      height  mass hair_color skin_color eye_color birth_year sex   gender
+  &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 Leia Org…    150    49 brown      light      brown             19 fema… femin…
+2 Bail Pre…    191    NA black      tan        brown             67 male  mascu…
+3 Raymus A…    188    79 brown      light      brown             NA male  mascu…
+# ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
 </div>
 </section>
 <section id="creating-non-standard-functions" class="level2">
 <h2 class="anchored" data-anchor-id="creating-non-standard-functions">Creating non-standard functions</h2>
-<p>Sometimes it is nice to write functions that use accept non-standard inputs, like <code>dplyr</code> verbs. For example, we might want to write a function with the same effect as</p>
+<p>Sometimes it is nice to write functions that accept non-standard inputs, like <code>dplyr</code> verbs. For example, we might want to write a function with the same effect as</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(homeworld, species) <span class="sc">%&gt;%</span> </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_mass =</span> <span class="fu">mean</span>(mass))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 58 × 3
+<pre><code># A tibble: 57 × 3
 # Groups:   homeworld [49]
    homeworld      species   avg_mass
    &lt;chr&gt;          &lt;chr&gt;        &lt;dbl&gt;
  1 Alderaan       Human         NA  
  2 Aleen Minor    Aleena        15  
  3 Bespin         Human         79  
- 4 Bestine IV     Human        110  
+ 4 Bestine IV     &lt;NA&gt;         110  
  5 Cato Neimoidia Neimodian     90  
  6 Cerea          Cerean        82  
  7 Champala       Chagrian      NA  
  8 Chandrila      Human         NA  
  9 Concord Dawn   Human         79  
 10 Corellia       Human         78.5
-# … with 48 more rows</code></pre>
+# ℹ 47 more rows</code></pre>
 </div>
 </div>
-<p>To this we need to capture our input in <code>quosures</code> with <code>quo</code> and <code>quos</code> when programming interactively.</p>
+<p>To do this we need to capture our input in <code>quosures</code> with <code>quo</code> and <code>quos</code> when programming interactively.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">quos</span>(homeworld, species)   <span class="co"># capture a list of variables as raw input</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mass <span class="ot">&lt;-</span> <span class="fu">quo</span>(mass)                    <span class="co"># capture a single variable as raw input</span></span>
@@ -402,21 +400,21 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="sc">!!!</span>groups) <span class="sc">%&gt;%</span>            <span class="co"># use !!! to access variables from `quos`</span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_mass =</span> <span class="fu">sum</span>(<span class="sc">!!</span>mass))  <span class="co"># use !! to access the variable in `quo`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 58 × 3
+<pre><code># A tibble: 57 × 3
 # Groups:   homeworld [49]
    homeworld      species   avg_mass
    &lt;chr&gt;          &lt;chr&gt;        &lt;dbl&gt;
  1 Alderaan       Human           NA
  2 Aleen Minor    Aleena          15
  3 Bespin         Human           79
- 4 Bestine IV     Human          110
+ 4 Bestine IV     &lt;NA&gt;           110
  5 Cato Neimoidia Neimodian       90
  6 Cerea          Cerean          82
  7 Champala       Chagrian        NA
  8 Chandrila      Human           NA
  9 Concord Dawn   Human           79
 10 Corellia       Human          157
-# … with 48 more rows</code></pre>
+# ℹ 47 more rows</code></pre>
 </div>
 </div>
 <p>There’s some nice symmetry here in that we unwrap both <code>rlang::sym</code> and <code>quo</code> with <code>!!</code> and both <code>rlang::syms</code> and <code>quos</code> with <code>!!!</code>.</p>
@@ -432,7 +430,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">summ =</span> <span class="fu">sum</span>(<span class="sc">!!</span>to_summarize))   <span class="co"># unwrap enquo with !!</span></span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Now our function call is non-standardized. Note that <code>quos</code> can capture an arbitrary number of arguments, like we have here. So both of the following calls are valid</p>
+<p>Now our function call is non-standard. Note that <code>quos</code> can capture an arbitrary number of arguments, like we have here. So both of the following calls are valid:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_by</span>(starwars, mass, homeworld)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -449,25 +447,25 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
  8 Chandrila         NA
  9 Concord Dawn      79
 10 Corellia         157
-# … with 39 more rows</code></pre>
+# ℹ 39 more rows</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_by</span>(starwars, mass, homeworld, species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 58 × 3
+<pre><code># A tibble: 57 × 3
 # Groups:   homeworld [49]
    homeworld      species    summ
    &lt;chr&gt;          &lt;chr&gt;     &lt;dbl&gt;
  1 Alderaan       Human        NA
  2 Aleen Minor    Aleena       15
  3 Bespin         Human        79
- 4 Bestine IV     Human       110
+ 4 Bestine IV     &lt;NA&gt;        110
  5 Cato Neimoidia Neimodian    90
  6 Cerea          Cerean       82
  7 Champala       Chagrian     NA
  8 Chandrila      Human        NA
  9 Concord Dawn   Human        79
 10 Corellia       Human       157
-# … with 48 more rows</code></pre>
+# ℹ 47 more rows</code></pre>
 </div>
 </div>
 <p>For more details, see the <a href="http://dplyr.tidyverse.org/articles/programming.html">programming with <code>dplyr</code> vignette</a>.</p>

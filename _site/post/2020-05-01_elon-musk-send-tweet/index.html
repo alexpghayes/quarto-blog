@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -60,10 +60,10 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-975e726794ce811e14261b5ab5acfd7c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0732fb268a8da304e632f8e6aea0557a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -236,10 +236,10 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 
 <p>At 2020-05-01 15:11:26 UTC Elon Musk tweeted</p>
 <p><img src="musk.png" class="img-fluid" alt="Screenshot of Elon Musk's tweet 'Tesla stock price is too high imo' and a response."></p>
-<p>and Tesla stock started tanking. I find this absolutely hilarious, especially since he did this a while back and got fined like several million dollars for tinkering with market or something illegal like that.</p>
-<p>Anyway, I asked myself: can we causally attribute Tesla tanking stock price to this tweet?</p>
+<p>and Tesla stock started tanking. I find this absolutely hilarious, especially since he did this a while back and got fined like several million dollars for tinkering with the market or something illegal like that.</p>
+<p>Anyway, I asked myself: can we causally attribute Tesla’s tanking stock price to this tweet?</p>
 <p>The answer is yes, yes, we absolutely can. In the following I use a synthetic control approach to estimate the causal impact of Musk’s tweet on the Tesla stock price (God I hate that I just wrote that sentence). You can read more about this approach in <span class="citation" data-cites="brodersen_inferring_2015">Brodersen et al. (<a href="#ref-brodersen_inferring_2015" role="doc-biblioref">2015</a>)</span>.</p>
-<p>I used the S&amp;P500 as my synthetic control and pull 1-minute resolution ticker data using Tiingo with the <code>riingo</code> package, then blindly shoved the data into <code>CausalImpact</code>. We get the following:</p>
+<p>I used the S&amp;P500 as my synthetic control and pulled 1-minute resolution ticker data using Tiingo with the <code>riingo</code> package, then blindly shoved the data into <code>CausalImpact</code>. We get the following:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -250,7 +250,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 </div>
 <p>In the first panel, the blue is Tesla stock price as predicted by the S&amp;P 500 based on a Bayesian state space model, and the black is the actual Tesla stock price. Elon tweets at the dashed vertical line. You can see that before the tweet, Tesla stock prices are well-predicted by the S&amp;P 500, and afterwards, the Tesla stock drops to prices lower than predicted based on the S&amp;P 500. The current best estimate is that the tweet is responsible for about a $40 drop in the price of Tesla, although there is clearly a fair amount of associated uncertainty in this.</p>
-<p>Of course, you probably shouldn’t believe these estimates since I didn’t generate them with neural net.</p>
+<p>Of course, you probably shouldn’t believe these estimates since I didn’t generate them with a neural net.</p>
 <p>Anyway, I’m gonna go finish a topology takehome now, and try to tank my grade by less than Elon tanked his stock. In the meantime, you should all read <span class="citation" data-cites="brodersen_inferring_2015">Brodersen et al. (<a href="#ref-brodersen_inferring_2015" role="doc-biblioref">2015</a>)</span>, it’s great. Everyone else, continue shitposting. Well, unless you’re Elon, in which case, maybe don’t.</p>
 <p><strong>Update:</strong> Fabian Dablander has a nice <a href="https://fabiandablander.com/r/Causal-Doge.html">followup post</a> about Elon’s tweets and Dogecoin prices that discusses synthetic control in more detail.</p>
 

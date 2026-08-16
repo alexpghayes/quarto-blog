@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,10 +76,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-975e726794ce811e14261b5ab5acfd7c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0732fb268a8da304e632f8e6aea0557a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -280,8 +280,8 @@ window.Quarto = {
   <li><a href="#welcome-to-testing-hell" id="toc-welcome-to-testing-hell" class="nav-link" data-scroll-target="#welcome-to-testing-hell">Welcome to testing hell!</a></li>
   <li><a href="#coda" id="toc-coda" class="nav-link" data-scroll-target="#coda">Coda</a>
   <ul class="collapse">
-  <li><a href="#follow-up-challenge-multiple-testing" id="toc-follow-up-challenge-multiple-testing" class="nav-link" data-scroll-target="#follow-up-challenge-multiple-testing">Follow up challenge: multiple testing</a></li>
-  <li><a href="#followup-challenge-unknown-probability-of-heads" id="toc-followup-challenge-unknown-probability-of-heads" class="nav-link" data-scroll-target="#followup-challenge-unknown-probability-of-heads">Followup challenge: unknown probability of heads</a></li>
+  <li><a href="#follow-up-challenge-multiple-testing" id="toc-follow-up-challenge-multiple-testing" class="nav-link" data-scroll-target="#follow-up-challenge-multiple-testing">Follow-up challenge: multiple testing</a></li>
+  <li><a href="#follow-up-challenge-unknown-probability-of-heads" id="toc-follow-up-challenge-unknown-probability-of-heads" class="nav-link" data-scroll-target="#follow-up-challenge-unknown-probability-of-heads">Follow-up challenge: unknown probability of heads</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/2022-11-02-hypothesis-testing-by-example/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -372,11 +372,11 @@ Figure&nbsp;1: Sequences A, B, C, D, E and F. Only one sequence was generated ra
 <ul>
 <li><code>A</code> always alternates between heads and tails, on every single flip</li>
 <li><code>E</code> stays heads for a long time, then switches to tails for a long time, and then the cycle repeats</li>
-<li>All of the other cycles switch back and forth between heads and tails fairly often, with some long streaks of all heads or all tails as well</li>
+<li>All of the other sequences switch back and forth between heads and tails fairly often, with some long streaks of all heads or all tails as well</li>
 </ul>
 <p>Immediately I think I can rule out <code>A</code> and <code>E</code>, because each flip appears to depend on the previous flips, and this shouldn’t happen when I repeatedly flip a fair coin. Hopefully, I can develop a test later on that will capture this intuition more quantitatively, but for now, I just rule out <code>A</code> and <code>E</code>.</p>
 <p>There are some other patterns that look suspicious to me, but I’ve previously learned that my intuition about which sequences are random and which aren’t isn’t very good. Part of the challenge here is that I am mainly looking at non-random sequences in <a href="#fig-observed" class="quarto-xref">Figure&nbsp;1</a>, and this doesn’t tell me very much about which patterns are surprising under a random model.</p>
-<p>So next I generate six sequences by repeatedly flipping a fair coin (from this point onward, when I refer to a “random sequence” or “a sequence from the null model”, I mean sequence of heads and tails generated by repeatedly flipping a fair coin).</p>
+<p>So next I generate six sequences by repeatedly flipping a fair coin (from this point onward, when I refer to a “random sequence” or “a sequence from the null model”, I mean a sequence of heads and tails generated by repeatedly flipping a fair coin).</p>
 <div class="cell page-columns page-full">
 <details class="code-fold">
 <summary>Code</summary>
@@ -409,7 +409,7 @@ Figure&nbsp;1: Sequences A, B, C, D, E and F. Only one sequence was generated ra
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(name)) <span class="sc">+</span></span>
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Sequences of coin flips"</span>,</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Every sequence was generated generated from fair and independent coin flips"</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Every sequence was generated from fair and independent coin flips"</span>,</span>
 <span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Each sequence consists of 200 results, either 'heads' or 'tails'"</span></span>
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
@@ -503,7 +503,7 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">expected =</span> <span class="fu">mean</span>(null_distribution),</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">observed_quantile =</span> <span class="fu">map_dbl</span>(statistic, \(stat) <span class="fu">ecdf</span>(null_distribution)(stat)),</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_value =</span> <span class="fu">pmin</span>(observed_quantile, <span class="dv">1</span> <span class="sc">-</span> observed_quantile),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_value =</span> <span class="fu">pmin</span>(<span class="dv">1</span>, <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pmin</span>(observed_quantile, <span class="dv">1</span> <span class="sc">-</span> observed_quantile)),</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">likelihood =</span> <span class="fl">0.5</span><span class="sc">^</span><span class="dv">200</span>,</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_likelihood =</span> <span class="dv">200</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fl">0.5</span>)</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  )</span>
@@ -1479,23 +1479,23 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_center" headers="name">Seq A</td>
-<td class="gt_row gt_right" headers="p_value">0.349</td>
+<td class="gt_row gt_right" headers="p_value">0.698</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_center" headers="name">Seq B</td>
-<td class="gt_row gt_right" headers="p_value">0.349</td>
+<td class="gt_row gt_right" headers="p_value">0.698</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_center" headers="name">Seq C</td>
-<td class="gt_row gt_right" headers="p_value">0.484</td>
+<td class="gt_row gt_right" headers="p_value">0.968</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_center" headers="name">Seq D</td>
-<td class="gt_row gt_right" headers="p_value">0.466</td>
+<td class="gt_row gt_right" headers="p_value">0.932</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_center" headers="name">Seq E</td>
-<td class="gt_row gt_right" headers="p_value">0.082</td>
+<td class="gt_row gt_right" headers="p_value">0.164</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_center" headers="name">Seq F</td>
@@ -1508,7 +1508,7 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 </div>
 </div>
 <p>When the p-value is small, it means that the number of observed heads in a sequence is either much higher or much lower than typically seen in random sequences. In particular, a p-value of <span class="math inline">\(p\)</span> (which should always be between zero and one) means that random sequences had as many heads as the mystery sequence only <span class="math inline">\(p \cdot 100\%\)</span> of the time.</p>
-<p>Intuitively, small p-values indicate that data is not compatible with a given model. In this case, the very small p-value for sequence <span class="math inline">\(F\)</span> indicates that sequence <span class="math inline">\(F\)</span> is not compatible the random sequence model for coin flips. Sequences <span class="math inline">\(A, B, C, D\)</span> and to a lesser extent <span class="math inline">\(E\)</span> are all compatible with the random sequence model.</p>
+<p>Intuitively, small p-values indicate that data is not compatible with a given model. In this case, the very small p-value for sequence <span class="math inline">\(F\)</span> indicates that sequence <span class="math inline">\(F\)</span> is not compatible with the random sequence model for coin flips. Sequences <span class="math inline">\(A, B, C, D\)</span> and to a lesser extent <span class="math inline">\(E\)</span> are all compatible with the random sequence model.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1519,7 +1519,7 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If we stare at the p-values a little longer, we might be tempted to conclude that sequence <span class="math inline">\(C\)</span> is the most likely to be sampled from the random model, since it has the highest p-value. The intuition goes roughly like this: a low p-value tells us that it is improbable that the data <span class="math inline">\(X_1, ..., X_n\)</span> came from the null model. Therefore a high p-value tells us that is probable the data <span class="math inline">\(X_1, ..., X_n\)</span> came from the null model.</p>
+<p>If we stare at the p-values a little longer, we might be tempted to conclude that sequence <span class="math inline">\(C\)</span> is the most likely to be sampled from the random model, since it has the highest p-value. The intuition goes roughly like this: a low p-value tells us that it is improbable that the data <span class="math inline">\(X_1, ..., X_n\)</span> came from the null model. Therefore a high p-value tells us that it is probable that the data <span class="math inline">\(X_1, ..., X_n\)</span> came from the null model.</p>
 <p>This is a very common misconception, and if we are a little bit more careful in interpreting the p-value, we can see where it comes from, and also why this reasoning doesn’t quite work. A low p-value tells us that it is improbable that the <em>observed test statistic</em> <span class="math inline">\(T(X_1, ..., X_n)\)</span> would be observed by chance under the null model. The probability of seeing the test statistic is <em>not</em> the probability of seeing the data.</p>
 <p>The test statistic is one of many possible reductions of the data. Different test statistics can be used to examine the compatibility of the data with different aspects of the null model! One test statistic might have a small p-value, and a different test statistic might have a large p-value, <em>for the same data, under the same null hypothesis</em>. Because of this, statisticians often emphasize that we can never “accept” a null hypothesis; instead, we can only “reject” or “fail to reject” the null hypothesis. This is clunky English shorthand to remind us that p-values tell us about the probability of the test statistic, not the data proper.</p>
 <p>Because hypothesis tests function through a test statistic, we cannot use them to compare the relative probability of hypotheses. To make this slightly more concrete, let’s compute the probability of observing sequences <span class="math inline">\(A, B, C, D, E\)</span> and <span class="math inline">\(F\)</span> under the null model. This turns out to be <span class="math inline">\((1/2)^{200}\)</span> for every single sequence! Under the null model, every single sequence is equally likely!</p>
@@ -1541,7 +1541,7 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Similarly, if we compute the expected number of heads under the null model, we cannot conclude that sequence <span class="math inline">\(C\)</span> is the most likely. Knowing that a test statistic <span class="math inline">\(T\)</span> (the number of heads in a sequence) is close to its expectation (the average number of heads in null model) does not tell us about the probability of the full data under the null. It only tells us about head counts, and head counts do not fully characterize the data!</p>
+<p>Similarly, if we compute the expected number of heads under the null model, we cannot conclude that sequence <span class="math inline">\(C\)</span> is the most likely. Knowing that a test statistic <span class="math inline">\(T\)</span> (the number of heads in a sequence) is close to its expectation (the average number of heads in the null model) does not tell us about the probability of the full data under the null. It only tells us about head counts, and head counts do not fully characterize the data!</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -2130,11 +2130,11 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 </div>
 </div>
 </div>
-<p>Here it looks like the longest streak of heads in sequences <span class="math inline">\(A, B\)</span> and <span class="math inline">\(F\)</span> is too short, and the long sequence of heads in sequence <span class="math inline">\(E\)</span> is possibly too long. Let’s eliminate <span class="math inline">\(A, B, E\)</span> and <span class="math inline">\(F\)</span> for now and try figure out if <span class="math inline">\(C\)</span> or <span class="math inline">\(D\)</span> comes from the random sequence.</p>
+<p>Here it looks like the longest streak of heads in sequences <span class="math inline">\(A, B\)</span> and <span class="math inline">\(F\)</span> is too short, and the long sequence of heads in sequence <span class="math inline">\(E\)</span> is possibly too long. Let’s eliminate <span class="math inline">\(A, B, E\)</span> and <span class="math inline">\(F\)</span> for now and try to figure out if <span class="math inline">\(C\)</span> or <span class="math inline">\(D\)</span> comes from the random sequence.</p>
 </section>
 <section id="some-suspicious-patterns" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="some-suspicious-patterns">Some suspicious patterns</h2>
-<p>So now I go back to sequences <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> and stare at both of them for a while. I like thinking about streaks, because streaks encode dependence, testing for dependence across coin flips seems like a promising idea. Instead of considering the longest streak in the data, let’s consider the total number of streaks in each sequence. Coding this up and running the test yields the following results:</p>
+<p>So now I go back to sequences <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> and stare at both of them for a while. I like thinking about streaks, because streaks encode dependence; testing for dependence across coin flips seems like a promising idea. Instead of considering the longest streak in the data, let’s consider the total number of streaks in each sequence. Coding this up and running the test yields the following results:</p>
 <div class="cell page-columns page-full">
 <details class="code-fold">
 <summary>Code</summary>
@@ -2190,7 +2190,7 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 </section>
 <section id="welcome-to-testing-hell" class="level2">
 <h2 class="anchored" data-anchor-id="welcome-to-testing-hell">Welcome to testing hell!</h2>
-<p>This is a good moment to stop, look at all of our results so far, and decide which sequence you think is random. So far we have rejected every sequence! This suggests that we may have made some Type I errors. Are there any tests that you find dubious? Why might be they be misleading?</p>
+<p>This is a good moment to stop, look at all of our results so far, and decide which sequence you think is random. So far we have rejected every sequence! This suggests that we may have made some Type I errors. Are there any tests that you find dubious? Why might they be misleading?</p>
 <p>The fact that we have managed to reject all the sequences is a somewhat subtle issue. The gist is that our final test, the one using <code>HTHHHHHHTTTTTTHHHTTHTHHHHTTTH</code>, is not a particularly good test. This is because all random data has surprising variation. If you look at data, see something surprising, and then develop a hypothesis test to check if that surprising thing is indeed surprising, your number of false positives (Type I errors) will skyrocket. If you’re curious to understand this issue, I wrote a <a href="https://www.alexpghayes.com/post/2020-05-04_using-the-data-twice/">blog post</a> that goes into more detail.</p>
 <p>In the meantime, here are two questions worth some contemplation:</p>
 <ul>
@@ -2201,19 +2201,19 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <section id="coda" class="level2">
 <h2 class="anchored" data-anchor-id="coda">Coda</h2>
 <section id="follow-up-challenge-multiple-testing" class="level3">
-<h3 class="anchored" data-anchor-id="follow-up-challenge-multiple-testing">Follow up challenge: multiple testing</h3>
+<h3 class="anchored" data-anchor-id="follow-up-challenge-multiple-testing">Follow-up challenge: multiple testing</h3>
 <p>Overall, we did <span class="math inline">\(4 \cdot 6 = 24\)</span> total hypothesis tests. Suppose we did all tests at the <span class="math inline">\(\alpha = 0.05\)</span> level, such that each test had probability <span class="math inline">\(\alpha\)</span> of type I error.</p>
 <ul>
-<li><p>Collectively, across all of our tests, what is the chance of at least one false positive result? Does it make sense to assume that tests results are independent?<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p></li>
+<li><p>Collectively, across all of our tests, what is the chance of at least one false positive result? Does it make sense to assume that test results are independent?<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p></li>
 <li><p>Does the number of tests seem like a problem to you? Can you think of any solutions?</p></li>
 </ul>
 </section>
-<section id="followup-challenge-unknown-probability-of-heads" class="level3">
-<h3 class="anchored" data-anchor-id="followup-challenge-unknown-probability-of-heads">Followup challenge: unknown probability of heads</h3>
+<section id="follow-up-challenge-unknown-probability-of-heads" class="level3">
+<h3 class="anchored" data-anchor-id="follow-up-challenge-unknown-probability-of-heads">Follow-up challenge: unknown probability of heads</h3>
 <p>One of the six sequences was generated by repeatedly flipping a weighted coin, with probability <span class="math inline">\(p \in (0, 1)\)</span> of heads, where <span class="math inline">\(p\)</span> is unknown.</p>
 <ul>
 <li><p>Do you have any suspicions about which sequence it was? Why?</p></li>
-<li><p>Can you still use a similar approach to figure out find the sequence from a weighted coin? Why or why not?</p></li>
+<li><p>Can you still use a similar approach to find the sequence from a weighted coin? Why or why not?</p></li>
 </ul>
 
 
@@ -2224,7 +2224,7 @@ Figure&nbsp;2: Six sequences sampled by repeatedly flipping a fair coin, for com
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>If you want to treat tests as dependent, you may not be able to calculate the precise probability of one or more false positive, but you can bound it using Fréchet’s inequality: <span class="math inline">\(P(A \text{ or } B) \le P(A) + P(B)\)</span> for possibly dependent events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>If you want to treat tests as dependent, you may not be able to calculate the precise probability of one or more false positives, but you can bound it using Boole’s inequality (the union bound): <span class="math inline">\(P(A \text{ or } B) \le P(A) + P(B)\)</span> for possibly dependent events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script>

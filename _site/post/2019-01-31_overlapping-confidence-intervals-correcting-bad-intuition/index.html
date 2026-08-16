@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -41,10 +41,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-975e726794ce811e14261b5ab5acfd7c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0732fb268a8da304e632f8e6aea0557a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -282,7 +282,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>and do something similar. While this procedure is intuitive satisfying, you should avoid it because it doesn’t work.</p>
+<p>and do something similar. While this procedure is intuitively satisfying, you should avoid it because it doesn’t work.</p>
 </section>
 <section id="type-i-error-rate-for-a-simple-case" class="level2">
 <h2 class="anchored" data-anchor-id="type-i-error-rate-for-a-simple-case">Type I error rate for a simple case</h2>
@@ -355,7 +355,7 @@ P(\text{type I error})
   &amp;= \alpha
 \end{align}\]</span></p>
 <p>So if we drop the <span class="math inline">\(\sqrt 2\)</span> term, we get what we want!</p>
-<p>In practice, though, the <span class="math inline">\(\sqrt 2\)</span> is still there, and we have this expression <span class="math inline">\(2 \cdot (1 - \Phi(\sqrt 2 \cdot \color{purple}{z_{1 - \alpha / 2}} ))\)</span>, which is a bit hard to parse. To get an idea of what this looks like, I’ve plotted <span class="math inline">\(\alpha\)</span> (used to construct the confidence intervals for mean) against the actual type I error:</p>
+<p>In practice, though, the <span class="math inline">\(\sqrt 2\)</span> is still there, and we have this expression <span class="math inline">\(2 \cdot (1 - \Phi(\sqrt 2 \cdot \color{purple}{z_{1 - \alpha / 2}} ))\)</span>, which is a bit hard to parse. To get an idea of what this looks like, I’ve plotted <span class="math inline">\(\alpha\)</span> (used to construct the confidence intervals for the mean) against the actual type I error:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -371,8 +371,8 @@ P(\text{type I error})
 <h2 class="anchored" data-anchor-id="what-went-wrong">What went wrong</h2>
 <p>At first, your intuition may suggest that this confidence interval thing is a reasonable testing procedure, but clearly something is wrong with it. Where is our intuition leading us astray?</p>
 <p>Let’s go back to that missing factor of <span class="math inline">\(\sqrt 2\)</span>.</p>
-<p>Remember that we found the variance <span class="math inline">\(\color{blue}{\bar y}  - \color{blue}{\bar x}\)</span> using the rule <span class="math inline">\(\mathbb{V}(a \cdot X + b \cdot Y) = a^2 \cdot \mathbb{V}(X) + b^2 \cdot \mathbb{V}(Y)\)</span> and it was <span class="math inline">\(2 \cdot \color{green} {\sigma^2 \over n}\)</span>. To get the standard error, we take the square root and get <span class="math inline">\(\sqrt 2 \cdot \color{green} {\sigma \over \sqrt n}\)</span>.</p>
-<p>But if we had accidentally have worked on the standard deviation scale instead, and mistakenly assumed</p>
+<p>Remember that we found the variance of <span class="math inline">\(\color{blue}{\bar y}  - \color{blue}{\bar x}\)</span> using the rule <span class="math inline">\(\mathbb{V}(a \cdot X + b \cdot Y) = a^2 \cdot \mathbb{V}(X) + b^2 \cdot \mathbb{V}(Y)\)</span> and it was <span class="math inline">\(2 \cdot \color{green} {\sigma^2 \over n}\)</span>. To get the standard error, we take the square root and get <span class="math inline">\(\sqrt 2 \cdot \color{green} {\sigma \over \sqrt n}\)</span>.</p>
+<p>But if we had accidentally worked on the standard deviation scale instead, and mistakenly assumed</p>
 <p><span class="math display">\[\begin{align}
 \text{se}(a \cdot X + b \cdot Y) = a^2 \cdot \text{se}(X) + b^2 \cdot \text{se}(Y) \qquad \text{this is wrong!}
 \end{align}\]</span></p>
@@ -394,7 +394,7 @@ P(\text{type I error})
 <blockquote class="blockquote">
 <p><strong>Left as an exercise for the reader</strong>: A coworker asked me, “If the individual confidence intervals don’t tell you whether the difference is (statistically) significant or not, then why do we make all these plots with the two standard errors?” … Develop an answer that (a) isn’t insulting to non-statisticians and (b) maintains hope for the future of the use of statistics by non-statisticians.</p>
 </blockquote>
-<p>In future posts I plan build off this idea and explore statistics as a primarily sociological problem.</p>
+<p>In future posts I plan to build off this idea and explore statistics as a primarily sociological problem.</p>
 <p><strong>Correction</strong>: Originally this post used <span class="math inline">\(\color{purple}{t_{1 - \alpha / 2, \, n-1}}\)</span>, but <span class="math inline">\(\color{purple}{z_{1 - \alpha / 2}}\)</span> is the appropriate quantile for the sampling distribution of <span class="math inline">\(\color{blue}{\bar y}  - \color{blue}{\bar x}\)</span>.</p>
 
 
@@ -404,7 +404,7 @@ P(\text{type I error})
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>This is actually a bad example because OLS estimates for regression coefficients are correlated. A better example would be plotting confidence intervals for independent groups means like you get from classic cross-sectional experimental designs.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>This is actually a bad example because OLS estimates for regression coefficients are correlated. A better example would be plotting confidence intervals for independent group means like you get from classic cross-sectional experimental designs.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script>

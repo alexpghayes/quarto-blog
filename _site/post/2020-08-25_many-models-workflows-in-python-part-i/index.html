@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,10 +76,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-975e726794ce811e14261b5ab5acfd7c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0732fb268a8da304e632f8e6aea0557a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -328,12 +328,12 @@ window.Quarto = {
 <p>Note that steps (2) and (3) require iteration over many models. In functional languages, <code>map</code>-style operations are a natural (and easily parallelizable!) way to do this; in Python we can use list-comprehensions.</p>
 <p>Another innovation in this workflow came from standardizing step (3), where we extract information from the models into a new column of the dataframe. A big issue that we can run into here is that when we extract information from the model object, it can have an inconvenient type that is hard to put in a dataframe column. This may seem esoteric but it turns out to matter a lot more than you’d expect.</p>
 <p>David Robinson in his <code>broom</code> package proposed a solution that is increasingly the standard within the R community<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. The idea is to create special getter methods for model objects that always return information in consistently formatted data frames. For each model object, we get a data frame with information. Since there are many model objects, we end up with a column of dataframes, which we then flatten.</p>
-<p>There has been a lot of pushback around the idea of a column of dataframes with the Python community, largely on the basis that it is not a performant data structure<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. This misses the point. The compute time in these workflows comes from model fitting, and afterwards we just want to keep track of things<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
+<p>There has been a lot of pushback around the idea of a column of dataframes with the Python community, largely on the basis that it is not a performant data structure<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. I think this concern is somewhat beside the point here. The compute time in these workflows comes from model fitting, and afterwards we just want to keep track of things<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
 <p>Anyway, there’s a lot more to say about the workflow conceptually, but for now, it is time to show some code and see how things work in practice. For this post, I am going to recreate the analysis that Hadley does in his linked presentation above, which makes use of the <a href="https://pypi.org/project/gapminder/">gapminder</a> data. The gapminder data consists of life expectancies for 142 counties, reported every 5 years from 1952 to 2007.</p>
 </section>
 <section id="setting-the-scene" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="setting-the-scene">Setting the scene</h2>
-<div id="cell-1" class="cell" data-execution_count="1">
+<div id="cell-1" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -345,20 +345,29 @@ window.Quarto = {
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>gapminder <span class="op">=</span> pd.read_csv(<span class="st">'gapminder.csv'</span>)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>gapminder.index.name <span class="op">=</span> <span class="st">'index'</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>gapminder</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 
 
 <table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th">row_index</th>
+<th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">country</th>
 <th data-quarto-table-cell-role="th">continent</th>
 <th data-quarto-table-cell-role="th">year</th>
 <th data-quarto-table-cell-role="th">lifeExp</th>
 <th data-quarto-table-cell-role="th">pop</th>
 <th data-quarto-table-cell-role="th">gdpPercap</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">index</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
 </tr>
 </thead>
 <tbody>
@@ -469,7 +478,7 @@ window.Quarto = {
 </div>
 </div>
 <p>To get a feel for the data, lets plot the life expectancy of each country over time, facetting by continent<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
-<div id="cell-3" class="cell page-columns page-full" data-execution_count="2">
+<div id="cell-3" class="cell page-columns page-full" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> sns.FacetGrid(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>gapminder,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">'continent'</span>,</span>
@@ -493,7 +502,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="step-1-specifying-models-to-fit">Step 1: specifying models to fit</h2>
 <p>Following Hadley’s presentation, suppose we would like to summarize the trend for each country by fitting a linear regression to the data from each country. So we have a correspondence 1 model ~ data from 1 country, and want to set up our data frame so that each row corresponds to data from a single country.</p>
 <p><code>groupby()</code> plus a list-comprehension handles this nicely, leveraging the fact that <code>gapminder.groupby('country')</code> is an iterable. In R, you could also use <code>group_by()</code> for this step, or additionally <code>nest()</code> or <code>rowwise()</code>, two <code>tidyverse</code> specification abstractions.</p>
-<div id="cell-5" class="cell page-columns page-full" data-execution_count="3">
+<div id="cell-5" class="cell page-columns page-full" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this works because grouped dataframes in pandas are iterable</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># and because you can pretty much treat series objects like</span></span>
@@ -507,15 +516,19 @@ window.Quarto = {
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># the downside of putting weird stuff into pandas dataframes is that</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># the dataframes print poorly</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>models</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display column-page" data-execution_count="3">
+<div class="cell-output cell-output-display column-page" data-execution_count="16">
 <div>
 
 
 <table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th">row_index</th>
+<th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">data</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">country</th>
+<th data-quarto-table-cell-role="th"></th>
 </tr>
 </thead>
 <tbody>
@@ -525,19 +538,19 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Albania</th>
-<td>country continent year lifeExp pop ...</td>
+<td>country continent year lifeExp p...</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Algeria</th>
-<td>country continent year lifeExp pop...</td>
+<td>country continent year lifeExp ...</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Angola</th>
-<td>country continent year lifeExp pop ...</td>
+<td>country continent year lifeExp p...</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Argentina</th>
-<td>country continent year lifeExp p...</td>
+<td>country continent year lifeExp ...</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">...</th>
@@ -545,11 +558,11 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Vietnam</th>
-<td>country continent year lifeExp p...</td>
+<td>country continent year lifeExp ...</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">West Bank and Gaza</th>
-<td>country continent year life...</td>
+<td>country continent year lif...</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Yemen, Rep.</th>
@@ -557,7 +570,7 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Zambia</th>
-<td>country continent year lifeExp po...</td>
+<td>country continent year lifeExp p...</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Zimbabwe</th>
@@ -574,7 +587,7 @@ window.Quarto = {
 <section id="step-2-iterative-model-fitting" class="level2">
 <h2 class="anchored" data-anchor-id="step-2-iterative-model-fitting">Step 2: iterative model fitting</h2>
 <p>Now we need to do the actual model fitting. My preferred approach is to use list-comprehensions.</p>
-<div id="cell-7" class="cell" data-execution_count="4">
+<div id="cell-7" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> country_model(df):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> smf.ols(<span class="st">'lifeExp ~ year'</span>, data<span class="op">=</span>df).fit()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -585,7 +598,7 @@ window.Quarto = {
 </div>
 <p>One compelling advantage of this (effectively) functional approach to iteration over list-columns of models is that most of these computations are embarrassingly parallel, and map()-like operations are often very easy to parallelize.</p>
 <p>An alternative approach here is to use <code>DataFrame.apply()</code>. However, I have found the <code>Series.apply()</code> and <code>DataFrame.apply()</code> methods to be hard to reason about when used together with list-columns, and so I recommend avoiding them.</p>
-<div id="cell-9" class="cell" data-execution_count="5">
+<div id="cell-9" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the pandas apply() approach</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># models = (</span></span>
@@ -600,7 +613,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="step-3-iterative-information-extraction">Step 3: iterative information extraction</h2>
 <p>Now that we’ve fit all of our models, we can extract information from them. Here I’ll define some helper functions very much in the spirit of <code>broom</code>. When you don’t own the model classes you’re using, you pretty much have to write extractor functions to do this; see Michael Chow’s excellent <a href="https://mchow.com/posts/2020-02-24-single-dispatch-data-science/">blog post</a> showing how to handle this in an elegant way.</p>
 <p>Even if you do own the model objects you’re using, I recommend extractor functions over class methods. This is because, during EDA, you typically fit some expensive models once, and then repeatedly investigate them–you can modify an extractor function and use it right away, but if you modify a method for a model class, you’ll have to refit all the model objects. This leads to slow iteration.</p>
-<div id="cell-11" class="cell" data-execution_count="6">
+<div id="cell-11" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ripped directly from michael chow's blog post!!</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># go read his stuff it's very cool!</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tidy(fit):</span>
@@ -639,20 +652,19 @@ window.Quarto = {
 <span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We check the helper functions by seeing if they work on a single model object before working with the entire list-column of models.</p>
-<div id="cell-13" class="cell page-columns page-full" data-execution_count="7">
+<div id="cell-13" class="cell page-columns page-full" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tidy(models.fit[<span class="dv">0</span>]).rename_axis(<span class="st">'index'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_125615/476014805.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
-  tidy(models.fit[0])</code></pre>
+<pre><code>&lt;positron-console-cell-20&gt;:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`</code></pre>
 </div>
-<div class="cell-output cell-output-display column-page" data-execution_count="7">
+<div class="cell-output cell-output-display column-page" data-execution_count="20">
 <div>
 
 
 <table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th">row_index</th>
+<th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">term</th>
 <th data-quarto-table-cell-role="th">estimate</th>
 <th data-quarto-table-cell-role="th">std_err</th>
@@ -660,6 +672,16 @@ window.Quarto = {
 <th data-quarto-table-cell-role="th">p_value</th>
 <th data-quarto-table-cell-role="th">conf_int_low</th>
 <th data-quarto-table-cell-role="th">conf_int_high</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">index</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
 </tr>
 </thead>
 <tbody>
@@ -689,16 +711,16 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="cell-14" class="cell page-columns page-full" data-execution_count="8">
+<div id="cell-14" class="cell page-columns page-full" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>glance(models.fit.iloc[<span class="dv">0</span>]).rename_axis(<span class="st">'index'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display column-page" data-execution_count="8">
+<div class="cell-output cell-output-display column-page" data-execution_count="21">
 <div>
 
 
 <table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th">row_index</th>
+<th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">aic</th>
 <th data-quarto-table-cell-role="th">bic</th>
 <th data-quarto-table-cell-role="th">ess</th>
@@ -708,6 +730,18 @@ window.Quarto = {
 <th data-quarto-table-cell-role="th">nobs</th>
 <th data-quarto-table-cell-role="th">rsquared</th>
 <th data-quarto-table-cell-role="th">rsquared_adj</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">index</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
 </tr>
 </thead>
 <tbody>
@@ -730,16 +764,16 @@ window.Quarto = {
 </div>
 </div>
 <p><code>augment()</code> actually takes two inputs, where one input is the model object, and the other is the training data used to fit that model object.</p>
-<div id="cell-16" class="cell page-columns page-full" data-execution_count="9">
+<div id="cell-16" class="cell page-columns page-full" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>augment(models.fit.iloc[<span class="dv">0</span>], models.data.iloc[<span class="dv">0</span>]).rename_axis(<span class="st">'index'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display column-page" data-execution_count="9">
+<div class="cell-output cell-output-display column-page" data-execution_count="22">
 <div>
 
 
 <table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th">row_index</th>
+<th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">country</th>
 <th data-quarto-table-cell-role="th">continent</th>
 <th data-quarto-table-cell-role="th">year</th>
@@ -748,6 +782,17 @@ window.Quarto = {
 <th data-quarto-table-cell-role="th">gdpPercap</th>
 <th data-quarto-table-cell-role="th">fitted</th>
 <th data-quarto-table-cell-role="th">resid</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">index</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
 </tr>
 </thead>
 <tbody>
@@ -890,7 +935,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Now we are ready to iterate over the list-column of models. Again, we leverage list-comprehensions. For <code>tidy()</code> and <code>glance()</code> these comprehension are straightforward, but for <code>augment()</code>, which will consume elements from two columns at once, we will need to do something a little fancier. In R we could use <code>purrr::map2()</code> or <code>purrr::pmap()</code>, but the Pythonic idiom here is to use <code>zip()</code> together with tuple unpacking.</p>
-<div id="cell-18" class="cell column-page" data-execution_count="10">
+<div id="cell-18" class="cell column-page" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>models[<span class="st">'tidied'</span>] <span class="op">=</span> [tidy(fit) <span class="cf">for</span> fit <span class="kw">in</span> models.fit]</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>models[<span class="st">'glanced'</span>] <span class="op">=</span> [glance(fit) <span class="cf">for</span> fit <span class="kw">in</span> models.fit]</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -900,22 +945,30 @@ window.Quarto = {
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Note for R users</strong>: In R the calls to <code>tidy()</code>, etc, would typically live inside a <code>mutate()</code> call. The <code>pandas</code> equivalent is <code>assign</code>, but <code>pandas</code> doesn’t leverage non-standard evaluation and I typically don’t use <code>assign()</code> unless I really want to leverage method chaining for some reason. Normally I save method chaining for data manipulation once I have a flat dataframe, and otherwise I operate entirely via list comprehensions.</p>
-<p>Anyway, the print method garbles the hell out of our results but whatever.</p>
-<div id="cell-20" class="cell page-columns page-full" data-execution_count="11">
+<p>Anyway, the print method makes our results hard to read, but we’ll live with that for now.</p>
+<div id="cell-20" class="cell page-columns page-full" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>models</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display column-page" data-execution_count="11">
+<div class="cell-output cell-output-display column-page" data-execution_count="24">
 <div>
 
 
 <table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th">row_index</th>
+<th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">data</th>
 <th data-quarto-table-cell-role="th">fit</th>
 <th data-quarto-table-cell-role="th">tidied</th>
 <th data-quarto-table-cell-role="th">glanced</th>
 <th data-quarto-table-cell-role="th">augmented</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">country</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
 </tr>
 </thead>
 <tbody>
@@ -929,35 +982,35 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Albania</th>
-<td>country continent year lifeExp pop ...</td>
+<td>country continent year lifeExp p...</td>
 <td>&lt;statsmodels.regression.linear_model.Regressio...</td>
 <td>term estimate std_err statistic...</td>
 <td>aic bic ess centered_...</td>
-<td>country continent year lifeExp pop ...</td>
+<td>country continent year lifeExp p...</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Algeria</th>
-<td>country continent year lifeExp pop...</td>
+<td>country continent year lifeExp ...</td>
 <td>&lt;statsmodels.regression.linear_model.Regressio...</td>
 <td>term estimate std_err statistic...</td>
 <td>aic bic ess centered_...</td>
-<td>country continent year lifeExp pop...</td>
+<td>country continent year lifeExp ...</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Angola</th>
-<td>country continent year lifeExp pop ...</td>
+<td>country continent year lifeExp p...</td>
 <td>&lt;statsmodels.regression.linear_model.Regressio...</td>
 <td>term estimate std_err statistic...</td>
 <td>aic bic ess centered_t...</td>
-<td>country continent year lifeExp pop ...</td>
+<td>country continent year lifeExp p...</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Argentina</th>
-<td>country continent year lifeExp p...</td>
+<td>country continent year lifeExp ...</td>
 <td>&lt;statsmodels.regression.linear_model.Regressio...</td>
 <td>term estimate std_err statistic ...</td>
 <td>aic bic ess centered_ts...</td>
-<td>country continent year lifeExp p...</td>
+<td>country continent year lifeExp ...</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">...</th>
@@ -969,19 +1022,19 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Vietnam</th>
-<td>country continent year lifeExp p...</td>
+<td>country continent year lifeExp ...</td>
 <td>&lt;statsmodels.regression.linear_model.Regressio...</td>
 <td>term estimate std_err statisti...</td>
 <td>aic bic ess centered...</td>
-<td>country continent year lifeExp p...</td>
+<td>country continent year lifeExp ...</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">West Bank and Gaza</th>
-<td>country continent year life...</td>
+<td>country continent year lif...</td>
 <td>&lt;statsmodels.regression.linear_model.Regressio...</td>
 <td>term estimate std_err statisti...</td>
 <td>aic bic ess centered_...</td>
-<td>country continent year life...</td>
+<td>country continent year lif...</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Yemen, Rep.</th>
@@ -993,11 +1046,11 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Zambia</th>
-<td>country continent year lifeExp po...</td>
+<td>country continent year lifeExp p...</td>
 <td>&lt;statsmodels.regression.linear_model.Regressio...</td>
 <td>term estimate std_err statisti...</td>
 <td>aic bic ess centered_t...</td>
-<td>country continent year lifeExp po...</td>
+<td>country continent year lifeExp p...</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Zimbabwe</th>
@@ -1018,7 +1071,7 @@ window.Quarto = {
 <section id="flattening-the-dataframe" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="flattening-the-dataframe">Flattening the dataframe</h2>
 <p>Our final step before we can recreate Hadley’s plots is to flatten or “unnest” the dataframe. <code>pandas</code> has no unnest method, but the following has served me well so far to unnest a single column. This will not play well with dataframes with MultiIndexes, which I recommend avoiding.</p>
-<div id="cell-22" class="cell" data-execution_count="12">
+<div id="cell-22" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> unnest(df, value_col):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    lst <span class="op">=</span> df[value_col].tolist()</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    unnested <span class="op">=</span> pd.concat(lst, keys<span class="op">=</span>df.index)</span>
@@ -1026,7 +1079,7 @@ window.Quarto = {
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df.join(unnested).drop(columns<span class="op">=</span>value_col)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>If we unnest just the <code>glance()</code> results we get:</p>
-<div class="cell page-columns page-full" data-tbl-cap="Model performance metrics (glance) for each country." data-execution_count="13">
+<div id="cell-24" class="cell column-page" data-tbl-cap="Model performance metrics (glance) for each country." data-execution_count="26">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>glance_results <span class="op">=</span> unnest(models, <span class="st">'glanced'</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># equivalently</span></span>
@@ -1041,228 +1094,140 @@ window.Quarto = {
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>glance_results.index.name <span class="op">=</span> <span class="st">'index'</span></span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>glance_results.style.set_table_attributes(<span class="st">'tabindex="0"'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display column-page" data-execution_count="13">
-<div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------</span>
+
+<span class="ansi-red-fg">ModuleNotFoundError</span>     Traceback (most recent call last)
+
+File <span class="ansi-green-fg">~/anaconda3/envs/manymodels/lib/python3.12/site-packages/pandas/compat/_optional.py:135</span>, in <span class="ansi-cyan-fg">import_optional_dependency</span><span class="ansi-blue-fg">(name, extra, errors, min_version)</span>
+
+<span class="ansi-green-fg ansi-bold">    134</span> <span style="font-weight:bold;color:rgb(0,135,0)">try</span>:
+
+<span class="ansi-green-fg">--&gt; 135</span>     module <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">importlib</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">import_module</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg">)</span>
+
+<span class="ansi-green-fg ansi-bold">    136</span> <span style="font-weight:bold;color:rgb(0,135,0)">except</span> <span style="font-weight:bold;color:rgb(215,95,95)">ImportError</span>:
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<caption>Model performance metrics (glance) for each country.</caption>
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th">row_index</th>
-<th data-quarto-table-cell-role="th">country</th>
-<th data-quarto-table-cell-role="th">data</th>
-<th data-quarto-table-cell-role="th">fit</th>
-<th data-quarto-table-cell-role="th">tidied</th>
-<th data-quarto-table-cell-role="th">augmented</th>
-<th data-quarto-table-cell-role="th">aic</th>
-<th data-quarto-table-cell-role="th">bic</th>
-<th data-quarto-table-cell-role="th">ess</th>
-<th data-quarto-table-cell-role="th">centered_tss</th>
-<th data-quarto-table-cell-role="th">fvalue</th>
-<th data-quarto-table-cell-role="th">f_pvalue</th>
-<th data-quarto-table-cell-role="th">nobs</th>
-<th data-quarto-table-cell-role="th">rsquared</th>
-<th data-quarto-table-cell-role="th">rsquared_adj</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>Afghanistan</td>
-<td>country continent year lifeExp ...</td>
-<td>&lt;statsmodels.regression.linear_model.Regressio...</td>
-<td>term estimate std_err statistic...</td>
-<td>country continent year lifeExp ...</td>
-<td>40.693870</td>
-<td>41.663683</td>
-<td>271.006011</td>
-<td>285.958116</td>
-<td>181.249410</td>
-<td>9.835213e-08</td>
-<td>12.0</td>
-<td>0.947712</td>
-<td>0.942483</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>Albania</td>
-<td>country continent year lifeExp pop ...</td>
-<td>&lt;statsmodels.regression.linear_model.Regressio...</td>
-<td>term estimate std_err statistic...</td>
-<td>country continent year lifeExp pop ...</td>
-<td>52.298071</td>
-<td>53.267884</td>
-<td>400.445959</td>
-<td>439.771289</td>
-<td>101.829014</td>
-<td>1.462763e-06</td>
-<td>12.0</td>
-<td>0.910578</td>
-<td>0.901636</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">2</th>
-<td>Algeria</td>
-<td>country continent year lifeExp pop...</td>
-<td>&lt;statsmodels.regression.linear_model.Regressio...</td>
-<td>term estimate std_err statistic...</td>
-<td>country continent year lifeExp pop...</td>
-<td>42.584427</td>
-<td>43.554240</td>
-<td>1158.583855</td>
-<td>1176.087314</td>
-<td>661.917086</td>
-<td>1.808143e-10</td>
-<td>12.0</td>
-<td>0.985117</td>
-<td>0.983629</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>Angola</td>
-<td>country continent year lifeExp pop ...</td>
-<td>&lt;statsmodels.regression.linear_model.Regressio...</td>
-<td>term estimate std_err statistic...</td>
-<td>country continent year lifeExp pop ...</td>
-<td>44.061857</td>
-<td>45.031670</td>
-<td>156.667858</td>
-<td>176.464605</td>
-<td>79.138182</td>
-<td>4.593498e-06</td>
-<td>12.0</td>
-<td>0.887815</td>
-<td>0.876596</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
-<td>Argentina</td>
-<td>country continent year lifeExp p...</td>
-<td>&lt;statsmodels.regression.linear_model.Regressio...</td>
-<td>term estimate std_err statistic ...</td>
-<td>country continent year lifeExp p...</td>
-<td>6.347866</td>
-<td>7.317679</td>
-<td>191.937384</td>
-<td>192.791819</td>
-<td>2246.366349</td>
-<td>4.215567e-13</td>
-<td>12.0</td>
-<td>0.995568</td>
-<td>0.995125</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">...</th>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">137</th>
-<td>Vietnam</td>
-<td>country continent year lifeExp p...</td>
-<td>&lt;statsmodels.regression.linear_model.Regressio...</td>
-<td>term estimate std_err statisti...</td>
-<td>country continent year lifeExp p...</td>
-<td>42.414079</td>
-<td>43.383892</td>
-<td>1612.565329</td>
-<td>1629.822069</td>
-<td>934.455357</td>
-<td>3.289412e-11</td>
-<td>12.0</td>
-<td>0.989412</td>
-<td>0.988353</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">138</th>
-<td>West Bank and Gaza</td>
-<td>country continent year life...</td>
-<td>&lt;statsmodels.regression.linear_model.Regressio...</td>
-<td>term estimate std_err statisti...</td>
-<td>country continent year life...</td>
-<td>52.287427</td>
-<td>53.257240</td>
-<td>1291.726331</td>
-<td>1331.016795</td>
-<td>328.763323</td>
-<td>5.585089e-09</td>
-<td>12.0</td>
-<td>0.970481</td>
-<td>0.967529</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">139</th>
-<td>Yemen, Rep.</td>
-<td>country continent year lifeExp ...</td>
-<td>&lt;statsmodels.regression.linear_model.Regressio...</td>
-<td>term estimate std_err statisti...</td>
-<td>country continent year lifeExp ...</td>
-<td>46.932773</td>
-<td>47.902586</td>
-<td>1310.527555</td>
-<td>1335.675109</td>
-<td>521.135193</td>
-<td>5.868274e-10</td>
-<td>12.0</td>
-<td>0.981172</td>
-<td>0.979290</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">140</th>
-<td>Zambia</td>
-<td>country continent year lifeExp po...</td>
-<td>&lt;statsmodels.regression.linear_model.Regressio...</td>
-<td>term estimate std_err statisti...</td>
-<td>country continent year lifeExp po...</td>
-<td>72.117172</td>
-<td>73.086985</td>
-<td>13.053046</td>
-<td>218.145441</td>
-<td>0.636447</td>
-<td>4.435318e-01</td>
-<td>12.0</td>
-<td>0.059836</td>
-<td>-0.034180</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">141</th>
-<td>Zimbabwe</td>
-<td>country continent year lifeExp ...</td>
-<td>&lt;statsmodels.regression.linear_model.Regressio...</td>
-<td>term estimate std_err statisti...</td>
-<td>country continent year lifeExp ...</td>
-<td>83.262706</td>
-<td>84.232520</td>
-<td>30.934127</td>
-<td>550.116442</td>
-<td>0.595824</td>
-<td>4.580290e-01</td>
-<td>12.0</td>
-<td>0.056232</td>
-<td>-0.038145</td>
-</tr>
-</tbody>
-</table>
 
-<p>142 rows × 14 columns</p>
+File <span class="ansi-green-fg">~/anaconda3/envs/manymodels/lib/python3.12/importlib/__init__.py:90</span>, in <span class="ansi-cyan-fg">import_module</span><span class="ansi-blue-fg">(name, package)</span>
+
+<span class="ansi-green-fg ansi-bold">     89</span>         level <span style="color:rgb(98,98,98)">+</span><span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(98,98,98)">1</span>
+
+<span class="ansi-green-fg">---&gt; 90</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">_bootstrap</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_gcd_import</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">level</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">package</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">level</span><span class="ansi-yellow-bg">)</span>
+
+
+
+File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:1387</span>, in <span class="ansi-cyan-fg">_gcd_import</span><span class="ansi-blue-fg">(name, package, level)</span>
+
+
+
+File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:1360</span>, in <span class="ansi-cyan-fg">_find_and_load</span><span class="ansi-blue-fg">(name, import_)</span>
+
+
+
+File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:1324</span>, in <span class="ansi-cyan-fg">_find_and_load_unlocked</span><span class="ansi-blue-fg">(name, import_)</span>
+
+
+
+<span class="ansi-red-fg">ModuleNotFoundError</span>: No module named 'jinja2'
+
+
+
+During handling of the above exception, another exception occurred:
+
+
+
+<span class="ansi-red-fg">ImportError</span>             Traceback (most recent call last)
+
+Cell <span class="ansi-green-fg">In[26], line 16</span>
+
+<span class="ansi-green-fg ansi-bold">      6</span> glance_results <span style="color:rgb(98,98,98)">=</span> (
+
+<span class="ansi-green-fg ansi-bold">      7</span>     models
+
+<span class="ansi-green-fg ansi-bold">      8</span>     <span style="color:rgb(98,98,98)">.</span>pipe(unnest, <span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">glanced</span><span style="color:rgb(175,0,0)">'</span>)
+
+<span class="ansi-green-fg">   (...)</span>
+
+<span class="ansi-green-fg ansi-bold">     12</span>     <span style="color:rgb(98,98,98)">.</span>rename(columns<span style="color:rgb(98,98,98)">=</span>{<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">index</span><span style="color:rgb(175,0,0)">'</span>: <span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">country</span><span style="color:rgb(175,0,0)">'</span>})
+
+<span class="ansi-green-fg ansi-bold">     13</span> )
+
+<span class="ansi-green-fg ansi-bold">     15</span> glance_results<span style="color:rgb(98,98,98)">.</span>index<span style="color:rgb(98,98,98)">.</span>name <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">index</span><span style="color:rgb(175,0,0)">'</span>
+
+<span class="ansi-green-fg">---&gt; 16</span> <span class="ansi-yellow-bg">glance_results</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">style</span><span style="color:rgb(98,98,98)">.</span>set_table_attributes(<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">tabindex=</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">0</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">'</span>)
+
+
+
+File <span class="ansi-green-fg">~/anaconda3/envs/manymodels/lib/python3.12/site-packages/pandas/core/frame.py:1430</span>, in <span class="ansi-cyan-fg">DataFrame.style</span><span class="ansi-blue-fg">(self)</span>
+
+<span class="ansi-green-fg ansi-bold">   1410</span> <span style="color:rgb(175,0,255)">@property</span>
+
+<span class="ansi-green-fg ansi-bold">   1411</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span style="color:rgb(0,0,255)">style</span>(<span style="color:rgb(0,135,0)">self</span>) <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">&gt;</span> Styler:
+
+<span class="ansi-green-fg ansi-bold">   1412</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic;color:rgb(175,0,0)">"""</span>
+
+<span class="ansi-green-fg ansi-bold">   1413</span> <span style="font-style:italic;color:rgb(175,0,0)">    Returns a Styler object.</span>
+
+<span class="ansi-green-fg ansi-bold">   1414</span> 
+
+<span class="ansi-green-fg">   (...)</span>
+
+<span class="ansi-green-fg ansi-bold">   1428</span> <span style="font-style:italic;color:rgb(175,0,0)">    `Table Visualization &lt;../../user_guide/style.ipynb&gt;`_ for more examples.</span>
+
+<span class="ansi-green-fg ansi-bold">   1429</span> <span style="font-style:italic;color:rgb(175,0,0)">    """</span>
+
+<span class="ansi-green-fg">-&gt; 1430</span>     <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">pandas</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">io</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">formats</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">style</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">import</span> Styler
+
+<span class="ansi-green-fg ansi-bold">   1432</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> Styler(<span style="color:rgb(0,135,0)">self</span>)
+
+
+
+File <span class="ansi-green-fg">~/anaconda3/envs/manymodels/lib/python3.12/site-packages/pandas/io/formats/style.py:44</span>
+
+<span class="ansi-green-fg ansi-bold">     40</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">pandas</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">core</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">shared_docs</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">import</span> _shared_docs
+
+<span class="ansi-green-fg ansi-bold">     42</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">pandas</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">io</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">formats</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">format</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">import</span> save_to_buffer
+
+<span class="ansi-green-fg">---&gt; 44</span> jinja2 <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">import_optional_dependency</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">jinja2</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">extra</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">DataFrame.style requires jinja2.</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span class="ansi-yellow-bg">)</span>
+
+<span class="ansi-green-fg ansi-bold">     46</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">pandas</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">io</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">formats</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">style_render</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">import</span> (
+
+<span class="ansi-green-fg ansi-bold">     47</span>     CSSProperties,
+
+<span class="ansi-green-fg ansi-bold">     48</span>     CSSStyles,
+
+<span class="ansi-green-fg">   (...)</span>
+
+<span class="ansi-green-fg ansi-bold">     56</span>     refactor_levels,
+
+<span class="ansi-green-fg ansi-bold">     57</span> )
+
+<span class="ansi-green-fg ansi-bold">     59</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> TYPE_CHECKING:
+
+
+
+File <span class="ansi-green-fg">~/anaconda3/envs/manymodels/lib/python3.12/site-packages/pandas/compat/_optional.py:138</span>, in <span class="ansi-cyan-fg">import_optional_dependency</span><span class="ansi-blue-fg">(name, extra, errors, min_version)</span>
+
+<span class="ansi-green-fg ansi-bold">    136</span> <span style="font-weight:bold;color:rgb(0,135,0)">except</span> <span style="font-weight:bold;color:rgb(215,95,95)">ImportError</span>:
+
+<span class="ansi-green-fg ansi-bold">    137</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> errors <span style="color:rgb(98,98,98)">==</span> <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">raise</span><span style="color:rgb(175,0,0)">"</span>:
+
+<span class="ansi-green-fg">--&gt; 138</span>         <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">ImportError</span>(msg)
+
+<span class="ansi-green-fg ansi-bold">    139</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>
+
+<span class="ansi-green-fg ansi-bold">    141</span> <span style="font-style:italic;color:rgb(95,135,135)"># Handle submodules: if we have submodule, grab parent module from sys.modules</span>
+
+
+
+<span class="ansi-red-fg">ImportError</span>: Missing optional dependency 'Jinja2'. DataFrame.style requires jinja2. Use pip or conda to install Jinja2.</pre>
 </div>
 </div>
 </div>
 <p>Now we could ask a question like “what countries seem to have the most linear trends in life expectancy?” and use R-squared as a measure of this.</p>
-<div id="cell-26" class="cell page-columns page-full" data-execution_count="14">
+<div id="cell-26" class="cell page-columns page-full">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> (</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    sns.FacetGrid(</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>        data<span class="op">=</span>glance_results.sort_values(<span class="st">'rsquared'</span>),</span>
@@ -1281,7 +1246,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Okay so this plot is awful but I don’t have the patience at the moment to make it better. We could also look at residuals for individual fits to inspect them for any patterns that might indicate systematic error.</p>
-<div id="cell-28" class="cell page-columns page-full" data-execution_count="15">
+<div id="cell-28" class="cell page-columns page-full">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>augment_results <span class="op">=</span> unnest(models, <span class="st">'augmented'</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> (</span>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -95,10 +95,10 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-975e726794ce811e14261b5ab5acfd7c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0732fb268a8da304e632f8e6aea0557a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -346,7 +346,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="types-of-tests">Types of tests</h2>
 <p>There are a lot of different ways you can test modeling code. Broadly, I think of tests as living in four categories:</p>
 <ul>
-<li><strong>Correctness tests</strong> check whether the code calculates the quantity it is supposed to calculated.</li>
+<li><strong>Correctness tests</strong> check whether the code calculates the quantity it is supposed to calculate.</li>
 <li><strong>Parameter recovery tests</strong> check whether the implementation can recover correct parameters in well understood scenarios.</li>
 <li><strong>Convergence tests</strong> check whether iterative fitting procedures have actually reached a solution.</li>
 <li><strong>Identification tests</strong> check whether the solution is unique, and stable under small perturbations to the data.</li>
@@ -354,7 +354,7 @@ window.Quarto = {
 <p>Most research software tests for correctness, but on occasion I come across parameter recovery tests and convergence tests<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. I rarely come across identification tests<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
 <section id="correctness-tests" class="level3">
 <h3 class="anchored" data-anchor-id="correctness-tests">Correctness tests</h3>
-<p>Correctness tests are by far the most important tests. Correctness tests come in two flavors: unit tests and integration tests. In the modeling context, a <em>unit test</em> checks the correctness of a individual calculations in a fitting procedure. An <em>integration test</em> means shoving data into the fitting procedure and making sure that the resulting estimates are correct.</p>
+<p>Correctness tests are by far the most important tests. Correctness tests come in two flavors: unit tests and integration tests. In the modeling context, a <em>unit test</em> checks the correctness of an individual calculation in a fitting procedure. An <em>integration test</em> means shoving data into the fitting procedure and making sure that the resulting estimates are correct.</p>
 <p>The general strategy for writing unit tests is to compute the same thing in as many different ways as possible, and verify that all the results agree. For example, I recently needed to find the sum of squared eigenvalues of a matrix. To test my calculations, I calculated this sum using two different eigendecomposition algorithms, and also by finding the squared Frobenius norm of the matrix. The results didn’t agree, and it turned out something was wrong in one of the eigendecompositions.</p>
 <p>For integration tests, you run the entire fitting procedure, and then you can:</p>
 <ul>
@@ -362,16 +362,16 @@ window.Quarto = {
 <li>Compare results to a solution you’ve worked out by hand</li>
 <li>Compare results to simple scenarios with obvious solutions</li>
 </ul>
-<p>The gold standard is to compare to a reference implementation. With research code, which is often the first implementation of method, this might not be possible. Additionally, it’s pretty rare to be able to work out the solution by hand.</p>
+<p>The gold standard is to compare to a reference implementation. With research code, which is often the first implementation of a method, this might not be possible. Additionally, it’s pretty rare to be able to work out the solution by hand.</p>
 <p>In practice, most people end up writing a reference implementation and checking that the reference implementation closely matches the pseudocode of their algorithm. Then they declare this implementation correct. How trustworthy this approach is depends on the clarity of the connection between the algorithm pseudocode and the reference implementation.</p>
 <section id="an-example-of-an-easily-verifiable-reference-implementation" class="level4">
 <h4 class="anchored" data-anchor-id="an-example-of-an-easily-verifiable-reference-implementation">An example of an easily verifiable reference implementation</h4>
 <p>Consider <em>Algorithm 1</em> of <span class="citation" data-cites="allen_sparse_2013-1">Allen and Weylandt (<a href="#ref-allen_sparse_2013-1" role="doc-biblioref">2013</a>)</span>:</p>
 <p><img src="sfpca_algorithm_1.png" class="img-fluid" alt="Pseudo-code for the SFPCA algorithm."></p>
-<p>There used a MATLAB reference implementation available online<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, which looked like:</p>
+<p>They used a MATLAB reference implementation available online<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, which looked like:</p>
 <p><img src="sfpca_ref_impl.png" class="img-fluid" alt="Screencap of the SFPCA reference implementation in MATLAB."></p>
-<p>This is a good reference implementation because the pseudocode is close enough to the actual code that we can be confident that the translation is correct almost by eyeballing it. I ended up <a href="https://github.com/alexpghayes/gsoc_moma_application">implementing</a> this algorithm in both R and C++ and testing against this reference implementation. Curious parties read the correctness test <a href="https://github.com/alexpghayes/gsoc_moma_application/blob/master/tests/testthat/test-sfpca.R">here</a>.</p>
-<p>Note that my test is really an integration test, making sure the entire computation is correct. I don’t do any tests on sub-function or calculations, although it would be good to write a unit test for the soft thresholding function.</p>
+<p>This is a good reference implementation because the pseudocode is close enough to the actual code that we can be confident that the translation is correct almost by eyeballing it. I ended up <a href="https://github.com/alexpghayes/gsoc_moma_application">implementing</a> this algorithm in both R and C++ and testing against this reference implementation. Curious parties can read the correctness test <a href="https://github.com/alexpghayes/gsoc_moma_application/blob/master/tests/testthat/test-sfpca.R">here</a>.</p>
+<p>Note that my test is really an integration test, making sure the entire computation is correct. I don’t do any tests on sub-functions or calculations, although it would be good to write a unit test for the soft thresholding function.</p>
 </section>
 <section id="a-reference-implementation-that-is-more-difficult-to-verify" class="level4">
 <h4 class="anchored" data-anchor-id="a-reference-implementation-that-is-more-difficult-to-verify">A reference implementation that is more difficult to verify</h4>
@@ -384,7 +384,7 @@ window.Quarto = {
 </section>
 <section id="parameter-recovery-tests" class="level3">
 <h3 class="anchored" data-anchor-id="parameter-recovery-tests">Parameter recovery tests</h3>
-<p>Another way to sanity check results is to see if we can recover known parameters with our implementation. Both SFPCA and AdaptImpute are essentially fancy versions of SVD that estimate low rank matrix components. A reasonable thing to do then is to generate a low rank matrix and see if SFPCA and AdaptImpute produces estimates close to the known low rank structure.</p>
+<p>Another way to sanity check results is to see if we can recover known parameters with our implementation. Both SFPCA and AdaptImpute are essentially fancy versions of SVD that estimate low rank matrix components. A reasonable thing to do then is to generate a low rank matrix and see if SFPCA and AdaptImpute produce estimates close to the known low rank structure.</p>
 <p>At first, we should do this with no noise. Then we should add random noise to the observed matrix. We then want to see the parameter estimates degrade more and more with increasing noise.</p>
 <p>If you are a package user, you should look for parameter recovery tests that use data similar to the data you have. A method may work well in some data regimes and not in other data regimes. If there are no tests on data that looks similar to your own, you can often write some without too much hassle.</p>
 <p>The Stan community is particularly good about emphasizing parameter recovery tests as a part of the data analysis workflow. You may enjoy Jim Savage’s post on <a href="https://khakieconomics.github.io/2017/04/30/An-easy-way-to-simulate-fake-data-in-stan.html">simulating fake data</a>, as well as the <a href="https://github.com/stan-dev/stan/wiki/Stan-Best-Practices#recover-simulated-values">Stan Best Practices</a> wiki.</p>
@@ -392,7 +392,7 @@ window.Quarto = {
 </section>
 <section id="convergence-tests" class="level3">
 <h3 class="anchored" data-anchor-id="convergence-tests">Convergence tests</h3>
-<p>Convergence tests check that iterative processes have actually reached solutions. Ideally you want packages to confirm that they convergence on a variety of sample problems. You also want them to perform runtime convergence tests.</p>
+<p>Convergence tests check that iterative processes have actually reached solutions. Ideally you want packages to confirm that they converge on a variety of sample problems. You also want them to perform runtime convergence tests.</p>
 <p>For example, I recently came across a modeling function that calculated estimates via gradient descent. It looked like the following:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">function</span>(x, <span class="at">eps =</span> <span class="fl">1e-07</span>) {</span>
@@ -410,16 +410,16 @@ window.Quarto = {
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The descent portion of the algorithm is contained in the <code>for</code> loop. If the algorithm converges early, the loop will break. But, if the algorithm does not converge in 1000 iterations, it will <strong>return an incorrect solution silently</strong>.</p>
-<p>We can contrast this behavior with <code>lme4</code>, which explicitly <a href="https://github.com/lme4/lme4/blob/366375f3d599fe27df250f0216d6dbca472d2caf/R/checkConv.R#L68">warns users</a> on convergence failures. The package also <a href="https://github.com/lme4/lme4/blob/master/tests/testthat/test-catch.R#L9">tests</a> to make sure sure it issues this warning.</p>
-<p>It can often be difficult to test for convergence, but for simple maximum likelihood or convex problems, I’d love to see more these tests. I suspect there are a lot of convergence failures out there that we don’t know about just because we haven’t checked.</p>
-<p>Other communities have taken different approaches. For example, the Stan community is careful to emphasize the importance of MCMC convergence checks as part of the modeling workflow, a task that needs to repeated by the data analyst for each model they fit. The machine learning community sometimes deals with convergence via early stopping, which is more a sort of statistical convergence than algorithmic convergence.</p>
+<p>We can contrast this behavior with <code>lme4</code>, which explicitly <a href="https://github.com/lme4/lme4/blob/366375f3d599fe27df250f0216d6dbca472d2caf/R/checkConv.R#L68">warns users</a> about convergence failures. The package also <a href="https://github.com/lme4/lme4/blob/master/tests/testthat/test-catch.R#L9">tests</a> to make sure it issues this warning.</p>
+<p>It can often be difficult to test for convergence, but for simple maximum likelihood or convex problems, I’d love to see more of these tests. I suspect there are a lot of convergence failures out there that we don’t know about just because we haven’t checked.</p>
+<p>Other communities have taken different approaches. For example, the Stan community is careful to emphasize the importance of MCMC convergence checks as part of the modeling workflow, a task that needs to be repeated by the data analyst for each model they fit. The machine learning community sometimes deals with convergence via early stopping, which is more a sort of statistical convergence than algorithmic convergence.</p>
 <p>While packages should definitely include convergence tests, automated procedures to check for convergence can be misleading. I would love to see convergence checks become a larger part of the data analysis workflow, and think of convergence as a responsibility shared by both users and developers.</p>
 </section>
 <section id="identification-tests" class="level3">
 <h3 class="anchored" data-anchor-id="identification-tests">Identification tests</h3>
 <p>Finally we arrive at identification tests<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. These tests are the most subtle out of anything we’ve considered because they get at the gap between theory and practice. For the most part, people don’t let you fit models that are actually unidentifiable.</p>
 <p>But you often <em>can</em> fit nearly unidentifiable models, where small perturbations to your data lead to dramatic changes in your estimates. I’m going to avoid details about conditioning and numerical stability here; for a concrete example you can read more about near unidentifiability in <code>lme4</code> in <a href="https://rpubs.com/jimsavage/scale_issues">this post</a> by Camelia Simoiu and Jim Savage.</p>
-<p>Generally, the more flexible a modeling tool, the more likely it is that you can fit an unindentifiable or near unidentifiable model. I find an example from <span class="citation" data-cites="simpson_modelling_2018">Simpson (<a href="#ref-simpson_modelling_2018" role="doc-biblioref">2018</a>)</span> particularly interesting, where a model with a smooth through time together with CAR(1) structure on the residuals leads to <a href="https://github.com/gavinsimpson/frontiers-palaeo-additive-modelling/blob/master/manuscript.Rmd#L339">fitting issues</a> due to identification challenges.</p>
+<p>Generally, the more flexible a modeling tool, the more likely it is that you can fit an unidentifiable or near unidentifiable model. I find an example from <span class="citation" data-cites="simpson_modelling_2018">Simpson (<a href="#ref-simpson_modelling_2018" role="doc-biblioref">2018</a>)</span> particularly interesting, where a model with a smooth through time together with CAR(1) structure on the residuals leads to <a href="https://github.com/gavinsimpson/frontiers-palaeo-additive-modelling/blob/master/manuscript.Rmd#L339">fitting issues</a> due to identification challenges.</p>
 <p>When you work with really flexible tools like Stan, you can also write down a model where some parameters just aren’t identified. For example, consider <code>alpha</code> and <code>beta</code> in the following:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; N;</span>
@@ -443,7 +443,7 @@ window.Quarto = {
 </section>
 <section id="things-i-am-especially-careful-about" class="level2">
 <h2 class="anchored" data-anchor-id="things-i-am-especially-careful-about">Things I am especially careful about</h2>
-<p>So far I’ve talked about things to test at a fairly high level. Now I’d like to switch gears and talk about about very specific issues that you need to be careful about, especially in R.</p>
+<p>So far I’ve talked about things to test at a fairly high level. Now I’d like to switch gears and talk about very specific issues that you need to be careful about, especially in R.</p>
 <p>The first thing to note is that most modeling code will <strong>fail silently</strong>. When modeling code fails, it normally doesn’t throw an error, or return an object with some nonsensical type. Rather, bad modeling code looks and works just like good modeling code, except it silently performs the wrong calculation.</p>
 <p>Suppose you want to get an unbiased estimate of population variance and you write the following function:</p>
 <div class="cell">
@@ -467,7 +467,7 @@ window.Quarto = {
 2 mpg            -8.83      1.31     -6.74 1.79e- 7    -11.5     -6.16</code></pre>
 </div>
 </div>
-<p>Here <code>conf.levl = 0.9</code> should read <code>conf.level = 0.9</code>, so the code has silently gone ahead and calculate a 95 percent confidence interval instead of a 90 percent confidence interval. This issue appear over and over in modeling code, and you can read more about it in the <a href="https://principles.tidyverse.org/dots-inspect.html">tidyverse principles</a> book draft.</p>
+<p>Here <code>conf.levl = 0.9</code> should read <code>conf.level = 0.9</code>, so the code has silently gone ahead and calculated a 95 percent confidence interval instead of a 90 percent confidence interval. This issue appears over and over in modeling code, and you can read more about it in the <a href="https://principles.tidyverse.org/dots-inspect.html">tidyverse principles</a> book draft.</p>
 </section>
 <section id="using-metaprogramming-or-interpreting-formulas-in-custom-ways" class="level3">
 <h3 class="anchored" data-anchor-id="using-metaprogramming-or-interpreting-formulas-in-custom-ways">Using metaprogramming or interpreting formulas in custom ways</h3>
@@ -475,7 +475,7 @@ window.Quarto = {
 </section>
 <section id="wrapping-lots-and-lots-of-different-models" class="level3">
 <h3 class="anchored" data-anchor-id="wrapping-lots-and-lots-of-different-models">Wrapping lots and lots of different models</h3>
-<p>This is mostly because packages that wrap lots of other packages (i.e.&nbsp;<code>broom</code>, <code>parsnip</code>, <code>mlr</code>, etc, etc) don’t normally do integration tests to make sure that the wrapped estimates are correct, and so things slip through the cracks every once in a while.</p>
+<p>This is mostly because packages that wrap lots of other packages (e.g.&nbsp;<code>broom</code>, <code>parsnip</code>, <code>mlr</code>, etc, etc) don’t normally do integration tests to make sure that the wrapped estimates are correct, and so things slip through the cracks every once in a while.</p>
 </section>
 <section id="validating-input" class="level3">
 <h3 class="anchored" data-anchor-id="validating-input">Validating input</h3>
@@ -499,7 +499,7 @@ window.Quarto = {
 </ul>
 <p><strong>Red flags</strong></p>
 <ul>
-<li>No tests, or tests don’t substantive check correctness.</li>
+<li>No tests, or tests don’t substantively check correctness.</li>
 <li>You need to use <code>capture.output()</code> to interact with results<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>.</li>
 <li>Model objects are built using <code>structure()</code> rather than an S3 constructor function.</li>
 <li>Large sections of commented out code in the source.</li>
@@ -522,7 +522,7 @@ window.Quarto = {
 <section id="deciding-which-packages-to-trust" class="level2">
 <h2 class="anchored" data-anchor-id="deciding-which-packages-to-trust">Deciding which packages to trust</h2>
 <p>The R community already has shared some excellent thoughts on how to choose which packages we should trust. I especially like Thomas Lumley’s <a href="https://notstatschat.rbind.io/2019/02/04/how-do-you-tell-what-packages-to-trust/">blog post</a>, as well as Jeff Leek’s <a href="https://simplystatistics.org/posts/2015-11-06-how-i-decide-when-to-trust-an-r-package/">blog post</a>. Hadley Wickham shares some thoughts in <a href="https://twitter.com/AlexCEngler/status/1092123648834658305">this Twitter thread</a>. The common theme amongst all these takes is that you should trust people rather than packages, and trust heavily used software with crucial functionality.</p>
-<p>I agree with all of this. Additionally, I’d pretty strongly endorse packages that have reviewed by <a href="https://ropensci.org/">ROpenSci</a>. I’m less certain how I feel about packages published in the <a href="https://joss.theoj.org/">Journal of Open Source Software</a> (JOSS) and the <a href="https://www.jstatsoft.org/index">Journal of Statistical Software</a> (JSS). More peer review is always better than less, but my impression is that peer review is does a lot more to ensure that package authors follow good software engineering practices than it does to ensure actual correctness.</p>
+<p>I agree with all of this. Additionally, I’d pretty strongly endorse packages that have been reviewed by <a href="https://ropensci.org/">ROpenSci</a>. I’m less certain how I feel about packages published in the <a href="https://joss.theoj.org/">Journal of Open Source Software</a> (JOSS) and the <a href="https://www.jstatsoft.org/index">Journal of Statistical Software</a> (JSS). More peer review is always better than less, but my impression is that peer review does a lot more to ensure that package authors follow good software engineering practices than it does to ensure actual correctness.</p>
 <p>For example, if you take a look at one of my JOSS <a href="https://github.com/openjournals/joss-reviews/issues/1412">reviews in progress</a>, note that the Reviewer Checklist doesn’t require me to verify the correctness of calculations, just the existence of tests for those calculations. In theory, tests should verify correctness, but for many modeling packages, the code gets written first, and then the tests get filled in with the results from the code, under the assumption that the code is correct.</p>
 <p>In general, the issue is that most interesting model computations are rather complicated, and I’m unwilling to trust that time constrained reviewers are going to take the time to understand all the details of the implementation. I’m also not certain that this is the best way for reviewers to spend their time. Merely as an anecdote, I recently reimplemented the algorithms in <span class="citation" data-cites="cho_intelligent_2018">Cho et al. (<a href="#ref-cho_intelligent_2018" role="doc-biblioref">2018</a>)</span>, a process which took me six weeks<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>, even though I was able to repeatedly sit down with the author of the original implementation to ask questions.</p>
 </section>
@@ -576,13 +576,13 @@ Simpson, Gavin L. 2018. <em>Modelling Palaeoecological Time Series Using General
 <li id="fn3"><p>I’m pretty sure there’s an Open AI blog post on this, but I can’t find it at the moment. The gist was that bugs in neural networks for reinforcement learning don’t show up as crashes and errors, but as silently incorrect calculations that reduce model performance.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Here’s a <a href="https://simplystatistics.org/posts/2018-05-24-context-compatibility-in-data-analysis/">fascinating read</a> that describes the “GAM crisis”, a series of nonsense research results in the air pollution community that resulted from subtle convergence failures.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>Interestingly enough, the foundational “White Book” <span class="citation" data-cites="chambers_statistical_1999">(<a href="#ref-chambers_statistical_1999" role="doc-biblioref">Chambers and Hastie 1999</a>)</span> does spend some time discussing condition numbers for linear models, although this material rarely appears in regression courses.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>It has seen been replaced with a more full fledged R package <a href="https://github.com/DataSlingers/MoMA"><code>MoMa</code></a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>It has since been replaced with a more fully-fledged R package <a href="https://github.com/DataSlingers/MoMA"><code>MoMa</code></a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>The astute reader may note that the SFPCA implementation from earlier also deviates from the algorithm pseudocode, scaling by <span class="math inline">\(p\)</span> and <span class="math inline">\(n\)</span>. This sort of thing is a common occurrence that makes reproducing work very difficult without access to the original code.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>Identification is a technical property of a statistical model. Formally, if we have a model <span class="math inline">\(P_\theta\)</span>, where <span class="math inline">\(P_\theta\)</span> is a probability distribution with parameters <span class="math inline">\(\theta\)</span>, <span class="math inline">\(P_\theta\)</span> is <em>identifiable</em> if <span class="math inline">\(P_{\theta_1} = P_{\theta_2}\)</span> implies <span class="math inline">\(\theta_1 = \theta_2\)</span>. Informally, the idea is that we only want to work with models where a there’s a single most likely parameter. Unidentifiable models might lead to statements like: “our best guess for the mean is either 8, or 14, or 107”, which isn’t very useful.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9"><p>ENDLESS SCREAMING.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn10"><p>It’s hard to test code that prints but doesn’t return actual values.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>To be fair, this was also during the last month of the semester. Ah, the joys of the academic work schedule.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12"><p><em>R Packages</em> teaches you how to use the <code>testthat</code> package for testing. I should not that there are other ways to test R code. I strongly recommend against these alternatives. More people understand <code>testthat</code> than any other testing system. Using an alternative test system makes it more difficult for users to understand and verify the reliability of your software.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p><em>R Packages</em> teaches you how to use the <code>testthat</code> package for testing. I should note that there are other ways to test R code. I strongly recommend against these alternatives. More people understand <code>testthat</code> than any other testing system. Using an alternative test system makes it more difficult for users to understand and verify the reliability of your software.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script>

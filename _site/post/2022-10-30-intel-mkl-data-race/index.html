@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,10 +76,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-975e726794ce811e14261b5ab5acfd7c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0732fb268a8da304e632f8e6aea0557a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -255,7 +255,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <p>If you are using Intel MKL for your BLAS/LAPACK implementation on Linux, you can set the environment variable <code>MKL_THREADING_LAYER</code> to <code>GNU</code> to avoid data races during matrix multiplication<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">Background</h2>
-<p>If you do numerically intensive computing, you might want to make it faster. One way to do this is to switch out the backend implementation of linear algebra routines on your computer. At a low level, most linear algebra on your computers happens by making calls via BLAS/LAPACK APIs, and there are several libraries that offer differing implementations of the underlying methods. Some of these libraries are faster than others; many are faster than the default implementation.</p>
+<p>If you do numerically intensive computing, you might want to make it faster. One way to do this is to switch out the backend implementation of linear algebra routines on your computer. At a low level, most linear algebra on your computer happens by making calls via BLAS/LAPACK APIs, and there are several libraries that offer differing implementations of the underlying methods. Some of these libraries are faster than others; many are faster than the default implementation.</p>
 <p>I use Intel MKL. On Ubuntu, you can install Intel MKL via the shell with:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install intel-mkl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can check your current BLAS/LAPACK implementation in <code>R</code> using <code>utils::sessionInfo()</code>:</p>
@@ -296,7 +296,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </section>
 <section id="the-solution" class="level2">
 <h2 class="anchored" data-anchor-id="the-solution">The solution</h2>
-<p>To avoid this problem, set the environmental variable <code>MKL_THREADING_LAYER=GNU</code>. You can check the current value of the <code>MKL_THREADING_LAYER</code> environmental variable via</p>
+<p>To avoid this problem, set the environment variable <code>MKL_THREADING_LAYER=GNU</code>. You can check the current value of the <code>MKL_THREADING_LAYER</code> environment variable via</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.getenv</span>(<span class="st">"MKL_THREADING_LAYER"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -305,19 +305,19 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </div>
 <p>When <code>MKL_THREADING_LAYER</code> is not set, it defaults to <code>INTEL</code>. To set <code>MKL_THREADING_LAYER=GNU</code> universally, you can update <code>/etc/environment</code>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"MKL_THREADING_LAYER=GNU"</span> <span class="op">&gt;&gt;</span> /etc/environment</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Alternatively, tell MKL to operate without parallelism by setting <code>MKL_NUM_THREADS=1</code>. Note that you will need to restart <code>R</code> for these changes to take effect. More generally, <a href="https://stackoverflow.com/a/74212620/5563099">environmental variables are typically read once, at program startup</a>, so you cannot use <code>Sys.setenv()</code> to set <code>MKL_THREADING_LAYER</code> at runtime. Similarly, you cannot change the number of threads MKL uses are runtime via environmental variables (see <a href="https://www.intel.com/content/www/us/en/develop/documentation/onemkl-linux-developer-guide/top/managing-performance-and-memory/improving-performance-with-threading/changing-the-number-of-openmp-threads-at-run-time.html">documentation</a>).</p>
-<p>If you want to test the effect of different environmental variables without leaving <code>R</code>, you can use <code>callr::r()</code>, as below:</p>
+<p>Alternatively, tell MKL to operate without parallelism by setting <code>MKL_NUM_THREADS=1</code>. Note that you will need to restart <code>R</code> for these changes to take effect. More generally, <a href="https://stackoverflow.com/a/74212620/5563099">environment variables are typically read once, at program startup</a>, so you cannot use <code>Sys.setenv()</code> to set <code>MKL_THREADING_LAYER</code> at runtime. Similarly, you cannot change the number of threads MKL uses at runtime via environment variables (see <a href="https://www.intel.com/content/www/us/en/develop/documentation/onemkl-linux-developer-guide/top/managing-performance-and-memory/improving-performance-with-threading/changing-the-number-of-openmp-threads-at-run-time.html">documentation</a>).</p>
+<p>If you want to test the effect of different environment variables without leaving <code>R</code>, you can use <code>callr::r()</code>, as below:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>callr<span class="sc">::</span><span class="fu">r</span>(can_induce_data_race, <span class="at">env =</span> <span class="fu">c</span>(<span class="at">MKL_THREADING_LAYER =</span> <span class="st">"INTEL"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2823.996</code></pre>
+<pre><code>[1] 2997.423</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>callr<span class="sc">::</span><span class="fu">r</span>(can_induce_data_race, <span class="at">env =</span> <span class="fu">c</span>(<span class="at">MKL_THREADING_LAYER =</span> <span class="st">"GNU"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 249.7852</code></pre>
 </div>
 </div>
-<p>If you would like to change set environmental variables locally (for example, if you want <code>targets</code> to manage parallelism across tasks, while running each individual task sequentially), use an <code>.Renviron</code> at the top level of your R project. You can do this via:</p>
+<p>If you would like to set environment variables locally (for example, if you want <code>targets</code> to manage parallelism across tasks, while running each individual task sequentially), use an <code>.Renviron</code> at the top level of your R project. You can do this via:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>(<span class="at">scope =</span> <span class="st">"project"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 

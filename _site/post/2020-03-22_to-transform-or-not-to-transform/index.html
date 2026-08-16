@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -95,10 +95,10 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-975e726794ce811e14261b5ab5acfd7c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0732fb268a8da304e632f8e6aea0557a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -299,7 +299,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#one-final-trick-box-cox-transformations" id="toc-one-final-trick-box-cox-transformations" class="nav-link" data-scroll-target="#one-final-trick-box-cox-transformations">One final trick: Box-Cox transformations</a></li>
   </ul></li>
-  <li><a href="#tl-dr" id="toc-tl-dr" class="nav-link" data-scroll-target="#tl-dr">TL; DR</a></li>
+  <li><a href="#tldr" id="toc-tldr" class="nav-link" data-scroll-target="#tldr">TL;DR</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/alexpghayes/quarto-blog/edit/main/post/2020-03-22_to-transform-or-not-to-transform/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alexpghayes/quarto-blog/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
 </nav>
@@ -317,17 +317,17 @@ window.Quarto = {
 <p>You may have heard that it is impossible to compare models when the outcome has been transformed in one model but not the other. This is not the case. Models fit to transformed data implicitly model the original data as well as the transformed data, and it is relatively straightforward to calculate the corresponding likelihoods. In this post, I’ll show you how to calculate these induced likelihoods. This will allow you to compare models fit to transformed data with models fit to the original, untransformed data.</p>
 <section id="setting" class="level2">
 <h2 class="anchored" data-anchor-id="setting">Setting</h2>
-<p>Let’s assume have some continuous data <span class="math inline">\(x_1, ..., x_n\)</span> that is independent and identically distributed. We transform this data via a nice, one-to-one function <span class="math inline">\(g : \mathbb{R} \to \mathbb{R}\)</span> that sends <span class="math inline">\(x \mapsto g(x)\)</span> to create a new data set <span class="math inline">\(y_1, ..., y_n\)</span>, such that <span class="math inline">\(y_i = g(x_i)\)</span>. We fit a model <span class="math inline">\(\mathcal M_x\)</span> on the original data <span class="math inline">\(x_1, ..., x_n\)</span> and a model <span class="math inline">\(\mathcal M_y\)</span> on the transformed data <span class="math inline">\(y_1, ..., y_n\)</span>. Call the density of <span class="math inline">\(\mathcal M_x\)</span> and <span class="math inline">\(\mathcal M_y\)</span> respectively <span class="math inline">\(f_x\)</span> and <span class="math inline">\(f_y\)</span>.</p>
+<p>Let’s assume we have some continuous data <span class="math inline">\(x_1, ..., x_n\)</span> that is independent and identically distributed. We transform this data via a nice, one-to-one function <span class="math inline">\(g : \mathbb{R} \to \mathbb{R}\)</span> that sends <span class="math inline">\(x \mapsto g(x)\)</span> to create a new data set <span class="math inline">\(y_1, ..., y_n\)</span>, such that <span class="math inline">\(y_i = g(x_i)\)</span>. We fit a model <span class="math inline">\(\mathcal M_x\)</span> on the original data <span class="math inline">\(x_1, ..., x_n\)</span> and a model <span class="math inline">\(\mathcal M_y\)</span> on the transformed data <span class="math inline">\(y_1, ..., y_n\)</span>. Call the density of <span class="math inline">\(\mathcal M_x\)</span> and <span class="math inline">\(\mathcal M_y\)</span> respectively <span class="math inline">\(f_x\)</span> and <span class="math inline">\(f_y\)</span>.</p>
 <p>Since <span class="math inline">\(\mathcal M_x\)</span> and <span class="math inline">\(\mathcal M_y\)</span> have been fit on different datasets, standard tools to compare <span class="math inline">\(\mathcal M_x\)</span> and <span class="math inline">\(\mathcal M_y\)</span> aren’t immediately applicable, and we have to use some tricks to compare them. Note that <a href="https://stats.stackexchange.com/questions/61332/comparing-aic-of-a-model-and-its-log-transformed-version">the internet</a> (and literature, for example <span class="citation" data-cites="burnham_model_2002">Burnham and Anderson (<a href="#ref-burnham_model_2002" role="doc-biblioref">2002</a>)</span> p.&nbsp;81-82) is littered with people saying that you can’t compare <span class="math inline">\(\mathcal M_x\)</span> and <span class="math inline">\(\mathcal M_y\)</span>, and the few references (for example <span class="citation" data-cites="akaike_likelihood_1978">Akaike (<a href="#ref-akaike_likelihood_1978" role="doc-biblioref">1978</a>)</span>) that do discuss <a href="https://avehtari.github.io/modelselection/CV-FAQ.html">how to compare models</a> with transformed responses are <a href="https://avehtari.github.io/ROS-Examples/Mesquite/mesquite.html">light on details</a>.</p>
 </section>
 <section id="that-density-transformation-stuff-that-everyone-is-always-forgetting" class="level2">
 <h2 class="anchored" data-anchor-id="that-density-transformation-stuff-that-everyone-is-always-forgetting">That density transformation stuff that everyone is always forgetting</h2>
-<p>The key observation is that putting a model on the <span class="math inline">\(y_i\)</span> is equivalent to putting a model on the <span class="math inline">\(x_i\)</span> since <span class="math inline">\(g\)</span> is a one-to-one mapping and <span class="math inline">\(y_i = g(x_i)\)</span>. In particular, <span class="math inline">\(\mathcal M_y\)</span> has a density in terms of <span class="math inline">\(x\)</span>, in addition to have a density in terms of <span class="math inline">\(y\)</span>. Let’s call this density <span class="math inline">\(f_{x'}\)</span>.</p>
+<p>The key observation is that putting a model on the <span class="math inline">\(y_i\)</span> is equivalent to putting a model on the <span class="math inline">\(x_i\)</span> since <span class="math inline">\(g\)</span> is a one-to-one mapping and <span class="math inline">\(y_i = g(x_i)\)</span>. In particular, <span class="math inline">\(\mathcal M_y\)</span> has a density in terms of <span class="math inline">\(x\)</span>, in addition to having a density in terms of <span class="math inline">\(y\)</span>. Let’s call this density <span class="math inline">\(f_{x'}\)</span>.</p>
 <p>At this point, we have to remember how transformations affect densities, which I always have to look up because I forget (<span class="citation" data-cites="casella_statistical_2002">Casella and Berger (<a href="#ref-casella_statistical_2002" role="doc-biblioref">2002</a>)</span> section 4.6 is one reference). In particular, for an individual <span class="math inline">\(y_i\)</span>, we have</p>
 <p><span class="math display">\[\begin{align}
   f_y(y_i) = f_{x'}(g^{-1} (y_i)) \cdot \left \vert \frac{\partial g^{-1}}{\partial y} (y_i) \right \vert,
 \end{align}\]</span></p>
-<p>where the second term comes the Jacobian correction when doing a transformation of variables during integration. Working with individual individual data points is acceptable because we assume that the data points are indepedent and <span class="math inline">\(y_i\)</span> is only a function of <span class="math inline">\(x_i\)</span>. Anyway, we leverage the transformed density to compute the log-likelihood of the <span class="math inline">\(y_i\)</span> under <span class="math inline">\(\mathcal M_y\)</span> and find</p>
+<p>where the second term comes from the Jacobian correction when doing a transformation of variables during integration. Working with individual data points is acceptable because we assume that the data points are independent and <span class="math inline">\(y_i\)</span> is only a function of <span class="math inline">\(x_i\)</span>. Anyway, we leverage the transformed density to compute the log-likelihood of the <span class="math inline">\(y_i\)</span> under <span class="math inline">\(\mathcal M_y\)</span> and find</p>
 <p><span class="math display">\[\begin{align}
   \log \mathcal L(y_1, ..., y_n | \mathcal M_{y})
   &amp;= \sum_{i=1}^n \log f_y(y_i) \\
@@ -340,7 +340,7 @@ window.Quarto = {
   &amp;= \sum_{i=1}^n \log f_{x'}(x_i) \\
   &amp;= \log \mathcal L(y_1, ..., y_n | \mathcal M_y) - \sum_{i=1}^n \log \left \vert \frac{\partial g^{-1}}{\partial y} (y_i) \right \vert.
 \end{align}\]</span></p>
-<p>So we can use a standard log-likelihood calculation for <span class="math inline">\(y_i\)</span> together with an adjustment to compensate for transformation, and end up with the induced likelihood on the original data. This induced likelihood will be comparable to the likelihood induced by <span class="math inline">\(\mathcal M_x\)</span>, and in general other models fit to the original, untransformed data.</p>
+<p>So we can use a standard log-likelihood calculation for <span class="math inline">\(y_i\)</span> together with an adjustment to compensate for transformation, and end up with the induced likelihood on the original data. This induced likelihood will be comparable to the likelihood induced by <span class="math inline">\(\mathcal M_x\)</span>, and, in general, to other models fit to the original, untransformed data.</p>
 </section>
 <section id="a-simple-example" class="level2">
 <h2 class="anchored" data-anchor-id="a-simple-example">A simple example</h2>
@@ -368,9 +368,9 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">trans</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>In our case, we’re using a <code>log()</code> transformation, which is nice because we need both the derive and the inverse of this function, and both of these are easy to figure out.</p>
-<p>Aside: for some traditional tranformations, such as Box-Cox transformations, or arcsine-square root transformation, finding the inverse by hand can be a pain. As a general rule, you can get the derivative either via automatic differentiation (not well supported in R) or numerical differentiation (moderately well supported in R). You can also use <code>uniroot()</code> to <a href="https://stackoverflow.com/questions/10081479/solving-for-the-inverse-of-a-function-in-r">find inverses</a>, but this approach is computationally expensive and I don’t in general recommend it.</p>
-<p>I strongly encourage an enterprising R developer to create an R package that provides objects encoding one-to-one transformations and their inverses, thus enabling the rest of us to be lazy. At the moment, the best hack I’ve come across is to the leverage link functions and their inverses from <code>family</code> objects.</p>
+<p>In our case, we’re using a <code>log()</code> transformation, which is nice because we need both the derivative and the inverse of this function, and both of these are easy to figure out.</p>
+<p>Aside: for some traditional transformations, such as Box-Cox transformations, or arcsine-square root transformation, finding the inverse by hand can be a pain. As a general rule, you can get the derivative either via automatic differentiation (not well supported in R) or numerical differentiation (moderately well supported in R). You can also use <code>uniroot()</code> to <a href="https://stackoverflow.com/questions/10081479/solving-for-the-inverse-of-a-function-in-r">find inverses</a>, but this approach is computationally expensive and I don’t in general recommend it.</p>
+<p>I strongly encourage an enterprising R developer to create an R package that provides objects encoding one-to-one transformations and their inverses, thus enabling the rest of us to be lazy. At the moment, the best hack I’ve come across is to leverage link functions and their inverses from <code>family</code> objects.</p>
 <p>Anyway, at some point, you define the transformation, and the inverse transformation. It’s a good idea to sanity check that the functions you write are actually inverses of each other:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">==</span> <span class="fu">inv_trans</span>(<span class="fu">trans</span>(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -386,8 +386,8 @@ window.Quarto = {
 [31] TRUE TRUE</code></pre>
 </div>
 </div>
-<p>In my case, I’m working with <code>log()</code>s, and so there’s some numerical error and my inverses are not quite exact. In practice, it turns out that I can ignore this for this post, but this may not always be case<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<p>Okay, now let’s define a function that computes the induced log-likelihood of <span class="math inline">\(\mathcal M_y\)</span> on the original, untransformated data. For convenience, I’m going to assume that our model is represented as a <code>distribution</code> object from my <a href="https://alexpghayes.github.io/distributions3/"><code>distributions3</code></a> package.</p>
+<p>In my case, I’m working with <code>log()</code>s, and so there’s some numerical error and my inverses are not quite exact. In practice, it turns out that I can ignore this for this post, but this may not always be the case<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>Okay, now let’s define a function that computes the induced log-likelihood of <span class="math inline">\(\mathcal M_y\)</span> on the original, untransformed data. For convenience, I’m going to assume that our model is represented as a <code>distribution</code> object from my <a href="https://alexpghayes.github.io/distributions3/"><code>distributions3</code></a> package.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(distributions3)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(numDeriv)</span>
@@ -434,7 +434,7 @@ window.Quarto = {
 </section>
 <section id="a-linear-regression-example" class="level2">
 <h2 class="anchored" data-anchor-id="a-linear-regression-example">A linear regression example</h2>
-<p>Now we’ll leave the pleasant world of <code>distributions3</code> and do a more practical linear regression example. Now we’ll use <code>mpg</code> as an outcome of a simple linear regression, and use the <code>wt</code> variable from the <code>mtcars</code> dataset as a predictor. We start by fitting out models, again using the <code>log()</code> transformation we previously defined.</p>
+<p>Now we’ll leave the pleasant world of <code>distributions3</code> and do a more practical linear regression example. Now we’ll use <code>mpg</code> as an outcome of a simple linear regression, and use the <code>wt</code> variable from the <code>mtcars</code> dataset as a predictor. We start by fitting our models, again using the <code>log()</code> transformation we previously defined.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>original_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, mtcars)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>transformed_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">trans</span>(mpg) <span class="sc">~</span> wt, mtcars)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -448,7 +448,7 @@ window.Quarto = {
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">logLik</span>(fit) <span class="sc">-</span> <span class="fu">sum</span>(<span class="fu">log</span>(<span class="fu">abs</span>(<span class="fu">grad</span>(inv_trans, y))))</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>This let’s us compare the original model and the transformed model:</p>
+<p>This lets us compare the original model and the transformed model:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(original_fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -459,8 +459,8 @@ window.Quarto = {
 <pre><code>'log Lik.' -75.21614 (df=3)</code></pre>
 </div>
 </div>
-<p>Again, it looks like the transformed model is slightly better (recall that high bigger densities are more likely, so high log-likelihoods are more probable). However, these models are not nested, and so we cannot apply standard likelihood ratio tests (or Wald or Rao tests).</p>
-<p>You may have been taught that this makes these models incomparable, but this is not the case. The log-likelihood is a proper scoring rule, and so all we really want is to minimize the log-likelihood, as measured on the original, untransformed data. The real issue is that there isn’t a nice analytical form for a likelihood ratio test.</p>
+<p>Again, it looks like the transformed model is slightly better (recall that bigger densities are more likely, so higher log-likelihoods are more probable). However, these models are not nested, and so we cannot apply standard likelihood ratio tests (or Wald or Rao tests).</p>
+<p>You may have been taught that this makes these models incomparable, but this is not the case. The log-likelihood is a proper scoring rule, and so all we really want is to maximize the log-likelihood, as measured on the original, untransformed data. The real issue is that there isn’t a nice analytical form for a likelihood ratio test.</p>
 <p>However, we can use the bootstrap to estimate a sampling distribution for the log-likelihoods of these models, just like we might with another loss function like mean square error<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <p>Anyway, here’s some code for a simple bootstrap:</p>
 <div class="cell">
@@ -517,7 +517,7 @@ window.Quarto = {
 <pre><code>[1] 156.4323</code></pre>
 </div>
 </div>
-<p>So tranformation is better in terms of AIC (smaller is better).</p>
+<p>So transformation is better in terms of AIC (smaller is better).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(original_fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -547,10 +547,10 @@ window.Quarto = {
 <p>If you come from a machine learning background, you may find this whole exercise pointless, for two reasons.</p>
 <p>The first is that you’re probably using an estimator that doesn’t give you densities for your predictions, so comparing likelihoods of transformed and untransformed models isn’t possible for you. It probably feels natural to get predictions using your model fit to the transformed data, and then backtransform to get predictions on the original scale.</p>
 <p>This is what <code>sklearn</code> does with the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.compose.TransformedTargetRegressor.html"><code>TransformedTargetRegressor</code></a>, for example. You may be surprised to learn that this approach does not in general result in consistent predictions for conditional means! See <span class="citation" data-cites="duan_smearing_1983">Duan (<a href="#ref-duan_smearing_1983" role="doc-biblioref">1983</a>)</span> for a short, pleasant read on why this is not the case, as well as an introduction to Duan’s smearing estimator, which is consistent for prediction under some relatively sane conditions on the transformation <span class="math inline">\(g\)</span>. As a general rule, backtransformed predictions can be surprisingly nasty to reason about.</p>
-<p>You might also have a second complaint, which is that the likelihood is dumb loss function, and that you should use mean squared error instead. If this is the case, invite your friendly neighborhood Bayesian to yell at you.</p>
+<p>You might also have a second complaint, which is that the likelihood is a dumb loss function, and that you should use mean squared error instead. If this is the case, invite your friendly neighborhood Bayesian to yell at you.</p>
 <section id="one-final-trick-box-cox-transformations" class="level3">
 <h3 class="anchored" data-anchor-id="one-final-trick-box-cox-transformations">One final trick: Box-Cox transformations</h3>
-<p>It turns out that this likelihood adjustment trick is also how to people estimate the optimal <span class="math inline">\(\lambda\)</span> for Box-Cox transformations. The Box-Cox transformation is a slight variation on a power tranformation such that <span class="math inline">\(\lambda = 0\)</span> corresponds to taking a logarithm, and looks like:</p>
+<p>It turns out that this likelihood adjustment trick is also how people estimate the optimal <span class="math inline">\(\lambda\)</span> for Box-Cox transformations. The Box-Cox transformation is a slight variation on a power transformation such that <span class="math inline">\(\lambda = 0\)</span> corresponds to taking a logarithm, and looks like:</p>
 <p><span class="math display">\[\begin{align}
   y &amp;=
   \begin{cases}
@@ -614,8 +614,8 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="tl-dr" class="level2">
-<h2 class="anchored" data-anchor-id="tl-dr">TL; DR</h2>
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
 <ol type="1">
 <li><p>Comparing models with transformed and non-transformed outcomes is hard. You should probably use held-out induced likelihoods for these comparisons, or maybe the <a href="../2018-05-03_performance-assessments-via-bootstrap-variants/">optimism bootstrap</a>.</p></li>
 <li><p>Prediction is hard with transformations. Use Duan’s Smearing estimator. Also, please, please, please report error on the original scale. Nobody knows how to interpret the root mean square error of log home price.</p></li>
@@ -623,8 +623,8 @@ window.Quarto = {
 <li><p>There isn’t much computational infrastructure to support inference after transformation, so be aware of how this can cause frustration down the line.</p></li>
 <li><p>Just use a GLM with a link function instead. You can thank me later.</p></li>
 </ol>
-<p>Thanks to Aki Vehtari for writing an <a href="https://avehtari.github.io/modelselection/CV-FAQ.html">FAQ on cross-validation</a> with some comments on transformed outcomes. I didn’t understand some of his comments, and this post is largely a result of me sorting those comments out for myself. Also thanks to commenters who point out helped me when I got stuck in this <a href="https://discourse.mc-stan.org/t/jacobian-correction-to-likelihood-of-transformed-response/13780">Stan discourse thread</a>.</p>
-<p>If you are interested in trying out many transformations all at once, with a Gaussian model on the transformed outcome, you may be interested in the <a href="https://cran.r-project.org/web/packages/trafo/index.html"><code>trafo</code></a> package (<span class="citation" data-cites="medina_r_2019">Medina et al. (<a href="#ref-medina_r_2019" role="doc-biblioref">2019</a>)</span>). The associated <a href="https://journal.r-project.org/archive/2019/RJ-2019-054/index.html">paper in the R journal</a> derives likelihood adjustments for an enormous number of common transformations. Note that <code>trafo</code> takes a rather different approach to model selection that I do in this blog post – i.e.&nbsp;it helps you find a transformation of your outcome that has normally distributed errors with constant variance, whereas I instead suggest choosing the model that minimizes out-of-sample log-likelihood.</p>
+<p>Thanks to Aki Vehtari for writing an <a href="https://avehtari.github.io/modelselection/CV-FAQ.html">FAQ on cross-validation</a> with some comments on transformed outcomes. I didn’t understand some of his comments, and this post is largely a result of me sorting those comments out for myself. Also thanks to commenters who helped me when I got stuck in this <a href="https://discourse.mc-stan.org/t/jacobian-correction-to-likelihood-of-transformed-response/13780">Stan discourse thread</a>.</p>
+<p>If you are interested in trying out many transformations all at once, with a Gaussian model on the transformed outcome, you may be interested in the <a href="https://cran.r-project.org/web/packages/trafo/index.html"><code>trafo</code></a> package (<span class="citation" data-cites="medina_r_2019">Medina et al. (<a href="#ref-medina_r_2019" role="doc-biblioref">2019</a>)</span>). The associated <a href="https://journal.r-project.org/archive/2019/RJ-2019-054/index.html">paper in the R journal</a> derives likelihood adjustments for an enormous number of common transformations. Note that <code>trafo</code> takes a rather different approach to model selection than I do in this blog post – i.e.&nbsp;it helps you find a transformation of your outcome that has normally distributed errors with constant variance, whereas I instead suggest choosing the model that maximizes out-of-sample log-likelihood.</p>
 
 
 
@@ -654,8 +654,8 @@ Medina, Lily, Ann-Kristin Kreutzmann, Natalia Rojas-Perilla, and Piedad Castro. 
 
 <ol>
 <li id="fn1"><p>John Cook has a <a href="https://www.johndcook.com/blog/2009/04/06/anatomy-of-a-floating-point-number/">blog post</a> that’s a nice introduction if you haven’t seen floating point arithmetic before. After that <span class="citation" data-cites="goldberg_what_1991">Goldberg (<a href="#ref-goldberg_what_1991" role="doc-biblioref">1991</a>)</span> is a classic reference worth at least skimming.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>You could also do cross-validation, but it turns out that it’s more difficult than I expected to calculate out-of-sample predictive likelihoods in R. The optimism bootstrap is a nice option here, since you get an approximately unbiased measure risk estimate without having to do out-of-sample calculations.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>It is also fairly natural to compare the deviance of the transformed and untransformed models, and in the process of playing with this, I can across the rather odd result that <code>deviance()</code> and <code>-2 * logLik()</code> don’t return the same thing on <code>lm()</code> objects.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>You could also do cross-validation, but it turns out that it’s more difficult than I expected to calculate out-of-sample predictive likelihoods in R. The optimism bootstrap is a nice option here, since you get an approximately unbiased estimate of risk without having to do out-of-sample calculations.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>It is also fairly natural to compare the deviance of the transformed and untransformed models, and in the process of playing with this, I came across the rather odd result that <code>deviance()</code> and <code>-2 * logLik()</code> don’t return the same thing on <code>lm()</code> objects.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,10 +76,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-975e726794ce811e14261b5ab5acfd7c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0732fb268a8da304e632f8e6aea0557a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -348,7 +348,7 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">real</span> alpha;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>says that <code>alpha</code> is a number you want to use. Numbers can have upper and lower bounds (for example, you’ll want numbers representing variances to be non-negative):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; alpha;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Integers can promoted to reals, but reals are never demoted to integers. The other two objects you should know about are <code>vector</code>s and <code>matrix</code>s. <code>vector</code>s and <code>matrix</code>s contain <code>real</code> elements. When you declare <code>vector</code>s and <code>matrix</code>s, you have to tell Stan how big they are:</p>
+<p>Integers can be promoted to reals, but reals are never demoted to integers. The other two objects you should know about are <code>vector</code>s and <code>matrix</code>s. <code>vector</code>s and <code>matrix</code>s contain <code>real</code> elements. When you declare <code>vector</code>s and <code>matrix</code>s, you have to tell Stan how big they are:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">vector</span>[N] x;    <span class="co">// a vector with N elements</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">matrix</span>[N, M] A; <span class="co">// an N x M matrix</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you declare variable bounds, you do that before the brackets:</p>
@@ -601,13 +601,13 @@ alpha[3]  956020.3 509425.0  966268.2 180645.1 567420.8 4698098     4 1.50
 alpha[4] 1291672.4 729440.3 1344858.7 245605.8 716285.4 6469577     3 1.52
 alpha[5]  863943.5 452132.4  863443.0 158560.7 521376.2 4209467     4 1.50
 
-Samples were drawn using NUTS(diag_e) at Wed Apr 15 15:48:06 2026.
+Samples were drawn using NUTS(diag_e) at Sun Aug 16 10:46:47 2026.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
 </div>
 </div>
-<p>It works! That’s great, sampling is actually happening. We get a lot warnings from Stan when we fit this model; these tell us that something is probably wrong. Here I realized that I should actually pass <code>alpha</code> to <code>sampling</code>, and that I’d actually given it a hyperprior by accident. So I changed this, and gave group 0 and group 1 different parameters <code>theta</code>, resulting in:</p>
+<p>It works! That’s great, sampling is actually happening. We get a lot of warnings from Stan when we fit this model; these tell us that something is probably wrong. Here I realized that I should actually pass <code>alpha</code> to <code>sampling</code>, and that I’d actually given it a hyperprior by accident. So I changed this, and gave group 0 and group 1 different parameters <code>theta</code>, resulting in:</p>
 <div class="cell" data-output.var="m2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">// survey_2.stan</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -744,24 +744,24 @@ theta_0[15,3] 0.34       0 0.06 0.21 0.34  0.46  1153 1.00
 theta_0[15,4] 0.20       0 0.05 0.11 0.20  0.30  1192 1.00
 theta_0[15,5] 0.18       0 0.05 0.10 0.18  0.29   939 1.00
 
-Samples were drawn using NUTS(diag_e) at Wed Apr 15 15:48:59 2026.
+Samples were drawn using NUTS(diag_e) at Sun Aug 16 10:47:40 2026.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
 </div>
 </div>
-<p>Note that the warnings go away! The new model actually makes sense, and as a consequence no longer stretches the sampler to a breaking point. At this point I has happy with the core logic of the model, so I used ShinyStan to check MCMC diagnostics and make sure that all the chains were mixing, etc:</p>
+<p>Note that the warnings go away! The new model actually makes sense, and as a consequence no longer stretches the sampler to a breaking point. At this point I was happy with the core logic of the model, so I used ShinyStan to check MCMC diagnostics and make sure that all the chains were mixing, etc:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>shinystan<span class="sc">::</span><span class="fu">launch_shinystan</span>(fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>That all checked out, which isn’t a surprise, since we’re effectively estimating a bunch of proportions, so it would be weird if things started exploding.</p>
 <p>But really, my original idea was to see how well this model would predict respondent group, so we need to do some more work.</p>
-<p>I wanted <span class="math inline">\(P(y = 0)\)</span> given a person’s set of responses <span class="math inline">\(R_{i1}, ..., R_{iA}\)</span>. This was one of those instances were I was intimated by how to figure that out, but then it all became clear with a minute or two of pen and paper work.</p>
+<p>I wanted <span class="math inline">\(P(y = 0)\)</span> given a person’s set of responses <span class="math inline">\(R_{i1}, ..., R_{iA}\)</span>. This was one of those instances where I was intimidated by how to figure that out, but then it all became clear with a minute or two of pen and paper work.</p>
 <p>Bayes rule gives us that <span class="math inline">\(P(y_i = 0 | R_{i1}, ..., R_{iA})\)</span> equals</p>
 <p><span class="math display">\[\begin{align}
 P(R_{i1}, ..., R_{iA} | y_i = 0) P(y_i = 0) \over
    P(R_{i1}, ..., R_{iA} | y_i = 0) P(y_i = 0) +
    P(R_{i1}, ..., R_{iA} | y_i = 1) P(y_i = 1)
 \end{align}\]</span></p>
-<p>to deal with <span class="math inline">\(P(y_i = 0)\)</span> and <span class="math inline">\(P(y_i = 1)\)</span> we need a prior on <span class="math inline">\(y\)</span>. I just assumed that <span class="math inline">\(P(y_i = 0) = P(y_i = 1) = 0.5\)</span>, so those terms cancel. Next we can also assume that questions are independent from other questions, and continue with:</p>
+<p>To deal with <span class="math inline">\(P(y_i = 0)\)</span> and <span class="math inline">\(P(y_i = 1)\)</span> we need a prior on <span class="math inline">\(y\)</span>. I just assumed that <span class="math inline">\(P(y_i = 0) = P(y_i = 1) = 0.5\)</span>, so those terms cancel. Next we can also assume that questions are independent from other questions, and continue with:</p>
 <p><span class="math display">\[\begin{align}
 &amp;= {\prod_{j=1}^A P(R_{ij} | y_i = 0)  \over
   \prod_{j=1}^A P(R_{ij} | y_i = 0) + \prod_{j=1}^A P(R_{ij} | y_i = 1)} \\
@@ -843,7 +843,7 @@ P(R_{i1}, ..., R_{iA} | y_i = 0) P(y_i = 0) \over
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(m3, <span class="at">data =</span> data, <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span>)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit3, <span class="at">pars =</span> <span class="st">"p"</span>, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>4  1486    1
+<pre><code>94  1486    1
 p[31] 0.91    0.00 0.12 0.54 0.95  1.00  1189    1
 p[32] 0.55    0.01 0.26 0.07 0.57  0.96  1321    1
 p[33] 0.66    0.01 0.23 0.17 0.71  0.97  1447    1
@@ -885,7 +885,7 @@ p[68] 0.12    0.01 0.14 0.00 0.06  0.53   722    1
 p[69] 0.16    0.01 0.17 0.01 0.10  0.67   777    1
 p[70] 0.18    0.01 0.19 0.00 0.11  0.73  1117    1
 
-Samples were drawn using NUTS(diag_e) at Wed Apr 15 15:49:55 2026.
+Samples were drawn using NUTS(diag_e) at Sun Aug 16 10:48:33 2026.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -1104,7 +1104,7 @@ new_pred[68] 0.75    0.01 0.22 0.17 0.82  0.99  1116 1.00
 new_pred[69] 0.27    0.01 0.23 0.01 0.19  0.83  1329 1.00
 new_pred[70] 0.51    0.01 0.26 0.07 0.51  0.94  1822 1.00
 
-Samples were drawn using NUTS(diag_e) at Wed Apr 15 15:50:49 2026.
+Samples were drawn using NUTS(diag_e) at Sun Aug 16 10:49:27 2026.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -1181,7 +1181,7 @@ convergence, Rhat=1).</code></pre>
 </div>
 </div>
 <p>The data is made up, so this isn’t terribly interesting, but if these were actual responses there might be something here.</p>
-<p>At this point, we’ve got the Stan part of things working, the rest of our job is just figuring out how to munge the samples back in R.</p>
+<p>At this point, we’ve got the Stan part of things working; the rest of our job is just figuring out how to munge the samples back in R.</p>
 </section>
 <section id="the-end" class="level2">
 <h2 class="anchored" data-anchor-id="the-end">The End</h2>
@@ -1195,10 +1195,10 @@ convergence, Rhat=1).</code></pre>
 </ul>
 <p><strong>Blogs and tutorials</strong></p>
 <p>I recommend that you read much more Stan than you write as you’re getting started. Reading lots of Stan will acquaint you with what is possible and general conventions. <a href="https://khakieconomics.github.io/">khakieconomics</a> by Jim Savage is my favorite place to read about both Stan and clever generative modeling. Mikhail Popov has a <a href="http://paws-public.wmflabs.org/paws-public/User:MPopov_(WMF)/intervention-analysis-rstan.ipynb">great notebook on time series innovations</a>.</p>
-<p>In terms of more didactic material, Michael Clark’s <a href="https://m-clark.github.io/bayesian-basics/">Bayesian Basics</a> is a nice introduction to Bayes. You may also enjoy Rasmus Bååth’s <a href="http://www.sumsar.net/files/posts/2017-01-15-bayesian-computation-with-stan-and-farmer-jons/stan_exercise.html">exercises</a>, which are both an introduction to both Stan and Bayesian inference.</p>
+<p>In terms of more didactic material, Michael Clark’s <a href="https://m-clark.github.io/bayesian-basics/">Bayesian Basics</a> is a nice introduction to Bayes. You may also enjoy Rasmus Bååth’s <a href="http://www.sumsar.net/files/posts/2017-01-15-bayesian-computation-with-stan-and-farmer-jons/stan_exercise.html">exercises</a>, which are an introduction to both Stan and Bayesian inference.</p>
 <p><strong>Reference</strong></p>
 <ul>
-<li><p><a href="https://mc-stan.org/docs/2_29/stan-users-guide/">Stan Manual</a>: The canonical reference. You answer is probably somewhere in here, if you can find it.</p></li>
+<li><p><a href="https://mc-stan.org/docs/2_29/stan-users-guide/">Stan Manual</a>: The canonical reference. Your answer is probably somewhere in here, if you can find it.</p></li>
 <li><p><a href="https://mc-stan.org/docs/2_29/stan-users-guide/example-models.html#example-models.part">Stan Example Models</a>: A huge number of example implementations. Part of the Stan Manual.</p></li>
 <li><p><a href="https://mc-stan.org/docs/2_18/functions-reference/">Stan Function Reference</a>: Function documentation for Stan functions.</p></li>
 </ul>
@@ -1210,8 +1210,8 @@ convergence, Rhat=1).</code></pre>
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>The other nice thing about Stan is that you end using the same estimator for all your models. This means there’s no context switching when you move to a different estimator and have to remember how to do inference all over again.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>After reading <a href="https://www.divio.com/blog/documentation/">What nobody tells you about documention</a>, I’d classify most existing Stan resources as Reference and How To Guides. I think there’s a lot of opportunity to introduce the language to a broader audience via more introductory tutorials.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>The other nice thing about Stan is that you end up using the same estimator for all your models. This means there’s no context switching when you move to a different estimator and have to remember how to do inference all over again.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>After reading <a href="https://www.divio.com/blog/documentation/">What nobody tells you about documentation</a>, I’d classify most existing Stan resources as Reference and How To Guides. I think there’s a lot of opportunity to introduce the language to a broader audience via more introductory tutorials.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script>

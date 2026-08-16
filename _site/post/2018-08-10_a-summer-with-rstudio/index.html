@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -41,10 +41,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-975e726794ce811e14261b5ab5acfd7c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0732fb268a8da304e632f8e6aea0557a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -251,7 +251,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="development-approach">Development approach</h2>
 <p>Working with Dave was incredibly empowering. I highly recommend working with Dave if you ever get the chance.</p>
 <p>Our general strategy was to have one or two video calls each week. Typically we each had some priorities for <code>broom</code> development and would set priorities and hash out any major decisions together. Occasionally I’d pitch Dave on some overambitious project – he pretty much was always all in.</p>
-<p>For the most part I had free rein to make pretty much whatever changes I felt like. Dave would occasionally comment on issues, but for the most part I was just having at on my own. This freedom was awesome.</p>
+<p>For the most part I had free rein to make pretty much whatever changes I felt like. Dave would occasionally comment on issues, but for the most part I was just having at it on my own. This freedom was awesome.</p>
 </section>
 <section id="what-i-worked-on" class="level2">
 <h2 class="anchored" data-anchor-id="what-i-worked-on">What I worked on</h2>
@@ -264,7 +264,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <li>~10 new tidiers (mostly contributed)</li>
 <li>Tons of bug fixes (mostly contributed)</li>
 </ul>
-<p>I won’t rehash the details, which you can find at the tidyverse blog post I linked to above, but suffice it to say the release was pretty big. A couple weeks ago I gave a presentation to the tidyverse team on my work; those slides (rough) are <a href="https://github.com/alexpghayes/rstudio-internship-broom-progress-update/">here</a>.</p>
+<p>I won’t rehash the details, which you can find in the tidyverse blog post I linked to above, but suffice it to say the release was pretty big. A couple weeks ago I gave a presentation to the tidyverse team on my work; those slides (rough) are <a href="https://github.com/alexpghayes/rstudio-internship-broom-progress-update/">here</a>.</p>
 </section>
 <section id="next-steps-for-broom" class="level2">
 <h2 class="anchored" data-anchor-id="next-steps-for-broom">Next steps for broom</h2>
@@ -283,11 +283,11 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="things-i-learned">Things I learned</h2>
 <section id="technical-takeaways" class="level3">
 <h3 class="anchored" data-anchor-id="technical-takeaways">Technical takeaways</h3>
-<p>Broom is basically three R generics plus a hundred or so methods for each of those generics. None of the methods are especially long – I’d be surprised if any is more than 100 lines of code. This means that most of the technical problems in broom are isolated and easy to fix, because they don’t interact with other moving components (Dana and Tim, the <code>ggplot2</code> and <code>Shiny</code> interns would sometimes spends several days on the same heinous bug, which I fortunately avoided!).</p>
+<p>Broom is basically three R generics plus a hundred or so methods for each of those generics. None of the methods are especially long – I’d be surprised if any is more than 100 lines of code. This means that most of the technical problems in broom are isolated and easy to fix, because they don’t interact with other moving components (Dana and Tim, the <code>ggplot2</code> and <code>Shiny</code> interns would sometimes spend several days on the same heinous bug, which I fortunately avoided!).</p>
 <p>The hard part of broom is not the technical aspect of writing the tidiers, but rather the design aspect of deciding what tidiers should do. Especially for models that you’ve never used before, this can be unclear.</p>
 <p>I will say that working with model objects in R is a special kind of frustrating in which everybody partially follows some conventions, but you never know which ones<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. For the first time in my life I found myself using test driven development.</p>
 <p>I didn’t produce the cleanest git history of all time, but I also didn’t bork anything up massively either, which I consider a success. I did break the build twice (?), so apologies if that affected you.</p>
-<p>At the beginning of the summer, RStudio offered me a laptop to develop on, which I declined. That was a mistake. My personal computer is getting old and, more critically, runs Windows, which made some development tasks painful (revdep checks for example). The time to get to familiar with a fast new MBP from RStudio was definitely work it.</p>
+<p>At the beginning of the summer, RStudio offered me a laptop to develop on, which I declined. That was a mistake. My personal computer is getting old and, more critically, runs Windows, which made some development tasks painful (revdep checks for example). The time to get familiar with a fast new MBP from RStudio was definitely worth it.</p>
 </section>
 <section id="open-source" class="level3">
 <h3 class="anchored" data-anchor-id="open-source">Open source</h3>
@@ -297,28 +297,28 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 <p><img src="broom_readme.png" class="img-fluid quarto-figure quarto-figure-right figure-img" alt="Screenshot of the broom README"></p>
 </figure>
 </div>
-<p>My takeaways from this time was that community matters. A lot. I was surprised by the number of PRs from 12+ months ago that came back to glorious life. In general, I tried to bring enthusiasm to all my Github activity. I also embraced the emoji more fully as a tool for clarifying tone.</p>
-<p>I’m realizing that my willingness to contributor to open source projects (and even to use other packages) has a lot to do with how I feel about the community. Life is short, and I like writing code for kind people. The broom contributors have been fantastic to work with, and I look forward to continued collaboration.</p>
+<p>My takeaways from this time were that community matters. A lot. I was surprised by the number of PRs from 12+ months ago that came back to glorious life. In general, I tried to bring enthusiasm to all my Github activity. I also embraced the emoji more fully as a tool for clarifying tone.</p>
+<p>I’m realizing that my willingness to contribute to open source projects (and even to use other packages) has a lot to do with how I feel about the community. Life is short, and I like writing code for kind people. The broom contributors have been fantastic to work with, and I look forward to continued collaboration.</p>
 <p>I’ve adopted a philosophy of <em>Merge now, refactor later</em>. Merged PRs generate enthusiasm, and if you need to go back and make some changes down the line, that’s okay in a project like broom. Similarly, I’ve tried to remember to have all contributors list themselves as contributors in the package description: if you put in the time to make a PR, you should get credit for it.</p>
 <p>It’s become increasingly clear that broom’s success depends on high quality PRs. The people who write new tidiers typically have domain knowledge that Dave and I don’t, and it’s best to have a frequent user of a model write the tidying methods. A large portion of the summer has been spent writing documentation to make it easier to contribute these tidiers.</p>
 </section>
 <section id="working-remotely" class="level3">
 <h3 class="anchored" data-anchor-id="working-remotely">Working remotely</h3>
-<p>I’m a fan of working remotely. Personally, I tried to stick to the 9 - 5 schedule fairly closely, with exceptions for errands and bike rides. It’s nice to not have someone looking over your shoulder, but I definitely found that I needed to be proactive about get work done. When I deviated too far from my schedule I found that I wasn’t as productive and that my stress levels went up.</p>
+<p>I’m a fan of working remotely. Personally, I tried to stick to the 9 - 5 schedule fairly closely, with exceptions for errands and bike rides. It’s nice to not have someone looking over your shoulder, but I definitely found that I needed to be proactive about getting work done. When I deviated too far from my schedule I found that I wasn’t as productive and that my stress levels went up.</p>
 <p>This internship was also my first 40 hour / week job. Writing code for 8 hours a day is exhausting. I started drinking a second coffee at 5 pm to kick my brain back into gear for socializing and getting out of the house. I worked in a coffee-shop one day a week or so.</p>
 <p>I also started scheduling social time a few days ahead of time, because if I didn’t I found I wasn’t leaving the house enough. I was lucky to be living with my hyperactive family this summer, but anticipate that I would have needed to be even more socially proactive if I were working remotely in an apartment on my own.</p>
 </section>
 </section>
 <section id="what-was-most-rewarding" class="level2">
 <h2 class="anchored" data-anchor-id="what-was-most-rewarding">What was most rewarding</h2>
-<p>The best of my summer was the success of the <code>Beginner Friendly</code> tag on Github issues. A number of people make their first ever PRs to <code>broom</code>, and that made me really happy. I remember having a hard time getting into open source, and I’d like to make that transition easier for others if I can (keep an eye for an upcoming post on how to make your first PR!).</p>
+<p>The best part of my summer was the success of the <code>Beginner Friendly</code> tag on Github issues. A number of people made their first ever PRs to <code>broom</code>, and that made me really happy. I remember having a hard time getting into open source, and I’d like to make that transition easier for others if I can (keep an eye for an upcoming post on how to make your first PR!).</p>
 <div class="quarto-figure quarto-figure-right">
 <figure class="figure">
 <p><img src="broom_beginner_friendly.png" class="img-fluid quarto-figure quarto-figure-right figure-img" alt="Screenshot of broom github issues with beginner friendly label"></p>
 </figure>
 </div>
 <p>I also enjoyed feeling empowered to make design decisions for broom and the level of freedom I had in setting my own goals and playing around in the code base.</p>
-<p>Spending time with the other interns was another highlight. We had a weekly intern-only coffee chat and private slack channel that featured a lot emotional support, technical support and the party parrot emoji.</p>
+<p>Spending time with the other interns was another highlight. We had a weekly intern-only coffee chat and private slack channel that featured a lot of emotional support, technical support and the party parrot emoji.</p>
 <p>Finally, working with broom has exposed me to a broad variety of statistical models. Over the course of the summer I’ve been writing up and slowly revising an essay on software abstractions for modeling software. Working on broom has inspired a number of interesting conversations in this vein that I look forward to continuing.</p>
 </section>
 <section id="what-could-have-gone-differently" class="level2">

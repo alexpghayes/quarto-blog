@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,10 +76,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-975e726794ce811e14261b5ab5acfd7c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0732fb268a8da304e632f8e6aea0557a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -296,7 +296,7 @@ window.Quarto = {
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>I’ll use the built in <code>iris</code> dataset for this post. If you’ve already seen the iris dataset a hundred times, I apologize. Our goal will be to predict the <code>Species</code> of an iris flower based on four numerical measures of the flower: <code>Sepal.Length</code>, <code>Speal.Width</code>, <code>Petal.Length</code> and <code>Petal.Width</code>. There are 150 measurements and three species of iris: <code>setosa</code>, <code>versicolor</code> and <code>virginica</code>.</p>
+<p>I’ll use the built in <code>iris</code> dataset for this post. If you’ve already seen the iris dataset a hundred times, I apologize. Our goal will be to predict the <code>Species</code> of an iris flower based on four numerical measures of the flower: <code>Sepal.Length</code>, <code>Sepal.Width</code>, <code>Petal.Length</code> and <code>Petal.Width</code>. There are 150 measurements and three species of iris: <code>setosa</code>, <code>versicolor</code> and <code>virginica</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
@@ -327,7 +327,7 @@ P(y = k|x) = {\exp(\beta_k^T x) \over 1 + \sum_{k=1}^{K - 1} \exp(\beta_k^T x)}
 <p><span class="math display">\[
 P(y = K|x) = {1 \over 1 + \sum_{k=1}^{K - 1} \exp(\beta_k^T x)}
 \]</span></p>
-<p>There are only <span class="math inline">\(K-1\)</span> coefficient vectors in order to prevent overparameterization<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The purpose here isn’t to describe the model in any meaningful detail, but rather to remind you of what it looks like. I strongly encourage you to read <a href="http://data.princeton.edu/wws509/notes/c6s3.html">this fantastic derivation</a> of multinomial logistic regression, which follows the work that lead to McFadden’s Noble prize in economics in 2000.</p>
+<p>There are only <span class="math inline">\(K-1\)</span> coefficient vectors in order to prevent overparameterization<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The purpose here isn’t to describe the model in any meaningful detail, but rather to remind you of what it looks like. I strongly encourage you to read <a href="http://data.princeton.edu/wws509/notes/c6s3.html">this fantastic derivation</a> of multinomial logistic regression, which follows the work that led to McFadden’s Nobel prize in economics in 2000.</p>
 <p>If you’d like to interpret the coefficients, I recommend reading the <a href="https://stats.idre.ucla.edu/stata/output/multinomial-logistic-regression-2/">Stata page</a>, but I won’t rehash that here. Instead we’ll explore partial dependence plots as a way of understanding the fit model.</p>
 </section>
 <section id="partial-dependence-plots" class="level2">
@@ -347,7 +347,7 @@ P(y = K|x) = {1 \over 1 + \sum_{k=1}^{K - 1} \exp(\beta_k^T x)}
 <p>More formally, suppose that we have a data set <span class="math inline">\(X = [x_s \, x_c] \in \mathbb R^{n \times p}\)</span> where <span class="math inline">\(x_s\)</span> is a matrix of variables we want to know the partial dependencies for and <span class="math inline">\(x_c\)</span> is a matrix of the remaining predictors. Suppose we estimate some fit <span class="math inline">\(\hat f\)</span>.</p>
 <p>Then <span class="math inline">\(\hat f_s (x)\)</span>, the partial dependence of <span class="math inline">\(\hat f\)</span> <em>at</em> <span class="math inline">\(x\)</span> (here <span class="math inline">\(x\)</span> lives in the same space as <span class="math inline">\(x_s\)</span>), is defined as:</p>
 <p><span class="math display">\[\hat f_s(x) = {1 \over n} \sum_{i=1}^n \hat f(x, x_{c_i})\]</span></p>
-<p>This says: hold <span class="math inline">\(x\)</span> constant for the variables of interest and take the average prediction over all other combinations of other variables in the training set. So we need to pick variables of interest, and also to pick a region of the space that <span class="math inline">\(x_s\)</span> lives in that we are interested in. Be careful extrapolating the marginal mean of <span class="math inline">\(f(x)\)</span> outside of this region!</p>
+<p>This says: hold <span class="math inline">\(x\)</span> constant for the variables of interest and take the average prediction over all combinations of the other variables in the training set. So we need to pick variables of interest, and also to pick a region of the space that <span class="math inline">\(x_s\)</span> lives in that we are interested in. Be careful extrapolating the marginal mean of <span class="math inline">\(f(x)\)</span> outside of this region!</p>
 <p>Here’s an example implementation in R. We start by fitting a multinomial regression to the <code>iris</code> dataset.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
@@ -523,7 +523,7 @@ AIC: 31.89973 </code></pre>
 </section>
 <section id="takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
-<p>Partial dependence plots are useful tool to understand the marginal behavior of models. The plots are especially helpful when telling a story about what your model means. In this post, I’ve only worked with continuous predictors, but you can calculate partial dependencies for categorical predictors as well, although you’ll probably want to plot them slightly differently. Additionally, it’s natural to consider the partial dependencies of a model when <span class="math inline">\(x_s\)</span> is multidimensional, in which case you can visualize marginal response surfaces.</p>
+<p>Partial dependence plots are a useful tool to understand the marginal behavior of models. The plots are especially helpful when telling a story about what your model means. In this post, I’ve only worked with continuous predictors, but you can calculate partial dependencies for categorical predictors as well, although you’ll probably want to plot them slightly differently. Additionally, it’s natural to consider the partial dependencies of a model when <span class="math inline">\(x_s\)</span> is multidimensional, in which case you can visualize marginal response surfaces.</p>
 <p>I recommend using the <a href="https://bgreenwell.github.io/pdp/index.html"><code>pdp</code></a> package to calculate partial dependencies in practice, and refer you to Christoph Molnar’s excellent <a href="https://christophm.github.io/interpretable-ml-book/pdp.html">book on interpretable machine learning</a> for additional reading.</p>
 
 
@@ -533,8 +533,8 @@ AIC: 31.89973 </code></pre>
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>Some machine learning courses present multinomial regression using a <span class="math inline">\(K \times p\)</span> coefficient matrix, but then estimate the coefficients with some sort of penalty. The penalty is necessary to prevent the likelihood from becoming infinite (in the <span class="math inline">\(k \times p\)</span> parameterization, multiplying <span class="math inline">\(\beta\)</span> by any constant <span class="math inline">\(c\)</span> retains the same class probabilities while inflating the likelihood). Statisticians are typically more interested in unbiased estimators and present the <span class="math inline">\((K-1) \times p\)</span> parameterization.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>At one point I began wondering how to get a small but representative subset of <span class="math inline">\(x_c\)</span>, which lead me down the rabbit hole of sampling from convex sets (for this problem I was imagining using the convex hulls of <span class="math inline">\(x_c\)</span>). There’s an interesting observation that you can use the Dirichlet distribution for this in an <a href="https://stat.ethz.ch/pipermail/r-help/2007-March/128299.html">old R-help thread</a>. Then I stumbled across <a href="http://sci-hub.tw/https://www.tandfonline.com/doi/abs/10.1080/15326349808807500">hit and run samplers</a>, which are intuitively satisfying, and finally the <a href="https://github.com/andyyao95/walkr"><code>walkr</code></a> package and the more sophisticated methods it implements. I imagine sampling this is just a hard problem in high dimensions, but if anybody can show me how to convert the convex hull of a dataset calculated using <code>chull()</code> into a format suitable for <code>walkr</code>, please email me!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Some machine learning courses present multinomial regression using a <span class="math inline">\(K \times p\)</span> coefficient matrix, but then estimate the coefficients with some sort of penalty (e.g.&nbsp;ridge). This parameterization is overparameterized: replacing every <span class="math inline">\(\beta_k\)</span> with <span class="math inline">\(\beta_k + \gamma\)</span> for any fixed vector <span class="math inline">\(\gamma \in \mathbb R^p\)</span> leaves all the class probabilities, and hence the likelihood, exactly unchanged. So the likelihood is flat (not identified) along this direction and there’s no unique MLE unless you break the symmetry, e.g.&nbsp;with a penalty that picks out a particular point along the ridge. Statisticians more commonly sidestep the issue entirely by fixing one class’s coefficients to zero and estimating the <span class="math inline">\((K-1) \times p\)</span> parameterization directly, which is identified and has a unique MLE.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>At one point I began wondering how to get a small but representative subset of <span class="math inline">\(x_c\)</span>, which led me down the rabbit hole of sampling from convex sets (for this problem I was imagining using the convex hulls of <span class="math inline">\(x_c\)</span>). There’s an interesting observation that you can use the Dirichlet distribution for this in an <a href="https://stat.ethz.ch/pipermail/r-help/2007-March/128299.html">old R-help thread</a>. Then I stumbled across <a href="http://sci-hub.tw/https://www.tandfonline.com/doi/abs/10.1080/15326349808807500">hit and run samplers</a>, which are intuitively satisfying, and finally the <a href="https://github.com/andyyao95/walkr"><code>walkr</code></a> package and the more sophisticated methods it implements. I imagine sampling this is just a hard problem in high dimensions, but if anybody can show me how to convert the convex hull of a dataset calculated using <code>chull()</code> into a format suitable for <code>walkr</code>, please email me!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script>

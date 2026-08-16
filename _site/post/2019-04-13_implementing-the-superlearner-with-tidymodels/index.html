@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -95,10 +95,10 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-975e726794ce811e14261b5ab5acfd7c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0732fb268a8da304e632f8e6aea0557a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -171,14 +171,14 @@ window.Quarto = {
 </script>
 
 <meta property="og:title" content="implementing the super learner with tidymodels – alex hayes">
-<meta property="og:description" content="a demonstration of low levels tidymodels infrastructure to build sophisticated tools in a hurry">
+<meta property="og:description" content="a demonstration of low-level tidymodels infrastructure to build sophisticated tools in a hurry">
 <meta property="og:image" content="https://www.alexpghayes.com/post/2019-04-13_implementing-the-superlearner-with-tidymodels/index_files/figure-html/unnamed-chunk-23-1.png">
 <meta property="og:site_name" content="alex hayes">
 <meta property="og:image:alt" content="ROC curve for the super learner model on credit data.">
 <meta property="og:image:height" content="960">
 <meta property="og:image:width" content="1344">
 <meta name="twitter:title" content="implementing the super learner with tidymodels – alex hayes">
-<meta name="twitter:description" content="a demonstration of low levels tidymodels infrastructure to build sophisticated tools in a hurry">
+<meta name="twitter:description" content="a demonstration of low-level tidymodels infrastructure to build sophisticated tools in a hurry">
 <meta name="twitter:image" content="https://www.alexpghayes.com/post/2019-04-13_implementing-the-superlearner-with-tidymodels/index_files/figure-html/unnamed-chunk-23-1.png">
 <meta name="twitter:creator" content="@alexpghayes">
 <meta name="twitter:card" content="summary_large_image">
@@ -254,7 +254,7 @@ window.Quarto = {
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">implementing the super learner with tidymodels</h1>
-            <p class="subtitle lead">a demonstration of low levels tidymodels infrastructure to build sophisticated tools in a hurry</p>
+            <p class="subtitle lead">a demonstration of low-level tidymodels infrastructure to build sophisticated tools in a hurry</p>
                                 <div class="quarto-categories">
                 <div class="quarto-category">tidymodels</div>
                 <div class="quarto-category">stacking</div>
@@ -355,7 +355,7 @@ window.Quarto = {
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">27</span>) <span class="co"># the one true seed</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We’ll build a super learner on the <code>iris</code> dataset, which is build into R. <code>iris</code> looks like:</p>
+<p>We’ll build a super learner on the <code>iris</code> dataset, which is built into R. <code>iris</code> looks like:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(iris)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -449,7 +449,7 @@ Computational engine: C5.0 </code></pre>
 10 &lt;spec[?]&gt;       10</code></pre>
 </div>
 </div>
-<p>Now that we’ve specified our library of models, we’ll describe the data design we’d like to use with a <a href="https://tidymodels.github.io/recipes/"><code>recipe</code></a>. For giggles, we’ll use the first two principle components:</p>
+<p>Now that we’ve specified our library of models, we’ll describe the data design we’d like to use with a <a href="https://tidymodels.github.io/recipes/"><code>recipe</code></a>. For giggles, we’ll use the first two principal components:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>recipe <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(Species <span class="sc">~</span> .) <span class="sc">%&gt;%</span></span>
@@ -582,7 +582,7 @@ predictor: 4</code></pre>
 <span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="at">obs =</span> obs, <span class="at">.before =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Now we use our helper to get predictions for each fold, for each hyperparameter combination. First we get the complete set of predictions for each fold and save them in a list-column called <code>raw_preds</code>. Then, since the predictions are perfectly correlated (<code>.pred_setosa + .pred_versicolor + .pred_virginica = 1</code>), we drop the last column of predictions to avoid issues with metalearners sensitive to colinearity. Finally, the <code>preds</code> column will be a list-column, so we <code>unnest()</code> to take a look.</p>
+<p>Now we use our helper to get predictions for each fold, for each hyperparameter combination. First we get the complete set of predictions for each fold and save them in a list-column called <code>raw_preds</code>. Then, since the predictions are perfectly correlated (<code>.pred_setosa + .pred_versicolor + .pred_virginica = 1</code>), we drop the last column of predictions to avoid issues with metalearners sensitive to collinearity. Finally, the <code>preds</code> column will be a list-column, so we <code>unnest()</code> to take a look.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>drop_last_column <span class="ot">&lt;-</span> <span class="cf">function</span>(df) df[, <span class="sc">-</span><span class="fu">ncol</span>(df)]</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -622,7 +622,7 @@ predictor: 4</code></pre>
 <li>1 column per regression tree and outcome category</li>
 </ul>
 <p>Getting data into this kind of tidy format is exactly what <code>tidyr</code> excels at. Here we need to go from a long format to a wide format, which will often be the case when working with models in list columns<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<p>The new <a href="https://tidyr.tidyverse.org/dev/articles/pivot.html"><code>pivot_wider()</code></a> function exactly solves this our reshaping problem once we realize that:</p>
+<p>The new <a href="https://tidyr.tidyverse.org/dev/articles/pivot.html"><code>pivot_wider()</code></a> function exactly solves this reshaping problem once we realize that:</p>
 <ul>
 <li>The row number of each observation in the original dataset is in the <code>obs</code> column</li>
 <li>The <code>.pred_*</code> columns contain the values of interest</li>
@@ -665,7 +665,7 @@ predictor: 4</code></pre>
 #   .pred_versicolor_7 &lt;dbl&gt;, .pred_versicolor_8 &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
-<p>We’re almost ready to fit a the metalearning model on top of these predictions, but first we need to join these predictions back to the original dataset using <code>obs</code> to recover the labels!</p>
+<p>We’re almost ready to fit the metalearning model on top of these predictions, but first we need to join these predictions back to the original dataset using <code>obs</code> to recover the labels!</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>meta_train <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">obs =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
@@ -715,7 +715,7 @@ predictor: 4</code></pre>
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Species <span class="sc">~</span> ., meta_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>That’s it! We’ve fit the super learner! Just like the training process, prediction itself proceeds involves two separate stages:</p>
+<p>That’s it! We’ve fit the super learner! Just like the training process, prediction itself involves two separate stages:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">head</span>(iris)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -753,7 +753,7 @@ predictor: 4</code></pre>
 <section id="putting-it-all-together" class="level2">
 <h2 class="anchored" data-anchor-id="putting-it-all-together">Putting it all together</h2>
 <p>Now we can take all the code we’ve written up and encapsulate it into a single function (still relying on the helper functions we defined above).</p>
-<p>Note that this is a reference implementation and in practice I recommend following the <a href="https://github.com/tidymodels/model-implementation-principles">tidymodels recommendations</a> when implementing new methods. Luckily, we do end up inherit a fair amount of nice consistency from <code>parsnip</code> itself.</p>
+<p>Note that this is a reference implementation and in practice I recommend following the <a href="https://github.com/tidymodels/model-implementation-principles">tidymodels recommendations</a> when implementing new methods. Luckily, we do end up inheriting a fair amount of nice consistency from <code>parsnip</code> itself.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Fit the super learner!</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -833,7 +833,7 @@ predictor: 4</code></pre>
 <span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(x<span class="sc">$</span>metalearner, new_preds, <span class="at">type =</span> type)</span>
 <span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Our helpers do assume that we’re working on a classification problem, but other than this we pretty much only rely on the <code>parsnip</code> API. This means we can mix and match parts to our hearts desire and things should still work<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. For example, we can build off the <code>parsnip</code> <a href="https://tidymodels.github.io/parsnip/articles/articles/Classification.html">classification vignette</a>, which starts like so:</p>
+<p>Our helpers do assume that we’re working on a classification problem, but other than this we pretty much only rely on the <code>parsnip</code> API. This means we can mix and match parts to our heart’s desire and things should still work<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. For example, we can build off the <code>parsnip</code> <a href="https://tidymodels.github.io/parsnip/articles/articles/Classification.html">classification vignette</a>, which starts like so:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we have to do this because `modeldata` doesn't use lazy data loading</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"credit_data"</span>)</span>
@@ -899,13 +899,13 @@ predictor: 4</code></pre>
 </section>
 <section id="wrap-up" class="level2">
 <h2 class="anchored" data-anchor-id="wrap-up">Wrap up</h2>
-<p>That’s it! We’ve fit a clever ensembling technique in a few lines of code! Hopefully the concepts are clear and you can start to play with ensembling on your own. I should note that this post uses <em>a ton</em> of different <code>tidymodels</code> abstractions, which can be intimidating. The goal here is to demonstrate how to integrate all of various components together into a big picture. If you aren’t familiar with the individual <code>tidymodels</code> packages, my impression is that the best way to gain this familiarity is by gradually working through the various tidymodels vignettes.</p>
-<p>In practice, it is a bit of relief to be done with this post. I’ve been playing around with implementing the Super Learner since summer 2017, but each time I gave it a shot things got messy much faster than I anticipated and I kicked the task down the line. Only recently have the tools to make the Super Learner implementation so pleasant come to life<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Thanks <a href="https://twitter.com/topepos">Max</a> and <a href="https://twitter.com/dvaughan32">Davis</a>!</p>
+<p>That’s it! We’ve fit a clever ensembling technique in a few lines of code! Hopefully the concepts are clear and you can start to play with ensembling on your own. I should note that this post uses <em>a ton</em> of different <code>tidymodels</code> abstractions, which can be intimidating. The goal here is to demonstrate how to integrate all of the various components together into a big picture. If you aren’t familiar with the individual <code>tidymodels</code> packages, my impression is that the best way to gain this familiarity is by gradually working through the various tidymodels vignettes.</p>
+<p>In practice, it is a bit of a relief to be done with this post. I’ve been playing around with implementing the Super Learner since summer 2017, but each time I gave it a shot things got messy much faster than I anticipated and I kicked the task down the line. Only recently have the tools to make the Super Learner implementation so pleasant come to life<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Thanks <a href="https://twitter.com/topepos">Max</a> and <a href="https://twitter.com/dvaughan32">Davis</a>!</p>
 <p>If you want to use the Super Learner in practice, I believe the <a href="https://tlverse.org/sl3/"><code>sl3</code></a> package is the most actively developed. There’s also Eric Polley’s classic <a href="https://github.com/ecpolley/SuperLearner"><code>SuperLearner</code></a> package, which may be more full featured than <code>sl3</code> at the moment. Also be sure to check out <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html#code-examples"><code>h2o::automl()</code></a>, which makes stacking about as painless as can be if you just need results!</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
-<p>If you’re new to the Super Learner, I recommend starting with <span class="citation" data-cites="ledell_intro_2015">LeDell (<a href="#ref-ledell_intro_2015" role="doc-biblioref">2015a</a>)</span>. Section 2.2 of <span class="citation" data-cites="ledell_scalable_2015">LeDell (<a href="#ref-ledell_scalable_2015" role="doc-biblioref">2015b</a>)</span> is similar but goes into more detail. <span class="citation" data-cites="van_der_laan_super_2007"><span class="nocase">van der Laan et al.</span> (<a href="#ref-van_der_laan_super_2007" role="doc-biblioref">2007</a>)</span> is the original Super Learner paper and contains the proof the oracle property, an optimality result. <span class="citation" data-cites="polley_super_2010"><span class="nocase">Polley and van der Laan</span> (<a href="#ref-polley_super_2010" role="doc-biblioref">2010</a>)</span> discusses the Super Learner from a more applied point of view, with some simulations demonstrating performance. <span class="citation" data-cites="van_der_laan_targeted_2018"><span class="nocase">van der Laan and Rose</span> (<a href="#ref-van_der_laan_targeted_2018" role="doc-biblioref">2018</a>)</span> is a comprehensive reference on both the Super Learner and TMLE. The Super Learner papers and book are targeted at a research audience with a high level of mathematical background, and are not easy reading. <span class="citation" data-cites="wolpert_stacked_1992">Wolpert (<a href="#ref-wolpert_stacked_1992" role="doc-biblioref">1992</a>)</span> is another often cited paper on stacking that is more approachable.</p>
+<p>If you’re new to the Super Learner, I recommend starting with <span class="citation" data-cites="ledell_intro_2015">LeDell (<a href="#ref-ledell_intro_2015" role="doc-biblioref">2015a</a>)</span>. Section 2.2 of <span class="citation" data-cites="ledell_scalable_2015">LeDell (<a href="#ref-ledell_scalable_2015" role="doc-biblioref">2015b</a>)</span> is similar but goes into more detail. <span class="citation" data-cites="van_der_laan_super_2007"><span class="nocase">van der Laan et al.</span> (<a href="#ref-van_der_laan_super_2007" role="doc-biblioref">2007</a>)</span> is the original Super Learner paper and contains the proof of the oracle property, an optimality result. <span class="citation" data-cites="polley_super_2010"><span class="nocase">Polley and van der Laan</span> (<a href="#ref-polley_super_2010" role="doc-biblioref">2010</a>)</span> discusses the Super Learner from a more applied point of view, with some simulations demonstrating performance. <span class="citation" data-cites="van_der_laan_targeted_2018"><span class="nocase">van der Laan and Rose</span> (<a href="#ref-van_der_laan_targeted_2018" role="doc-biblioref">2018</a>)</span> is a comprehensive reference on both the Super Learner and TMLE. The Super Learner papers and book are targeted at a research audience with a high level of mathematical background, and are not easy reading. <span class="citation" data-cites="wolpert_stacked_1992">Wolpert (<a href="#ref-wolpert_stacked_1992" role="doc-biblioref">1992</a>)</span> is another often cited paper on stacking that is more approachable.</p>
 
 
 
@@ -936,7 +936,7 @@ Wolpert, David H. 1992. <em>Stacked <span>Generalization</span></em>.
 <ol>
 <li id="fn1"><p>Note that multiclass prediction is hardest to deal with because we have multiple prediction columns. For binary classification and regression, we’d only have a single column containing predictions, making the tidying easier.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Fair warning: I have found a lot of bugs in the wrappers around modeling functions.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>For some reason, I got poor test performance when I tried this, and I’m not sure why. I’ve <a href="https://twitter.com/alexpghayes/status/1117225953783164929">asked Erin Ledell on Twitter</a> and will update if I get a response, hopefully including a more full example here.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>For some reason, I got poor test performance when I tried this, and I’m not sure why. I’ve <a href="https://twitter.com/alexpghayes/status/1117225953783164929">asked Erin Ledell on Twitter</a> and will update if I get a response, hopefully including a fuller example here.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>The newness of these tools also means that some of them aren’t entirely stable, however, and I found some bugs while writing this post.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->

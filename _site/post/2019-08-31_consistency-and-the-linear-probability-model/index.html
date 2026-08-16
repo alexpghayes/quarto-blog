@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -60,10 +60,10 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-975e726794ce811e14261b5ab5acfd7c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cad2a2f8a56dfe71ee895a68e79c9b9a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0732fb268a8da304e632f8e6aea0557a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1f68affbd4cf95e8a85d63a4b6c7844f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.4/all.css" rel="stylesheet">
@@ -286,7 +286,7 @@ window.Quarto = {
 </section>
 <section id="what-is-the-linear-probability-model" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-the-linear-probability-model">What is the linear probability model?</h2>
-<p>Suppose we have outcomes <span class="math inline">\(Y \in \{0, 1\}\)</span> and fixed covariate vectors <span class="math inline">\(X\)</span>. The linear probability model is a <em>model</em>, that is, a set of probability distributions that might have produced our observed data. In particular, the linear probability assumes that the data generating process looks like:</p>
+<p>Suppose we have outcomes <span class="math inline">\(Y \in \{0, 1\}\)</span> and fixed covariate vectors <span class="math inline">\(X\)</span>. The linear probability model is a <em>model</em>, that is, a set of probability distributions that might have produced our observed data. In particular, the linear probability model assumes that the data generating process looks like:</p>
 <p><span class="math display">\[\begin{align}
 P(Y = 1 | X) =
   \begin{cases}
@@ -326,7 +326,7 @@ Y_i | X_i &amp;\sim \mathrm{Normal}(X_i \beta, \sigma^2)
 </ol>
 <p>Identification means that each possible value of the estimand should correspond to a distinct distribution in our probability model. When we say that we want a consistent estimator, we mean that our estimator should recover the estimand exactly with infinite data. All the estimands in the LPM debate are identified (to my knowledge), so this isn’t the big deal here. But consistency matters a lot!</p>
 <p><span class="citation" data-cites="gomila_logistic_2019">Gomila (<a href="#ref-gomila_logistic_2019" role="doc-biblioref">2019</a>)</span> claims that <span class="math inline">\(\hat \beta_\text{OLS}\)</span> is unbiased and consistent for <span class="math inline">\(\beta\)</span>, and attempts to demonstrate this two ways: (1) analytically, and (2) via simulation.</p>
-<p>And this is the point that I got pretty confused, because the big question is: consistent under what model? Depending on who you ask, we could conceivably be assuming that the data comes from:</p>
+<p>And this is the point where I got pretty confused, because the big question is: consistent under what model? Depending on who you ask, we could conceivably be assuming that the data comes from:</p>
 <ul>
 <li>a Gaussian GLM (linear regression),</li>
 <li>the linear probability model, or</li>
@@ -412,14 +412,14 @@ Y_i | X_i &amp;\sim \mathrm{Normal}(X_i \beta, \sigma^2)
 <h2 class="anchored" data-anchor-id="what-about-uncertainty-in-our-estimator">What about uncertainty in our estimator?</h2>
 <p>So far we have established that <span class="math inline">\(\hat \beta_\text{OLS}\)</span> is at least occasionally a consistent estimator for <span class="math inline">\(P(Y=1|X)\)</span> under the LPM and logistic regression.</p>
 <p>In practice, we also care about the uncertainty in <span class="math inline">\(\hat \beta\)</span>. We might want a confidence interval, or, God forbid, a p-value. So we should think about consistent estimators for <span class="math inline">\(\mathbf{Cov} (\hat \beta)\)</span>. In the grand LPM debate, most people suggest using robust standard errors. For a while, it was unclear to me how these robust standard errors were derived and under what conditions they are consistent. The answer again comes from <span class="citation" data-cites="boos_essential_2013">Boos and Stefanski (<a href="#ref-boos_essential_2013" role="doc-biblioref">2013</a>)</span>, and all we need for the consistency of robust standard errors for <span class="math inline">\(\mathbf{Cov} (\hat \beta)\)</span> is some moment conditions (the existence of (7.5) and (7.6) in the text), which linear regression, logistic regression, and the LPM all satisfy.</p>
-<p>It only took several weeks of misreading <span class="citation" data-cites="boos_essential_2013">Boos and Stefanski (<a href="#ref-boos_essential_2013" role="doc-biblioref">2013</a>)</span> and asking dumb questions on Twitter to figure this out. Thanks to Achim Zeileis, James E. Pustejovsky, Cyrus Samii for answering those questions. Note that <span class="citation" data-cites="white_heteroskedasticity-consistent_1980">White (<a href="#ref-white_heteroskedasticity-consistent_1980" role="doc-biblioref">1980</a>)</span> is another canonical paper on robust standard errors, but it doesn’t click for me like the M-estimation framework does.</p>
+<p>It only took several weeks of misreading <span class="citation" data-cites="boos_essential_2013">Boos and Stefanski (<a href="#ref-boos_essential_2013" role="doc-biblioref">2013</a>)</span> and asking dumb questions on Twitter to figure this out. Thanks to Achim Zeileis, James E. Pustejovsky, and Cyrus Samii for answering those questions. Note that <span class="citation" data-cites="white_heteroskedasticity-consistent_1980">White (<a href="#ref-white_heteroskedasticity-consistent_1980" role="doc-biblioref">1980</a>)</span> is another canonical paper on robust standard errors, but it doesn’t click for me like the M-estimation framework does.</p>
 </section>
 <section id="takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
 <p>This post exists because I wasn’t sure when <span class="math inline">\(\hat \beta_\text{OLS}\)</span> was a consistent estimator, and the rest of the LPM debate seemed like a lot of noise until I could figure that out. I have three takeaways.</p>
 <ol type="1">
 <li><p>Properties of estimators are always with respect to models, and it’s hard to discuss which estimator is best if you don’t clarify modeling assumptions.</p></li>
-<li><p>If there are multiple reasonable estimators, fit them all. If they result in substantively different conclusions: congratulations! Your data is trash and you can move on to a new project!</p></li>
+<li><p>If there are multiple reasonable estimators, fit them all. If they give substantively different conclusions, don’t just pick your favorite for the write-up. That’s usually a sign your data can’t distinguish between the models you’re considering, so it’s worth digging into why before you trust any of them.</p></li>
 <li><p>If you really care about getting efficient, consistent estimates under weak assumptions, you should be doing TMLE or Double ML or burning your CPU to a crisp with BART<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p></li>
 </ol>
 <p>Anyway, this concludes the “I taught myself about the linear probability model and hope to never mention it again” period of my life. I look forward to my mentions being a trash fire.</p>
@@ -480,7 +480,7 @@ Wooldridge, Jeffrey M. 2001. <em>Econometric <span>Analysis</span> of <span>Cros
 \end{align*}\]</span></p>
 <p>so life is pretty great and we can get asymptotic estimates of uncertainty for <span class="math inline">\(\hat \theta\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>In a lot of experimental settings that compare categorical treatments, you fit a fully saturated model that allocates a full parameter to the mean of each combination of treatments. <span class="math inline">\(\hat \beta_\text{OLS}\)</span> is consistent in this setting under both logistic regression and the LPM.</p>
-<p>Let’s prove this for logistic regression first. Suppose we have groups <span class="math inline">\(1, ..., k\)</span> and the data comes from a logistic regression model. We represent the groups in the model via one hot coding, omitting an intercept for identifability. That is, we assume</p>
+<p>Let’s prove this for logistic regression first. Suppose we have groups <span class="math inline">\(1, ..., k\)</span> and the data comes from a logistic regression model. We represent the groups in the model via one hot coding, omitting an intercept for identifiability. That is, we assume</p>
 <p><span class="math display">\[\begin{align}
   P(Y = 1 | X) = \frac{1}{1 + \exp(-(\alpha_1 X_1 + ... + \alpha_k X_k))}
 \end{align}\]</span></p>
@@ -519,8 +519,8 @@ Wooldridge, Jeffrey M. 2001. <em>Econometric <span>Analysis</span> of <span>Cros
 <p>We know that <span class="math inline">\(P(Y_i = 1 | X_i = 0) = 0.731\)</span> and <span class="math inline">\(P(Y_i = 1 | X_i = 1) = 0.269\)</span>. <span class="math inline">\(\hat \beta_\text{logistic MLE} = \beta = (1, -2)\)</span> by the consistency of the MLE. The OLS fit will yield <span class="math inline">\(P(Y_i = 1 | X_i) = 0.731 - 0.462 X_i\)</span>. The predictions for <span class="math inline">\(\mathbb{E}(Y|X) = P(Y=1|X)\)</span> agree, but <span class="math inline">\(\hat \beta_\text{OLS} = (0.731, -0.4621)\)</span> while <span class="math inline">\(\beta = (1, -2)\)</span>.</p>
 <p>This is a concrete application of the result in the previous footnote: <span class="math inline">\(\hat \beta_\text{OLS}\)</span> being consistent for group means only results in <span class="math inline">\(\hat \beta_\text{OLS}\)</span> being consistent for the model parameters <span class="math inline">\(\beta\)</span> if the model parameters are themselves the group means.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>I.I.D. assumptions are often violated in real life, for example!</p>
-<p>My advisor made an interesting point about critiquing assumptions the other day. He said that it isn’t enough to say “I don’t think that assumption holds” when evaluating a model or an estimator. Instead, to show than the assumption is unacceptable, he claims you need to demonstrate that making a particular assumption results in some form of undesirable inference.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>Gomila also makes an argument against using <span class="math inline">\(\hat \beta_\text{logistic MLE}\)</span> based on some papers that show it handles interactions poorly. This sort of misses the forest for the trees in my opinion. GLMs are generically dubious models because few empirical conditional expectations are actually linear. And maybe linear main effects won’t kill you, but modeling interactions with linear terms amounts to fitting global hyperplanes for interactions. This is undesirable because interactions are almost always local, not global. If you want to model interactions carefully, you need something flexible like a GAM or kernels or whatnot.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<p>My advisor made an interesting point about critiquing assumptions the other day. He said that it isn’t enough to say “I don’t think that assumption holds” when evaluating a model or an estimator. Instead, to show that the assumption is unacceptable, he claims you need to demonstrate that making a particular assumption results in some form of undesirable inference.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Gomila also makes an argument against using <span class="math inline">\(\hat \beta_\text{logistic MLE}\)</span> based on some papers that show it handles interactions poorly. This sort of misses the forest for the trees in my opinion. GLMs impose a specific form (linear, or linear on the link scale) on the conditional expectation, and that’s often wrong in some part of the covariate space. And maybe linear main effects won’t kill you, but modeling interactions with linear terms amounts to fitting global hyperplanes for interactions. This is undesirable because interactions are almost always local, not global. If you want to model interactions carefully, you need something flexible like a GAM or kernels or whatnot.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script>
