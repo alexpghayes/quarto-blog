@@ -92,7 +92,7 @@ On the other hand, I want to clarify that not all code is created equal. Within 
 
 I was a little surprised to realize this, but I think my answer is paid professionals. More generally, people who want a nice implementation of a method should pay for the nice implementation of that method. This can take a number of different forms:
 
-- industry paying software engineers to produce in-house or open-source implementations of methods,^[I find it somewhat entertaining when a software engineer at FAANG, paid a quarter of a million dollars per year to write code, is frustrated that an academic has not implemented code for them already. That's where your job security comes from! Instead of pushing the academic to write code for you, ask the academic to share material that makes it easier for you to write the code yourself.]
+- industry paying software engineers to produce in-house or open-source implementations of methods,^[It's a bit funny when a software engineer at a big tech company, paid quite well to write code, gets frustrated that an academic hasn't already implemented something for them. Closing that gap is kind of the job. Instead of pushing the academic to write code for you, ask them to share whatever makes it easier for you to write it yourself.]
 - academic departments hiring research software engineers,
 - philanthropic efforts subsidizing open-source work, and
 - applied researchers with software chops, implementing methods to facilitate their own research.

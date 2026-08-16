@@ -46,7 +46,7 @@ ggplot() +
 
 It turns out that I have horrible intuition about the function $f(x) = 1 / \sqrt{x}$ though, so I can never tell if a plot like this is showing asymptotic convergence or if there's some possibility of asymptotic bias. This is especially the case when $\hat \theta$ is computationally expensive to compute, so I can't push $n$ as high as I'd like, such that my smallest error is far from zero.
 
-One thing that helps a lot here is to plot $\log \left(\left \Vert \hat \theta - \theta \right \Vert \right)$ as a function of $\log n$, and check if the resulting line has constant negative slope. The idea here is that if $\left \Vert \hat \theta - \theta \right \Vert \le C n^{-\alpha}$ with high probability, or whatever bound you prove, then $\log \left(\left \Vert \hat \theta - \theta \right \Vert \right) \le -C \alpha \log n$. So we can just check if things are linear after transformation, and this is easier to do visually.
+One thing that helps a lot here is to plot $\log \left(\left \Vert \hat \theta - \theta \right \Vert \right)$ as a function of $\log n$, and check if the resulting line has constant negative slope. The idea here is that if $\left \Vert \hat \theta - \theta \right \Vert \le C n^{-\alpha}$ with high probability, or whatever bound you prove, then $\log \left(\left \Vert \hat \theta - \theta \right \Vert \right) \le \log C - \alpha \log n$, i.e. a line with slope $-\alpha$ in $\log n$. So we can just check if things are linear after transformation, and this is easier to do visually.
 
 ```{r}
 #| fig-alt: "The same Error versus Number of data points plot but on a log-log scale. The curve is now a perfectly straight line with a constant negative slope, making the rate of convergence much easier to identify."

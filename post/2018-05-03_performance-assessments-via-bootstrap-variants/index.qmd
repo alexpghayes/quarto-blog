@@ -331,9 +331,9 @@ Given how it can be difficult to keep track of which metric should be calculated
 
 ## Using the bootstrap in practice
 
-When you have fewer than 20,000 data points, it's reasonable to use the optimism bootstrap with $B = 200$ to $B = 400$. When you have more data, cross-validation[^4] or simply splitting the data becomes more reliable. Any steps taken to develop a model should be performed on each bootstrap dataset. For example, if you use LASSO for feature selection and then fit a model, the feature selection step needs to be included in the bootstrap procedure.
+As a rule of thumb from simulations in specific settings (see the footnote), the optimism bootstrap with $B = 200$ to $B = 400$ tends to work well below about 20,000 data points, with cross-validation[^4] or simple data splitting becoming more reliable past that. Any steps taken to develop a model should be performed on each bootstrap dataset. For example, if you use LASSO for feature selection and then fit a model, the feature selection step needs to be included in the bootstrap procedure.
 
-[^4]: Cross validation is much less stable than the bootstrap on data sets with fewer than 20,000 data points (@steyerberg2001). Frank Harrell has run a number of simulations showing that you need at least 100 repetitions of 10-fold cross-validation to get accurate error estimates at this data size (@harrell2015).
+[^4]: In the simulations in @steyerberg2001, cross validation was much less stable than the bootstrap on data sets with fewer than 20,000 data points. Frank Harrell has run similar simulations suggesting you need on the order of 100 repetitions of 10-fold cross-validation to get accurate error estimates at that data size (@harrell2015).
 
 In some studies (@steyerberg2001) the 0.632 and 0.632+ estimators have similar performance. Asymptotically, the 0.632 estimator is equivalent to the optimism bootstrap (@efron1994)[^5]. It isn't clear if one is preferable over the other in finite samples, so I'd just stick with the estimator your audience is most likely to already be familiar with. You should be fine so long as you avoid using the *bootstrap in sample error* estimate.
 

@@ -199,7 +199,7 @@ head_count_stats <- observed_statistics |>
   mutate(
     expected = mean(null_distribution),
     observed_quantile = map_dbl(statistic, \(stat) ecdf(null_distribution)(stat)),
-    p_value = pmin(observed_quantile, 1 - observed_quantile),
+    p_value = pmin(1, 2 * pmin(observed_quantile, 1 - observed_quantile)),
     likelihood = 0.5^200,
     log_likelihood = 200 * log(0.5)
   )
@@ -399,7 +399,7 @@ In the meantime, here are two questions worth some contemplation:
 
 Overall, we did $4 \cdot 6 = 24$ total hypothesis tests. Suppose we did all tests at the $\alpha = 0.05$ level, such that each test had probability $\alpha$ of type I error.
 
-- Collectively, across all of our tests, what is the chance of at least one false positive result? Does it make sense to assume that test results are independent?^[If you want to treat tests as dependent, you may not be able to calculate the precise probability of one or more false positives, but you can bound it using Fréchet's inequality: $P(A \text{ or } B) \le P(A) + P(B)$ for possibly dependent events $A$ and $B$.]
+- Collectively, across all of our tests, what is the chance of at least one false positive result? Does it make sense to assume that test results are independent?^[If you want to treat tests as dependent, you may not be able to calculate the precise probability of one or more false positives, but you can bound it using Boole's inequality (the union bound): $P(A \text{ or } B) \le P(A) + P(B)$ for possibly dependent events $A$ and $B$.]
 
 - Does the number of tests seem like a problem to you? Can you think of any solutions?
 
