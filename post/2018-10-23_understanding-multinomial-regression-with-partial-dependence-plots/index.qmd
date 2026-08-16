@@ -16,7 +16,7 @@ This post assumes you are familiar with logistic regression and that you just fi
 
 ## Data
 
-I'll use the built in `iris` dataset for this post. If you've already seen the iris dataset a hundred times, I apologize. Our goal will be to predict the `Species` of an iris flower based on four numerical measures of the flower: `Sepal.Length`, `Speal.Width`, `Petal.Length` and `Petal.Width`. There are 150 measurements and three species of iris: `setosa`, `versicolor` and `virginica`.
+I'll use the built in `iris` dataset for this post. If you've already seen the iris dataset a hundred times, I apologize. Our goal will be to predict the `Species` of an iris flower based on four numerical measures of the flower: `Sepal.Length`, `Sepal.Width`, `Petal.Length` and `Petal.Width`. There are 150 measurements and three species of iris: `setosa`, `versicolor` and `virginica`.
 
 ```{r}
 library(tidyverse)
@@ -45,7 +45,7 @@ $$
 P(y = K|x) = {1 \over 1 + \sum_{k=1}^{K - 1} \exp(\beta_k^T x)}
 $$
 
-There are only $K-1$ coefficient vectors in order to prevent overparameterization[^1]. The purpose here isn't to describe the model in any meaningful detail, but rather to remind you of what it looks like. I strongly encourage you to read [this fantastic derivation](http://data.princeton.edu/wws509/notes/c6s3.html) of multinomial logistic regression, which follows the work that lead to McFadden's Noble prize in economics in 2000.
+There are only $K-1$ coefficient vectors in order to prevent overparameterization[^1]. The purpose here isn't to describe the model in any meaningful detail, but rather to remind you of what it looks like. I strongly encourage you to read [this fantastic derivation](http://data.princeton.edu/wws509/notes/c6s3.html) of multinomial logistic regression, which follows the work that led to McFadden's Nobel prize in economics in 2000.
 
 [^1]: Some machine learning courses present multinomial regression using a $K \times p$ coefficient matrix, but then estimate the coefficients with some sort of penalty. The penalty is necessary to prevent the likelihood from becoming infinite (in the $k \times p$ parameterization, multiplying $\beta$ by any constant $c$ retains the same class probabilities while inflating the likelihood). Statisticians are typically more interested in unbiased estimators and present the $(K-1) \times p$ parameterization.
 
@@ -67,7 +67,7 @@ Then $\hat f_s (x)$, the partial dependence of $\hat f$ *at* $x$ (here $x$ lives
 
 $$\hat f_s(x) = {1 \over n} \sum_{i=1}^n \hat f(x, x_{c_i})$$
 
-This says: hold $x$ constant for the variables of interest and take the average prediction over all other combinations of other variables in the training set. So we need to pick variables of interest, and also to pick a region of the space that $x_s$ lives in that we are interested in. Be careful extrapolating the marginal mean of $f(x)$ outside of this region!
+This says: hold $x$ constant for the variables of interest and take the average prediction over all combinations of the other variables in the training set. So we need to pick variables of interest, and also to pick a region of the space that $x_s$ lives in that we are interested in. Be careful extrapolating the marginal mean of $f(x)$ outside of this region!
 
 Here's an example implementation in R. We start by fitting a multinomial regression to the `iris` dataset.
 
@@ -93,7 +93,7 @@ x_c <- select(data, -!!var) # other predictors
 
 Then we create a dataframe of all combinations of these datasets[^2]:
 
-[^2]: At one point I began wondering how to get a small but representative subset of $x_c$, which lead me down the rabbit hole of sampling from convex sets (for this problem I was imagining using the convex hulls of $x_c$). There's an interesting observation that you can use the Dirichlet distribution for this in an [old R-help thread](https://stat.ethz.ch/pipermail/r-help/2007-March/128299.html). Then I stumbled across [hit and run samplers](http://sci-hub.tw/https://www.tandfonline.com/doi/abs/10.1080/15326349808807500), which are intuitively satisfying, and finally the [`walkr`](https://github.com/andyyao95/walkr) package and the more sophisticated methods it implements. I imagine sampling this is just a hard problem in high dimensions, but if anybody can show me how to convert the convex hull of a dataset calculated using `chull()` into a format suitable for `walkr`, please email me!
+[^2]: At one point I began wondering how to get a small but representative subset of $x_c$, which led me down the rabbit hole of sampling from convex sets (for this problem I was imagining using the convex hulls of $x_c$). There's an interesting observation that you can use the Dirichlet distribution for this in an [old R-help thread](https://stat.ethz.ch/pipermail/r-help/2007-March/128299.html). Then I stumbled across [hit and run samplers](http://sci-hub.tw/https://www.tandfonline.com/doi/abs/10.1080/15326349808807500), which are intuitively satisfying, and finally the [`walkr`](https://github.com/andyyao95/walkr) package and the more sophisticated methods it implements. I imagine sampling this is just a hard problem in high dimensions, but if anybody can show me how to convert the convex hull of a dataset calculated using `chull()` into a format suitable for `walkr`, please email me!
 
 ```{r}
 # if the training dataset is large, use a subsample of x_c instead
@@ -189,6 +189,6 @@ Here we see that `Sepal.Length` and `Sepal.Width` don't influence class probabil
 
 ## Takeaways
 
-Partial dependence plots are useful tool to understand the marginal behavior of models. The plots are especially helpful when telling a story about what your model means. In this post, I've only worked with continuous predictors, but you can calculate partial dependencies for categorical predictors as well, although you'll probably want to plot them slightly differently. Additionally, it's natural to consider the partial dependencies of a model when $x_s$ is multidimensional, in which case you can visualize marginal response surfaces.
+Partial dependence plots are a useful tool to understand the marginal behavior of models. The plots are especially helpful when telling a story about what your model means. In this post, I've only worked with continuous predictors, but you can calculate partial dependencies for categorical predictors as well, although you'll probably want to plot them slightly differently. Additionally, it's natural to consider the partial dependencies of a model when $x_s$ is multidimensional, in which case you can visualize marginal response surfaces.
 
 I recommend using the [`pdp`](https://bgreenwell.github.io/pdp/index.html) package to calculate partial dependencies in practice, and refer you to Christoph Molnar's excellent [book on interpretable machine learning](https://christophm.github.io/interpretable-ml-book/pdp.html) for additional reading.

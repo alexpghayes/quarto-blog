@@ -32,7 +32,7 @@ Working with Dave was incredibly empowering. I highly recommend working with Dav
 
 Our general strategy was to have one or two video calls each week. Typically we each had some priorities for `broom` development and would set priorities and hash out any major decisions together. Occasionally I'd pitch Dave on some overambitious project -- he pretty much was always all in.
 
-For the most part I had free rein to make pretty much whatever changes I felt like. Dave would occasionally comment on issues, but for the most part I was just having at on my own. This freedom was awesome.
+For the most part I had free rein to make pretty much whatever changes I felt like. Dave would occasionally comment on issues, but for the most part I was just having at it on my own. This freedom was awesome.
 
 ## What I worked on
 
@@ -45,7 +45,7 @@ The big win of the summer was the [`broom 0.5.0`](https://www.tidyverse.org/arti
 - ~10 new tidiers (mostly contributed)
 - Tons of bug fixes (mostly contributed)
 
-I won't rehash the details, which you can find at the tidyverse blog post I linked to above, but suffice it to say the release was pretty big. A couple weeks ago I gave a presentation to the tidyverse team on my work; those slides (rough) are [here](https://github.com/alexpghayes/rstudio-internship-broom-progress-update/).
+I won't rehash the details, which you can find in the tidyverse blog post I linked to above, but suffice it to say the release was pretty big. A couple weeks ago I gave a presentation to the tidyverse team on my work; those slides (rough) are [here](https://github.com/alexpghayes/rstudio-internship-broom-progress-update/).
 
 ## Next steps for broom
 
@@ -64,7 +64,7 @@ You can track broom's long term goals in [this thread](https://github.com/tidymo
 
 ### Technical takeaways
 
-Broom is basically three R generics plus a hundred or so methods for each of those generics. None of the methods are especially long -- I'd be surprised if any is more than 100 lines of code. This means that most of the technical problems in broom are isolated and easy to fix, because they don't interact with other moving components (Dana and Tim, the `ggplot2` and `Shiny` interns would sometimes spends several days on the same heinous bug, which I fortunately avoided!).
+Broom is basically three R generics plus a hundred or so methods for each of those generics. None of the methods are especially long -- I'd be surprised if any is more than 100 lines of code. This means that most of the technical problems in broom are isolated and easy to fix, because they don't interact with other moving components (Dana and Tim, the `ggplot2` and `Shiny` interns would sometimes spend several days on the same heinous bug, which I fortunately avoided!).
 
 The hard part of broom is not the technical aspect of writing the tidiers, but rather the design aspect of deciding what tidiers should do. Especially for models that you've never used before, this can be unclear.
 
@@ -74,7 +74,7 @@ I will say that working with model objects in R is a special kind of frustrating
 
 I didn't produce the cleanest git history of all time, but I also didn't bork anything up massively either, which I consider a success. I did break the build twice (?), so apologies if that affected you.
 
-At the beginning of the summer, RStudio offered me a laptop to develop on, which I declined. That was a mistake. My personal computer is getting old and, more critically, runs Windows, which made some development tasks painful (revdep checks for example). The time to get to familiar with a fast new MBP from RStudio was definitely work it.
+At the beginning of the summer, RStudio offered me a laptop to develop on, which I declined. That was a mistake. My personal computer is getting old and, more critically, runs Windows, which made some development tasks painful (revdep checks for example). The time to get familiar with a fast new MBP from RStudio was definitely worth it.
 
 ### Open source
 
@@ -84,9 +84,9 @@ I spent the first two weeks of my internship on full time bug-resolution and PR 
 
 ![](broom_readme.png){fig-align="right" fig-alt="Screenshot of the broom README"}
 
-My takeaways from this time was that community matters. A lot. I was surprised by the number of PRs from 12+ months ago that came back to glorious life. In general, I tried to bring enthusiasm to all my Github activity. I also embraced the emoji more fully as a tool for clarifying tone.
+My takeaways from this time were that community matters. A lot. I was surprised by the number of PRs from 12+ months ago that came back to glorious life. In general, I tried to bring enthusiasm to all my Github activity. I also embraced the emoji more fully as a tool for clarifying tone.
 
-I'm realizing that my willingness to contributor to open source projects (and even to use other packages) has a lot to do with how I feel about the community. Life is short, and I like writing code for kind people. The broom contributors have been fantastic to work with, and I look forward to continued collaboration.
+I'm realizing that my willingness to contribute to open source projects (and even to use other packages) has a lot to do with how I feel about the community. Life is short, and I like writing code for kind people. The broom contributors have been fantastic to work with, and I look forward to continued collaboration.
 
 I've adopted a philosophy of *Merge now, refactor later*. Merged PRs generate enthusiasm, and if you need to go back and make some changes down the line, that's okay in a project like broom. Similarly, I've tried to remember to have all contributors list themselves as contributors in the package description: if you put in the time to make a PR, you should get credit for it.
 
@@ -94,7 +94,7 @@ It's become increasingly clear that broom's success depends on high quality PRs.
 
 ### Working remotely
 
-I'm a fan of working remotely. Personally, I tried to stick to the 9 - 5 schedule fairly closely, with exceptions for errands and bike rides. It's nice to not have someone looking over your shoulder, but I definitely found that I needed to be proactive about get work done. When I deviated too far from my schedule I found that I wasn't as productive and that my stress levels went up.
+I'm a fan of working remotely. Personally, I tried to stick to the 9 - 5 schedule fairly closely, with exceptions for errands and bike rides. It's nice to not have someone looking over your shoulder, but I definitely found that I needed to be proactive about getting work done. When I deviated too far from my schedule I found that I wasn't as productive and that my stress levels went up.
 
 This internship was also my first 40 hour / week job. Writing code for 8 hours a day is exhausting. I started drinking a second coffee at 5 pm to kick my brain back into gear for socializing and getting out of the house. I worked in a coffee-shop one day a week or so.
 
@@ -102,14 +102,14 @@ I also started scheduling social time a few days ahead of time, because if I did
 
 ## What was most rewarding
 
-The best of my summer was the success of the `Beginner Friendly` tag on Github issues. A number of people make their first ever PRs to `broom`, and that made me really happy. I remember having a hard time getting into open source, and I'd like to make that transition easier for others if I can (keep an eye for an upcoming post on how to make your first PR!).
+The best part of my summer was the success of the `Beginner Friendly` tag on Github issues. A number of people made their first ever PRs to `broom`, and that made me really happy. I remember having a hard time getting into open source, and I'd like to make that transition easier for others if I can (keep an eye for an upcoming post on how to make your first PR!).
 
 
 ![](broom_beginner_friendly.png){fig-align="right" fig-alt="Screenshot of broom github issues with beginner friendly label"}
 
 I also enjoyed feeling empowered to make design decisions for broom and the level of freedom I had in setting my own goals and playing around in the code base.
 
-Spending time with the other interns was another highlight. We had a weekly intern-only coffee chat and private slack channel that featured a lot emotional support, technical support and the party parrot emoji. 
+Spending time with the other interns was another highlight. We had a weekly intern-only coffee chat and private slack channel that featured a lot of emotional support, technical support and the party parrot emoji. 
 
 Finally, working with broom has exposed me to a broad variety of statistical models. Over the course of the summer I've been writing up and slowly revising an essay on software abstractions for modeling software. Working on broom has inspired a number of interesting conversations in this vein that I look forward to continuing.
 

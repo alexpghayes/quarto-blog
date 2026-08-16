@@ -36,7 +36,7 @@ Correctness is also less important in prediction problems than in inference prob
 
 There are a lot of different ways you can test modeling code. Broadly, I think of tests as living in four categories:
 
-- **Correctness tests** check whether the code calculates the quantity it is supposed to calculated.
+- **Correctness tests** check whether the code calculates the quantity it is supposed to calculate.
 - **Parameter recovery tests** check whether the implementation can recover correct parameters in well understood scenarios.
 - **Convergence tests** check whether iterative fitting procedures have actually reached a solution.
 - **Identification tests** check whether the solution is unique, and stable under small perturbations to the data.
@@ -49,7 +49,7 @@ Most research software tests for correctness, but on occasion I come across para
 
 ### Correctness tests
 
-Correctness tests are by far the most important tests. Correctness tests come in two flavors: unit tests and integration tests. In the modeling context, a *unit test* checks the correctness of a individual calculations in a fitting procedure. An *integration test* means shoving data into the fitting procedure and making sure that the resulting estimates are correct.
+Correctness tests are by far the most important tests. Correctness tests come in two flavors: unit tests and integration tests. In the modeling context, a *unit test* checks the correctness of an individual calculation in a fitting procedure. An *integration test* means shoving data into the fitting procedure and making sure that the resulting estimates are correct.
 
 The general strategy for writing unit tests is to compute the same thing in as many different ways as possible, and verify that all the results agree. For example, I recently needed to find the sum of squared eigenvalues of a matrix. To test my calculations, I calculated this sum using two different eigendecomposition algorithms, and also by finding the squared Frobenius norm of the matrix. The results didn't agree, and it turned out something was wrong in one of the eigendecompositions.
 
@@ -59,7 +59,7 @@ For integration tests, you run the entire fitting procedure, and then you can:
 - Compare results to a solution you've worked out by hand
 - Compare results to simple scenarios with obvious solutions
 
-The gold standard is to compare to a reference implementation. With research code, which is often the first implementation of method, this might not be possible. Additionally, it's pretty rare to be able to work out the solution by hand.
+The gold standard is to compare to a reference implementation. With research code, which is often the first implementation of a method, this might not be possible. Additionally, it's pretty rare to be able to work out the solution by hand.
 
 In practice, most people end up writing a reference implementation and checking that the reference implementation closely matches the pseudocode of their algorithm. Then they declare this implementation correct. How trustworthy this approach is depends on the clarity of the connection between the algorithm pseudocode and the reference implementation.
 
@@ -69,19 +69,19 @@ Consider *Algorithm 1* of @allen_sparse_2013-1:
 
 ![](sfpca_algorithm_1.png){fig-alt="Pseudo-code for the SFPCA algorithm."}
 
-There used a MATLAB reference implementation available online^[It has seen been replaced with a more full fledged R package [`MoMa`](https://github.com/DataSlingers/MoMA).], which looked like:
+They used a MATLAB reference implementation available online^[It has since been replaced with a more fully-fledged R package [`MoMa`](https://github.com/DataSlingers/MoMA).], which looked like:
 
 [sfpca_reference_implementation]: http://www.stat.rice.edu/~gallen/software/sfpca/
 
 ![](sfpca_ref_impl.png){fig-alt="Screencap of the SFPCA reference implementation in MATLAB."}
 
-This is a good reference implementation because the pseudocode is close enough to the actual code that we can be confident that the translation is correct almost by eyeballing it. I ended up [implementing][gsoc_repo] this algorithm in both R and C++ and testing against this reference implementation. Curious parties read the correctness test [here][gsoc_test]. 
+This is a good reference implementation because the pseudocode is close enough to the actual code that we can be confident that the translation is correct almost by eyeballing it. I ended up [implementing][gsoc_repo] this algorithm in both R and C++ and testing against this reference implementation. Curious parties can read the correctness test [here][gsoc_test].
 
 [gsoc_repo]: https://github.com/alexpghayes/gsoc_moma_application
 
 [gsoc_test]: https://github.com/alexpghayes/gsoc_moma_application/blob/master/tests/testthat/test-sfpca.R
 
-Note that my test is really an integration test, making sure the entire computation is correct. I don't do any tests on sub-function or calculations, although it would be good to write a unit test for the soft thresholding function.
+Note that my test is really an integration test, making sure the entire computation is correct. I don't do any tests on sub-functions or calculations, although it would be good to write a unit test for the soft thresholding function.
 
 #### A reference implementation that is more difficult to verify
 
@@ -102,7 +102,7 @@ The first deviation is in `AdaptImpute()`, which truncates the reconstructed SVD
 
 ### Parameter recovery tests
 
-Another way to sanity check results is to see if we can recover known parameters with our implementation. Both SFPCA and AdaptImpute are essentially fancy versions of SVD that estimate low rank matrix components. A reasonable thing to do then is to generate a low rank matrix and see if SFPCA and AdaptImpute produces estimates close to the known low rank structure.
+Another way to sanity check results is to see if we can recover known parameters with our implementation. Both SFPCA and AdaptImpute are essentially fancy versions of SVD that estimate low rank matrix components. A reasonable thing to do then is to generate a low rank matrix and see if SFPCA and AdaptImpute produce estimates close to the known low rank structure.
 
 At first, we should do this with no noise. Then we should add random noise to the observed matrix. We then want to see the parameter estimates degrade more and more with increasing noise.
 
@@ -118,7 +118,7 @@ In the package evaluation context, you just want to check that the package you'r
 
 ### Convergence tests
 
-Convergence tests check that iterative processes have actually reached solutions. Ideally you want packages to confirm that they convergence on a variety of sample problems. You also want them to perform runtime convergence tests.
+Convergence tests check that iterative processes have actually reached solutions. Ideally you want packages to confirm that they converge on a variety of sample problems. You also want them to perform runtime convergence tests.
 
 For example, I recently came across a modeling function that calculated estimates via gradient descent. It looked like the following:
 
@@ -142,11 +142,11 @@ function(x, eps = 1e-07) {
 
 The descent portion of the algorithm is contained in the `for` loop. If the algorithm converges early, the loop will break. But, if the algorithm does not converge in 1000 iterations, it will **return an incorrect solution silently**. 
 
-We can contrast this behavior with `lme4`, which explicitly [warns users](https://github.com/lme4/lme4/blob/366375f3d599fe27df250f0216d6dbca472d2caf/R/checkConv.R#L68) on convergence failures. The package also [tests](https://github.com/lme4/lme4/blob/master/tests/testthat/test-catch.R#L9) to make sure sure it issues this warning.
+We can contrast this behavior with `lme4`, which explicitly [warns users](https://github.com/lme4/lme4/blob/366375f3d599fe27df250f0216d6dbca472d2caf/R/checkConv.R#L68) about convergence failures. The package also [tests](https://github.com/lme4/lme4/blob/master/tests/testthat/test-catch.R#L9) to make sure it issues this warning.
 
-It can often be difficult to test for convergence, but for simple maximum likelihood or convex problems, I'd love to see more these tests. I suspect there are a lot of convergence failures out there that we don't know about just because we haven't checked.
+It can often be difficult to test for convergence, but for simple maximum likelihood or convex problems, I'd love to see more of these tests. I suspect there are a lot of convergence failures out there that we don't know about just because we haven't checked.
 
-Other communities have taken different approaches. For example, the Stan community is careful to emphasize the importance of MCMC convergence checks as part of the modeling workflow, a task that needs to repeated by the data analyst for each model they fit. The machine learning community sometimes deals with convergence via early stopping, which is more a sort of statistical convergence than algorithmic convergence.
+Other communities have taken different approaches. For example, the Stan community is careful to emphasize the importance of MCMC convergence checks as part of the modeling workflow, a task that needs to be repeated by the data analyst for each model they fit. The machine learning community sometimes deals with convergence via early stopping, which is more a sort of statistical convergence than algorithmic convergence.
 
 While packages should definitely include convergence tests, automated procedures to check for convergence can be misleading. I would love to see convergence checks become a larger part of the data analysis workflow, and think of convergence as a responsibility shared by both users and developers.
 
@@ -160,7 +160,7 @@ But you often *can* fit nearly unidentifiable models, where small perturbations 
 
 [unidentifiability_post]: https://rpubs.com/jimsavage/scale_issues
 
-Generally, the more flexible a modeling tool, the more likely it is that you can fit an unindentifiable or near unidentifiable model. I find an example from @simpson_modelling_2018 particularly interesting, where a model with a smooth through time together with CAR(1) structure on the residuals leads to [fitting issues][car_fitting_issues] due to identification challenges.
+Generally, the more flexible a modeling tool, the more likely it is that you can fit an unidentifiable or near unidentifiable model. I find an example from @simpson_modelling_2018 particularly interesting, where a model with a smooth through time together with CAR(1) structure on the residuals leads to [fitting issues][car_fitting_issues] due to identification challenges.
 
 [car_fitting_issues]: https://github.com/gavinsimpson/frontiers-palaeo-additive-modelling/blob/master/manuscript.Rmd#L339
 
@@ -193,7 +193,7 @@ I'd also like to mention Gelman's [folk theorem][folk_theorem] here, which says:
 
 ## Things I am especially careful about
 
-So far I've talked about things to test at a fairly high level. Now I'd like to switch gears and talk about about very specific issues that you need to be careful about, especially in R.
+So far I've talked about things to test at a fairly high level. Now I'd like to switch gears and talk about very specific issues that you need to be careful about, especially in R.
 
 The first thing to note is that most modeling code will **fail silently**. When modeling code fails, it normally doesn't throw an error, or return an object with some nonsensical type. Rather, bad modeling code looks and works just like good modeling code, except it silently performs the wrong calculation.
 
@@ -218,7 +218,7 @@ fit <- lm(hp ~ mpg, mtcars)
 broom::tidy(fit, conf.int = TRUE, conf.levl = 0.9)
 ```
 
-Here `conf.levl = 0.9` should read `conf.level = 0.9`, so the code has silently gone ahead and calculate a 95 percent confidence interval instead of a 90 percent confidence interval. This issue appear over and over in modeling code, and you can read more about it in the [tidyverse principles][inspect_the_dots] book draft.
+Here `conf.levl = 0.9` should read `conf.level = 0.9`, so the code has silently gone ahead and calculated a 95 percent confidence interval instead of a 90 percent confidence interval. This issue appears over and over in modeling code, and you can read more about it in the [tidyverse principles][inspect_the_dots] book draft.
 
 [inspect_the_dots]: https://principles.tidyverse.org/dots-inspect.html
 
@@ -228,7 +228,7 @@ There's almost always a couple of versions of a variable called `x` floating aro
 
 ### Wrapping lots and lots of different models
 
-This is mostly because packages that wrap lots of other packages (i.e. `broom`, `parsnip`, `mlr`, etc, etc) don't normally do integration tests to make sure that the wrapped estimates are correct, and so things slip through the cracks every once in a while.
+This is mostly because packages that wrap lots of other packages (e.g. `broom`, `parsnip`, `mlr`, etc, etc) don't normally do integration tests to make sure that the wrapped estimates are correct, and so things slip through the cracks every once in a while.
 
 ### Validating input
 
@@ -255,7 +255,7 @@ The code:
 
 **Red flags**
 
-- No tests, or tests don't substantive check correctness.
+- No tests, or tests don't substantively check correctness.
 - You need to use `capture.output()` to interact with results[^hard].
 - Model objects are built using `structure()` rather than an S3 constructor function.
 - Large sections of commented out code in the source.
@@ -283,7 +283,7 @@ The R community already has shared some excellent thoughts on how to choose whic
 [leek_post]: https://simplystatistics.org/posts/2015-11-06-how-i-decide-when-to-trust-an-r-package/
 [engler_thread]: https://twitter.com/AlexCEngler/status/1092123648834658305
 
-I agree with all of this. Additionally, I'd pretty strongly endorse packages that have reviewed by [ROpenSci](https://ropensci.org/). I'm less certain how I feel about packages published in the [Journal of Open Source Software](https://joss.theoj.org/) (JOSS) and the [Journal of Statistical Software](https://www.jstatsoft.org/index) (JSS). More peer review is always better than less, but my impression is that peer review is does a lot more to ensure that package authors follow good software engineering practices than it does to ensure actual correctness.
+I agree with all of this. Additionally, I'd pretty strongly endorse packages that have been reviewed by [ROpenSci](https://ropensci.org/). I'm less certain how I feel about packages published in the [Journal of Open Source Software](https://joss.theoj.org/) (JOSS) and the [Journal of Statistical Software](https://www.jstatsoft.org/index) (JSS). More peer review is always better than less, but my impression is that peer review does a lot more to ensure that package authors follow good software engineering practices than it does to ensure actual correctness.
 
 For example, if you take a look at one of my JOSS [reviews in progress](https://github.com/openjournals/joss-reviews/issues/1412), note that the Reviewer Checklist doesn't require me to verify the correctness of calculations, just the existence of tests for those calculations. In theory, tests should verify correctness, but for many modeling packages, the code gets written first, and then the tests get filled in with the results from the code, under the assumption that the code is correct.
 
@@ -303,7 +303,7 @@ Users *will* read the tests in your package when they decide if they want to use
 
 You can read lots more about the mechanics of testing in [R Packages](https://r-pkgs.org/tests.html), which focuses extensively on *how* to test code[^testthat].
 
-[^testthat]: *R Packages* teaches you how to use the `testthat` package for testing. I should not that there are other ways to test R code. I strongly recommend against these alternatives. More people understand `testthat` than any other testing system. Using an alternative test system makes it more difficult for users to understand and verify the reliability of your software.
+[^testthat]: *R Packages* teaches you how to use the `testthat` package for testing. I should note that there are other ways to test R code. I strongly recommend against these alternatives. More people understand `testthat` than any other testing system. Using an alternative test system makes it more difficult for users to understand and verify the reliability of your software.
 
 ## References
 

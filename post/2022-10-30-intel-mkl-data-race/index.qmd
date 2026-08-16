@@ -10,7 +10,7 @@ If you are using Intel MKL for your BLAS/LAPACK implementation on Linux, you can
 
 ## Background
 
-If you do numerically intensive computing, you might want to make it faster. One way to do this is to switch out the backend implementation of linear algebra routines on your computer. At a low level, most linear algebra on your computers happens by making calls via BLAS/LAPACK APIs, and there are several libraries that offer differing implementations of the underlying methods. Some of these libraries are faster than others; many are faster than the default implementation.
+If you do numerically intensive computing, you might want to make it faster. One way to do this is to switch out the backend implementation of linear algebra routines on your computer. At a low level, most linear algebra on your computer happens by making calls via BLAS/LAPACK APIs, and there are several libraries that offer differing implementations of the underlying methods. Some of these libraries are faster than others; many are faster than the default implementation.
 
 I use Intel MKL. On Ubuntu, you can install Intel MKL via the shell with:
 
@@ -47,7 +47,7 @@ See discussion [here](https://github.com/eddelbuettel/mkl4deb/issues/2), [here](
 
 ## The solution
 
-To avoid this problem, set the environmental variable `MKL_THREADING_LAYER=GNU`. You can check the current value of the `MKL_THREADING_LAYER` environmental variable via
+To avoid this problem, set the environment variable `MKL_THREADING_LAYER=GNU`. You can check the current value of the `MKL_THREADING_LAYER` environment variable via
 
 ```{r}
 Sys.getenv("MKL_THREADING_LAYER")
@@ -59,16 +59,16 @@ When `MKL_THREADING_LAYER` is not set, it defaults to `INTEL`. To set `MKL_THREA
 echo "MKL_THREADING_LAYER=GNU" >> /etc/environment
 ```
 
-Alternatively, tell MKL to operate without parallelism by setting `MKL_NUM_THREADS=1`. Note that you will need to restart `R` for these changes to take effect. More generally, [environmental variables are typically read once, at program startup](https://stackoverflow.com/a/74212620/5563099), so you cannot use `Sys.setenv()` to set `MKL_THREADING_LAYER` at runtime. Similarly, you cannot change the number of threads MKL uses are runtime via environmental variables (see [documentation](https://www.intel.com/content/www/us/en/develop/documentation/onemkl-linux-developer-guide/top/managing-performance-and-memory/improving-performance-with-threading/changing-the-number-of-openmp-threads-at-run-time.html)).
+Alternatively, tell MKL to operate without parallelism by setting `MKL_NUM_THREADS=1`. Note that you will need to restart `R` for these changes to take effect. More generally, [environment variables are typically read once, at program startup](https://stackoverflow.com/a/74212620/5563099), so you cannot use `Sys.setenv()` to set `MKL_THREADING_LAYER` at runtime. Similarly, you cannot change the number of threads MKL uses at runtime via environment variables (see [documentation](https://www.intel.com/content/www/us/en/develop/documentation/onemkl-linux-developer-guide/top/managing-performance-and-memory/improving-performance-with-threading/changing-the-number-of-openmp-threads-at-run-time.html)).
 
-If you want to test the effect of different environmental variables without leaving `R`, you can use `callr::r()`, as below:
+If you want to test the effect of different environment variables without leaving `R`, you can use `callr::r()`, as below:
 
 ```{r}
 callr::r(can_induce_data_race, env = c(MKL_THREADING_LAYER = "INTEL"))
 callr::r(can_induce_data_race, env = c(MKL_THREADING_LAYER = "GNU"))
 ```
 
-If you would like to change set environmental variables locally (for example, if you want `targets` to manage parallelism across tasks, while running each individual task sequentially), use an `.Renviron` at the top level of your R project. You can do this via:
+If you would like to set environment variables locally (for example, if you want `targets` to manage parallelism across tasks, while running each individual task sequentially), use an `.Renviron` at the top level of your R project. You can do this via:
 
 ``` r
 usethis::edit_r_environ(scope = "project")

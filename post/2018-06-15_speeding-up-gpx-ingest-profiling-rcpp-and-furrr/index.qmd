@@ -10,9 +10,9 @@ This post is a casual case study in speeding up R code. I work through several i
 
 ## The problem: tidying trajectories in GPX files
 
-I record my runs on my phone using Strava. Strava stores the GPS recordings in GPX files, which are XML files that follow some additional conventions. They start with some metadata and then contain a list of GPS readings taken at one second intervals with longitude, latitude, elevation and timestap information. I wanted to approximate my speed at each timestamp in the GPS record, as well as my distance traveled since the previous GPS recordings. 
+I record my runs on my phone using Strava. Strava stores the GPS recordings in GPX files, which are XML files that follow some additional conventions. They start with some metadata and then contain a list of GPS readings taken at one second intervals with longitude, latitude, elevation and timestamp information. I wanted to approximate my speed at each timestamp in the GPS record, as well as my distance traveled since the previous GPS recordings. 
 
-Below I have an example of a GPX file that contains three GPS readings. First I create a vector that contains the names off my GPX files, and then I subset to the files that contain running data. I choose to work with the third run as a canonical example, and show a subset of the recording with three GPS readings.
+Below I have an example of a GPX file that contains three GPS readings. First I create a vector that contains the names of my GPX files, and then I subset to the files that contain running data. I choose to work with the third run as a canonical example, and show a subset of the recording with three GPS readings.
 
 ```{r}
 #| message: false
@@ -221,9 +221,9 @@ lagged <- retyped |>
 lagged
 ```
 
-It turns out this data is not contiguous. Strava has a feature called autopause which detects pauses in runs (for example, at a stoplight), and GPS readings during paused periods are not include in the GPX files[^1]. GPS readings typically happen once every second. I plotted the time gaps between readings and realized that time gaps greater than three seconds between two GPS recordings indicated a pause. This lets me break the run down into a series of contigous segments:
+It turns out this data is not contiguous. Strava has a feature called autopause which detects pauses in runs (for example, at a stoplight), and GPS readings during paused periods are not included in the GPX files[^1]. GPS readings typically happen once every second. I plotted the time gaps between readings and realized that time gaps greater than three seconds between two GPS recordings indicated a pause. This lets me break the run down into a series of contiguous segments:
 
-[^1]: It took me a two months to realize this, mostly because I didn't plot enough of the data. If you're curous how Strava detects paused movement, you can read more [here](https://medium.com/strava-engineering/improving-auto-pause-for-everyone-13f253c66f9e). It seems to involve more if-statements than fun models.
+[^1]: It took me two months to realize this, mostly because I didn't plot enough of the data. If you're curious how Strava detects paused movement, you can read more [here](https://medium.com/strava-engineering/improving-auto-pause-for-everyone-13f253c66f9e). It seems to involve more if-statements than fun models.
 
 ```{r}
 #| column: body-outset
@@ -330,7 +330,7 @@ library(profvis)
 profvis(read_gpx0(fname))
 ```
 
-In the default view, the horizontal axis represents time and the box represents the call stack. All the boxes above `plotKML::readGPX` are functions called by `plotKML::readGPX`. Here it seems like `plotKML::readGPX` takes about 400 milliseconds to run. So about half the time is spent reading in the file, and half calculating metrics. Most of the time calculating metrics is in `raster::pointDistance`, which is fairly up the call stack - you may have to click and drag the plot to see it.
+In the default view, the horizontal axis represents time and the box represents the call stack. All the boxes above `plotKML::readGPX` are functions called by `plotKML::readGPX`. Here it seems like `plotKML::readGPX` takes about 400 milliseconds to run. So about half the time is spent reading in the file, and half calculating metrics. Most of the time calculating metrics is in `raster::pointDistance`, which is fairly far up the call stack - you may have to click and drag the plot to see it.
 
 ## GPX reader version 1: no more plotKML::GPX
 
@@ -430,7 +430,7 @@ Our results are still as expected, which is good.  We profile again to see if we
 profvis(read_gpx2(fname))
 ```
 
-I needed to this for about fifty files though, so this was still slow enough to be somewhat frustrating. Now `xml2::as_list` is really killing us. 
+I needed to do this for about fifty files though, so this was still slow enough to be somewhat frustrating. Now `xml2::as_list` is really killing us. 
 
 ## GPX reader version 3: now with more xml2
 
@@ -516,7 +516,7 @@ dist_result <- haversine_dist(p1, p2)
 dist_result - dist_expected
 ```
 
-It turns out that "small error" on the geological scale is big error on the neighborhood run scale. Put all together, the C++ version looks like:
+It turns out that "small error" on the geological scale is a big error on the neighborhood run scale. Put all together, the C++ version looks like:
 
 ```{r}
 read_gpx4 <- function(fname) {

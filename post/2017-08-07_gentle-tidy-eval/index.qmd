@@ -63,7 +63,7 @@ filter(starwars, UQ(homeworld) == "Alderaan")
 
 ## Creating non-standard functions
 
-Sometimes it is nice to write functions that use accept non-standard inputs, like `dplyr` verbs. For example, we might want to write a function with the same effect as
+Sometimes it is nice to write functions that accept non-standard inputs, like `dplyr` verbs. For example, we might want to write a function with the same effect as
 
 ```{r}
 starwars %>% 
@@ -71,7 +71,7 @@ starwars %>%
   summarize(avg_mass = mean(mass))
 ```
 
-To this we need to capture our input in `quosures` with `quo` and `quos` when programming interactively.
+To do this we need to capture our input in `quosures` with `quo` and `quos` when programming interactively.
 
 ```{r}
 groups <- quos(homeworld, species)   # capture a list of variables as raw input
@@ -98,7 +98,7 @@ summarize_by <- function(df, to_summarize, ...) {
 }
 ```
 
-Now our function call is non-standardized. Note that `quos` can capture an arbitrary number of arguments, like we have here. So both of the following calls are valid
+Now our function call is non-standard. Note that `quos` can capture an arbitrary number of arguments, like we have here. So both of the following calls are valid:
 
 ```{r}
 summarize_by(starwars, mass, homeworld)

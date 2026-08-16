@@ -40,7 +40,7 @@ ggplot(td, aes(term, estimate)) +
 
 In this case you might say, oh hey, the confidence intervals for the `carb` and `qsec` coefficients overlap, so those coefficients must be different[^covariance]. Or you might get a plot like the following:
 
-[^covariance]: This is actually a bad example because OLS estimates for regression coefficients are correlated. A better example would be plotting confidence intervals for independent groups means like you get from classic cross-sectional experimental designs.
+[^covariance]: This is actually a bad example because OLS estimates for regression coefficients are correlated. A better example would be plotting confidence intervals for independent group means like you get from classic cross-sectional experimental designs.
 
 ```{r}
 #| fig-alt: "A bar chart showing the same regression coefficients as the previous plot, but using bars for estimates and error bars for confidence intervals. The visualization emphasizes the overlap between intervals for different terms."
@@ -49,7 +49,7 @@ ggplot(td, aes(term, estimate)) +
   geom_errorbar(aes(x = term, ymin = conf.low, ymax = conf.high))
 ```
 
-and do something similar. While this procedure is intuitive satisfying, you should avoid it because it doesn't work.
+and do something similar. While this procedure is intuitively satisfying, you should avoid it because it doesn't work.
 
 ## Type I error rate for a simple case
 
@@ -140,7 +140,7 @@ P(\text{type I error})
 
 So if we drop the $\sqrt 2$ term, we get what we want!
 
-In practice, though, the $\sqrt 2$ is still there, and we have this expression $2 \cdot (1 - \Phi(\sqrt 2 \cdot \color{purple}{z_{1 - \alpha / 2}} ))$, which is a bit hard to parse. To get an idea of what this looks like, I've plotted $\alpha$ (used to construct the confidence intervals for mean) against the actual type I error:
+In practice, though, the $\sqrt 2$ is still there, and we have this expression $2 \cdot (1 - \Phi(\sqrt 2 \cdot \color{purple}{z_{1 - \alpha / 2}} ))$, which is a bit hard to parse. To get an idea of what this looks like, I've plotted $\alpha$ (used to construct the confidence intervals for the mean) against the actual type I error:
 
 ```{r}
 #| fig-alt: "Line chart comparing the desired type I error rate (alpha) on the x-axis to the true type I error rate on the y-axis. A dashed identity line shows that the true error rate is always lower than the desired one, indicating that the confidence interval overlap heuristic is conservative."
@@ -167,9 +167,9 @@ At first, your intuition may suggest that this confidence interval thing is a re
 
 Let's go back to that missing factor of $\sqrt 2$.
 
-Remember that we found the variance $\color{blue}{\bar y}  - \color{blue}{\bar x}$ using the rule $\mathbb{V}(a \cdot X + b \cdot Y) = a^2 \cdot \mathbb{V}(X) + b^2 \cdot \mathbb{V}(Y)$ and it was $2 \cdot \color{green} {\sigma^2 \over n}$. To get the standard error, we take the square root and get $\sqrt 2 \cdot \color{green} {\sigma \over \sqrt n}$.
+Remember that we found the variance of $\color{blue}{\bar y}  - \color{blue}{\bar x}$ using the rule $\mathbb{V}(a \cdot X + b \cdot Y) = a^2 \cdot \mathbb{V}(X) + b^2 \cdot \mathbb{V}(Y)$ and it was $2 \cdot \color{green} {\sigma^2 \over n}$. To get the standard error, we take the square root and get $\sqrt 2 \cdot \color{green} {\sigma \over \sqrt n}$.
 
-But if we had accidentally have worked on the standard deviation scale instead, and mistakenly assumed
+But if we had accidentally worked on the standard deviation scale instead, and mistakenly assumed
 
 \begin{align}
 \text{se}(a \cdot X + b \cdot Y) = a^2 \cdot \text{se}(X) + b^2 \cdot \text{se}(Y) \qquad \text{this is wrong!}
@@ -197,7 +197,7 @@ For an interesting comparison of some of the many correct ways to compare means,
 
 > **Left as an exercise for the reader**: A coworker asked me, “If the individual confidence intervals don’t tell you whether the difference is (statistically) significant or not, then why do we make all these plots with the two standard errors?” ... Develop an answer that (a) isn’t insulting to non-statisticians and (b) maintains hope for the future of the use of statistics by non-statisticians.
 
-In future posts I plan build off this idea and explore statistics as a primarily sociological problem.
+In future posts I plan to build off this idea and explore statistics as a primarily sociological problem.
 
 **Correction**: Originally this post used $\color{purple}{t_{1 - \alpha / 2, \, n-1}}$, but $\color{purple}{z_{1 - \alpha / 2}}$ is the appropriate quantile for the sampling distribution of $\color{blue}{\bar y}  - \color{blue}{\bar x}$.
 

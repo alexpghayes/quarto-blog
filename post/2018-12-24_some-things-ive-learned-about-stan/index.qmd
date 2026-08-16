@@ -20,7 +20,7 @@ Stan is Tensorflow for generative statistical models. Just like Tensorflow lets 
 
 The big win is flexibility, and creativity: if you can dream up a generative model and write it in Stan, much of the work to use that model in practice is done[^1].
 
-[^1]: The other nice thing about Stan is that you end using the same estimator for all your models. This means there's no context switching when you move to a different estimator and have to remember how to do inference all over again.
+[^1]: The other nice thing about Stan is that you end up using the same estimator for all your models. This means there's no context switching when you move to a different estimator and have to remember how to do inference all over again.
 
 Like Tensorflow, the downside is the low-level interface, which can be inconvenient for day-to-day work. Luckily, Stan has [`brms`][brms], a much higher level interface that provides a huge amount of infrastructure to make repetitive tasks easy.
 
@@ -34,7 +34,7 @@ Intermittently I've tried to code up models in raw Stan. I've probably tried to 
 
 In retrospect, I should have just sat down and read the [manual][stan_manual] sooner, but I really dislike learning new languages by reading dense technical documentation[^2].
 
-[^2]: After reading [What nobody tells you about documention][types_of_doc], I'd classify most existing Stan resources as Reference and How To Guides. I think there's a lot of opportunity to introduce the language to a broader audience via more introductory tutorials.
+[^2]: After reading [What nobody tells you about documentation][types_of_doc], I'd classify most existing Stan resources as Reference and How To Guides. I think there's a lot of opportunity to introduce the language to a broader audience via more introductory tutorials.
 
   I also think there'd be a lot of value in a publicly available set of Stan exercises, where you would practice translating models from math to Stan, and from Stan to math.
 
@@ -84,7 +84,7 @@ says that `alpha` is a number you want to use. Numbers can have upper and lower 
 real<lower=0> alpha;
 ```
 
-Integers can promoted to reals, but reals are never demoted to integers. The other two objects you should know about are `vector`s and `matrix`s. `vector`s and `matrix`s contain `real` elements. When you declare `vector`s and `matrix`s, you have to tell Stan how big they are:
+Integers can be promoted to reals, but reals are never demoted to integers. The other two objects you should know about are `vector`s and `matrix`s. `vector`s and `matrix`s contain `real` elements. When you declare `vector`s and `matrix`s, you have to tell Stan how big they are:
 
 ``` stan
 vector[N] x;    // a vector with N elements
@@ -345,7 +345,7 @@ fit1 <- sampling(m1, data = data, chains = 2, iter = 1000, refresh = 0)
 print(fit1, pars = "alpha", probs = c(0.025, 0.5, 0.975))
 ```
 
-It works! That's great, sampling is actually happening. We get a lot warnings from Stan when we fit this model; these tell us that something is probably wrong. Here I realized that I should actually pass `alpha` to `sampling`, and that I'd actually given it a hyperprior by accident. So I changed this, and gave group 0 and group 1 different parameters `theta`, resulting in:
+It works! That's great, sampling is actually happening. We get a lot of warnings from Stan when we fit this model; these tell us that something is probably wrong. Here I realized that I should actually pass `alpha` to `sampling`, and that I'd actually given it a hyperprior by accident. So I changed this, and gave group 0 and group 1 different parameters `theta`, resulting in:
 
 ```{stan output.var = "m2"}
 // survey_2.stan
@@ -405,7 +405,7 @@ fit2 <- sampling(m2, data = data, chains = 2, iter = 1000, refresh = 0)
 print(fit2, pars = "theta_0", probs = c(0.025, 0.5, 0.975))
 ```
 
-Note that the warnings go away! The new model actually makes sense, and as a consequence no longer stretches the sampler to a breaking point. At this point I has happy with the core logic of the model, so I used ShinyStan to check MCMC diagnostics and make sure that all the chains were mixing, etc:
+Note that the warnings go away! The new model actually makes sense, and as a consequence no longer stretches the sampler to a breaking point. At this point I was happy with the core logic of the model, so I used ShinyStan to check MCMC diagnostics and make sure that all the chains were mixing, etc:
 
 ``` r
 shinystan::launch_shinystan(fit2)
@@ -415,7 +415,7 @@ That all checked out, which isn't a surprise, since we're effectively estimating
 
 But really, my original idea was to see how well this model would predict respondent group, so we need to do some more work.
 
-I wanted $P(y = 0)$ given a person's set of responses $R_{i1}, ..., R_{iA}$. This was one of those instances were I was intimated by how to figure that out, but then it all became clear with a minute or two of pen and paper work.
+I wanted $P(y = 0)$ given a person's set of responses $R_{i1}, ..., R_{iA}$. This was one of those instances where I was intimidated by how to figure that out, but then it all became clear with a minute or two of pen and paper work.
 
 Bayes rule gives us that $P(y_i = 0 | R_{i1}, ..., R_{iA})$ equals
 
@@ -425,7 +425,7 @@ P(R_{i1}, ..., R_{iA} | y_i = 0) P(y_i = 0) \over
    P(R_{i1}, ..., R_{iA} | y_i = 1) P(y_i = 1)
 \end{align}
 
-to deal with $P(y_i = 0)$ and $P(y_i = 1)$ we need a prior on $y$. I just assumed that $P(y_i = 0) = P(y_i = 1) = 0.5$, so those terms cancel. Next we can also assume that questions are independent from other questions, and continue with:
+To deal with $P(y_i = 0)$ and $P(y_i = 1)$ we need a prior on $y$. I just assumed that $P(y_i = 0) = P(y_i = 1) = 0.5$, so those terms cancel. Next we can also assume that questions are independent from other questions, and continue with:
 
 \begin{align}
 &= {\prod_{j=1}^A P(R_{ij} | y_i = 0)  \over
@@ -734,7 +734,7 @@ theta_draws %>%
 
 The data is made up, so this isn't terribly interesting, but if these were actual responses there might be something here.
 
-At this point, we've got the Stan part of things working, the rest of our job is just figuring out how to munge the samples back in R.
+At this point, we've got the Stan part of things working; the rest of our job is just figuring out how to munge the samples back in R.
 
 ## The End
 
@@ -752,7 +752,7 @@ This is pretty much everything I've figured out how to do in Stan. Thanks to all
 
 I recommend that you read much more Stan than you write as you're getting started. Reading lots of Stan will acquaint you with what is possible and general conventions. [khakieconomics][savage_blog] by Jim Savage is my favorite place to read about both Stan and clever generative modeling. Mikhail Popov has a [great notebook on time series innovations][popov_notebook].
 
-In terms of more didactic material, Michael Clark's [Bayesian Basics][mclark] is a nice introduction to Bayes. You may also enjoy Rasmus Bååth's [exercises][farmer_jon], which are both an introduction to both Stan and Bayesian inference.
+In terms of more didactic material, Michael Clark's [Bayesian Basics][mclark] is a nice introduction to Bayes. You may also enjoy Rasmus Bååth's [exercises][farmer_jon], which are an introduction to both Stan and Bayesian inference.
 
 [savage_blog]: https://khakieconomics.github.io/
 [popov_notebook]: http://paws-public.wmflabs.org/paws-public/User:MPopov_(WMF)/intervention-analysis-rstan.ipynb
@@ -761,7 +761,7 @@ In terms of more didactic material, Michael Clark's [Bayesian Basics][mclark] is
 
 **Reference**
 
-- [Stan Manual][stan_manual]: The canonical reference. You answer is probably somewhere in here, if you can find it.
+- [Stan Manual][stan_manual]: The canonical reference. Your answer is probably somewhere in here, if you can find it.
 
 - [Stan Example Models][stan_example_models]: A huge number of example implementations. Part of the Stan Manual.
 

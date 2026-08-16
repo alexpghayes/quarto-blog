@@ -28,11 +28,11 @@ Suppose that we have $n = 20$ data points in $\mathbb{R}^2$ with responses $y \i
 
 $$y = X \beta + \epsilon$$
 
-We want to find an estimate $\hat \beta$ that minimizes the sum of squared error of the predicted values $\hat y = X \hat \beta$
+We want to find an estimate $\hat \beta$ that minimizes the sum of squared errors of the predicted values $\hat y = X \hat \beta$
 
 $$\mathcal{L}(\beta) = \frac{1}{2n} \sum_i (y_i - \hat y_i)^2 = \frac{1}{2n} \sum_i (y_i - x_i \beta)^2 = \frac{1}{2n} (y - X \beta)^T (y - X \beta)$$
 
-In the final step above we recognize that the sum of squared residuals can be written as a dot product. Next we'd like to the gradient of this dot product. There's a beautiful explanation of how to take the gradient of a quadratic form [here](http://michael.orlitzky.com/articles/the_derivative_of_a_quadratic_form.xhtml). The gradient (in matrix notation) is
+In the final step above we recognize that the sum of squared residuals can be written as a dot product. Next we'd like to take the gradient of this dot product. There's a beautiful explanation of how to take the gradient of a quadratic form [here](http://michael.orlitzky.com/articles/the_derivative_of_a_quadratic_form.xhtml). The gradient (in matrix notation) is
 
 $$\nabla_\mathcal{L}(\beta) = -\frac{1}{n} (y - X \beta)^T X$$
 
@@ -67,7 +67,7 @@ analytical_grad <- function(beta) {
 }
 ```
 
-To perform this check, we need get approximate the gradient in a direction $d$:
+To perform this check, we need to approximate the gradient in a direction $d$:
 
 ```{r}
 #' @param f function that takes a single vector argument x
@@ -116,4 +116,4 @@ relative_error(num_grad, ana_grad)
 
 The relative error is small, and we can feel confident that our implementation of the gradient is correct.
 
-This post is based off of Tim Vieira's [fantastic post](http://timvieira.github.io/blog/post/2017/04/21/how-to-test-gradient-implementations/) on how to use numerical gradient checks in practice, but with `R` code. See also the [numDeriv](https://cran.r-project.org/package=numDeriv) package.
+This post is based on Tim Vieira's [fantastic post](http://timvieira.github.io/blog/post/2017/04/21/how-to-test-gradient-implementations/) on how to use numerical gradient checks in practice, but with `R` code. See also the [numDeriv](https://cran.r-project.org/package=numDeriv) package.

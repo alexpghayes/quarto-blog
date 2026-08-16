@@ -17,7 +17,7 @@ So I decided to learn some more about the linear probability model (LPM), which 
 
 ## What is the linear probability model?
 
-Suppose we have outcomes $Y \in \{0, 1\}$ and fixed covariate vectors $X$. The linear probability model is a *model*, that is, a set of probability distributions that might have produced our observed data. In particular, the linear probability assumes that the data generating process looks like:
+Suppose we have outcomes $Y \in \{0, 1\}$ and fixed covariate vectors $X$. The linear probability model is a *model*, that is, a set of probability distributions that might have produced our observed data. In particular, the linear probability model assumes that the data generating process looks like:
 
 \begin{align}
 P(Y = 1 | X) = 
@@ -66,7 +66,7 @@ Identification means that each possible value of the estimand should correspond 
 
 @gomila_logistic_2019 claims that $\hat \beta_\text{OLS}$ is unbiased and consistent for $\beta$, and attempts to demonstrate this two ways: (1) analytically, and (2) via simulation.
 
-And this is the point that I got pretty confused, because the big question is: consistent under what model? Depending on who you ask, we could conceivably be assuming that the data comes from:
+And this is the point where I got pretty confused, because the big question is: consistent under what model? Depending on who you ask, we could conceivably be assuming that the data comes from:
 
 - a Gaussian GLM (linear regression),
 - the linear probability model, or
@@ -180,7 +180,7 @@ Anyway, the expectation of a binomial GLM is $\mathrm{logit}^{-1} (X_i \beta)$, 
 
 [^experimental_example]: In a lot of experimental settings that compare categorical treatments, you fit a fully saturated model that allocates a full parameter to the mean of each combination of treatments. $\hat \beta_\text{OLS}$ is consistent in this setting under both logistic regression and the LPM.
 
-    Let's prove this for logistic regression first. Suppose we have groups $1, ..., k$ and the data comes from a logistic regression model. We represent the groups in the model via one hot coding, omitting an intercept for identifability. That is, we assume
+    Let's prove this for logistic regression first. Suppose we have groups $1, ..., k$ and the data comes from a logistic regression model. We represent the groups in the model via one hot coding, omitting an intercept for identifiability. That is, we assume
     
     \begin{align}
       P(Y = 1 | X) = \frac{1}{1 + \exp(-(\alpha_1 X_1 + ... + \alpha_k X_k))}
@@ -276,7 +276,7 @@ This might seem like a dealbreaker, but it doesn't bother me. Where the estimato
 
 [^independence]: I.I.D. assumptions are often violated in real life, for example!
 
-    My advisor made an interesting point about critiquing assumptions the other day. He said that it isn't enough to say "I don't think that assumption holds" when evaluating a model or an estimator. Instead, to show than the assumption is unacceptable, he claims you need to demonstrate that making a particular assumption results in some form of undesirable inference.
+    My advisor made an interesting point about critiquing assumptions the other day. He said that it isn't enough to say "I don't think that assumption holds" when evaluating a model or an estimator. Instead, to show that the assumption is unacceptable, he claims you need to demonstrate that making a particular assumption results in some form of undesirable inference.
 
 In a bit more detail, here's how I think of model checking:
 
@@ -298,7 +298,7 @@ So far we have established that $\hat \beta_\text{OLS}$ is at least occasionally
 
 In practice, we also care about the uncertainty in $\hat \beta$. We might want a confidence interval, or, God forbid, a p-value. So we should think about consistent estimators for $\mathbf{Cov} (\hat \beta)$. In the grand LPM debate, most people suggest using robust standard errors. For a while, it was unclear to me how these robust standard errors were derived and under what conditions they are consistent. The answer again comes from @boos_essential_2013, and all we need for the consistency of robust standard errors for $\mathbf{Cov} (\hat \beta)$ is some moment conditions (the existence of (7.5) and (7.6) in the text), which linear regression, logistic regression, and the LPM all satisfy.
 
-It only took several weeks of misreading @boos_essential_2013 and asking dumb questions on Twitter to figure this out. Thanks to Achim Zeileis, James E. Pustejovsky, Cyrus Samii for answering those questions. Note that @white_heteroskedasticity-consistent_1980 is another canonical paper on robust standard errors, but it doesn't click for me like the M-estimation framework does.
+It only took several weeks of misreading @boos_essential_2013 and asking dumb questions on Twitter to figure this out. Thanks to Achim Zeileis, James E. Pustejovsky, and Cyrus Samii for answering those questions. Note that @white_heteroskedasticity-consistent_1980 is another canonical paper on robust standard errors, but it doesn't click for me like the M-estimation framework does.
 
 ## Takeaways
 
