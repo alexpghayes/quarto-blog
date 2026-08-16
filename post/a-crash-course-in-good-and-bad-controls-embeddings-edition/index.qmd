@@ -1,0 +1,28 @@
+---
+title: "a crash course in good and bad controls: embedding edition"
+subtitle: |
+  using embeddings to adjust for confounding is complicated
+date: "2026-08-16"
+bibliography: references.bib
+---
+
+"representation learning"
+
+1. how should we use fancy machine learning models -- one idea, broadly construed, is to take various "non-euclidean" kinds of data (read: anything that isn't a number in a csv), embed it using some foundation model or something along those lines. lots of people are doing this; doing it well is clearly important and smart
+
+2. in this literature, the framing is always that we are learning a representation of confounders; that is, things that we need to adjust for to get valid causal estimates. but what should we actually adjust for @cinelli2022:
+
+- TODO
+
+what should not adjust for:
+
+- mediators
+- colliders
+- post-outcome variables
+- post-treatment variables
+
+make ggdag pictures of these things
+
+3. okay, so we have some image/network/text, we estimate some embeddings, and then we go forth and adjust for it. when can this go wrong: whenever the latent features in the embeddings are mediators, colliders, etc, etc
+
+4. how can you know if the latent features you learned in the embedding are mediators, colliders, etc. this is **generically impossible**.
