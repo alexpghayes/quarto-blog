@@ -197,7 +197,7 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">April 6, 2024</p>
+      <p class="date-modified">August 19, 2026</p>
     </div>
   </div>
     
@@ -208,50 +208,78 @@ gtag('config', 'G-G6PQFW2XSK', { 'anonymize_ip': true});
 </header>
 
 
-<p><strong>n.b.</strong> For the last several years, I written code purely for the purposes of furthering my academic research. The goal of this code is not to be broadly usable. I only commit to maintaining and explaining my research code to the extent that it is assists others in their own academic research. I have also written code designed for broad consumption – see <a href="#rstats">#rstats</a> below for some details about my open source work.</p>
-<p>My research code, as well as miscellaneous personal projects in various stages of completion, lives on my <a href="https://github.com/alexpghayes">Github</a>. I primarily use <code>R</code>, and most of my work as a developer is on methods packages. I am also a proficient Python user, and have passing exposure to SQL, Julia, and C++.</p>
-<section id="research-software" class="level2">
-<h2 class="anchored" data-anchor-id="research-software">research software</h2>
+<p>At the moment, I primarily develop <code>R</code> packages to support research projects – you can read a little bit about my goals for these packages in <a href="../post/what-i-want-from-academic-code/">what i want from academic code</a>. In brief: I am committed to maintaining and explaining my research code to the extent that it assists others in their own academic research, but I’m not writing research code with the goal of it ending up in production.</p>
+<p>Independently from my research, I have been involved in a number of open source projects in the <code>tidyverse</code> and <code>tidymodels</code> orbits. I previously maintained the <a href="https://broom.tidymodels.org/"><code>broom</code></a> package, and am responsible for the <a href="https://www.tidyverse.org/blog/2018/07/broom-0-5-0/"><code>0.5.0</code> release</a> and a portion of the <a href="https://www.tidyverse.org/blog/2020/07/broom-0-7-0/"><code>0.7.0</code> release</a>. For these contributions I was generously given authorship on <span class="citation" data-cites="wickham2019">Wickham et al. (<a href="#ref-wickham2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>I review for the <a href="https://journal.r-project.org/">R Journal</a> and the <a href="https://joss.theoj.org/">Journal of Open Source Software</a>.</p>
+<p>You can find all my code on <a href="https://github.com/alexpghayes">my GitHub</a>. Please report bugs and let me know if things break!</p>
+<section id="recent-news" class="level2">
+<h2 class="anchored" data-anchor-id="recent-news">recent news</h2>
 <ul>
-<li><p><a href="https://github.com/RoheLab/vsp"><code>vsp</code></a> performs semi-parametric estimation of latent factors in random-dot product graphs by computing varimax rotations of the spectral embeddings of graphs. The resulting factors are sparse and interpretable. The theory work on this was done by <span class="citation" data-cites="rohe_vintage_2022">Rohe and Zeng (<a href="#ref-rohe_vintage_2022" role="doc-biblioref">2022+</a>)</span>, and then I ended up using varimax rotation a lot in my own data analysis and wrapped some of the infrastructure I developed into this package. I am committed to maintenance of this package and will respond quickly to feature requests or questions about how you might use it in your own research.</p></li>
-<li><p><a href="https://rohelab.github.io/fastRG/"><code>fastRG</code></a> samples large, sparse random-dot product graphs very efficiently and is especially useful when running simulation studies for spectral network estimators. I am committed to maintenance of this package and will respond quickly to feature requests or questions about how you might use it in your own research. The <code>fastRG</code> sampling algorithm is described in <span class="citation" data-cites="rohe_note_2018">Rohe et al. (<a href="#ref-rohe_note_2018" role="doc-biblioref">2018</a>)</span>.</p></li>
-<li><p><a href="https://github.com/RoheLab/fastadi"><code>fastadi</code></a> is a proof-of-concept implementation of <code>AdaptiveImpute</code>, a self-tuning matrix completion with adaptive thresholding that is closely related to <code>softImpute</code> <span class="citation" data-cites="cho_intelligent_2019 cho_asymptotic_2018">(<a href="#ref-cho_intelligent_2019" role="doc-biblioref">Cho et al. 2019</a>, <a href="#ref-cho_asymptotic_2018" role="doc-biblioref">2018</a>)</span>. I extended <code>AdaptiveImpute</code> to the computationally challenging case where the entire upper triangle is observed as part of my work with Karl Rohe on citation networks. This is research code rather than code intended for broad consumption. I make no commitments to maintaining or improving this code unless something about it is blocking an ongoing research project.</p></li>
-<li><p><a href="https://rohelab.github.io/aPPR/"><code>aPPR</code></a> approximates Personalized PageRanks in large graphs, including those that can only be queried via an API. <code>aPPR</code> additionally performs degree correction and regularization, allowing users to recover blocks from stochastic blockmodels <span class="citation" data-cites="chen_targeted_2020">(see <a href="#ref-chen_targeted_2020" role="doc-biblioref">Chen et al. 2020</a>)</span>. Originally <code>aPPR</code> was designed to be used together with the <a href="https://github.com/alexpghayes/neocache"><code>neocache</code></a> backend to sample large portions of the Twitter following graph with high Personalized PageRanks around seed nodes (joint work with <a href="https://wid.wisc.edu/people/nathan-kolbow/">Nathan Kolbow</a>). I am no longer maintaining <code>neocache</code>, however, and cannot commit any development time to keeping up with the Twitter API shenanigans. <a href="https://github.com/alexpghayes/JSM2021">slides</a></p></li>
+<li><p>2026-04-16: <a href="https://rohelab.github.io/vsp/"><code>vsp 0.1.4</code></a> is on CRAN. This update adds several heuristic localization metrics useful for investigating the quality of estimated embeddings.</p></li>
+<li><p>2026-04-15: <a href="https://github.com/alexpghayes/spectralard"><code>spectralard 0.0.0.9000</code></a> is on GitHub. This in-development package implements estimators for random dot product graphs from Aggregated Relational Data.</p></li>
 </ul>
 </section>
 <section id="design-of-statistical-software" class="level2">
 <h2 class="anchored" data-anchor-id="design-of-statistical-software">design of statistical software</h2>
-<p>I am interested in the design of statistical software and have contributed to ROpenSci’s <a href="https://ropensci.org/stat-software-review/">statistical software reviewing guidelines</a>, as well as early versions of the <a href="https://github.com/tidymodels/model-implementation-principles">tidymodels implementation principles</a>. I have some long form explorations of modeling software design on my blog:</p>
+<p>I was previously quite interested in the design of statistical software and contributed to rOpenSci’s <a href="https://ropensci.org/stat-software-review/">statistical software reviewing guidelines</a>, as well as early versions of the <a href="https://github.com/tidymodels/model-implementation-principles">tidymodels implementation principles</a>. I have some long form explorations of modeling software design on my blog:</p>
 <ul>
 <li><a href="../post/2019-06-07_testing-statistical-software/">testing statistical software</a></li>
 <li><a href="../post/2019-05-21_type-stable-estimation/">type stable estimation</a></li>
 </ul>
-<p>I review for the Journal of Open Source Software and the R Journal.</p>
 </section>
-<section id="rstats" class="level2">
-<h2 class="anchored" data-anchor-id="rstats">#rstats</h2>
-<p>I have been involved in a number of open source projects in the <code>tidyverse</code> and <code>tidymodels</code> orbits. I previously maintained the <a href="https://broom.tidymodels.org/"><code>broom</code></a> package, and am responsible for the <a href="https://www.tidyverse.org/blog/2018/07/broom-0-5-0/"><code>0.5.0</code> release</a> and a portion of the <a href="https://www.tidyverse.org/blog/2020/07/broom-0-7-0/"><code>0.7.0</code> release</a>. For these contributions I was generously given authorship on the tidyverse paper. I intermittently participate in the Stan and ROpenSci communities.</p>
-<p>I also wrote the <a href="https://github.com/alexpghayes/distributions3"><code>distributions3</code></a> package, which provides an S3 interface to distribution functions, with an emphasis on good documentation and beginner friendly design. The <a href="https://alexpghayes.github.io/distributions3/dev/articles/">vignettes</a> in particular are designed to walk students intro stat courses though a litany of classic hypothesis tests. I do not actively develop <code>distributions3</code> but I make sure it stays on CRAN and there is small community of invested contributors.</p>
+<section id="research-software-in-development" class="level2">
+<h2 class="anchored" data-anchor-id="research-software-in-development">research software (in development)</h2>
+<ul>
+<li><p><a href="https://github.com/alexpghayes/spectralard"><code>spectralard</code></a> estimates random dot product graphs from Aggregated Relational Data. Functional but lacking documentation.</p></li>
+<li><p><a href="https://github.com/alexpghayes/latentnetmediate/"><code>latentnetmediate</code></a> estimates natural direct and indirect effects in social network data, using the methods developed in <span class="citation" data-cites="hayes2025">Hayes et al. (<a href="#ref-hayes2025" role="doc-biblioref">2025</a>)</span>. Methods have been implemented but are not yet documented.</p></li>
+</ul>
+<p>Both of these packages need a small push to land on CRAN. Getting either of these out the door would be a very reasonable undergraduate project.</p>
+</section>
+<section id="research-software-released" class="level2">
+<h2 class="anchored" data-anchor-id="research-software-released">research software (released)</h2>
+<ul>
+<li><p><a href="https://rohelab.github.io/fastRG/"><code>fastRG</code></a> samples large, sparse random dot product graphs very efficiently and is especially useful when running simulation studies for spectral network estimators. I am committed to maintenance of this package and will respond quickly to feature requests or questions about how you might use it in your own research. The <code>fastRG</code> sampling algorithm is described in <span class="citation" data-cites="rohe2018">Rohe et al. (<a href="#ref-rohe2018" role="doc-biblioref">2018</a>)</span>.</p></li>
+<li><p><a href="https://rohelab.github.io/vsp/"><code>vsp</code></a> performs semi-parametric estimation of latent factors in random dot product graphs by computing varimax rotations of the spectral embeddings of graphs. The resulting factors are sparse and interpretable. The theory work on this was done by <span class="citation" data-cites="rohe2023">Rohe and Zeng (<a href="#ref-rohe2023" role="doc-biblioref">2023</a>)</span>, and then I ended up using varimax rotation a lot in my own data analysis and wrapped some of the infrastructure I developed into this package. I am committed to maintenance of this package and will respond quickly to feature requests or questions about how you might use it in your own research.</p></li>
+<li><p><a href="https://github.com/RoheLab/fastadi"><code>fastadi</code></a> is a proof-of-concept implementation of <code>AdaptiveImpute</code>, a self-tuning matrix completion method with adaptive thresholding that is closely related to <code>softImpute</code> <span class="citation" data-cites="cho2019 cho2018">(<a href="#ref-cho2019" role="doc-biblioref">Cho et al. 2019</a>, <a href="#ref-cho2018" role="doc-biblioref">2018</a>)</span>. I extended <code>AdaptiveImpute</code> to the computationally challenging case where the entire upper triangle is observed as part of my work with Karl Rohe on citation networks. This is research code rather than code intended for broad consumption. I make no commitments to maintaining or improving this code unless something about it is blocking an ongoing research project.</p></li>
+<li><p><a href="https://CRAN.R-project.org/package=gdim"><code>gdim</code></a> estimates graph dimension using cross-validated eigenvalues, which determines the number of communities in stochastic blockmodels and variants. The method is described in <span class="citation" data-cites="chen2021">Chen et al. (<a href="#ref-chen2021" role="doc-biblioref">2021</a>)</span>.</p></li>
+<li><p><a href="https://rohelab.github.io/aPPR/"><code>aPPR</code></a> approximates Personalized PageRanks in large graphs, including those that can only be queried via an API. <code>aPPR</code> additionally performs degree correction and regularization, allowing users to recover blocks from stochastic blockmodels <span class="citation" data-cites="chen2020">(see <a href="#ref-chen2020" role="doc-biblioref">Chen et al. 2020</a>)</span>. Note that the Twitter workflow is defunct: <code>aPPR</code> was originally designed to be used together with the <a href="https://github.com/alexpghayes/neocache"><code>neocache</code></a> backend to sample large portions of the Twitter following graph with high Personalized PageRanks around seed nodes (joint work with <a href="https://wid.wisc.edu/people/nathan-kolbow/">Nathan Kolbow</a>), but I am no longer maintaining <code>neocache</code> and cannot commit any development time to keeping up with the Twitter API shenanigans. <a href="https://github.com/alexpghayes/JSM2021">slides</a></p></li>
+</ul>
+</section>
+<section id="open-source-work" class="level2">
+<h2 class="anchored" data-anchor-id="open-source-work">open source work</h2>
+<ul>
+<li><p><a href="https://CRAN.R-project.org/package=broom"><code>broom</code></a> converts statistical objects into tidy tibbles, putting hundreds of types of statistical estimates into a consistent format to make programming easier. <code>broom</code> is part of the tidyverse; as mentioned above, I no longer maintain the package.</p></li>
+<li><p><a href="https://CRAN.R-project.org/package=distributions3"><code>distributions3</code></a> provides an S3 interface to distribution functions, with an emphasis on good documentation and beginner friendly design. The vignettes in particular are designed to walk students in intro stat courses through a litany of classic hypothesis tests. <a href="https://www.zeileis.org/">Achim Zeileis</a> now maintains the package.</p></li>
+</ul>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-chen_targeted_2020" class="csl-entry" role="listitem">
+<div id="ref-chen2021" class="csl-entry" role="listitem">
+Chen, Fan, Sebastien Roch, Karl Rohe, and Shuqi Yu. 2021. <span>“Estimating <span>Graph Dimension</span> with <span class="nocase">Cross-validated Eigenvalues</span>.”</span> <em>arXiv:2108.03336 [Cs, Math, Stat]</em>, August. <a href="http://arxiv.org/abs/2108.03336">http://arxiv.org/abs/2108.03336</a>.
+</div>
+<div id="ref-chen2020" class="csl-entry" role="listitem">
 Chen, Fan, Yini Zhang, and Karl Rohe. 2020. <span>“Targeted Sampling from Massive Block Model Graphs with Personalized <span>PageRank</span>.”</span> <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 82 (1): 99–126. <a href="https://doi.org/10.1111/rssb.12349">https://doi.org/10.1111/rssb.12349</a>.
 </div>
-<div id="ref-cho_asymptotic_2018" class="csl-entry" role="listitem">
+<div id="ref-cho2018" class="csl-entry" role="listitem">
 Cho, Juhee, Donggyu Kim, and Karl Rohe. 2018. <span>“Asymptotic Theory for Estimating the Singular Vectors and Values of a Partially-Observed Low Rank Matrix with Noise.”</span> <em>Statistica Sinica</em>, ahead of print. <a href="https://doi.org/10.5705/ss.202016.0205">https://doi.org/10.5705/ss.202016.0205</a>.
 </div>
-<div id="ref-cho_intelligent_2019" class="csl-entry" role="listitem">
-Cho, Juhee, Donggyu Kim, and Karl Rohe. 2019. <span>“Intelligent <span>Initialization</span> and <span>Adaptive Thresholding</span> for <span>Iterative Matrix Completion</span>: <span>Some Statistical</span> and <span>Algorithmic Theory</span> for <span><em>Adaptive-Impute</em></span>.”</span> <em>Journal of Computational and Graphical Statistics</em> 28 (2): 323–33. <a href="https://doi.org/10.1080/10618600.2018.1518238">https://doi.org/10.1080/10618600.2018.1518238</a>.
+<div id="ref-cho2019" class="csl-entry" role="listitem">
+Cho, Juhee, Donggyu Kim, and Karl Rohe. 2019. <span>“Intelligent <span>Initialization</span> and <span>Adaptive Thresholding</span> for <span>Iterative Matrix Completion</span>: <span>Some Statistical</span> and <span>Algorithmic Theory</span> for <span>Adaptive-Impute</span>.”</span> <em>Journal of Computational and Graphical Statistics</em> 28 (2): 323–33. <a href="https://doi.org/10.1080/10618600.2018.1518238">https://doi.org/10.1080/10618600.2018.1518238</a>.
 </div>
-<div id="ref-rohe_note_2018" class="csl-entry" role="listitem">
-Rohe, Karl, Jun Tao, Xintian Han, and Norbert Binkiewicz. 2018. <span>“A <span>Note</span> on <span>Quickly Sampling</span> a <span>Sparse Matrix</span> with <span>Low Rank Expectation</span>.”</span> <em>Journal of Machine Learning Research</em> 19: 1–13.
+<div id="ref-hayes2025" class="csl-entry" role="listitem">
+Hayes, Alex, Mark M Fredrickson, and Keith Levin. 2025. <span>“Estimating <span>Network-Mediated Causal Effects</span> via <span>Principal Components Network Regression</span>.”</span> <em>Journal of Machine Learning Research</em> 26: 1–99. <a href="https://www.jmlr.org/papers/v26/23-1317.html">https://www.jmlr.org/papers/v26/23-1317.html</a>.
 </div>
-<div id="ref-rohe_vintage_2022" class="csl-entry" role="listitem">
-Rohe, Karl, and Muzhe Zeng. 2022+. <span>“Vintage <span>Factor Analysis</span> with <span>Varimax Performs Statistical Inference</span>.”</span> <em>arXiv:2004.05387 [Math, Stat]</em>, 2022+. <a href="https://arxiv.org/abs/2004.05387">https://arxiv.org/abs/2004.05387</a>.
+<div id="ref-rohe2018" class="csl-entry" role="listitem">
+Rohe, Karl, Jun Tao, Xintian Han, and Norbert Binkiewicz. 2018. <span>“A <span>Note</span> on <span>Quickly Sampling</span> a <span>Sparse Matrix</span> with <span>Low Rank Expectation</span>.”</span> <em>Journal of Machine Learning Research</em> 19: 1–13. <a href="https://jmlr.csail.mit.edu/papers/volume19/17-128/17-128.pdf">https://jmlr.csail.mit.edu/papers/volume19/17-128/17-128.pdf</a>.
+</div>
+<div id="ref-rohe2023" class="csl-entry" role="listitem">
+Rohe, Karl, and Muzhe Zeng. 2023. <span>“Vintage Factor Analysis with <span>Varimax</span> Performs Statistical Inference.”</span> <em>Journal of the Royal Statistical Society Series B: Statistical Methodology</em> 85 (4): 1037–60. <a href="https://doi.org/10.1093/jrsssb/qkad029">https://doi.org/10.1093/jrsssb/qkad029</a>.
+</div>
+<div id="ref-wickham2019" class="csl-entry" role="listitem">
+Wickham, Hadley, Mara Averick, Jennifer Bryan, et al. 2019. <span>“Welcome to the <span>Tidyverse</span>.”</span> <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <script>

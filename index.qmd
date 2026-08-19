@@ -7,24 +7,59 @@ about:
   image-width: 10em
   image-alt: Headshot of Alex
   image-shape: rounded
+format:
+  html:
+    include-in-header:
+      text: |
+        <style>
+        /* Toggle between the two bios with :target -- no JavaScript. The
+           #fun-bio / #professional-bio anchors are never rendered, so following
+           them swaps which panel is shown without scrolling the page. */
+        .bio-anchor { display: none; }
+        #fun-bio-panel { display: none; }
+        body:has(#fun-bio:target) #fun-bio-panel { display: block; }
+        body:has(#fun-bio:target) #professional-bio-panel { display: none; }
+        /* Smaller and greyer than the bio text; #6e6e6e is 5.1:1 on white. */
+        .bio-switch { font-size: 0.8em; color: #6e6e6e; text-decoration-color: #6e6e6e; }
+        .bio-switch:hover, .bio-switch:focus { color: #000000; text-decoration-color: #000000; }
+        </style>
 ---
 
+```{=html}
+<span id="professional-bio" class="bio-anchor"></span>
+<span id="fun-bio" class="bio-anchor"></span>
+```
+
 :::{#hero-heading}
+
+::: {#professional-bio-panel}
 I am a Postdoctoral Scholar at Stanford University in the Economics Department, where I work with [Arun Chandrasekhar](https://stanford.edu/~arungc/). I study spectral methods for network analysis, causal inference, and causal inference on networks. In September 2026, I will join Oregon State University as an Assistant Professor in Statistics. 
 
-I completed my PhD in Statistics at the University of Wisconsin-Madison, where I was co-advised by [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) and [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/). During my PhD I also spent some time working on [`broom`](https://broom.tidymodels.org/), a popular open-source `R` package in the `tidyverse`. 
+I completed my PhD in Statistics at the University of Wisconsin-Madison, where I was co-advised by [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) and [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/). During my PhD I spent some time working on [`broom`](https://broom.tidymodels.org/), a popular open-source `R` package in the `tidyverse`, and I interned at Posit (formerly RStudio) and Facebook.
 
-My curriculum vitae is available [here](academic-cv.pdf). I also keep [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIAAAAJ) up to date, and you can find me on Bluesky at [@alexpghayes.com](https://bsky.app/profile/alexpghayes.com).
+I keep [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIAAAAJ) up to date. My intermittently updated curriculum vitae is available [here](academic-cv.pdf).
+
+[Click here for a non-academic bio.](#fun-bio){.bio-switch}
 :::
 
+::: {#fun-bio-panel}
 
-## recent updates
+Outside of academic life, I'm excited about trying new food, weightlifting, learning the guitar, and, intermittently, developing a better sense of style.
 
-- 2026-07-29: I'll be at New Researchers Conference 2026 this weekend chatting about some recent work on estimating peer effects in noisy networks! [slide](https://github.com/alexpghayes/2026-09-nrc-lightning-talk)
+Lately I've been reading lots of speculative fiction, especially Ursula K. Le Guin, and getting into espresso. 
 
-- 2026-04-16: [`vsp 0.1.4`](https://rohelab.github.io/vsp/) is on CRAN. This update adds several heuristic localization metrics useful for investigating the quality of estimated embeddings.
+I dabble in ultimate frisbee, pickleball and climbing, and am vaguely pondering social dance as my next underdeveloped hobby.
 
-- 2026-04-15: [`spectralard 0.0.0.9000`](https://github.com/alexpghayes/spectralard) is on Github. This in-development package implements estimators for random dot product graphs from Aggregated Relational Data.
+I love to host dinner parties, go on group bike rides, and watch chaos unfold during [Blood on the Clocktower](https://boardgamegeek.com/boardgame/240980/blood-on-the-clocktower).
+
+[Back to the academic bio.](#professional-bio){.bio-switch}
+:::
+
+:::
+
+## recent news
+
+- 2026-07-29: I presented at New Researchers Conference 2026 about some recent work on estimating peer effects in noisy networks [slide](https://github.com/alexpghayes/2026-09-nrc-lightning-talk)
 
 - 2026-04-11: I presented on [Spectral Estimation and Trait Selection for Aggregated Relational Data](https://github.com/alexpghayes/2026-04-11-nsec-2026) at Network Science in Economics 2026.
 
@@ -33,6 +68,35 @@ My curriculum vitae is available [here](academic-cv.pdf). I also keep [Google Sc
 - 2025-12-15: I presented [Minimax rates for the linear-in-means model reveal an identifiability-estimability gap](https://github.com/alexpghayes/2025-12-15-cmstat) virtually at CMStatistics 2025.
 
 Material from older talks, presentations, posters, etc, can be found [on my Github](https://github.com/alexpghayes/).
+<!-- 
+## prospective students
+
+I'm looking for PhD students to work with...
+
+My current active areas are peer effects and network econometrics, causal inference with latent or textual treatments, minimax theory for linear-in-means models, and limit theorems for dependent data.
+
+personal fit more important than topic
+
+
+## collaborators
+
+I'm actively building part of my research program around partnerships with the College of Agriculture; this is a standing priority for me at OSU -->
+
+<!-- 
+
+## research interests
+
+active:
+
+- peer effect estimation, especially in noisy networks
+- network clt
+- spectral methods for aggregated relational data
+- applied collaborations on public opinion surveys about DEI related political attitudes
+
+past & adjacent interests:
+
+- semi-parametric mediation to make experimentation cheaper -->
+
 
 ## working papers & pre-prints
 
@@ -48,10 +112,9 @@ Material from older talks, presentations, posters, etc, can be found [on my Gith
 
 1. [Welcome to the tidyverse](https://joss.theoj.org/papers/10.21105/joss.01686). Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, **Alex Hayes**, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. *Journal of Open Source Software*. 2019. [website](https://www.tidyverse.org/)
 
-<!-- 
-## statistical consulting
+## consulting
 
-At Stanford, I do some informal statistical consulting in the economics department, especially for grad students. [Learn more](./consulting/). -->
+At Stanford, I do some informal statistical consulting in the economics department, especially for grad students. [Learn more](./consulting/).
 
 ## blog
 
@@ -60,13 +123,3 @@ In a hobbyist capacity, I also blog about statistics, programming, and data. Som
 - [overfitting: a guided tour](./post/2020-01-06_overfitting-a-guide-tour/)
 - [consistency and the linear probability model](./post/2019-08-31_consistency-and-the-linear-probability-model/)
 - [fairness in repeated lotteries](./post/2024-06-09_repeated-lotteries/)
-
-<!-- 
-
-## students
-- classes i'm teaching
-- working with me / lab manual
-- understanding what's happening in academia
-- for prospective students -- research topics of interest
-
--->
