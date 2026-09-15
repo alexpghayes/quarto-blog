@@ -1,0 +1,47 @@
+---
+title: "against the causal effect of social media"
+date: "2026-09-01"
+categories: [statistical software]
+draft: true
+---
+
+lots of spilled ink about the effect of social media on the kids, and lots of contested empirical evidence. i'm not taking the empirical work too seriously, because i think the questions that empirical work can answer about social media are not the questions that are actually important. in short: social media has widely and substantively altered culture, society and life. the interesting comparison of interest is the counterfactual worlds with this change, and without this change -- note already that even defining the interesting counterfactual world without social media is a tall task. we cannot randomize or experiment to investigate and compare these counterfactuals, but social media is a general purpose technology that has restructured society, and we are broadly unable to undo or meaningful alter the current equilibrium world where social media is present.
+
+reduction experiments -- https://matthewbjane.github.io/blog-posts/blog-post-6.html
+
+https://theconversation.com/governments-are-pushing-teen-social-media-bans-but-behind-the-scenes-is-a-messy-fight-over-science-241684
+
+to make this idea concrete, i present a series of vignettes:
+
+- turning things off / why i think it doesn't work: once social media starts moderately all these other relationships i can like turn off if i'm seeing instagram posts but i can't turn off the fact that, like, marketing and the flow of billions of dollars happens through the platform
+
+
+- in matching markets you this is super clear: imagine someone opts out of facebook marketplace or tinder but everyone else is still there. but if everyone opts out and there is some other marketplace, things could be quite different
+
+- social multipliers; here individual effects can genuinely be small but collective effects very large
+
+- social media "restructuring the DAG" / interacting with everything
+
+a brief explanation on why individual-level experiments don't work in (1) markets, and (2) settings with interference, and how intervening on a small number of people in a system with a huge social multiplier is effectively meaningless
+
+hot take: it's extremely reasonable to have a prior that social media had a large effect on X, Y and Z *regardless of the state of current empirical work*
+
+
+idea: causal effects of social media are not well-defined
+
+lots of the studies are like "we made people take a break from social media and the results were X, Y, Z" or "we studied how much social media is associated with some outcome observationally and controlled for confounders" etc etc
+
+don't know if you've been following the empirical contest about whether or not social media is bad for kids
+or in general
+the results are super mixed empirically and hotly contested, by folks with a variety of methodological competence
+lots of the studies are like "we made people take a break from social media and the results were X, Y, Z" or "we studied how much social media is associated with some outcome observationally and controlled for confounders" etc etc
+and the thing that i'm coming to realize that i simply don't believe that any of this work is causal identified
+sure, in an experiment you can identify the causal effect of take a social media detox
+but to my eye, the fundamental question is about the overall impact of social media on culture and collective behavior
+i was listening to this podcast last weekend about people who stop using their phones for a month
+and to my eye, the correct counterfactual to compare against is the counterfactual in which everyone stops using phones for a month, so that by not using your phone individually do you are not opting out of the digital part of society (which clearly, obviously, must impact us in some ways)
+so i think the kinds of comparisons that researchers can make are at the level of: "if everyone but me continues to use the internet and i opt out of the internet personally, here's what happens"
+
+and i think the correct counterfactual to compare against is, how people interacted pre-digital age, or some other cultural equilibrium that has to do with the place of digital life in society
+and that is an extremely hard causal problem, but i think it also highlights were intuition and empirical results mismatch: it's easy to imagine that in a society with less instagram, there is less mental health disorder. but empirically, a thousand people opting out of instagram does not actually alter our relationship with being digitally observed
+
