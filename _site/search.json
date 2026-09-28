@@ -840,11 +840,18 @@
     "text": "open source work\n\nbroom converts statistical objects into tidy tibbles, putting hundreds of types of statistical estimates into a consistent format to make programming easier. broom is part of the tidyverse; as mentioned above, I no longer maintain the package.\ndistributions3 provides an S3 interface to distribution functions, with an emphasis on good documentation and beginner friendly design. The vignettes in particular are designed to walk students in intro stat courses through a litany of classic hypothesis tests. Achim Zeileis now maintains the package."
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "about",
+    "section": "",
+    "text": "I’m actively looking to for PhD students to work with. I’m also looking for collaborators across Oregon State, and especially collaborators within the College of Agriculture. Please reach out if you have statistics questions!"
+  },
+  {
     "objectID": "index.html#recent-news",
     "href": "index.html#recent-news",
     "title": "about",
     "section": "recent news",
-    "text": "recent news\n\n2026-07-29: I presented at New Researchers Conference 2026 about some recent work on estimating peer effects in noisy networks slide\n2026-04-11: I presented on Spectral Estimation and Trait Selection for Aggregated Relational Data at Network Science in Economics 2026.\n2026-04-09: I have a new working paper Estimating peer effects in noisy, low-rank networks via network smoothing with Keith Levin.\n2025-12-15: I presented Minimax rates for the linear-in-means model reveal an identifiability-estimability gap virtually at CMStatistics 2025.\n\nMaterial from older talks, presentations, posters, etc, can be found on my Github."
+    "text": "recent news\n\n2026-09-16: I joined Oregon State University as an Assistant Professor in the Department of Statistics and Data Science.\n2026-07-29: I presented at New Researchers Conference 2026 about some recent work on estimating peer effects in noisy networks slide\n2026-04-11: I presented on Spectral Estimation and Trait Selection for Aggregated Relational Data at Network Science in Economics 2026.\n2026-04-09: I have a new working paper Estimating peer effects in noisy, low-rank networks via network smoothing with Keith Levin.\n\nMaterial from older talks, presentations, posters, etc, can be found on my Github."
   },
   {
     "objectID": "index.html#working-papers-pre-prints",
@@ -859,20 +866,6 @@
     "title": "about",
     "section": "publications",
     "text": "publications\n\nEstimating network-mediated causal effects via principal components network regression. Alex Hayes, Mark M. Fredrickson, and Keith Levin. Journal of Machine Learning Research. 2025. replication package, code\nCo-factor analysis of citation networks. Alex Hayes and Karl Rohe. Journal of Computational and Graphical Statistics. 2024. post-print, arXiv, replication package, code\nWelcome to the tidyverse. Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, Alex Hayes, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. Journal of Open Source Software. 2019. website"
-  },
-  {
-    "objectID": "index.html#consulting",
-    "href": "index.html#consulting",
-    "title": "about",
-    "section": "consulting",
-    "text": "consulting\nAt Stanford, I do some informal statistical consulting in the economics department, especially for grad students. Learn more."
-  },
-  {
-    "objectID": "index.html#blog",
-    "href": "index.html#blog",
-    "title": "about",
-    "section": "blog",
-    "text": "blog\nIn a hobbyist capacity, I also blog about statistics, programming, and data. Some posts I enjoyed writing:\n\noverfitting: a guided tour\nconsistency and the linear probability model\nfairness in repeated lotteries"
   },
   {
     "objectID": "consulting/index.html",

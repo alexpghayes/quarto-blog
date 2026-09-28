@@ -33,9 +33,9 @@ format:
 :::{#hero-heading}
 
 ::: {#professional-bio-panel}
-I am a Postdoctoral Scholar at Stanford University in the Economics Department, where I work with [Arun Chandrasekhar](https://stanford.edu/~arungc/). My work thus far focuses on network analysis, causal inference and peer effects, which I mostly study using tools from multivariate statistics. In September 2026, I will join Oregon State University as an Assistant Professor in Statistics. 
+I am an Assistant Professor in the Department of Statistics & Data Science at Oregon State University. My work thus far focuses on network analysis, causal inference and peer effects, which I mostly study using tools from multivariate statistics.
 
-I completed my PhD in Statistics at the University of Wisconsin-Madison, where I was co-advised by [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) and [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/). During my PhD I spent some time working on [`broom`](https://broom.tidymodels.org/), a popular open-source `R` package in the `tidyverse`, and I interned at Posit (formerly RStudio) and Facebook. Before grad school, I studied statistics at Rice University.
+Previously, I was a Postdoctoral Scholar at Stanford University in the Economics Department, where I worked with [Arun Chandrasekhar](https://stanford.edu/~arungc/) on econometric methods for development economics. I completed my PhD in Statistics at the University of Wisconsin-Madison, where I was co-advised by [Keith Levin](https://pages.stat.wisc.edu/~kdlevin/) and [Karl Rohe](http://pages.stat.wisc.edu/~karlrohe/). During my PhD I spent some time working on [`broom`](https://broom.tidymodels.org/), a popular open-source `R` package in the `tidyverse`, and I interned at Posit (formerly RStudio) and Facebook. Before grad school, I studied statistics at Rice University.
 
 I keep [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIAAAAJ) up to date. My intermittently updated curriculum vitae is available [here](academic-cv.pdf).
 
@@ -44,11 +44,11 @@ I keep [Google Scholar](https://scholar.google.com/citations?hl=en&user=6g1T3WIA
 
 ::: {#fun-bio-panel}
 
-Ever since dissertating, board games have been my load-bearing hobby; I got into board games as a way to take my mind off work, and the habit has stuck. I particularly enjoy novelty and weird games; recently I tried [psychedelic frog battle in space](https://boardgamegeek.com/boardgame/295905/cosmic-frog). In terms of more regular favorites, I've developed a taste for area control like Root, which allow me to indulge my inner competitive streak, and also co-ops such as Spirit Island, since I suppose team-work is also fun on occasion. I regularly host and attend large party games like Blood on the Clocktower, both for the thrill of finding hidden traitors and because I like to meet lots of new people.
+In recent years I've enjoyed board games as a way to take my mind off work. Recent favorites include Root, which allows me to indulge my inner competitive streak, and also co-ops such as Spirit Island, which allows me to give myself a violent headache. I regularly host and attend large party games like Blood on the Clocktower, both for the thrill of finding hidden traitors and for the chance to meet lots of new people.
 
-Over my postdoc, I got back into being consistently active, and I put much of my open calendar towards weightlifting and group rides in the Santa Cruz mountains. I'm a big fan of playing recreational sports poorly. Once I move to Corvallis I'll be on the lookout for pickup ultimate, pickleball players and fellow climbers; I'm pondering social dance as a next underdeveloped hobby. Together with some college friends, I'm learning about snow travel and mountaineering and we plan to explore some of the glaciated peaks in the PNW.
+During my postdoc, I got back into being consistently active, and I put much of my open calendar towards weightlifting and group rides in the Santa Cruz mountains. I'm a big fan of playing recreational sports poorly. In Corvallis I'm excited to find pickup ultimate frisbee, pickleball partners, and fellow climbers; I'm pondering social dance as a next underdeveloped hobby. Together with some college friends, I'm learning about snow travel and mountaineering and we plan to explore some of the glaciated peaks in the PNW.
 
-This last year I've been picking up the guitar at a local Palo Alto music school, child prodigies hammering out Beethoven in the next room as I struggle through classics such as Twinkle Twinkle Little Star and Mary Had A Little Lamb. While I am not particularly artsy myself, I've recently enjoyed being dragged to arthouse movies, thrifting with friends who have better aesthetic sensibilities than myself, and reading speculative fiction. Ursula K. Le Guin's Hainish Cycle is a favorite.
+During my last year in Palo Alto, I picked up the guitar at a local music school, child prodigies hammering out Beethoven in the next room as I struggled through classics such as Twinkle Twinkle Little Star and Mary Had A Little Lamb. While I am not particularly artsy myself, I've recently enjoyed being dragged to arthouse movies, thrifting with friends who have better aesthetic sensibilities than me, and reading speculative fiction. Ursula K. Le Guin's Hainish Cycle is a favorite.
 
 In Oregon, I'd like to put down roots after my recent transient year as a postdoc. I'd especially like to connect with other junior faculty, and I'm hoping to get back in the habit of hosting dinner parties on a regular basis.
 
@@ -57,7 +57,11 @@ In Oregon, I'd like to put down roots after my recent transient year as a postdo
 
 :::
 
+I'm actively looking to for PhD students to work with. I'm also looking for collaborators across Oregon State, and especially collaborators within the College of Agriculture. Please reach out if you have statistics questions!
+
 ## recent news
+
+- 2026-09-16: I joined Oregon State University as an Assistant Professor in the Department of Statistics and Data Science.
 
 - 2026-07-29: I presented at New Researchers Conference 2026 about some recent work on estimating peer effects in noisy networks [slide](https://github.com/alexpghayes/2026-09-nrc-lightning-talk)
 
@@ -65,38 +69,7 @@ In Oregon, I'd like to put down roots after my recent transient year as a postdo
 
 - 2026-04-09: I have a new working paper [Estimating peer effects in noisy, low-rank networks via network smoothing](https://arxiv.org/abs/2605.03204) with Keith Levin.
 
-- 2025-12-15: I presented [Minimax rates for the linear-in-means model reveal an identifiability-estimability gap](https://github.com/alexpghayes/2025-12-15-cmstat) virtually at CMStatistics 2025.
-
 Material from older talks, presentations, posters, etc, can be found [on my Github](https://github.com/alexpghayes/).
-<!-- 
-## prospective students
-
-I'm looking for PhD students to work with...
-
-My current active areas are peer effects and network econometrics, causal inference with latent or textual treatments, minimax theory for linear-in-means models, and limit theorems for dependent data.
-
-personal fit more important than topic
-
-
-## collaborators
-
-I'm actively building part of my research program around partnerships with the College of Agriculture; this is a standing priority for me at OSU -->
-
-<!-- 
-
-## research interests
-
-active:
-
-- peer effect estimation, especially in noisy networks
-- network clt
-- spectral methods for aggregated relational data
-- applied collaborations on public opinion surveys about DEI related political attitudes
-
-past & adjacent interests:
-
-- semi-parametric mediation to make experimentation cheaper -->
-
 
 ## working papers & pre-prints
 
@@ -111,15 +84,3 @@ past & adjacent interests:
 1. [Co-factor analysis of citation networks](http://www.tandfonline.com/10.1080/10618600.2024.2394464). **Alex Hayes** and Karl Rohe. *Journal of Computational and Graphical Statistics*. 2024. [post-print](./papers/cofactor-analysis-of-citation-networks-aom.pdf), [arXiv](https://arxiv.org/abs/2408.14604), [replication package](https://github.com/alexpghayes/citation-cofactoring-replication), [code](https://rohelab.github.io/fastadi/)
 
 1. [Welcome to the tidyverse](https://joss.theoj.org/papers/10.21105/joss.01686). Hadley Wickham, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, **Alex Hayes**, Lionel Henry, Jim Hester, Max Kuhn, Thomas Lin Pedersen, Evan Miller, Kirill Müller, David Robinson, Dana Paige Seidel, Vitalie Spinu, Kohske Takahashi, Davis Vaughan, Claus Wilke, Kara Woo, Hiroaki Yutani. *Journal of Open Source Software*. 2019. [website](https://www.tidyverse.org/)
-
-## consulting
-
-At Stanford, I do some informal statistical consulting in the economics department, especially for grad students. [Learn more](./consulting/).
-
-## blog
-
-In a hobbyist capacity, I also blog about statistics, programming, and data. Some posts I enjoyed writing:
-
-- [overfitting: a guided tour](./post/2020-01-06_overfitting-a-guide-tour/)
-- [consistency and the linear probability model](./post/2019-08-31_consistency-and-the-linear-probability-model/)
-- [fairness in repeated lotteries](./post/2024-06-09_repeated-lotteries/)
